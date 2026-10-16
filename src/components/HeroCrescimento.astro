@@ -53,19 +53,20 @@ const agenda: [number, number, number, string][] = [
               <div class="pj pj-site" data-p="desktop">
                 <div class="bar"><i></i><i></i><i></i><span>padariapaodourado.com.br</span></div>
                 <div class="pg">
-                  <div class="nav b"><span class="lg">Pão Dourado</span><em></em><em></em><em></em><span class="bt">Pedir</span></div>
+                  <div class="nav b"><span class="lg">Pão Dourado</span><span class="mn">Início</span><span class="mn">Cardápio</span><span class="mn">Contato</span><span class="bt">Pedir</span></div>
                   <div class="sh">
                     <div class="sh-t">
-                      <p class="b ttl">Pão quentinho<br />todo dia</p>
-                      <p class="b ln"></p>
+                      <small class="b ey">Padaria artesanal desde 1998</small>
+                      <p class="b ttl ty">Pão quentinho todo dia</p>
+                      <p class="b tx">Fornadas às 6h, 11h e 17h. Peça pelo WhatsApp e retire sem fila.</p>
                       <span class="b bt">Pedir no WhatsApp</span>
                     </div>
-                    <div class="b img img-a"></div>
+                    <div class="b ph"><img src="/mock/padaria.webp" alt="" width="640" height="400" loading="lazy" decoding="async" /></div>
                   </div>
                   <div class="cards">
-                    <div class="b cd"><div class="img img-b"></div><p class="ln"></p></div>
-                    <div class="b cd"><div class="img img-c"></div><p class="ln"></p></div>
-                    <div class="b cd"><div class="img img-a"></div><p class="ln"></p></div>
+                    {[['pao', 'Pães artesanais'], ['croissant', 'Croissants'], ['bolo', 'Bolos e tortas']].map(([img, t]) => (
+                      <div class="b cd"><div class="ph"><img src={`/mock/${img}.webp`} alt="" width="320" height="220" loading="lazy" decoding="async" /></div><b>{t}</b></div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -74,11 +75,14 @@ const agenda: [number, number, number, string][] = [
               <div class="pj pj-loja" data-p="notebook">
                 <div class="bar"><i></i><i></i><i></i><span>rsmodafitness.com.br</span></div>
                 <div class="pg">
-                  <div class="nav b"><span class="lg">RS Moda</span><em></em><em></em><span class="cart"><Icon name="cart" size={12} /> 2</span></div>
-                  <div class="b banner"><span>Coleção nova · 20% off no Pix</span></div>
+                  <div class="nav b"><span class="lg">RS Moda</span><span class="mn">Feminino</span><span class="mn">Masculino</span><span class="cart"><Icon name="cart" size={12} /> 2</span></div>
+                  <div class="b banner">
+                    <img src="/mock/fitness1.webp" alt="" width="640" height="260" loading="lazy" decoding="async" />
+                    <div><small>Coleção nova</small><p class="ty">20% off no Pix</p></div>
+                  </div>
                   <div class="prods">
-                    {['R$ 89,90', 'R$ 129,90', 'R$ 69,90', 'R$ 149,90'].map((p, i) => (
-                      <div class="b pd"><div class={`img img-${'abcd'[i]}`}></div><p class="ln"></p><b>{p}</b></div>
+                    {[['moletom', 'Moletom Basic', 'R$ 129,90'], ['fitness2', 'Calça Jogger', 'R$ 89,90'], ['modelo', 'Casaco Inverno', 'R$ 199,90']].map(([img, n, p]) => (
+                      <div class="b pd"><div class="ph"><img src={`/mock/${img}.webp`} alt="" width="320" height="360" loading="lazy" decoding="async" /></div><span>{n}</span><b>{p}</b></div>
                     ))}
                   </div>
                 </div>
@@ -88,7 +92,15 @@ const agenda: [number, number, number, string][] = [
               <div class="pj pj-sis" data-p="tablet">
                 <div class="pg">
                   <div class="b sis-top"><span class="lg">Studio Bella</span><span class="bt">+ Agendar</span></div>
-                  <div class="b sis-kpi"><div><small>Hoje</small><b>14</b></div><div><small>Semana</small><b>63</b></div><div><small>Livre</small><b>9</b></div></div>
+                  <div class="b sis-cover"><img src="/mock/salao.webp" alt="" width="480" height="220" loading="lazy" decoding="async" /><p class="ty">Agenda da semana</p></div>
+                  <div class="b sis-next">
+                    <img class="av" src="/mock/pessoa1.webp" alt="" width="96" height="96" loading="lazy" decoding="async" />
+                    <div><small>Próximo atendimento · 14h</small><b>Ana Paula · Coloração</b></div>
+                  </div>
+                  <div class="b sis-next">
+                    <img class="av" src="/mock/pessoa2.webp" alt="" width="96" height="96" loading="lazy" decoding="async" />
+                    <div><small>15h30</small><b>Marcos · Corte e barba</b></div>
+                  </div>
                   <div class="cal">
                     {dias.map((d) => <span class="dia">{d}</span>)}
                     {agenda.map(([c, r, h, t]) => (
@@ -102,10 +114,10 @@ const agenda: [number, number, number, string][] = [
               <div class="pj pj-app" data-p="celular">
                 <div class="pg">
                   <div class="b app-top"><small>Entregar em</small><b>Rua das Flores, 120</b></div>
-                  <div class="b busca">Buscar lanches, pizza…</div>
-                  <div class="chips"><span class="b on">Lanches</span><span class="b">Pizza</span><span class="b">Doces</span></div>
-                  {['Burger da Casa', 'Pizza Calabresa', 'Açaí 500ml'].map((n, i) => (
-                    <div class="b item"><div class={`img img-${'abc'[i]}`}></div><div><b>{n}</b><small>{['R$ 32,90', 'R$ 54,90', 'R$ 19,90'][i]}</small></div></div>
+                  <div class="b promo"><img src="/mock/cafe.webp" alt="" width="480" height="240" loading="lazy" decoding="async" /><p class="ty">Café da manhã -20%</p></div>
+                  <div class="chips"><span class="b on">Lanches</span><span class="b">Pizza</span><span class="b">Bowls</span></div>
+                  {[['burger', 'Burger da Casa', 'R$ 32,90'], ['pizza', 'Pizza Calabresa', 'R$ 54,90'], ['acai', 'Poke Bowl', 'R$ 38,90']].map(([img, n, p]) => (
+                    <div class="b item"><img src={`/mock/${img}.webp`} alt="" width="160" height="160" loading="lazy" decoding="async" /><div><b>{n}</b><small>{p}</small></div><span class="add">+</span></div>
                   ))}
                   <div class="b tabbar"><i></i><i class="on"></i><i></i><i></i></div>
                 </div>
@@ -192,74 +204,84 @@ const agenda: [number, number, number, string][] = [
   .hc-note{margin-top:14px;font-size:13px;color:#aeb4bd}
 
   /* ---------- projetos dentro da tela ---------- */
-  .pj{position:absolute;inset:0;display:none;flex-direction:column;color:#1b1d22;font-size:clamp(7px,2.1cqw,12px);line-height:1.2}
+  .pj{position:absolute;inset:0;display:none;flex-direction:column;color:#1b1d22;font-size:clamp(7px,2.1cqw,12px);line-height:1.25}
   .hc-stage[data-mode="desktop"] .pj-site,.hc-stage[data-mode="notebook"] .pj-loja,
   .hc-stage[data-mode="tablet"] .pj-sis,.hc-stage[data-mode="celular"] .pj-app{display:flex}
+  .pj img{display:block;width:100%;height:100%;object-fit:cover}
   .bar{display:flex;align-items:center;gap:.5em;padding:.6em .9em;background:#e7e4e0;border-bottom:1px solid #d8d4cf}
   .bar i{width:.7em;height:.7em;border-radius:50%;background:#c9c4be}
   .bar i:first-child{background:#ff6b5e}
   .bar span{margin-left:.6em;flex:1;max-width:60%;padding:.25em .9em;border-radius:99px;background:#fff;color:#6b6f76;font-size:.85em}
-  .pg{flex:1;min-height:0;padding:3cqh 4cqw 9cqh;display:flex;flex-direction:column;gap:3cqh;overflow:hidden}
-  .nav{display:flex;align-items:center;gap:1.2em;padding:.5em 0}
-  .nav em{width:3.2em;height:.45em;border-radius:9px;background:#d9d5d0}
-  .lg{font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:1.25em;margin-right:auto;color:#141006}
+  .pg{flex:1;min-height:0;padding:3cqh 4cqw 9cqh;display:flex;flex-direction:column;gap:2.6cqh;overflow:hidden}
+  .nav{display:flex;align-items:center;gap:1.4em;padding:.3em 0}
+  .mn{color:#55585f;font-weight:600;font-size:.9em}
+  .lg{font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:1.3em;margin-right:auto;color:#141006}
   .bt{display:inline-block;background:#ff6900;color:#141006;font-weight:800;border-radius:99px;padding:.45em 1em;font-size:.9em;white-space:nowrap}
-  .ln{height:.55em;border-radius:9px;background:#d9d5d0;width:80%}
-  .ln.s{width:55%}
-  .img{border-radius:8px}
-  .img-a{background:linear-gradient(135deg,#ffb36b,#ff6900 60%,#b84a00)}
-  .img-b{background:linear-gradient(135deg,#ffd9a8,#e7a45a)}
-  .img-c{background:linear-gradient(135deg,#2a2a2e,#55585f)}
-  .img-d{background:linear-gradient(135deg,#f3d1b4,#c98a5d)}
+  .ph{border-radius:8px;overflow:hidden;background:#e4e0db}
 
-  .sh{display:grid;grid-template-columns:1.1fr 1fr;grid-template-rows:minmax(0,1fr);gap:4cqw;flex:1;min-height:0}
-  .sh-t{display:flex;flex-direction:column;justify-content:center;gap:1.8cqh;align-items:flex-start;min-height:0}
-  .ttl{font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:2.3em;line-height:.92;color:#141006}
-  .sh{overflow:hidden}
-  .sh .img{align-self:stretch;min-height:0}
-  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:3cqw;height:17cqh;flex:none}
-  .cd{background:#fff;border-radius:10px;padding:.5em;display:flex;flex-direction:column;gap:.5em;box-shadow:0 4px 14px rgba(0,0,0,.06)}
-  .cd .img{flex:1}
+  .sh{display:grid;grid-template-columns:1fr 1.05fr;grid-template-rows:minmax(0,1fr);gap:4cqw;flex:1;min-height:0}
+  .sh-t{display:flex;flex-direction:column;justify-content:center;gap:1.6cqh;align-items:flex-start;min-height:0}
+  .ey{color:#a84300;font-weight:800;text-transform:uppercase;letter-spacing:.1em;font-size:.75em}
+  .ttl{font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:2.3em;line-height:.95;color:#141006;min-height:1.9em}
+  .tx{color:#55585f;font-size:.9em;max-width:26ch}
+  .sh .ph{min-height:0}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:3cqw;height:22cqh;flex:none}
+  .cd{background:#fff;border-radius:10px;padding:.45em;display:flex;flex-direction:column;gap:.4em;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+  .cd .ph{flex:1;min-height:0}
+  .cd b{font-weight:800;font-size:.9em}
 
   .cart{display:inline-flex;align-items:center;gap:.3em;font-weight:800;background:#141006;color:#fff;border-radius:99px;padding:.3em .8em}
-  .banner{border-radius:10px;background:linear-gradient(100deg,#141006,#3a2410);color:#fff;font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:1.5em;padding:.9em 1em}
-  .banner span{color:#ff8a24}
-  .prods{display:grid;grid-template-columns:repeat(4,1fr);gap:2.5cqw;flex:1;min-height:0}
-  .pd{background:#fff;border-radius:10px;padding:.5em;display:flex;flex-direction:column;gap:.5em;box-shadow:0 4px 14px rgba(0,0,0,.06)}
-  .pd .img{flex:1}
+  .banner{position:relative;border-radius:10px;overflow:hidden;height:26cqh;flex:none;background:#141006}
+  .banner img{position:absolute;inset:0;opacity:.75}
+  .banner div{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;padding:0 5%;background:linear-gradient(90deg,rgba(20,16,6,.9),rgba(20,16,6,0) 70%)}
+  .banner small{color:#ff8a24;font-weight:800;text-transform:uppercase;letter-spacing:.1em;font-size:.8em}
+  .banner p{font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:2.2em;color:#fff;line-height:1;min-height:1em}
+  .prods{display:grid;grid-template-columns:repeat(3,1fr);gap:2.5cqw;flex:1;min-height:0}
+  .pd{background:#fff;border-radius:10px;padding:.45em;display:flex;flex-direction:column;gap:.3em;box-shadow:0 4px 14px rgba(0,0,0,.08);min-height:0}
+  .pd .ph{flex:1;min-height:0}
+  .pd span{font-weight:600;font-size:.9em}
   .pd b{font-weight:800;color:#a84300}
 
-  .pj-sis .pg{padding-top:5cqh}
+  .pj-sis .pg{padding-top:7cqh;gap:2cqh}
   .sis-top{display:flex;align-items:center;justify-content:space-between}
-  .sis-kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:3cqw}
-  .sis-kpi div{background:#fff;border-radius:10px;padding:.6em .8em;box-shadow:0 4px 14px rgba(0,0,0,.06)}
-  .sis-kpi small{display:block;color:#6b6f76}
-  .sis-kpi b{font-family:var(--ff-tit);font-size:2em;line-height:1}
-  .cal{flex:1;min-height:0;display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:auto repeat(5,1fr);gap:1.6cqw;background:#fff;border-radius:12px;padding:3cqw;box-shadow:0 4px 14px rgba(0,0,0,.06)}
-  .dia{text-align:center;font-weight:800;color:#6b6f76;font-size:.9em}
-  .ev{border-radius:6px;background:#fff1e6;border-left:3px solid #ff6900;color:#a84300;font-weight:700;font-size:.8em;padding:.3em;overflow:hidden}
-  .ev:nth-child(3n){background:#e8f7ef;border-left-color:#0b7544;color:#0b7544}
+  .sis-cover{position:relative;height:16cqh;flex:none;border-radius:12px;overflow:hidden;background:#e4e0db}
+  .sis-cover p{position:absolute;left:0;right:0;bottom:0;padding:1.2em .8em .5em;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:1.5em;min-height:2.6em}
+  .sis-next{display:flex;align-items:center;gap:.7em;background:#fff;border-radius:12px;padding:.5em .7em;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+  .av{width:2.8em !important;height:2.8em !important;border-radius:50%;flex:none}
+  .sis-next small{display:block;color:#a84300;font-weight:700;font-size:.85em}
+  .sis-next b{font-weight:800}
+  .cal{flex:1;min-height:0;display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:auto repeat(5,1fr);gap:1.4cqw;background:#fff;border-radius:12px;padding:3cqw;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+  .dia{text-align:center;font-weight:800;color:#6b6f76;font-size:.85em}
+  .ev{border-radius:6px;background:#fff1e6;box-shadow:inset 3px 0 #ff6900;color:#a84300;font-weight:700;font-size:.75em;padding:.3em .4em;overflow:hidden}
+  .ev:nth-child(3n){background:#e8f7ef;box-shadow:inset 3px 0 #0b7544;color:#0b7544}
 
   .pj-app{font-size:clamp(8px,6cqw,12px)}
-  .pj-app .pg{padding:9cqh 5cqw 0;gap:2.2cqh}
+  .pj-app .pg{padding:9cqh 5cqw 0;gap:1.8cqh}
   .app-top small{display:block;color:#6b6f76;font-size:.85em}
   .app-top b{font-weight:800}
-  .busca{background:#fff;border-radius:99px;padding:.7em 1em;color:#9a9ea5;box-shadow:0 4px 14px rgba(0,0,0,.06)}
+  .promo{position:relative;height:15cqh;flex:none;border-radius:12px;overflow:hidden;background:#e4e0db}
+  .promo p{position:absolute;inset:auto 0 0 0;padding:1.4em .8em .5em;background:linear-gradient(transparent,rgba(0,0,0,.75));color:#fff;font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:1.35em;min-height:2.6em}
   .chips{display:flex;gap:.5em}
-  .chips span{border-radius:99px;padding:.4em .9em;background:#fff;font-weight:700;font-size:.9em}
+  .chips span{border-radius:99px;padding:.4em .9em;background:#fff;font-weight:700;font-size:.9em;box-shadow:0 2px 8px rgba(0,0,0,.06)}
   .chips span.on{background:#ff6900;color:#141006}
-  .item{display:flex;gap:.7em;align-items:center;background:#fff;border-radius:12px;padding:.5em;box-shadow:0 4px 14px rgba(0,0,0,.06)}
-  .item .img{width:3.4em;height:3.4em;flex:none}
+  .item{display:flex;gap:.7em;align-items:center;background:#fff;border-radius:12px;padding:.45em;box-shadow:0 4px 14px rgba(0,0,0,.08)}
+  .item img{width:3.6em;height:3.6em;flex:none;border-radius:9px}
+  .item div{flex:1}
   .item b{display:block;font-weight:800}
   .item small{color:#a84300;font-weight:800}
+  .add{width:1.7em;height:1.7em;border-radius:50%;display:grid;place-items:center;background:#ff6900;color:#141006;font-weight:800}
   .tabbar{margin-top:auto;margin-inline:-5cqw;display:flex;justify-content:space-around;padding:1em 0 1.4em;background:#fff;border-top:1px solid #eee}
   .tabbar i{width:1.4em;height:1.4em;border-radius:6px;background:#d9d5d0}
   .tabbar i.on{background:#ff6900}
 
   /* peça em construção: só o contorno tracejado */
   .b{transition:background-color .4s,box-shadow .4s,opacity .4s}
-  .b.wire{background:transparent !important;box-shadow:none !important;outline:1.5px dashed #ff8a24;outline-offset:-1px;color:transparent !important;border-color:transparent !important}
+  .b.wire{background:transparent !important;box-shadow:none !important;outline:1.5px dashed #ff8a24;outline-offset:-1px;color:transparent !important}
   .b.wire *{opacity:0}
+  .b.skel{position:relative;overflow:hidden;color:transparent !important;background:#e4e0db !important;box-shadow:none !important}
+  .b.skel *{opacity:0}
+  .b.skel::after{content:'';position:absolute;inset:0;background:linear-gradient(100deg,transparent 20%,rgba(255,255,255,.75) 50%,transparent 80%);animation:hc-shim .7s linear infinite}
+  @keyframes hc-shim{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
 
   .hc-cursor{position:absolute;z-index:7;left:50%;top:50%;pointer-events:none;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4));opacity:0}
   .hc-status{position:absolute;z-index:7;left:50%;bottom:3cqh;transform:translateX(-50%);display:flex;align-items:center;gap:.6em;white-space:nowrap;padding:.45em .9em .55em;border-radius:99px;background:#141006;color:#fff;font-size:clamp(8px,2.2cqw,12px);font-weight:700;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.35)}
@@ -282,7 +304,7 @@ const agenda: [number, number, number, string][] = [
     .hc-lines{display:none}
     .hc-dev,.hc-bezel,.hc-screen,.hc-island,.hc-neck,.hc-base,.hc-kb{transition:none !important}
   }
-  @container (max-width:300px){.sh{grid-template-columns:1fr}.sh .img{display:none}.prods{grid-template-columns:1fr 1fr}}
+  @container (max-width:300px){.sh{grid-template-columns:1fr}.sh .ph{display:none}.prods{grid-template-columns:1fr 1fr}.pd:nth-child(3){display:none}.mn{display:none}}
 </style>
 
 <script>
@@ -300,6 +322,18 @@ const agenda: [number, number, number, string][] = [
   const stTxt = $('.hc-st-txt'), stPct = $('.hc-st-pct'), stBar = $<HTMLElement>('.hc-st-bar');
   let build: gsap.core.Timeline | undefined;
 
+  // etapa final de cada peça: a foto sai do borrado/cinza para nítida e os títulos são digitados
+  function revelar(p: HTMLElement) {
+    p.classList.remove('skel');
+    p.querySelectorAll('img').forEach((img) =>
+      gsap.fromTo(img, { filter: 'blur(10px) grayscale(1)', scale: 1.15, opacity: .4 }, { filter: 'blur(0px) grayscale(0)', scale: 1, opacity: 1, duration: .9, ease: 'power2.out' }));
+    const alvos = p.classList.contains('ty') ? [p] : Array.from(p.querySelectorAll<HTMLElement>('.ty'));
+    alvos.forEach((t) => {
+      const txt = t.dataset.txt ?? (t.dataset.txt = t.textContent || '');
+      gsap.to({ n: 0 }, { n: txt.length, duration: Math.min(1.1, txt.length * .045), ease: 'none', onUpdate() { t.textContent = txt.slice(0, Math.round(this.targets()[0].n)); } });
+    });
+  }
+
   function construir(id: string, projeto: string) {
     build?.kill();
     const pecas = Array.from(root.querySelectorAll<HTMLElement>(`.pj[data-p="${id}"] .b`));
@@ -307,11 +341,11 @@ const agenda: [number, number, number, string][] = [
     status.classList.remove('ok');
     stTxt.textContent = `${verbo} ${projeto.toLowerCase()}…`;
     if (reduce) {
-      pecas.forEach((p) => p.classList.remove('wire'));
+      pecas.forEach((p) => p.classList.remove('wire', 'skel'));
       status.classList.add('ok'); stTxt.textContent = `${projeto} publicado`; stPct.textContent = '100%'; stBar.style.width = '100%';
       return;
     }
-    pecas.forEach((p) => p.classList.add('wire'));
+    pecas.forEach((p) => { p.classList.remove('skel'); p.classList.add('wire'); gsap.set(p.querySelectorAll('img'), { clearProps: 'all' }); });
     stPct.textContent = '0%'; stBar.style.width = '0%';
     const tela = screen.getBoundingClientRect();
     build = gsap.timeline({ delay: .5 });
@@ -323,8 +357,9 @@ const agenda: [number, number, number, string][] = [
       const pct = Math.round(((i + 1) / pecas.length) * 100);
       build!
         .to(cursor, { left: `${x}%`, top: `${y}%`, duration: .32, ease: 'power2.inOut' })
-        .add(() => { p.classList.remove('wire'); stPct.textContent = `${pct}%`; stBar.style.width = `${pct}%`; })
-        .fromTo(p, { scale: .92 }, { scale: 1, duration: .35, ease: 'back.out(2)' }, '<');
+        .add(() => { p.classList.replace('wire', 'skel'); stPct.textContent = `${pct}%`; stBar.style.width = `${pct}%`; })
+        .fromTo(p, { scale: .92 }, { scale: 1, duration: .35, ease: 'back.out(2)' }, '<')
+        .add(() => revelar(p), '+=.18');
     });
     build
       .to(cursor, { opacity: 0, duration: .3 }, '+=.2')
@@ -350,7 +385,7 @@ const agenda: [number, number, number, string][] = [
     else gsap.delayedCall(.9, () => construir(id, projeto)); // espera o aparelho terminar de mudar de forma
   }
   let ciclo: number | undefined;
-  const reiniciarCiclo = () => { clearInterval(ciclo); if (!reduce) ciclo = window.setInterval(() => mudarModo((modo + 1) % modos.length), 7000); };
+  const reiniciarCiclo = () => { clearInterval(ciclo); if (!reduce) ciclo = window.setInterval(() => mudarModo((modo + 1) % modos.length), 8500); };
   modoBtns.forEach((b) => b.addEventListener('click', () => { mudarModo(Number(b.dataset.m)); reiniciarCiclo(); }));
 
   // ?dispositivo=celular abre o hero direto num aparelho (útil para apresentar)
