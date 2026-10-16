@@ -19,7 +19,7 @@ const schema = [
     <div class="wrap">
       <span class="eyebrow">O que fazemos</span>
       <h2>Serviços</h2>
-      <div class="grid grid-servicos carrossel">
+      <div class="grid grid-servicos">
         {servicos.map((s) => (
           <a class="card" href={`/${s.slug}/`}>
             <span class="icone"><Icon name={s.icone} /></span>
@@ -51,7 +51,7 @@ const schema = [
     <div class="wrap">
       <span class="eyebrow">Clientes</span>
       <h2>Depoimentos</h2>
-      <div class="grid carrossel">
+      <div class="grid">
         {[
           ['Depois do site novo, os pedidos pelo WhatsApp dobraram em dois meses.', 'Carla Mendes', 'Padaria Pão Dourado'],
           ['A loja virtual ficou simples de usar. Hoje vendo para o estado inteiro.', 'Rafael Souza', 'RS Moda Fitness'],

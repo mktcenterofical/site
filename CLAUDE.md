@@ -18,10 +18,11 @@ Objetivo do site: gerar contatos pelo WhatsApp e pelo formulário.
 - Fontes: Barlow Condensed (títulos), DM Sans (texto)
 - Logo em fundo escuro: public/logo-escuro.webp (cabeçalho, fundo #000). Em fundo claro: public/logo-claro.webp (rodapé). Originais em referencia/logo-fundo-*.png
 - Hero da home: src/components/HeroCrescimento.astro (textos animados à esquerda; à direita um aparelho 3D que alterna desktop/notebook/tablet/celular, cada um com um projeto fictício sendo montado em etapas: rascunho tracejado → esqueleto → foto nítida e texto digitado. Fotos em public/mock/ (Unsplash, originais em referencia/mock-src/). ?dispositivo=celular abre direto num aparelho)
-- Menu: topo com Início, Quem somos, Portfólio e botão Contato (/contato/); faixa abaixo com os 5 serviços e ícones (rola na horizontal no celular)
+- Menu: topo com Início, Quem somos, Portfólio e botão Contato (/contato/); faixa fina abaixo com os 5 serviços e ícones. Fundo dos menus #090a0c (mesmo tom do hero). Ao rolar (tablet em diante) a faixa e os links somem e entra o botão do menu off-canvas; no celular o off-canvas é sempre o menu
+- Celular: tudo centralizado, margem lateral de 10px, sem nenhuma rolagem horizontal (html/body overflow-x:clip, sem carrosséis)
 
 ## Regras técnicas
-- Layout próprio por dispositivo (bloco "LAYOUTS POR DISPOSITIVO" no fim de global.css): celular < 768 (menu off-canvas, carrosséis .carrossel, botões largos, etapas em linha do tempo), tablet 768–1023 (2 colunas, hero centralizado), notebook 1024–1439 (3 colunas), desktop ≥ 1440 (tipografia maior, serviços em 5 colunas). O hero começa no aparelho de quem visita. /#menu abre o menu no celular
+- Layout próprio por dispositivo (bloco "LAYOUTS POR DISPOSITIVO" no fim de global.css): celular < 768 (menu off-canvas, conteúdo centralizado e empilhado, botões largos), tablet 768–1023 (2 colunas, hero centralizado), notebook 1024–1439 (3 colunas), desktop ≥ 1440 (tipografia maior, serviços em 5 colunas). O hero começa no aparelho de quem visita. /#menu abre o menu no celular
 - Todo o conteúdo (cabeçalho, seções, rodapé) usa a largura total de 1140px (.wrap)
 - Sem frameworks de JS no cliente; JS mínimo
 - Imagens em WebP/AVIF com width e height

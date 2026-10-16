@@ -63,7 +63,7 @@ const principais: [string, string, string][] = [
 </aside>
 
 <style>
-  .topo{position:sticky;top:0;z-index:50;background:#000;box-shadow:0 8px 24px -12px rgba(0,0,0,.5)}
+  .topo{position:sticky;top:0;z-index:50;background:#090a0c;box-shadow:0 8px 24px -12px rgba(0,0,0,.5)}
   .barra{display:flex;align-items:center;gap:40px;height:72px}
   .logo{flex:none;display:flex}
   .logo img{height:32px;width:auto}
@@ -75,10 +75,10 @@ const principais: [string, string, string][] = [
   .menu a[aria-current]{color:#fff}
   .cta{display:none;min-height:44px;padding:10px 26px}
 
-  .faixa{display:none;background:#000;border-top:1px solid #1a1b1f}
-  .faixa-in{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-top:4px;padding-bottom:4px}
+  .faixa{display:none;background:#090a0c;border-top:1px solid #1a1b1f;max-height:60px;overflow:hidden;transition:max-height .3s,opacity .3s}
+  .faixa-in{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-top:3px;padding-bottom:3px}
   .faixa-in::-webkit-scrollbar{display:none}
-  .faixa a{flex:none;display:flex;align-items:center;gap:8px;padding:4px 12px 4px 4px;border-radius:999px;text-decoration:none;color:#c3c8cf;font-size:13px;font-weight:600;white-space:nowrap;transition:background .2s,color .2s}
+  .faixa a{flex:none;display:flex;align-items:center;gap:8px;padding:3px 12px 3px 4px;border-radius:999px;text-decoration:none;color:#c3c8cf;font-size:13px;font-weight:600;white-space:nowrap;transition:background .2s,color .2s}
   .ic{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;color:var(--orange-hot);transition:background .2s,color .2s}
   .faixa a:hover{background:#16171b;color:#fff}
   .faixa a[aria-current]{background:rgba(255,105,0,.14);color:#fff}
@@ -106,7 +106,7 @@ const principais: [string, string, string][] = [
   /* gaveta */
   .veu{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.55);backdrop-filter:blur(3px);opacity:0;transition:opacity .3s}
   .veu.on{opacity:1}
-  .gaveta{position:fixed;top:0;right:0;bottom:0;z-index:100;width:min(86vw,360px);display:flex;flex-direction:column;background:#000;color:#fff;padding:16px 16px 24px;overflow-y:auto;transform:translateX(100%);transition:transform .35s cubic-bezier(.7,0,.2,1);box-shadow:-20px 0 60px rgba(0,0,0,.5)}
+  .gaveta{position:fixed;top:0;right:0;bottom:0;z-index:100;width:min(86vw,360px);display:flex;flex-direction:column;background:#090a0c;color:#fff;padding:16px 16px 24px;overflow-y:auto;transform:translateX(100%);transition:transform .35s cubic-bezier(.7,0,.2,1);box-shadow:-20px 0 60px rgba(0,0,0,.5)}
   .gaveta.on{transform:none}
   .g-topo{display:flex;align-items:center;justify-content:space-between;height:48px;margin-bottom:16px}
   .g-topo img{height:26px;width:auto}
@@ -120,7 +120,15 @@ const principais: [string, string, string][] = [
   .g-tit{margin:20px 10px 6px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--orange-hot)}
   .g-base{margin-top:auto;padding-top:24px;display:grid;gap:10px;text-align:center}
   .g-base small{color:#aeb4bd;font-size:13px}
-  @media(min-width:768px){.veu,.gaveta{display:none}}
+  /* ao rolar (tablet em diante): some a faixa e os links, entra o menu off-canvas */
+  @media(min-width:768px){
+    .topo.compacto .menu{display:none}
+    .topo.compacto .cta{margin-left:auto}
+    .topo.compacto .burger{display:grid}
+    .topo.compacto .faixa{max-height:0;opacity:0;border-top-color:transparent}
+    .topo.compacto .barra{height:64px}
+    .barra{transition:height .3s}
+  }
   @media (prefers-reduced-motion: reduce){.gaveta,.veu{transition:none}}
 </style>
 
@@ -141,5 +149,12 @@ const principais: [string, string, string][] = [
   fechar.addEventListener('click', () => abrir(false));
   veu.addEventListener('click', () => abrir(false));
   addEventListener('keydown', (e) => { if (e.key === 'Escape' && gaveta.classList.contains('on')) abrir(false); });
-  if (location.hash === '#menu' && innerWidth < 768) abrir(true);
+  if (location.hash === '#menu') abrir(true);
+
+  // ao rolar a página o cabeçalho fica compacto (sem faixa de serviços, com menu off-canvas)
+  const topo = document.querySelector<HTMLElement>('.topo')!;
+  let compacto = false;
+  const checar = () => { const c = compacto ? scrollY > 60 : scrollY > 140; if (c !== compacto) { compacto = c; topo.classList.toggle('compacto', c); } };
+  addEventListener('scroll', checar, { passive: true });
+  checar();
 </script>

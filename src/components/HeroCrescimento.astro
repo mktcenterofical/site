@@ -132,8 +132,8 @@ const agenda: [number, number, number, string][] = [
         <div class="hc-base" aria-hidden="true"></div>
         <div class="hc-kb" aria-hidden="true"></div>
 
-        <div class="hc-badge hc-b1"><span class="hc-bi"><Icon name="message" size={18} /></span><div><b>Automatize seu WhatsApp</b><em>Respostas automáticas 24h</em></div></div>
-        <div class="hc-badge hc-b2"><span class="hc-bi hc-bi-g"><Icon name="check" size={18} /></span><div><b id="hc-dev-nome">Site institucional</b><em id="hc-dev-sub">Desktop · layout adaptado</em></div></div>
+        <div class="hc-badge hc-b1"><span class="hc-bi"><Icon name="message" size={14} /></span><div><b>Automatize seu WhatsApp</b><em>Respostas automáticas 24h</em></div></div>
+        <div class="hc-badge hc-b2"><span class="hc-bi hc-bi-g"><Icon name="check" size={14} /></span><div><b id="hc-dev-nome">Site institucional</b><em id="hc-dev-sub">Desktop · layout adaptado</em></div></div>
       </div>
       <div class="hc-modes" role="tablist" aria-label="Dispositivo">
         {dispositivos.map((d, i) => (
@@ -291,14 +291,14 @@ const agenda: [number, number, number, string][] = [
   .hc-status.ok .hc-st-pct{color:#fff}
 
   /* ---------- selos ---------- */
-  .hc-badge{position:absolute;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;color:#fff;background:linear-gradient(135deg,rgba(38,40,46,.96),rgba(14,15,18,.96));backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 0 0 1px rgba(255,255,255,.14),0 25px 50px -12px rgba(0,0,0,.8);transform:translateZ(80px)}
-  .hc-badge b{display:block;font-size:13px;line-height:1.2}
-  .hc-badge em{display:block;font-style:normal;font-size:11px;color:#c3c8cf}
-  .hc-bi{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#ff8a24;background:rgba(255,105,0,.15);border:1px solid rgba(255,105,0,.35)}
+  .hc-badge{position:absolute;display:flex;align-items:center;gap:8px;padding:7px 12px 7px 8px;border-radius:12px;color:#fff;background:linear-gradient(135deg,rgba(38,40,46,.96),rgba(14,15,18,.96));backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 0 0 1px rgba(255,255,255,.14),0 25px 50px -12px rgba(0,0,0,.8)}
+  .hc-badge b{display:block;font-size:12px;line-height:1.2;white-space:nowrap}
+  .hc-badge em{display:block;font-style:normal;font-size:10px;color:#c3c8cf;white-space:nowrap}
+  .hc-bi{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;color:#ff8a24;background:rgba(255,105,0,.15);border:1px solid rgba(255,105,0,.35)}
   .hc-bi-g{color:#3ddc97;background:rgba(61,220,151,.12);border-color:rgba(61,220,151,.35)}
   .hc-b1{bottom:26%;left:-4%}
   .hc-b2{top:4%;right:-3%}
-  @media(max-width:600px){.hc-b1{display:none}.hc-b2{right:-2%;top:0}}
+  @media(max-width:600px){.hc-b1{display:none}.hc-b2{right:0;top:0}}
 
   @media (prefers-reduced-motion: reduce){
     .hc-lines{display:none}
@@ -306,7 +306,11 @@ const agenda: [number, number, number, string][] = [
   }
   /* ----- hero por dispositivo ----- */
   @media(max-width:767px){
-    .hc{padding:32px 0 48px}
+    .hc{padding:28px 0 40px;text-align:center}
+    .hc-txt{display:flex;flex-direction:column;align-items:center}
+    .hc-h1{align-items:center}
+    .hc-stats{width:100%}
+    .hc-stats li{flex:1;text-align:center}
     .hc-h1{font-size:46px}
     .hc-lead{font-size:16px;line-height:26px;margin-top:16px}
     .hc-stats{gap:0;justify-content:space-between;margin-top:28px;padding-top:20px;border-top:1px solid #23252b}

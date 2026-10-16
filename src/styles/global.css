@@ -20,7 +20,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--surface);color:var(--ink);font-family:var(--ff-txt);font-size:16px;line-height:26px;overflow-x:hidden}
+body{background:var(--surface);color:var(--ink);font-family:var(--ff-txt);font-size:16px;line-height:26px;overflow-x:clip}
 img{max-width:100%;display:block}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--focus-ring);outline-offset:3px}
@@ -81,26 +81,30 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--focus-ring);outl
    celular < 768 · tablet 768–1023 · notebook 1024–1439 · desktop ≥ 1440
    ===================================================================== */
 
-/* ---------- CELULAR: leitura vertical, carrosséis com o polegar ---------- */
+/* ---------- CELULAR: tudo centralizado, margem de 10px, sem rolagem lateral ---------- */
+html,body{max-width:100%;overflow-x:clip}
 @media(max-width:767px){
-  section{padding:48px 0}
-  h1{font-size:44px}
-  h2{font-size:34px;margin-bottom:24px}
-  .lead{font-size:17px;line-height:27px}
+  .wrap{padding:0 10px}
+  section{padding:44px 0;text-align:center}
+  h1{font-size:42px}
+  h2{font-size:32px;margin-bottom:22px}
+  .lead{font-size:17px;line-height:27px;margin-inline:auto}
+  .eyebrow{text-align:center}
   .acoes{flex-direction:column;align-items:stretch}
   .acoes .btn{width:100%}
-  /* carrossel horizontal com snap no lugar da grade */
-  .carrossel{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;margin-inline:-16px;padding:4px 16px 16px;scrollbar-width:none}
-  .carrossel::-webkit-scrollbar{display:none}
-  .carrossel>*{flex:0 0 84%;scroll-snap-align:center}
-  .lista{grid-template-columns:1fr}
-  /* etapas viram linha do tempo vertical */
-  .etapas{grid-template-columns:1fr;gap:0;position:relative;padding-left:8px}
-  .etapas li{display:grid;grid-template-columns:48px 1fr;align-items:center;gap:12px;border:0;background:none;padding:12px 0;position:relative}
-  .etapas li::before{margin:0;width:48px;height:48px;border-radius:50%;background:var(--carbon);color:var(--orange-hot);display:grid;place-items:center;font-size:22px;position:relative;z-index:1}
-  .etapas li:not(:last-child)::after{content:'';position:absolute;left:23px;top:60px;bottom:-12px;width:2px;background:var(--line)}
-  .dois{gap:28px}
+  .grid{grid-template-columns:1fr;gap:10px}
+  .card{padding:20px 16px;text-align:center}
+  .icone{margin-inline:auto}
+  .lista{grid-template-columns:1fr;gap:8px}
+  .lista li{justify-content:center;text-align:left}
+  .etapas{grid-template-columns:1fr;gap:10px}
+  .etapas li{text-align:center;padding:18px 14px}
+  .etapas li::before{margin:0 auto 6px}
+  details{text-align:left}
+  .dois{gap:24px}
+  .prose,.prose p,.prose li{text-align:left}
   .breadcrumb{display:none}
+  form{text-align:left}
 }
 
 /* ---------- TABLET: duas colunas, toque confortável ---------- */
