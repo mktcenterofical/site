@@ -43,4 +43,5 @@ const ano = new Date().getFullYear();
   .logo{font-family:var(--ff-tit);font-weight:800;font-size:1.6rem;color:var(--papel)}
   .logo span{color:var(--laranja);margin-left:4px}
   .base{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;margin-top:40px;padding-top:20px;border-top:1px solid var(--linha);font-size:.85rem;color:var(--prata)}
+  @media(max-width:767px){.cols{grid-template-columns:1fr 1fr;gap:28px 16px}.cols>div:first-child,.cols>div:last-child{grid-column:1 / -1}.base{flex-direction:column}}
 </style>

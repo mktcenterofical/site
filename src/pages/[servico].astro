@@ -57,7 +57,7 @@ if (s.faq.length) schema.push({
   <section class="alt">
     <div class="wrap">
       <h2>Investimento</h2>
-      <div class="grid">
+      <div class="grid grid-planos carrossel">
         {planos.map(([nome, preco, desc], i) => (
           <div class="card" style={i === 1 ? 'border-color:var(--laranja)' : ''}>
             {i === 1 && <span class="eyebrow" style="margin:0 0 6px">Mais escolhido</span>}

@@ -167,7 +167,7 @@ const agenda: [number, number, number, string][] = [
   .hc-h1{font-size:clamp(46px,5.6vw,76px);line-height:.9;letter-spacing:-.02em;display:flex;flex-direction:column}
   .hc-line{display:block;overflow:hidden;padding-bottom:.04em}
   .hc-w{display:inline-block}
-  .hc-or{background:linear-gradient(180deg,#ff8a24,#ff6900);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 8px 24px rgba(255,105,0,.35))}
+  .hc-or{background:linear-gradient(180deg,#ff8a24,#ff6900);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
   .hc-lead{color:#aeb4bd;font-size:18px;line-height:28px;max-width:52ch;margin-top:24px}
   .hc-ghost{border-color:#5b616b;color:#fff}
   .hc-ghost:hover{border-color:#fff}
@@ -304,6 +304,39 @@ const agenda: [number, number, number, string][] = [
     .hc-lines{display:none}
     .hc-dev,.hc-bezel,.hc-screen,.hc-island,.hc-neck,.hc-base,.hc-kb{transition:none !important}
   }
+  /* ----- hero por dispositivo ----- */
+  @media(max-width:767px){
+    .hc{padding:32px 0 48px}
+    .hc-h1{font-size:46px}
+    .hc-lead{font-size:16px;line-height:26px;margin-top:16px}
+    .hc-stats{gap:0;justify-content:space-between;margin-top:28px;padding-top:20px;border-top:1px solid #23252b}
+    .hc-stats b{font-size:32px}
+    .hc-stats small{font-size:12px}
+    .hc-stage{margin-top:8px}
+    .hc-pc{aspect-ratio:4/5;transform:none}
+    .hc-stage[data-mode="celular"]{--w:56%;--h:94%;--b:2%}
+    .hc-stage[data-mode="tablet"]{--w:78%;--h:94%;--b:2%}
+    .hc-stage[data-mode="notebook"]{--w:100%;--h:52%;--b:30%}
+    .hc-stage[data-mode="desktop"]{--w:100%;--h:56%;--b:34%}
+    .hc-stage[data-mode="desktop"] .hc-neck{bottom:16%;height:18%}
+    .hc-stage[data-mode="desktop"] .hc-base{bottom:14%}
+    .hc-stage[data-mode="notebook"] .hc-kb{bottom:26%}
+  }
+  @media(min-width:768px) and (max-width:1023px){
+    .hc{padding:64px 0 72px;text-align:center}
+    .hc-txt{display:flex;flex-direction:column;align-items:center}
+    .hc-h1{font-size:68px;align-items:center}
+    .hc-lead{margin-inline:auto}
+    .hc .acoes,.hc-stats{justify-content:center}
+    .hc-pc{width:min(100%,560px)}
+  }
+  @media(min-width:1440px){
+    .hc-in{grid-template-columns:1fr 1.15fr;gap:48px}
+    .hc-h1{font-size:80px}
+    .hc-lead{font-size:20px;line-height:31px}
+    .hc-pc{width:min(100%,680px)}
+    .hc-stats b{font-size:48px}
+  }
   @container (max-width:300px){.sh{grid-template-columns:1fr}.sh .ph{display:none}.prods{grid-template-columns:1fr 1fr}.pd:nth-child(3){display:none}.mn{display:none}}
 </style>
 
@@ -389,7 +422,10 @@ const agenda: [number, number, number, string][] = [
   modoBtns.forEach((b) => b.addEventListener('click', () => { mudarModo(Number(b.dataset.m)); reiniciarCiclo(); }));
 
   // ?dispositivo=celular abre o hero direto num aparelho (útil para apresentar)
-  const inicial = Math.max(0, modos.findIndex(([id]) => id === new URLSearchParams(location.search).get('dispositivo')));
+  // sem ?dispositivo, começa pelo aparelho de quem está vendo (celular, tablet, notebook ou desktop)
+  const doVisitante = innerWidth < 768 ? 'celular' : innerWidth < 1024 ? 'tablet' : innerWidth < 1440 ? 'notebook' : 'desktop';
+  const pedido = new URLSearchParams(location.search).get('dispositivo') || doVisitante;
+  const inicial = Math.max(0, modos.findIndex(([id]) => id === pedido));
 
   // ---- entrada ----
   if (reduce) {

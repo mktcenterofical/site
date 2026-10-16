@@ -1,12 +1,13 @@
 ---
 import Icon from './Icon.astro';
 import { servicos } from '../data/servicos';
+import { config, waLink } from '../config';
 const path = Astro.url.pathname;
 const atual = (u: string) => (path === u ? 'page' : undefined);
-const principais: [string, string][] = [
-  ['/', 'Início'],
-  ['/quem-somos/', 'Quem somos'],
-  ['/portfolio/', 'Portfólio'],
+const principais: [string, string, string][] = [
+  ['/', 'Início', 'home'],
+  ['/quem-somos/', 'Quem somos', 'smile'],
+  ['/portfolio/', 'Portfólio', 'folder'],
 ];
 ---
 <header class="topo">
@@ -18,6 +19,9 @@ const principais: [string, string][] = [
       {principais.map(([u, n]) => <a href={u} aria-current={atual(u)}>{n}</a>)}
     </nav>
     <a href="/contato/" class="btn btn-primary cta" aria-current={atual('/contato/')}>Contato</a>
+    <button class="burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="gaveta">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 
   <nav class="faixa" aria-label="Serviços">
@@ -31,6 +35,33 @@ const principais: [string, string][] = [
   </nav>
 </header>
 
+<!-- Menu off-canvas do celular -->
+<div class="veu" hidden></div>
+<aside id="gaveta" class="gaveta" aria-label="Menu" aria-hidden="true" inert>
+  <div class="g-topo">
+    <img src="/logo-escuro.webp" alt="MKT Marketing Digital" width="182" height="28" loading="lazy" />
+    <button class="fechar" type="button" aria-label="Fechar menu">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12" /></svg>
+    </button>
+  </div>
+  <nav class="g-nav" aria-label="Páginas">
+    {principais.map(([u, n, i]) => (
+      <a href={u} aria-current={atual(u)}><span class="g-ic"><Icon name={i} size={18} /></span>{n}</a>
+    ))}
+    <a href="/contato/" aria-current={atual('/contato/')}><span class="g-ic"><Icon name="mail" size={18} /></span>Contato</a>
+  </nav>
+  <p class="g-tit">Serviços</p>
+  <nav class="g-serv" aria-label="Serviços">
+    {servicos.map((s) => (
+      <a href={`/${s.slug}/`} aria-current={atual(`/${s.slug}/`)}><span class="g-ic"><Icon name={s.icone} size={18} /></span>{s.nome}</a>
+    ))}
+  </nav>
+  <div class="g-base">
+    <a class="btn btn-whatsapp" href={waLink()} target="_blank" rel="noopener">Falar no WhatsApp</a>
+    <small>{config.telefone} · {config.horario}</small>
+  </div>
+</aside>
+
 <style>
   .topo{position:sticky;top:0;z-index:50;background:#000;box-shadow:0 8px 24px -12px rgba(0,0,0,.5)}
   .barra{display:flex;align-items:center;gap:40px;height:72px}
@@ -42,16 +73,73 @@ const principais: [string, string][] = [
   .menu a:hover{color:#fff}
   .menu a:hover::after,.menu a[aria-current]::after{transform:scaleX(1)}
   .menu a[aria-current]{color:#fff}
-  .cta{margin-left:auto;min-height:44px;padding:10px 26px}
-  @media(min-width:768px){.menu{display:flex}.cta{margin-left:0}}
+  .cta{display:none;min-height:44px;padding:10px 26px}
 
-  .faixa{background:#000;border-top:1px solid #1a1b1f}
+  .faixa{display:none;background:#000;border-top:1px solid #1a1b1f}
   .faixa-in{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-top:4px;padding-bottom:4px}
   .faixa-in::-webkit-scrollbar{display:none}
   .faixa a{flex:none;display:flex;align-items:center;gap:8px;padding:4px 12px 4px 4px;border-radius:999px;text-decoration:none;color:#c3c8cf;font-size:13px;font-weight:600;white-space:nowrap;transition:background .2s,color .2s}
-  .ic{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:transparent;color:var(--orange-hot);transition:background .2s,color .2s}
+  .ic{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;color:var(--orange-hot);transition:background .2s,color .2s}
   .faixa a:hover{background:#16171b;color:#fff}
   .faixa a[aria-current]{background:rgba(255,105,0,.14);color:#fff}
   .faixa a[aria-current] .ic,.faixa a:hover .ic{background:var(--orange);color:var(--on-orange)}
-  @media(min-width:1100px){.faixa-in{justify-content:space-between}}
+
+  /* celular: só logo + hambúrguer */
+  .barra{height:64px;justify-content:space-between}
+  .logo img{height:26px}
+  .burger{display:grid;gap:5px;place-content:center;width:44px;height:44px;border:1px solid #2a2d33;border-radius:12px;background:#111317;cursor:pointer}
+  .burger span{display:block;width:20px;height:2px;border-radius:2px;background:#fff;transition:transform .3s,opacity .3s}
+  .burger span:nth-child(2){width:14px;background:var(--orange)}
+
+  /* tablet em diante: menu completo + faixa de serviços */
+  @media(min-width:768px){
+    .barra{height:72px;justify-content:flex-start}
+    .logo img{height:30px}
+    .menu{display:flex;gap:28px}
+    .cta{display:inline-flex}
+    .burger{display:none}
+    .faixa{display:block}
+  }
+  @media(min-width:1024px){.logo img{height:32px}.menu{gap:36px}.faixa-in{justify-content:space-between}}
+  @media(min-width:1440px){.barra{height:80px}.menu a{font-size:16px}.faixa a{font-size:14px}}
+
+  /* gaveta */
+  .veu{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.55);backdrop-filter:blur(3px);opacity:0;transition:opacity .3s}
+  .veu.on{opacity:1}
+  .gaveta{position:fixed;top:0;right:0;bottom:0;z-index:100;width:min(86vw,360px);display:flex;flex-direction:column;background:#000;color:#fff;padding:16px 16px 24px;overflow-y:auto;transform:translateX(100%);transition:transform .35s cubic-bezier(.7,0,.2,1);box-shadow:-20px 0 60px rgba(0,0,0,.5)}
+  .gaveta.on{transform:none}
+  .g-topo{display:flex;align-items:center;justify-content:space-between;height:48px;margin-bottom:16px}
+  .g-topo img{height:26px;width:auto}
+  .fechar{width:44px;height:44px;border-radius:12px;border:1px solid #2a2d33;background:#111317;color:#fff;display:grid;place-items:center;cursor:pointer}
+  .g-nav,.g-serv{display:grid;gap:4px}
+  .g-nav a,.g-serv a{display:flex;align-items:center;gap:12px;min-height:48px;padding:6px 10px;border-radius:12px;text-decoration:none;font-weight:700;color:#e4e6ea}
+  .g-nav a{font-family:var(--ff-tit);font-size:22px;text-transform:uppercase;letter-spacing:.01em}
+  .g-serv a{font-size:15px;font-weight:600;color:#c3c8cf}
+  .g-nav a[aria-current],.g-serv a[aria-current]{background:rgba(255,105,0,.14);color:#fff}
+  .g-ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:#16171b;color:var(--orange-hot);flex:none}
+  .g-tit{margin:20px 10px 6px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--orange-hot)}
+  .g-base{margin-top:auto;padding-top:24px;display:grid;gap:10px;text-align:center}
+  .g-base small{color:#aeb4bd;font-size:13px}
+  @media(min-width:768px){.veu,.gaveta{display:none}}
+  @media (prefers-reduced-motion: reduce){.gaveta,.veu{transition:none}}
 </style>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('.burger')!;
+  const gaveta = document.getElementById('gaveta')!;
+  const veu = document.querySelector<HTMLElement>('.veu')!;
+  const fechar = gaveta.querySelector<HTMLButtonElement>('.fechar')!;
+  function abrir(on: boolean) {
+    btn.setAttribute('aria-expanded', String(on));
+    gaveta.setAttribute('aria-hidden', String(!on));
+    gaveta.toggleAttribute('inert', !on);
+    document.documentElement.style.overflow = on ? 'hidden' : '';
+    if (on) { veu.hidden = false; requestAnimationFrame(() => { veu.classList.add('on'); gaveta.classList.add('on'); }); fechar.focus(); }
+    else { veu.classList.remove('on'); gaveta.classList.remove('on'); setTimeout(() => (veu.hidden = true), 300); btn.focus(); }
+  }
+  btn.addEventListener('click', () => abrir(true));
+  fechar.addEventListener('click', () => abrir(false));
+  veu.addEventListener('click', () => abrir(false));
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && gaveta.classList.contains('on')) abrir(false); });
+  if (location.hash === '#menu' && innerWidth < 768) abrir(true);
+</script>

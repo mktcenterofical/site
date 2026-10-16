@@ -21,7 +21,7 @@ Objetivo do site: gerar contatos pelo WhatsApp e pelo formulário.
 - Menu: topo com Início, Quem somos, Portfólio e botão Contato (/contato/); faixa abaixo com os 5 serviços e ícones (rola na horizontal no celular)
 
 ## Regras técnicas
-- Mobile-first; testar sempre em 390px de largura
+- Layout próprio por dispositivo (bloco "LAYOUTS POR DISPOSITIVO" no fim de global.css): celular < 768 (menu off-canvas, carrosséis .carrossel, botões largos, etapas em linha do tempo), tablet 768–1023 (2 colunas, hero centralizado), notebook 1024–1439 (3 colunas), desktop ≥ 1440 (tipografia maior, serviços em 5 colunas). O hero começa no aparelho de quem visita. /#menu abre o menu no celular
 - Todo o conteúdo (cabeçalho, seções, rodapé) usa a largura total de 1140px (.wrap)
 - Sem frameworks de JS no cliente; JS mínimo
 - Imagens em WebP/AVIF com width e height
