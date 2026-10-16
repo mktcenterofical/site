@@ -11,7 +11,8 @@ Objetivo do site: gerar contatos pelo WhatsApp e pelo formulário.
 - Preto #090a0c, grafite #111317, papel #f3f4f5, prata #aeb4bd
 - Botão laranja sempre com texto escuro #141006 (contraste)
 - Fontes: Barlow Condensed (títulos), DM Sans (texto)
-- Emblema 3D só no topo da home; logo plana no resto
+- Logo: public/logo.webp (topo e rodapé), logo-grande.webp no hero da home
+- Menu sem submenus (links simples)
 
 ## Regras técnicas
 - Mobile-first; testar sempre em 390px de largura
