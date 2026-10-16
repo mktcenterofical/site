@@ -1,0 +1,248 @@
+---
+// Hero cinematográfico: textos animados à esquerda e monitor 3D com projeção de crescimento à direita.
+// Números são ilustrativos (projeção de exemplo) — ver CLAUDE.md.
+import { waLink } from '../config';
+import Icon from './Icon.astro';
+const palavras = ['sites', 'aplicativos', 'lojas virtuais', 'tráfego pago', 'campanhas'];
+const periodos = [
+  { rotulo: '3 meses', contatos: 86, receita: 38, pontos: [12, 16, 15, 22, 27, 31, 38] },
+  { rotulo: '6 meses', contatos: 174, receita: 92, pontos: [12, 18, 24, 33, 45, 61, 78] },
+  { rotulo: '12 meses', contatos: 312, receita: 210, pontos: [12, 21, 34, 50, 71, 96, 124] },
+];
+---
+<section class="hc" id="hero" data-periodos={JSON.stringify(periodos)} data-palavras={JSON.stringify(palavras)}>
+  <div class="hc-glow" aria-hidden="true"></div>
+  <div class="hc-grid" aria-hidden="true"></div>
+  <div class="hc-lines" aria-hidden="true"><i></i><i></i><i></i></div>
+
+  <div class="wrap hc-in">
+    <div class="hc-txt">
+      <span class="eyebrow hc-r">Agência de marketing digital</span>
+      <h1 class="hc-h1">
+        <span class="hc-line"><span class="hc-w">Seu</span> <span class="hc-w">negócio</span></span>
+        <span class="hc-line"><span class="hc-w hc-or">crescendo</span></span>
+        <span class="hc-line"><span class="hc-w">com</span> <span class="hc-rot" aria-live="polite"><span class="hc-rot-t">sites</span><span class="hc-caret"></span></span></span>
+      </h1>
+      <p class="hc-lead hc-r">Criamos sites, apps, lojas virtuais e campanhas que trazem clientes para o seu WhatsApp. Cada contato medido, cada resultado na tela.</p>
+      <div class="acoes hc-r">
+        <a class="btn btn-primary" href={waLink()} target="_blank" rel="noopener">Quero meu orçamento</a>
+        <a class="btn hc-ghost" href="#servicos">Ver serviços</a>
+      </div>
+      <ul class="hc-stats hc-r">
+        <li><b><span class="hc-n" data-to="180">0</span>+</b><small>projetos entregues</small></li>
+        <li><b><span class="hc-n" data-to="98">0</span>%</b><small>clientes satisfeitos</small></li>
+        <li><b><span class="hc-n" data-to="2">0</span>h</b><small>para responder</small></li>
+      </ul>
+    </div>
+
+    <div class="hc-stage">
+      <div class="hc-pc">
+        <div class="hc-monitor">
+          <div class="hc-screen">
+            <div class="hc-glare" aria-hidden="true"></div>
+            <div class="hc-app">
+              <div class="hc-top">
+                <div><small>Painel MKT</small><strong>Projeção de crescimento</strong></div>
+                <div class="hc-tabs" role="tablist">
+                  {periodos.map((p, i) => <button type="button" role="tab" class={i === 0 ? 'on' : ''} data-i={i}>{p.rotulo}</button>)}
+                </div>
+              </div>
+              <div class="hc-kpis">
+                <div class="hc-kpi"><small>Contatos no WhatsApp</small><b>+<span id="hc-k1">0</span>%</b></div>
+                <div class="hc-kpi"><small>Faturamento projetado</small><b>+<span id="hc-k2">0</span>%</b></div>
+                <div class="hc-kpi hc-kpi-g"><small>Posição no Google</small><b>Top 3</b></div>
+              </div>
+              <div class="hc-chart">
+                <svg viewBox="0 0 600 220" preserveAspectRatio="none" aria-hidden="true">
+                  <defs>
+                    <linearGradient id="hc-area" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stop-color="#ff6900" stop-opacity=".45" />
+                      <stop offset="1" stop-color="#ff6900" stop-opacity="0" />
+                    </linearGradient>
+                  </defs>
+                  <g class="hc-gl">{[40, 90, 140, 190].map((y) => <line x1="0" x2="600" y1={y} y2={y} />)}</g>
+                  <g class="hc-bars"></g>
+                  <path class="hc-fill" d="" fill="url(#hc-area)" />
+                  <path class="hc-path" d="" fill="none" stroke="#ff8a24" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+                  <circle class="hc-dot" r="7" cx="0" cy="0" />
+                </svg>
+                <div class="hc-tip">+<span id="hc-tip">0</span>% contatos</div>
+              </div>
+              <div class="hc-foot"><span>Mês 1</span><span>Hoje</span><span>Projeção</span></div>
+            </div>
+          </div>
+          <div class="hc-chin"><span></span></div>
+        </div>
+        <div class="hc-neck"></div>
+        <div class="hc-base"></div>
+
+        <div class="hc-badge hc-b1"><span class="hc-bi"><Icon name="message" size={18} /></span><div><b>Novo contato</b><em>via WhatsApp · agora</em></div></div>
+        <div class="hc-badge hc-b2"><span class="hc-bi hc-bi-g"><Icon name="trending" size={18} /></span><div><b>Vendas em alta</b><em>+38% este mês</em></div></div>
+      </div>
+      <p class="hc-note">Projeção ilustrativa</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hc{position:relative;overflow:hidden;background:var(--carbon);color:#fff;padding:56px 0 72px;isolation:isolate}
+  @media(min-width:1024px){.hc{padding:72px 0 96px;min-height:calc(100vh - 68px);display:flex;align-items:center}}
+  .hc-glow{position:absolute;inset:-20%;z-index:-1;background:radial-gradient(600px 420px at 75% 45%,rgba(255,105,0,.28),transparent 65%),radial-gradient(500px 360px at 10% 90%,rgba(255,138,36,.12),transparent 70%)}
+  .hc-grid{position:absolute;inset:0;z-index:-1;background-size:56px 56px;background-image:linear-gradient(to right,rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.05) 1px,transparent 1px);mask-image:radial-gradient(ellipse at 60% 50%,#000 0%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse at 60% 50%,#000 0%,transparent 70%)}
+  .hc-lines{position:absolute;inset:0;z-index:-1;pointer-events:none}
+  .hc-lines i{position:absolute;height:2px;width:220px;background:linear-gradient(90deg,transparent,#ff6900,transparent);transform:skewX(-30deg);opacity:.5;animation:hc-speed 5s linear infinite}
+  .hc-lines i:nth-child(1){top:18%;animation-delay:0s}
+  .hc-lines i:nth-child(2){top:62%;animation-delay:1.7s;width:160px}
+  .hc-lines i:nth-child(3){top:84%;animation-delay:3.2s}
+  @keyframes hc-speed{from{left:-20%}to{left:110%}}
+
+  .hc-in{display:grid;gap:48px;align-items:center;width:100%}
+  @media(min-width:1024px){.hc-in{grid-template-columns:1fr 1.1fr;gap:32px}}
+
+  .hc .eyebrow{color:var(--orange-hot)}
+  .hc-h1{font-size:clamp(52px,7.2vw,88px);line-height:.9;letter-spacing:-.02em;display:flex;flex-direction:column}
+  .hc-line{display:block;overflow:hidden;padding-bottom:.04em}
+  .hc-w{display:inline-block}
+  .hc-or{background:linear-gradient(180deg,#ff8a24,#ff6900);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 8px 24px rgba(255,105,0,.35))}
+  .hc-rot{display:inline-flex;align-items:center;color:#c9cdd2}
+  .hc-caret{width:4px;height:.8em;background:var(--orange);margin-left:6px;animation:hc-blink 1s steps(1) infinite}
+  @keyframes hc-blink{50%{opacity:0}}
+  .hc-lead{color:#aeb4bd;font-size:18px;line-height:28px;max-width:52ch;margin-top:24px}
+  .hc-ghost{border-color:#5b616b;color:#fff}
+  .hc-ghost:hover{border-color:#fff}
+  .hc-stats{list-style:none;display:flex;gap:28px;margin-top:40px;flex-wrap:wrap}
+  .hc-stats b{display:block;font-family:var(--ff-tit);font-weight:800;font-size:40px;line-height:1}
+  .hc-stats small{color:#aeb4bd;font-size:14px}
+
+  .hc-stage{position:relative;perspective:1600px;display:flex;flex-direction:column;align-items:center}
+  .hc-pc{position:relative;width:min(100%,600px);transform-style:preserve-3d;transform:rotateY(-16deg) rotateX(6deg);will-change:transform}
+  .hc-monitor{position:relative;background:linear-gradient(160deg,#3a3d44,#16181c 40%,#0c0d10);border-radius:18px;padding:12px 12px 0;box-shadow:0 60px 120px -30px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.08),inset 0 1px 1px rgba(255,255,255,.18),40px 30px 80px -40px rgba(255,105,0,.45)}
+  .hc-screen{position:relative;aspect-ratio:16/10;border-radius:8px;overflow:hidden;background:radial-gradient(120% 90% at 80% 0%,#1f140b,#0b0c0f 60%)}
+  .hc-glare{position:absolute;inset:0;z-index:5;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.1) 0%,rgba(255,255,255,0) 40%)}
+  .hc-chin{height:30px;display:grid;place-items:center}
+  .hc-chin span{width:8px;height:8px;border-radius:50%;background:#ff6900;box-shadow:0 0 10px #ff6900}
+  .hc-neck{width:18%;height:56px;margin:0 auto;background:linear-gradient(90deg,#1b1d22,#4a4e57 50%,#1b1d22);clip-path:polygon(12% 0,88% 0,100% 100%,0 100%)}
+  .hc-base{width:42%;height:14px;margin:0 auto;border-radius:8px 8px 14px 14px;background:linear-gradient(180deg,#4a4e57,#17191d);box-shadow:0 30px 40px -10px rgba(0,0,0,.9)}
+
+  .hc-app{position:absolute;inset:0;padding:4% 4.5%;display:flex;flex-direction:column;gap:3.5%;font-size:clamp(9px,1.4vw,13px)}
+  .hc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+  .hc-top small{display:block;font-size:.8em;letter-spacing:.14em;text-transform:uppercase;color:#ff8a24;font-weight:700}
+  .hc-top strong{font-family:var(--ff-tit);font-size:1.7em;text-transform:uppercase;line-height:1}
+  .hc-tabs{display:flex;gap:4px;background:rgba(255,255,255,.05);border-radius:999px;padding:3px}
+  .hc-tabs button{font:inherit;font-size:.85em;font-weight:700;color:#aeb4bd;background:none;border:0;border-radius:999px;padding:.4em .9em;cursor:pointer}
+  .hc-tabs button.on{background:#ff6900;color:#141006}
+  .hc-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:3%}
+  .hc-kpi{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:.7em .9em}
+  .hc-kpi small{display:block;color:#aeb4bd;font-size:.8em}
+  .hc-kpi b{font-family:var(--ff-tit);font-size:2em;line-height:1.05;color:#ff8a24}
+  .hc-kpi-g b{color:#3ddc97}
+  .hc-chart{position:relative;flex:1;min-height:0}
+  .hc-chart svg{width:100%;height:100%;overflow:visible}
+  .hc-gl line{stroke:rgba(255,255,255,.06);stroke-width:1}
+  .hc-bars rect{fill:rgba(255,255,255,.07)}
+  .hc-dot{fill:#fff;stroke:#ff6900;stroke-width:4;filter:drop-shadow(0 0 8px #ff6900)}
+  .hc-tip{position:absolute;top:0;right:0;background:#ff6900;color:#141006;font-weight:800;font-size:.9em;padding:.3em .8em;border-radius:999px;box-shadow:0 8px 20px -6px rgba(255,105,0,.8)}
+  .hc-foot{display:flex;justify-content:space-between;color:#7d8591;font-size:.8em}
+
+  .hc-badge{position:absolute;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;color:#fff;background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(255,255,255,.03));backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 0 0 1px rgba(255,255,255,.12),0 25px 50px -12px rgba(0,0,0,.8);transform:translateZ(80px)}
+  .hc-badge b{display:block;font-size:13px;line-height:1.2}
+  .hc-badge em{display:block;font-style:normal;font-size:11px;color:#c3c8cf}
+  .hc-bi{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#ff8a24;background:rgba(255,105,0,.15);border:1px solid rgba(255,105,0,.35)}
+  .hc-bi-g{color:#3ddc97;background:rgba(61,220,151,.12);border-color:rgba(61,220,151,.35)}
+  .hc-b1{bottom:22%;left:-7%}
+  .hc-b2{top:-7%;right:-4%}
+  @media(max-width:600px){.hc-b1{left:-2%;bottom:18%}.hc-b2{right:-2%;top:-9%}}
+  .hc-note{margin-top:16px;font-size:12px;color:#7d8591}
+
+  @media (prefers-reduced-motion: reduce){.hc-lines,.hc-caret{display:none}}
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  const root = document.getElementById('hero')!;
+  const periodos: { rotulo: string; contatos: number; receita: number; pontos: number[] }[] = JSON.parse(root.dataset.periodos!);
+  const palavras: string[] = JSON.parse(root.dataset.palavras!);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = <T extends Element>(s: string) => root.querySelector<T>(s)!;
+
+  // ---- gráfico ----
+  const W = 600, H = 220, PAD = 16;
+  let MAX = 130;
+  const path = $<SVGPathElement>('.hc-path'), fill = $<SVGPathElement>('.hc-fill'), dot = $<SVGCircleElement>('.hc-dot');
+  const bars = $<SVGGElement>('.hc-bars');
+  const k1 = $('#hc-k1'), k2 = $('#hc-k2'), tip = $('#hc-tip');
+  const xy = (p: number[]) => p.map((v, i) => [PAD + (i * (W - PAD * 2)) / (p.length - 1), H - PAD - (v / MAX) * (H - PAD * 2)]);
+  const linha = (pts: number[][]) => pts.reduce((d, [x, y], i, a) => {
+    if (!i) return `M${x},${y}`;
+    const [px, py] = a[i - 1]; const cx = (px + x) / 2;
+    return `${d} C${cx},${py} ${cx},${y} ${x},${y}`;
+  }, '');
+  const contar = (el: Element, to: number, dur = 1.6) =>
+    reduce ? (el.textContent = String(to)) : gsap.to({ v: Number(el.textContent) || 0 }, { v: to, duration: dur, ease: 'expo.out', onUpdate() { el.textContent = String(Math.round(this.targets()[0].v)); } });
+
+  let atual = 0;
+  function desenhar(i: number) {
+    atual = i;
+    root.querySelectorAll('.hc-tabs button').forEach((b, j) => b.classList.toggle('on', j === i));
+    const p = periodos[i]; MAX = Math.max(...p.pontos) * 1.12;
+    const pts = xy(p.pontos), d = linha(pts);
+    const [lx, ly] = pts[pts.length - 1];
+    path.setAttribute('d', d);
+    fill.setAttribute('d', `${d} L${lx},${H} L${pts[0][0]},${H} Z`);
+    bars.innerHTML = pts.map(([x, y]) => `<rect x="${x - 14}" y="${y}" width="28" height="${H - y}" rx="5"/>`).join('');
+    contar(k1, p.contatos); contar(k2, p.receita); contar(tip, p.contatos);
+    if (reduce) { dot.setAttribute('cx', String(lx)); dot.setAttribute('cy', String(ly)); return; }
+    const len = path.getTotalLength();
+    gsap.fromTo(path, { strokeDasharray: len, strokeDashoffset: len }, { strokeDashoffset: 0, duration: 1.8, ease: 'power3.inOut' });
+    gsap.fromTo(fill, { opacity: 0 }, { opacity: 1, duration: 1.2, delay: .8 });
+    gsap.fromTo(bars.children, { scaleY: 0, transformOrigin: '50% 100%' }, { scaleY: 1, duration: .9, stagger: .08, ease: 'back.out(1.4)' });
+    const prog = { t: 0 };
+    gsap.to(prog, { t: 1, duration: 1.8, ease: 'power3.inOut', onUpdate() {
+      const pt = path.getPointAtLength(len * prog.t); dot.setAttribute('cx', String(pt.x)); dot.setAttribute('cy', String(pt.y));
+    } });
+  }
+  root.querySelectorAll<HTMLButtonElement>('.hc-tabs button').forEach((b) =>
+    b.addEventListener('click', () => { desenhar(Number(b.dataset.i)); reiniciarCiclo(); }));
+  let ciclo: number | undefined;
+  const reiniciarCiclo = () => { clearInterval(ciclo); if (!reduce) ciclo = window.setInterval(() => desenhar((atual + 1) % periodos.length), 5000); };
+
+  // ---- palavra rotativa (efeito digitação) ----
+  const rot = $('.hc-rot-t');
+  if (!reduce) {
+    let wi = 0;
+    const trocar = () => {
+      const prox = palavras[(wi = (wi + 1) % palavras.length)];
+      const tl = gsap.timeline();
+      const cur = rot.textContent || '';
+      tl.to({ n: cur.length }, { n: 0, duration: cur.length * 0.04, ease: 'none', onUpdate() { rot.textContent = cur.slice(0, Math.round(this.targets()[0].n)); } })
+        .to({ n: 0 }, { n: prox.length, duration: prox.length * 0.06, ease: 'none', onUpdate() { rot.textContent = prox.slice(0, Math.round(this.targets()[0].n)); } }, '+=.15');
+    };
+    setInterval(trocar, 2600);
+  }
+
+  // ---- entrada ----
+  if (reduce) {
+    desenhar(0);
+    root.querySelectorAll('.hc-n').forEach((n) => (n.textContent = (n as HTMLElement).dataset.to!));
+  } else {
+    const tl = gsap.timeline({ delay: .2 });
+    tl.from('.hc-w', { yPercent: 110, rotationX: -60, opacity: 0, filter: 'blur(12px)', duration: 1.2, stagger: .08, ease: 'expo.out' })
+      .from('.hc-rot', { opacity: 0, x: -20, duration: .6 }, '-=.6')
+      .from('.hc-r', { y: 30, opacity: 0, filter: 'blur(10px)', duration: .9, stagger: .12, ease: 'power3.out' }, '-=.8')
+      .from('.hc-pc', { opacity: 0, rotationY: -55, rotationX: 20, z: -400, y: 80, duration: 1.8, ease: 'expo.out', onComplete: () => { desenhar(0); reiniciarCiclo(); } }, .3)
+      .from('.hc-badge', { opacity: 0, scale: .6, y: 40, duration: 1, stagger: .25, ease: 'back.out(1.6)' }, '-=.6')
+      .add(() => root.querySelectorAll<HTMLElement>('.hc-n').forEach((n) => contar(n, Number(n.dataset.to), 2)), '-=1.2');
+
+    gsap.to('.hc-b1', { y: -10, duration: 2.4, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+    gsap.to('.hc-b2', { y: 10, duration: 2.8, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+
+    // inclinação 3D seguindo o mouse
+    const pc = $<HTMLElement>('.hc-pc');
+    root.addEventListener('mousemove', (e) => {
+      const r = root.getBoundingClientRect();
+      const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      gsap.to(pc, { rotationY: -16 + x * 14, rotationX: 6 - y * 10, duration: 1.2, ease: 'power3.out' });
+    });
+    root.addEventListener('mouseleave', () => gsap.to(pc, { rotationY: -16, rotationX: 6, duration: 1.4, ease: 'power3.out' }));
+  }
+</script>

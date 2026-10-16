@@ -17,7 +17,7 @@ Objetivo do site: gerar contatos pelo WhatsApp e pelo formulário.
 - Botão laranja sempre com texto escuro #141006 (contraste)
 - Fontes: Barlow Condensed (títulos), DM Sans (texto)
 - Logo: public/logo.webp (topo e rodapé)
-- Hero da home: src/components/CinematicHero.astro (GSAP + ScrollTrigger, card preto/laranja da marca)
+- Hero da home: src/components/HeroCrescimento.astro (textos animados à esquerda, monitor 3D com projeção de crescimento à direita, GSAP)
 - Menu sem submenus (links simples)
 
 ## Regras técnicas
