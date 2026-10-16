@@ -18,7 +18,7 @@ const principais: [string, string, string][] = [
     <nav class="menu" aria-label="Principal">
       {principais.map(([u, n]) => <a href={u} aria-current={atual(u)}>{n}</a>)}
     </nav>
-    <button class="mostrar" type="button" aria-expanded="false" aria-controls="faixa-servicos">Serviços<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
+    <button class="mostrar" type="button" aria-label="Mostrar menu de serviços" aria-expanded="false" aria-controls="faixa-servicos"><span></span><span></span><span></span></button>
     <a href="/contato/" class="btn btn-primary cta" aria-current={atual('/contato/')}>Contato</a>
     <button class="burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="gaveta">
       <span></span><span></span><span></span>
@@ -105,11 +105,14 @@ const principais: [string, string, string][] = [
   @media(min-width:1440px){.barra{height:80px}.menu a{font-size:16px}.faixa a{font-size:14px}}
 
   /* botão que mostra de novo a faixa de serviços escondida ao rolar */
-  .mostrar{display:none;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid #2a2d33;background:#111317;color:#e4e6ea;font:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:border-color .2s,background .2s}
+  .mostrar{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;border:1px solid #2a2d33;border-radius:12px;background:#111317;cursor:pointer;transition:border-color .2s,background .2s}
   .mostrar:hover{border-color:var(--orange)}
-  .mostrar svg{color:var(--orange-hot);transition:transform .3s}
-  .topo.aberta .mostrar{background:rgba(255,105,0,.14);border-color:var(--orange)}
-  .topo.aberta .mostrar svg{transform:rotate(180deg)}
+  .mostrar span{display:block;width:20px;height:2px;border-radius:2px;background:#fff;transition:transform .3s,opacity .3s}
+  .mostrar span:nth-child(2){width:14px;background:var(--orange)}
+  .topo.aberta .mostrar{border-color:var(--orange);background:rgba(255,105,0,.14)}
+  .topo.aberta .mostrar span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .topo.aberta .mostrar span:nth-child(2){opacity:0}
+  .topo.aberta .mostrar span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
 
   /* gaveta */
   .veu{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.55);backdrop-filter:blur(3px);opacity:0;transition:opacity .3s}
@@ -131,7 +134,7 @@ const principais: [string, string, string][] = [
   /* ao rolar (tablet em diante): só a faixa de serviços some; o menu horizontal continua */
   @media(min-width:768px){
     .topo.compacto:not(.aberta) .faixa{max-height:0;opacity:0;border-top-color:transparent}
-    .topo.compacto .mostrar{display:inline-flex}
+    .topo.compacto .mostrar{display:flex}
     .topo.compacto .barra{height:64px}
     .barra{transition:height .3s}
   }
