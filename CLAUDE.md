@@ -18,7 +18,7 @@ Objetivo do site: gerar contatos pelo WhatsApp e pelo formulário.
 - Fontes: Barlow Condensed (títulos), DM Sans (texto)
 - Logo em fundo escuro: public/logo-escuro.webp (cabeçalho, fundo #000). Em fundo claro: public/logo-claro.webp (rodapé). Originais em referencia/logo-fundo-*.png
 - Hero da home: src/components/HeroCrescimento.astro (textos animados à esquerda; à direita um aparelho 3D que alterna desktop/notebook/tablet/celular, cada um com um projeto fictício sendo montado em etapas: rascunho tracejado → esqueleto → foto nítida e texto digitado. Fotos em public/mock/ (Unsplash, originais em referencia/mock-src/). ?dispositivo=celular abre direto num aparelho)
-- Menu sem submenus (links simples)
+- Menu: topo com Início, Quem somos, Portfólio e botão Contato (/contato/); faixa abaixo com os 5 serviços e ícones (rola na horizontal no celular)
 
 ## Regras técnicas
 - Mobile-first; testar sempre em 390px de largura

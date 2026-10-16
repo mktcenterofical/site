@@ -1,8 +1,13 @@
 ---
-import { waLink } from '../config';
+import Icon from './Icon.astro';
 import { servicos } from '../data/servicos';
 const path = Astro.url.pathname;
 const atual = (u: string) => (path === u ? 'page' : undefined);
+const principais: [string, string][] = [
+  ['/', 'Início'],
+  ['/quem-somos/', 'Quem somos'],
+  ['/portfolio/', 'Portfólio'],
+];
 ---
 <header class="topo">
   <div class="wrap barra">
@@ -10,23 +15,43 @@ const atual = (u: string) => (path === u ? 'page' : undefined);
       <img src="/logo-escuro.webp" alt="MKT Marketing Digital" width="208" height="32" fetchpriority="high" />
     </a>
     <nav class="menu" aria-label="Principal">
-      <a href="/" aria-current={atual('/')}>Início</a>
-      {servicos.map((s) => <a href={`/${s.slug}/`} aria-current={atual(`/${s.slug}/`)}>{s.nome}</a>)}
-      <a href="/portfolio/" aria-current={atual('/portfolio/')}>Portfólio</a>
-      <a href="/contato/" aria-current={atual('/contato/')}>Contato</a>
-      <a href={waLink()} class="btn btn-primary cta" target="_blank" rel="noopener">Orçamento</a>
+      {principais.map(([u, n]) => <a href={u} aria-current={atual(u)}>{n}</a>)}
     </nav>
+    <a href="/contato/" class="btn btn-primary cta" aria-current={atual('/contato/')}>Contato</a>
   </div>
+
+  <nav class="faixa" aria-label="Serviços">
+    <div class="wrap faixa-in">
+      {servicos.map((s) => (
+        <a href={`/${s.slug}/`} aria-current={atual(`/${s.slug}/`)}>
+          <span class="ic"><Icon name={s.icone} size={18} /></span>{s.nome}
+        </a>
+      ))}
+    </div>
+  </nav>
 </header>
 
 <style>
-  .topo{position:sticky;top:0;z-index:50;background:#000;border-bottom:1px solid #1d2026}
-  .barra{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .topo{position:sticky;top:0;z-index:50;background:#000;box-shadow:0 8px 24px -12px rgba(0,0,0,.5)}
+  .barra{display:flex;align-items:center;gap:40px;height:72px}
+  .logo{flex:none;display:flex}
   .logo img{height:32px;width:auto}
-  .menu{display:none;align-items:center;gap:12px}
-  .menu > a{text-decoration:none;font-weight:600;color:#c3c8cf;font-size:.85rem;white-space:nowrap}
-  .menu > a:hover,.menu > a[aria-current]{color:#ffffff}
-  .menu > a[aria-current]{box-shadow:inset 0 -2px var(--laranja)}
-  .menu .cta{color:var(--laranja-txt);padding:9px 14px;box-shadow:none}
-  @media(min-width:1180px){.menu{display:flex}}
+  .menu{display:none;align-items:center;gap:36px;margin-left:auto}
+  .menu a{position:relative;text-decoration:none;font-weight:600;font-size:15px;color:#c3c8cf;padding:8px 0;transition:color .2s}
+  .menu a::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:2px;background:var(--orange);transform:scaleX(0);transition:transform .25s}
+  .menu a:hover{color:#fff}
+  .menu a:hover::after,.menu a[aria-current]::after{transform:scaleX(1)}
+  .menu a[aria-current]{color:#fff}
+  .cta{margin-left:auto;min-height:44px;padding:10px 26px}
+  @media(min-width:768px){.menu{display:flex}.cta{margin-left:0}}
+
+  .faixa{background:#141519;border-top:1px solid #23252b;border-bottom:1px solid #23252b}
+  .faixa-in{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-top:8px;padding-bottom:8px}
+  .faixa-in::-webkit-scrollbar{display:none}
+  .faixa a{flex:none;display:flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;border-radius:999px;text-decoration:none;color:#c3c8cf;font-size:14px;font-weight:600;white-space:nowrap;transition:background .2s,color .2s}
+  .ic{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#22242a;color:var(--orange-hot);transition:background .2s,color .2s}
+  .faixa a:hover{background:#1f2126;color:#fff}
+  .faixa a[aria-current]{background:rgba(255,105,0,.14);color:#fff}
+  .faixa a[aria-current] .ic,.faixa a:hover .ic{background:var(--orange);color:var(--on-orange)}
+  @media(min-width:1100px){.faixa-in{justify-content:space-between}}
 </style>

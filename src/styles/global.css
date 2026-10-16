@@ -21,7 +21,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--surface);color:var(--ink);font-family:var(--ff-txt);font-size:16px;line-height:26px;padding-bottom:64px;overflow-x:hidden}
-@media(min-width:1180px){body{padding-bottom:0}}
+@media(min-width:768px){body{padding-bottom:0}}
 img{max-width:100%;display:block}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--focus-ring);outline-offset:3px}

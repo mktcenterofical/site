@@ -10,6 +10,12 @@ const ano = new Date().getFullYear();
       <p>Sites, aplicativos, lojas virtuais, tráfego e marketing político.</p>
     </div>
     <div>
+      <h3>Empresa</h3>
+      <a href="/quem-somos/">Quem somos</a>
+      <a href="/portfolio/">Portfólio</a>
+      <a href="/contato/">Contato</a>
+    </div>
+    <div>
       <h3>Serviços</h3>
       {servicos.map((s) => <a href={`/${s.slug}/`}>{s.nome}</a>)}
     </div>
