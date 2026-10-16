@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import { config } from '../config';
+---
+<Base title="Política de Privacidade | MKT Center"
+  description="Saiba quais dados a MKT Center coleta no site, para que são usados e como pedir a exclusão."
+  crumbs={[['Política de privacidade', '/politica-de-privacidade/']]}>
+  <section style="padding-top:8px">
+    <div class="wrap prose">
+      <h1>Política de privacidade</h1>
+      <p><span class="pendente">Rascunho — revisar com advogado antes de publicar oficialmente.</span></p>
+      <h2>Quais dados coletamos</h2>
+      <p>Pelo formulário de contato: nome, número de WhatsApp, serviço de interesse e a mensagem que você escrever.</p>
+      <h2>Para que usamos</h2>
+      <p>Somente para responder ao seu pedido de orçamento e conversar sobre o seu projeto.</p>
+      <h2>Por quanto tempo</h2>
+      <p><span class="pendente">[A DEFINIR]</span></p>
+      <h2>Ferramentas usadas</h2>
+      <ul><li>WhatsApp (Meta), para a conversa.</li><li>Hospedagem Vercel.</li></ul>
+      <h2>Como pedir a exclusão</h2>
+      <p>Envie um pedido para {config.email}. Responsável: {config.nome}, CNPJ {config.cnpj}.</p>
+    </div>
+  </section>
+</Base>

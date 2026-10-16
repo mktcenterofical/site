@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+import FaixaCTA from '../components/FaixaCTA.astro';
+const schema = [{ '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Portfólio MKT Center' }];
+---
+<Base title="Portfólio de Sites e Projetos | MKT Center"
+  description="Veja sites, lojas virtuais, aplicativos e campanhas feitos pela MKT Center. Peça o seu orçamento pelo WhatsApp."
+  schema={schema} crumbs={[['Portfólio', '/portfolio/']]}>
+  <section class="hero" style="padding-top:8px">
+    <div class="wrap">
+      <span class="eyebrow">Nosso trabalho</span>
+      <h1>Portfólio de sites e projetos</h1>
+      <p class="lead">Cada projeto com o desafio do cliente e o resultado alcançado.</p>
+    </div>
+  </section>
+  <section class="alt">
+    <div class="wrap">
+      <div class="grid">
+        {[1, 2, 3].map(() => (
+          <div class="card">
+            <div style="aspect-ratio:16/10;background:var(--grafite);border-radius:10px;display:grid;place-items:center;color:var(--prata)">Imagem do case</div>
+            <h3 style="margin-top:16px">Case <span class="pendente">[A DEFINIR]</span></h3>
+            <p>Cases reais, com prints e resultados, entram aqui.</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+  <FaixaCTA titulo="Quer ser o próximo case?" />
+</Base>

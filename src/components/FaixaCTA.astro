@@ -1,0 +1,19 @@
+---
+import { waLink } from '../config';
+const { titulo = 'Vamos tirar seu projeto do papel?', msg } = Astro.props;
+---
+<section class="faixa">
+  <div class="wrap in">
+    <h2>{titulo}</h2>
+    <div class="acoes" style="margin-top:0">
+      <a class="btn btn-primary" href={waLink(msg)} target="_blank" rel="noopener">Chamar no WhatsApp</a>
+      <a class="btn btn-ghost" href="/contato/">Pedir orçamento</a>
+    </div>
+  </div>
+</section>
+<style>
+  .faixa{background:linear-gradient(135deg,#1a0f05,var(--grafite));border-top:1px solid var(--linha)}
+  .in{display:grid;gap:20px;align-items:center}
+  h2{margin:0}
+  @media(min-width:900px){.in{grid-template-columns:1fr auto}}
+</style>

@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import { waLink } from '../config';
+---
+<Base title="Página não encontrada | MKT Center" description="Esta página não existe. Volte para a página inicial da MKT Center.">
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Erro 404</span>
+      <h1>Página não encontrada</h1>
+      <p class="lead">O endereço pode ter mudado. Volte para o início ou fale com a gente.</p>
+      <div class="acoes">
+        <a class="btn btn-primary" href="/">Ir para o início</a>
+        <a class="btn btn-ghost" href={waLink()} target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+    </div>
+  </section>
+</Base>

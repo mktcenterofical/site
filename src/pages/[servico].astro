@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+import FaixaCTA from '../components/FaixaCTA.astro';
+import { servicos, type Servico } from '../data/servicos';
+import { config, waLink } from '../config';
+
+export function getStaticPaths() {
+  return servicos.map((s) => ({ params: { servico: s.slug }, props: { s } }));
+}
+const { s } = Astro.props as { s: Servico };
+const msg = `Olá! Vim pelo site e quero um orçamento de ${s.nome}.`;
+const schema: object[] = [{
+  '@context': 'https://schema.org', '@type': 'Service', name: s.nome, description: s.description,
+  provider: { '@type': 'ProfessionalService', name: config.nome }, areaServed: 'BR',
+}];
+if (s.faq.length) schema.push({
+  '@context': 'https://schema.org', '@type': 'FAQPage',
+  mainEntity: s.faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
+});
+---
+<Base title={s.title} description={s.description} schema={schema} crumbs={[[s.nome, `/${s.slug}/`]]}>
+  <section class="hero" style="padding-top:8px">
+    <div class="wrap">
+      <span class="eyebrow">{s.icone} {s.nome}</span>
+      <h1>{s.h1}</h1>
+      <p class="lead">{s.intro}</p>
+      <div class="acoes">
+        <a class="btn btn-primary" href={waLink(msg)} target="_blank" rel="noopener">Pedir orçamento no WhatsApp</a>
+        <a class="btn btn-ghost" href="/contato/">Preencher formulário</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt">
+    <div class="wrap">
+      <h2>O que está incluso</h2>
+      <ul class="lista">{s.itens.map((i) => <li>{i}</li>)}</ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Como funciona</h2>
+      <ol class="etapas">{s.etapas.map((e) => <li>{e}</li>)}</ol>
+    </div>
+  </section>
+
+  <section class="alt">
+    <div class="wrap">
+      <h2>Investimento</h2>
+      <p class="lead"><span class="pendente">[A DEFINIR]</span> Planos e preços reais deste serviço entram aqui.</p>
+    </div>
+  </section>
+
+  {s.faq.length > 0 && (
+    <section>
+      <div class="wrap prose">
+        <h2>Perguntas frequentes</h2>
+        {s.faq.map(([q, a]) => <details><summary>{q}</summary><p>{a}</p></details>)}
+      </div>
+    </section>
+  )}
+
+  <FaixaCTA msg={msg} />
+</Base>

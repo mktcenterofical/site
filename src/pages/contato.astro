@@ -1,0 +1,55 @@
+---
+import Base from '../layouts/Base.astro';
+import { servicos } from '../data/servicos';
+import { config, waLink } from '../config';
+const schema = [{ '@context': 'https://schema.org', '@type': 'ContactPage', name: 'Contato MKT Center' }];
+---
+<Base title="Orçamento de Site e Marketing | MKT Center"
+  description="Peça seu orçamento de site, app, loja virtual, tráfego ou marketing político. Resposta rápida pelo WhatsApp."
+  schema={schema} crumbs={[['Contato', '/contato/']]}>
+  <section style="padding-top:8px">
+    <div class="wrap dois">
+      <div>
+        <span class="eyebrow">Fale com a gente</span>
+        <h1>Peça seu orçamento</h1>
+        <p class="lead">Conte um pouco do seu projeto. Respondemos pelo WhatsApp.</p>
+        <div class="acoes"><a class="btn btn-primary" href={waLink()} target="_blank" rel="noopener">Chamar no WhatsApp</a></div>
+        <ul class="lista" style="margin-top:32px;grid-template-columns:1fr">
+          <li>Telefone: {config.telefone}</li>
+          <li>E-mail: {config.email}</li>
+          <li>{config.horario}</li>
+        </ul>
+      </div>
+      <form id="form" class="card" novalidate>
+        <label>Nome<input name="nome" required autocomplete="name" /></label>
+        <label>WhatsApp<input name="tel" required inputmode="tel" autocomplete="tel" placeholder="(00) 00000-0000" /></label>
+        <label>Serviço
+          <select name="servico">{servicos.map((s) => <option>{s.nome}</option>)}<option>Outro</option></select>
+        </label>
+        <label>Mensagem<textarea name="msg" rows="4"></textarea></label>
+        <input class="hp" name="empresa" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <p id="erro" style="color:#ff8a8a" hidden>Preencha nome e WhatsApp.</p>
+        <button class="btn btn-primary" type="submit">Enviar pelo WhatsApp</button>
+      </form>
+    </div>
+  </section>
+  <script define:vars={{ numero: config.whatsapp }}>
+    const f = document.getElementById('form');
+    const tel = f.tel;
+    tel.addEventListener('input', () => {
+      const d = tel.value.replace(/\D/g, '').slice(0, 11);
+      tel.value = d.length > 6 ? `(${d.slice(0,2)}) ${d.slice(2, d.length-4)}-${d.slice(-4)}` : d.length > 2 ? `(${d.slice(0,2)}) ${d.slice(2)}` : d;
+    });
+    f.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (f.empresa.value) return;
+      const ok = f.nome.value.trim() && tel.value.replace(/\D/g, '').length >= 10;
+      document.getElementById('erro').hidden = !!ok;
+      if (!ok) return;
+      const p = new URLSearchParams(location.search);
+      const txt = `Olá! Sou ${f.nome.value.trim()} (${tel.value}).\nServiço: ${f.servico.value}\n${f.msg.value.trim()}` +
+        (p.get('utm_source') ? `\nOrigem: ${p.get('utm_source')} / ${p.get('utm_campaign') || '-'}` : '');
+      window.open(`https://wa.me/${numero}?text=${encodeURIComponent(txt)}`, '_blank');
+    });
+  </script>
+</Base>

@@ -1,0 +1,40 @@
+---
+import { config, waLink } from '../config';
+import { servicos } from '../data/servicos';
+const ano = new Date().getFullYear();
+---
+<footer class="rodape">
+  <div class="wrap cols">
+    <div>
+      <a href="/" class="logo">MKT<span>CENTER</span></a>
+      <p>Sites, aplicativos, lojas virtuais, tráfego e marketing político.</p>
+    </div>
+    <div>
+      <h3>Serviços</h3>
+      {servicos.map((s) => <a href={`/${s.slug}/`}>{s.nome}</a>)}
+    </div>
+    <div>
+      <h3>Contato</h3>
+      <a href={waLink()} target="_blank" rel="noopener">WhatsApp</a>
+      <span>Telefone: {config.telefone}</span>
+      <span>E-mail: {config.email}</span>
+      <span>{config.horario}</span>
+      <span>{config.cidade}</span>
+    </div>
+  </div>
+  <div class="wrap base">
+    <span>© {ano} {config.nome} · CNPJ {config.cnpj}</span>
+    <a href="/politica-de-privacidade/">Política de privacidade</a>
+  </div>
+</footer>
+<style>
+  .rodape{background:var(--grafite);border-top:1px solid var(--linha);padding:48px 0 24px;margin-top:0}
+  .cols{display:grid;gap:32px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+  .cols > div{display:grid;gap:8px;align-content:start;color:var(--prata)}
+  .cols a{text-decoration:none}
+  .cols a:hover{color:var(--papel)}
+  h3{color:var(--papel);font-size:1.2rem;margin-bottom:4px}
+  .logo{font-family:var(--ff-tit);font-weight:800;font-size:1.6rem;color:var(--papel)}
+  .logo span{color:var(--laranja);margin-left:4px}
+  .base{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;margin-top:40px;padding-top:20px;border-top:1px solid var(--linha);font-size:.85rem;color:var(--prata)}
+</style>

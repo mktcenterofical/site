@@ -1,0 +1,67 @@
+---
+import Base from '../layouts/Base.astro';
+import FaixaCTA from '../components/FaixaCTA.astro';
+import { servicos } from '../data/servicos';
+import { config, waLink } from '../config';
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'ProfessionalService', name: config.nome, url: Astro.site!.href, areaServed: 'BR' },
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: config.nome, url: Astro.site!.href, inLanguage: 'pt-BR' },
+];
+---
+<Base title="Agência de Marketing Digital | MKT Center"
+  description="Agência de marketing digital: criação de sites, apps, lojas virtuais, tráfego pago, SEO e marketing político. Fale no WhatsApp."
+  schema={schema}>
+  <section class="hero">
+    <div class="wrap">
+      <span class="eyebrow">Agência de marketing digital</span>
+      <h1>Sua empresa <span class="destaque">vendendo mais</span> na internet</h1>
+      <p class="lead">Sites, aplicativos, lojas virtuais, tráfego pago e marketing político. Tudo pensado para o celular e para trazer clientes pelo WhatsApp.</p>
+      <div class="acoes">
+        <a class="btn btn-primary" href={waLink()} target="_blank" rel="noopener">Quero um orçamento</a>
+        <a class="btn btn-ghost" href="#servicos">Ver serviços</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="servicos" class="alt">
+    <div class="wrap">
+      <span class="eyebrow">O que fazemos</span>
+      <h2>Serviços</h2>
+      <div class="grid">
+        {servicos.map((s) => (
+          <a class="card" href={`/${s.slug}/`}>
+            <span class="icone" aria-hidden="true">{s.icone}</span>
+            <h3>{s.nome}</h3>
+            <p>{s.curto}</p>
+            <span class="mais">Saiba mais →</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <span class="eyebrow">Por que a MKT Center</span>
+      <h2>Feito para dar resultado</h2>
+      <ul class="lista">
+        <li>Tudo pensado primeiro para o celular</li>
+        <li>Contato direto pelo WhatsApp</li>
+        <li>Sites rápidos e prontos para o Google</li>
+        <li>Medição de cada contato que chega</li>
+        <li>Atendimento próximo, sem jargão</li>
+        <li>Uma agência para todo o digital</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="alt">
+    <div class="wrap">
+      <span class="eyebrow">Clientes</span>
+      <h2>Depoimentos</h2>
+      <p class="lead"><span class="pendente">[A DEFINIR]</span> Depoimentos reais e autorizados de clientes entram aqui.</p>
+    </div>
+  </section>
+
+  <FaixaCTA />
+</Base>
