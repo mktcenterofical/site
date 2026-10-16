@@ -3,14 +3,13 @@
 // Números são ilustrativos (projeção de exemplo) — ver CLAUDE.md.
 import { waLink } from '../config';
 import Icon from './Icon.astro';
-const palavras = ['sites', 'aplicativos', 'lojas virtuais', 'tráfego pago', 'campanhas'];
 const periodos = [
   { rotulo: '3 meses', contatos: 86, receita: 38, pontos: [12, 16, 15, 22, 27, 31, 38] },
   { rotulo: '6 meses', contatos: 174, receita: 92, pontos: [12, 18, 24, 33, 45, 61, 78] },
   { rotulo: '12 meses', contatos: 312, receita: 210, pontos: [12, 21, 34, 50, 71, 96, 124] },
 ];
 ---
-<section class="hc" id="hero" data-periodos={JSON.stringify(periodos)} data-palavras={JSON.stringify(palavras)}>
+<section class="hc" id="hero" data-periodos={JSON.stringify(periodos)}>
   <div class="hc-glow" aria-hidden="true"></div>
   <div class="hc-grid" aria-hidden="true"></div>
   <div class="hc-lines" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -20,8 +19,8 @@ const periodos = [
       <span class="eyebrow hc-r">Agência de marketing digital</span>
       <h1 class="hc-h1">
         <span class="hc-line"><span class="hc-w">Seu</span> <span class="hc-w">negócio</span></span>
-        <span class="hc-line"><span class="hc-w hc-or">crescendo</span></span>
-        <span class="hc-line"><span class="hc-w">com</span> <span class="hc-rot" aria-live="polite"><span class="hc-rot-t">sites</span><span class="hc-caret"></span></span></span>
+        <span class="hc-line"><span class="hc-w">com</span> <span class="hc-w">tecnologia</span></span>
+        <span class="hc-line"><span class="hc-w hc-or">avançada</span></span>
       </h1>
       <p class="hc-lead hc-r">Criamos sites, apps, lojas virtuais e campanhas que trazem clientes para o seu WhatsApp. Cada contato medido, cada resultado na tela.</p>
       <div class="acoes hc-r">
@@ -100,13 +99,10 @@ const periodos = [
   @media(min-width:1024px){.hc-in{grid-template-columns:1fr 1.1fr;gap:32px}}
 
   .hc .eyebrow{color:var(--orange-hot)}
-  .hc-h1{font-size:clamp(52px,7.2vw,88px);line-height:.9;letter-spacing:-.02em;display:flex;flex-direction:column}
+  .hc-h1{font-size:clamp(46px,5.6vw,76px);line-height:.9;letter-spacing:-.02em;display:flex;flex-direction:column}
   .hc-line{display:block;overflow:hidden;padding-bottom:.04em}
   .hc-w{display:inline-block}
   .hc-or{background:linear-gradient(180deg,#ff8a24,#ff6900);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 8px 24px rgba(255,105,0,.35))}
-  .hc-rot{display:inline-flex;align-items:center;color:#c9cdd2}
-  .hc-caret{width:4px;height:.8em;background:var(--orange);margin-left:6px;animation:hc-blink 1s steps(1) infinite}
-  @keyframes hc-blink{50%{opacity:0}}
   .hc-lead{color:#aeb4bd;font-size:18px;line-height:28px;max-width:52ch;margin-top:24px}
   .hc-ghost{border-color:#5b616b;color:#fff}
   .hc-ghost:hover{border-color:#fff}
@@ -114,7 +110,7 @@ const periodos = [
   .hc-stats b{display:block;font-family:var(--ff-tit);font-weight:800;font-size:40px;line-height:1}
   .hc-stats small{color:#aeb4bd;font-size:14px}
 
-  .hc-stage{position:relative;perspective:1600px;display:flex;flex-direction:column;align-items:center}
+  .hc-stage{position:relative;margin-top:32px;perspective:1600px;display:flex;flex-direction:column;align-items:center}
   .hc-pc{position:relative;width:min(100%,600px);transform-style:preserve-3d;transform:rotateY(-16deg) rotateX(6deg);will-change:transform}
   .hc-monitor{position:relative;background:linear-gradient(160deg,#3a3d44,#16181c 40%,#0c0d10);border-radius:18px;padding:12px 12px 0;box-shadow:0 60px 120px -30px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.08),inset 0 1px 1px rgba(255,255,255,.18),40px 30px 80px -40px rgba(255,105,0,.45)}
   .hc-screen{position:relative;aspect-ratio:16/10;border-radius:8px;overflow:hidden;background:radial-gradient(120% 90% at 80% 0%,#1f140b,#0b0c0f 60%)}
@@ -151,17 +147,16 @@ const periodos = [
   .hc-bi-g{color:#3ddc97;background:rgba(61,220,151,.12);border-color:rgba(61,220,151,.35)}
   .hc-b1{bottom:22%;left:-7%}
   .hc-b2{top:-7%;right:-4%}
-  @media(max-width:600px){.hc-b1{left:-2%;bottom:18%}.hc-b2{right:-2%;top:-9%}}
+  @media(max-width:600px){.hc-b1{left:-2%;bottom:18%}.hc-b2{right:-2%;top:-6%}}
+  @media(min-width:1024px){.hc-stage{margin-top:0}}
   .hc-note{margin-top:16px;font-size:12px;color:#7d8591}
 
-  @media (prefers-reduced-motion: reduce){.hc-lines,.hc-caret{display:none}}
 </style>
 
 <script>
   import { gsap } from 'gsap';
   const root = document.getElementById('hero')!;
   const periodos: { rotulo: string; contatos: number; receita: number; pontos: number[] }[] = JSON.parse(root.dataset.periodos!);
-  const palavras: string[] = JSON.parse(root.dataset.palavras!);
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = <T extends Element>(s: string) => root.querySelector<T>(s)!;
 
@@ -206,20 +201,6 @@ const periodos = [
   let ciclo: number | undefined;
   const reiniciarCiclo = () => { clearInterval(ciclo); if (!reduce) ciclo = window.setInterval(() => desenhar((atual + 1) % periodos.length), 5000); };
 
-  // ---- palavra rotativa (efeito digitação) ----
-  const rot = $('.hc-rot-t');
-  if (!reduce) {
-    let wi = 0;
-    const trocar = () => {
-      const prox = palavras[(wi = (wi + 1) % palavras.length)];
-      const tl = gsap.timeline();
-      const cur = rot.textContent || '';
-      tl.to({ n: cur.length }, { n: 0, duration: cur.length * 0.04, ease: 'none', onUpdate() { rot.textContent = cur.slice(0, Math.round(this.targets()[0].n)); } })
-        .to({ n: 0 }, { n: prox.length, duration: prox.length * 0.06, ease: 'none', onUpdate() { rot.textContent = prox.slice(0, Math.round(this.targets()[0].n)); } }, '+=.15');
-    };
-    setInterval(trocar, 2600);
-  }
-
   // ---- entrada ----
   if (reduce) {
     desenhar(0);
@@ -227,7 +208,6 @@ const periodos = [
   } else {
     const tl = gsap.timeline({ delay: .2 });
     tl.from('.hc-w', { yPercent: 110, rotationX: -60, opacity: 0, filter: 'blur(12px)', duration: 1.2, stagger: .08, ease: 'expo.out' })
-      .from('.hc-rot', { opacity: 0, x: -20, duration: .6 }, '-=.6')
       .from('.hc-r', { y: 30, opacity: 0, filter: 'blur(10px)', duration: .9, stagger: .12, ease: 'power3.out' }, '-=.8')
       .from('.hc-pc', { opacity: 0, rotationY: -55, rotationX: 20, z: -400, y: 80, duration: 1.8, ease: 'expo.out', onComplete: () => { desenhar(0); reiniciarCiclo(); } }, .3)
       .from('.hc-badge', { opacity: 0, scale: .6, y: 40, duration: 1, stagger: .25, ease: 'back.out(1.6)' }, '-=.6')
