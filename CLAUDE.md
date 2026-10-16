@@ -8,6 +8,7 @@ Objetivo do site: gerar contatos pelo WhatsApp e pelo formulário.
 
 ## Marca
 - Laranja #ff6900 (destaques e botões, no máximo ~10% da tela)
+- Menu do topo com fundo preto #090a0c (preto da logo), links claros
 - Tema CLARO: fundo branco, seções alternadas #f3f4f5, texto #111317, texto secundário #545a63
 - Laranja em texto pequeno usa #b84a00 (contraste no fundo claro)
 - Botão laranja sempre com texto escuro #141006 (contraste)
