@@ -18,13 +18,14 @@ const principais: [string, string, string][] = [
     <nav class="menu" aria-label="Principal">
       {principais.map(([u, n]) => <a href={u} aria-current={atual(u)}>{n}</a>)}
     </nav>
+    <button class="mostrar" type="button" aria-expanded="false" aria-controls="faixa-servicos">Serviços<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
     <a href="/contato/" class="btn btn-primary cta" aria-current={atual('/contato/')}>Contato</a>
     <button class="burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="gaveta">
       <span></span><span></span><span></span>
     </button>
   </div>
 
-  <nav class="faixa" aria-label="Serviços">
+  <nav class="faixa" id="faixa-servicos" aria-label="Serviços">
     <div class="wrap faixa-in">
       {servicos.map((s) => (
         <a href={`/${s.slug}/`} aria-current={atual(`/${s.slug}/`)}>
@@ -103,6 +104,13 @@ const principais: [string, string, string][] = [
   @media(min-width:1024px){.logo img{height:32px}.menu{gap:36px}.faixa-in{justify-content:space-between}}
   @media(min-width:1440px){.barra{height:80px}.menu a{font-size:16px}.faixa a{font-size:14px}}
 
+  /* botão que mostra de novo a faixa de serviços escondida ao rolar */
+  .mostrar{display:none;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid #2a2d33;background:#111317;color:#e4e6ea;font:inherit;font-size:14px;font-weight:700;cursor:pointer;transition:border-color .2s,background .2s}
+  .mostrar:hover{border-color:var(--orange)}
+  .mostrar svg{color:var(--orange-hot);transition:transform .3s}
+  .topo.aberta .mostrar{background:rgba(255,105,0,.14);border-color:var(--orange)}
+  .topo.aberta .mostrar svg{transform:rotate(180deg)}
+
   /* gaveta */
   .veu{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.55);backdrop-filter:blur(3px);opacity:0;transition:opacity .3s}
   .veu.on{opacity:1}
@@ -122,7 +130,8 @@ const principais: [string, string, string][] = [
   .g-base small{color:#aeb4bd;font-size:13px}
   /* ao rolar (tablet em diante): só a faixa de serviços some; o menu horizontal continua */
   @media(min-width:768px){
-    .topo.compacto .faixa{max-height:0;opacity:0;border-top-color:transparent}
+    .topo.compacto:not(.aberta) .faixa{max-height:0;opacity:0;border-top-color:transparent}
+    .topo.compacto .mostrar{display:inline-flex}
     .topo.compacto .barra{height:64px}
     .barra{transition:height .3s}
   }
@@ -151,7 +160,10 @@ const principais: [string, string, string][] = [
   // ao rolar a página o cabeçalho fica compacto (some só a faixa de serviços)
   const topo = document.querySelector<HTMLElement>('.topo')!;
   let compacto = false;
-  const checar = () => { const c = compacto ? scrollY > 60 : scrollY > 140; if (c !== compacto) { compacto = c; topo.classList.toggle('compacto', c); } };
+  const mostrar = topo.querySelector<HTMLButtonElement>('.mostrar')!;
+  const mostrarFaixa = (on: boolean) => { topo.classList.toggle('aberta', on); mostrar.setAttribute('aria-expanded', String(on)); };
+  mostrar.addEventListener('click', () => mostrarFaixa(!topo.classList.contains('aberta')));
+  const checar = () => { const c = compacto ? scrollY > 60 : scrollY > 140; if (c !== compacto) { compacto = c; topo.classList.toggle('compacto', c); if (!c) mostrarFaixa(false); } };
   addEventListener('scroll', checar, { passive: true });
   checar();
 </script>
