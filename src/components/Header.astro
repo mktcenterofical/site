@@ -18,8 +18,8 @@ const principais: [string, string, string][] = [
     <nav class="menu" aria-label="Principal">
       {principais.map(([u, n]) => <a href={u} aria-current={atual(u)}>{n}</a>)}
     </nav>
+    <a href="/contato/" class="btn btn-primary cta" aria-current={atual('/contato/')}>Fale conosco</a>
     <button class="mostrar" type="button" aria-label="Mostrar menu de serviços" aria-expanded="false" aria-controls="faixa-servicos"><span></span><span></span><span></span></button>
-    <a href="/contato/" class="btn btn-primary cta" aria-current={atual('/contato/')}>Contato</a>
     <button class="burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="gaveta">
       <span></span><span></span><span></span>
     </button>
