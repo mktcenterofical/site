@@ -7,7 +7,7 @@ const atual = (u: string) => (path === u ? 'page' : undefined);
 <header class="topo">
   <div class="wrap barra">
     <a href="/" class="logo" aria-label="MKT Center, página inicial">
-      <img src="/logo.webp" alt="MKT Marketing Digital" width="144" height="48" fetchpriority="high" />
+      <img src="/logo-escuro.webp" alt="MKT Marketing Digital" width="208" height="32" fetchpriority="high" />
     </a>
     <nav class="menu" aria-label="Principal">
       <a href="/" aria-current={atual('/')}>Início</a>
@@ -20,9 +20,9 @@ const atual = (u: string) => (path === u ? 'page' : undefined);
 </header>
 
 <style>
-  .topo{position:sticky;top:0;z-index:50;background:#090a0c;border-bottom:1px solid #1d2026}
+  .topo{position:sticky;top:0;z-index:50;background:#000;border-bottom:1px solid #1d2026}
   .barra{display:flex;align-items:center;justify-content:space-between;height:68px}
-  .logo img{height:48px;width:auto}
+  .logo img{height:32px;width:auto}
   .menu{display:none;align-items:center;gap:12px}
   .menu > a{text-decoration:none;font-weight:600;color:#c3c8cf;font-size:.85rem;white-space:nowrap}
   .menu > a:hover,.menu > a[aria-current]{color:#ffffff}

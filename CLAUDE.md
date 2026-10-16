@@ -16,7 +16,7 @@ Objetivo do site: gerar contatos pelo WhatsApp e pelo formulário.
 - Laranja em texto pequeno usa #a84300 (orange-text) (contraste no fundo claro)
 - Botão laranja sempre com texto escuro #141006 (contraste)
 - Fontes: Barlow Condensed (títulos), DM Sans (texto)
-- Logo: public/logo.webp (topo e rodapé)
+- Logo em fundo escuro: public/logo-escuro.webp (cabeçalho, fundo #000). Em fundo claro: public/logo-claro.webp (rodapé). Originais em referencia/logo-fundo-*.png
 - Hero da home: src/components/HeroCrescimento.astro (textos animados à esquerda; à direita um aparelho 3D que alterna desktop/notebook/tablet/celular, cada um com um projeto fictício sendo montado em etapas: rascunho tracejado → esqueleto → foto nítida e texto digitado. Fotos em public/mock/ (Unsplash, originais em referencia/mock-src/). ?dispositivo=celular abre direto num aparelho)
 - Menu sem submenus (links simples)
 
