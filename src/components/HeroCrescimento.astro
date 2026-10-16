@@ -1,22 +1,22 @@
 ---
 // Hero cinematográfico: textos animados à esquerda e, à direita, um aparelho 3D que vira desktop,
-// notebook, tablet e celular mostrando o mesmo painel de crescimento adaptado a cada tela.
-// Números são ilustrativos (projeção de exemplo) — ver CLAUDE.md.
+// notebook, tablet e celular. Em cada aparelho um projeto (site, loja, sistema, app) é "construído"
+// peça por peça, simulando a criação. Nomes de clientes são fictícios — ver CLAUDE.md.
 import { waLink } from '../config';
 import Icon from './Icon.astro';
-const periodos = [
-  { rotulo: '3 meses', contatos: 86, receita: 38, pontos: [12, 16, 15, 22, 27, 31, 38] },
-  { rotulo: '6 meses', contatos: 174, receita: 92, pontos: [12, 18, 24, 33, 45, 61, 78] },
-  { rotulo: '12 meses', contatos: 312, receita: 210, pontos: [12, 21, 34, 50, 71, 96, 124] },
-];
 const dispositivos = [
-  { id: 'desktop', nome: 'Desktop', icone: '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>' },
-  { id: 'notebook', nome: 'Notebook', icone: '<rect x="4" y="4" width="16" height="11" rx="2"/><path d="M2 19h20"/>' },
-  { id: 'tablet', nome: 'Tablet', icone: '<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/>' },
-  { id: 'celular', nome: 'Celular', icone: '<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/>' },
+  { id: 'desktop', nome: 'Desktop', projeto: 'Site institucional', icone: '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>' },
+  { id: 'notebook', nome: 'Notebook', projeto: 'Loja virtual', icone: '<rect x="4" y="4" width="16" height="11" rx="2"/><path d="M2 19h20"/>' },
+  { id: 'tablet', nome: 'Tablet', projeto: 'Sistema de agendamento', icone: '<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/>' },
+  { id: 'celular', nome: 'Celular', projeto: 'Aplicativo de delivery', icone: '<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/>' },
+];
+const dias = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex'];
+const agenda: [number, number, number, string][] = [
+  [0, 1, 2, 'Corte'], [1, 0, 1, 'Barba'], [1, 3, 2, 'Coloração'], [2, 2, 1, 'Corte'],
+  [3, 0, 2, 'Escova'], [3, 4, 1, 'Corte'], [4, 1, 1, 'Barba'], [4, 3, 2, 'Manicure'], [0, 4, 1, 'Corte'],
 ];
 ---
-<section class="hc" id="hero" data-periodos={JSON.stringify(periodos)} data-dispositivos={JSON.stringify(dispositivos.map((d) => d.id))}>
+<section class="hc" id="hero" data-dispositivos={JSON.stringify(dispositivos.map((d) => [d.id, d.nome, d.projeto]))}>
   <div class="hc-glow" aria-hidden="true"></div>
   <div class="hc-grid" aria-hidden="true"></div>
   <div class="hc-lines" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -45,39 +45,74 @@ const dispositivos = [
       <div class="hc-pc">
         <div class="hc-dev">
           <div class="hc-bezel">
-            <div class="hc-screen">
-              <div class="hc-glare" aria-hidden="true"></div>
-              <div class="hc-island" aria-hidden="true"></div>
-              <div class="hc-app">
-                <div class="hc-top">
-                  <div><small>Painel MKT</small><strong>Projeção de crescimento</strong></div>
-                  <div class="hc-tabs" role="tablist" aria-label="Período">
-                    {periodos.map((p, i) => <button type="button" role="tab" class={i === 0 ? 'on' : ''} data-i={i}>{p.rotulo}</button>)}
+            <div class="hc-screen" aria-hidden="true">
+              <div class="hc-glare"></div>
+              <div class="hc-island"></div>
+
+              <!-- Desktop: site institucional -->
+              <div class="pj pj-site" data-p="desktop">
+                <div class="bar"><i></i><i></i><i></i><span>padariapaodourado.com.br</span></div>
+                <div class="pg">
+                  <div class="nav b"><span class="lg">Pão Dourado</span><em></em><em></em><em></em><span class="bt">Pedir</span></div>
+                  <div class="sh">
+                    <div class="sh-t">
+                      <p class="b ttl">Pão quentinho<br />todo dia</p>
+                      <p class="b ln"></p>
+                      <span class="b bt">Pedir no WhatsApp</span>
+                    </div>
+                    <div class="b img img-a"></div>
+                  </div>
+                  <div class="cards">
+                    <div class="b cd"><div class="img img-b"></div><p class="ln"></p></div>
+                    <div class="b cd"><div class="img img-c"></div><p class="ln"></p></div>
+                    <div class="b cd"><div class="img img-a"></div><p class="ln"></p></div>
                   </div>
                 </div>
-                <div class="hc-kpis">
-                  <div class="hc-kpi"><small>Contatos no WhatsApp</small><b>+<span id="hc-k1">0</span>%</b></div>
-                  <div class="hc-kpi"><small>Faturamento projetado</small><b>+<span id="hc-k2">0</span>%</b></div>
-                  <div class="hc-kpi hc-kpi-g"><small>Posição no Google</small><b>Top 3</b></div>
-                </div>
-                <div class="hc-chart">
-                  <svg viewBox="0 0 600 220" preserveAspectRatio="none" aria-hidden="true">
-                    <defs>
-                      <linearGradient id="hc-area" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0" stop-color="#ff6900" stop-opacity=".45" />
-                        <stop offset="1" stop-color="#ff6900" stop-opacity="0" />
-                      </linearGradient>
-                    </defs>
-                    <g class="hc-gl">{[40, 90, 140, 190].map((y) => <line x1="0" x2="600" y1={y} y2={y} />)}</g>
-                    <g class="hc-bars"></g>
-                    <path class="hc-fill" d="" fill="url(#hc-area)" />
-                    <path class="hc-path" d="" fill="none" stroke="#ff8a24" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke" />
-                  </svg>
-                  <span class="hc-dot" aria-hidden="true"></span>
-                  <div class="hc-tip">+<span id="hc-tip">0</span>% contatos</div>
-                </div>
-                <div class="hc-foot"><span>Mês 1</span><span>Hoje</span><span>Projeção</span></div>
               </div>
+
+              <!-- Notebook: loja virtual -->
+              <div class="pj pj-loja" data-p="notebook">
+                <div class="bar"><i></i><i></i><i></i><span>rsmodafitness.com.br</span></div>
+                <div class="pg">
+                  <div class="nav b"><span class="lg">RS Moda</span><em></em><em></em><span class="cart"><Icon name="cart" size={12} /> 2</span></div>
+                  <div class="b banner"><span>Coleção nova · 20% off no Pix</span></div>
+                  <div class="prods">
+                    {['R$ 89,90', 'R$ 129,90', 'R$ 69,90', 'R$ 149,90'].map((p, i) => (
+                      <div class="b pd"><div class={`img img-${'abcd'[i]}`}></div><p class="ln"></p><b>{p}</b></div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tablet: sistema de agendamento -->
+              <div class="pj pj-sis" data-p="tablet">
+                <div class="pg">
+                  <div class="b sis-top"><span class="lg">Studio Bella</span><span class="bt">+ Agendar</span></div>
+                  <div class="b sis-kpi"><div><small>Hoje</small><b>14</b></div><div><small>Semana</small><b>63</b></div><div><small>Livre</small><b>9</b></div></div>
+                  <div class="cal">
+                    {dias.map((d) => <span class="dia">{d}</span>)}
+                    {agenda.map(([c, r, h, t]) => (
+                      <div class="b ev" style={`grid-column:${c + 1};grid-row:${r + 2} / span ${h}`}>{t}</div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Celular: app de delivery -->
+              <div class="pj pj-app" data-p="celular">
+                <div class="pg">
+                  <div class="b app-top"><small>Entregar em</small><b>Rua das Flores, 120</b></div>
+                  <div class="b busca">Buscar lanches, pizza…</div>
+                  <div class="chips"><span class="b on">Lanches</span><span class="b">Pizza</span><span class="b">Doces</span></div>
+                  {['Burger da Casa', 'Pizza Calabresa', 'Açaí 500ml'].map((n, i) => (
+                    <div class="b item"><div class={`img img-${'abc'[i]}`}></div><div><b>{n}</b><small>{['R$ 32,90', 'R$ 54,90', 'R$ 19,90'][i]}</small></div></div>
+                  ))}
+                  <div class="b tabbar"><i></i><i class="on"></i><i></i><i></i></div>
+                </div>
+              </div>
+
+              <span class="hc-cursor"><svg viewBox="0 0 24 24" width="18" height="18"><path d="M4 2l16 9-7 2-3 7z" fill="#fff" stroke="#141006" stroke-width="1.5" stroke-linejoin="round" /></svg></span>
+              <div class="hc-status"><span class="hc-st-txt">Criando site…</span><span class="hc-st-pct">0%</span><i class="hc-st-bar"></i></div>
             </div>
           </div>
         </div>
@@ -86,7 +121,7 @@ const dispositivos = [
         <div class="hc-kb" aria-hidden="true"></div>
 
         <div class="hc-badge hc-b1"><span class="hc-bi"><Icon name="message" size={18} /></span><div><b>Novo contato</b><em>via WhatsApp · agora</em></div></div>
-        <div class="hc-badge hc-b2"><span class="hc-bi hc-bi-g"><Icon name="check" size={18} /></span><div><b id="hc-dev-nome">Desktop</b><em>Layout adaptado</em></div></div>
+        <div class="hc-badge hc-b2"><span class="hc-bi hc-bi-g"><Icon name="check" size={18} /></span><div><b id="hc-dev-nome">Site institucional</b><em id="hc-dev-sub">Desktop · layout adaptado</em></div></div>
       </div>
       <div class="hc-modes" role="tablist" aria-label="Dispositivo">
         {dispositivos.map((d, i) => (
@@ -96,7 +131,7 @@ const dispositivos = [
           </button>
         ))}
       </div>
-      <p class="hc-note">Um só projeto, perfeito em todas as telas · Projeção ilustrativa</p>
+      <p class="hc-note">Um só projeto, perfeito em todas as telas</p>
     </div>
   </div>
 </section>
@@ -128,13 +163,15 @@ const dispositivos = [
   .hc-stats b{display:block;font-family:var(--ff-tit);font-weight:800;font-size:40px;line-height:1}
   .hc-stats small{color:#aeb4bd;font-size:14px}
 
+  /* ---------- aparelho que muda de forma ---------- */
   .hc-stage{position:relative;margin-top:32px;perspective:1600px;display:flex;flex-direction:column;align-items:center}
+  @media(min-width:1024px){.hc-stage{margin-top:0}}
   .hc-pc{position:relative;width:min(100%,600px);aspect-ratio:5/4;transform-style:preserve-3d;transform:rotateY(-12deg) rotateX(5deg);will-change:transform}
   .hc-dev{--ease:cubic-bezier(.7,0,.2,1);position:absolute;left:50%;transform:translateX(-50%);bottom:var(--b);width:var(--w);height:var(--h);transition:width .9s var(--ease),height .9s var(--ease),bottom .9s var(--ease)}
   .hc-bezel{position:absolute;inset:0;padding:var(--p);border-radius:var(--r);background:linear-gradient(160deg,#3a3d44,#16181c 40%,#0c0d10);box-shadow:0 60px 120px -30px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.08),inset 0 1px 1px rgba(255,255,255,.18),40px 30px 80px -40px rgba(255,105,0,.45);transition:padding .9s var(--ease),border-radius .9s var(--ease)}
-  .hc-screen{position:relative;width:100%;height:100%;border-radius:calc(var(--r) - var(--p) + 2px);overflow:hidden;background:radial-gradient(120% 90% at 80% 0%,#1f140b,#0b0c0f 60%);container-type:size;transition:border-radius .9s var(--ease)}
-  .hc-glare{position:absolute;inset:0;z-index:5;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.1) 0%,rgba(255,255,255,0) 40%)}
-  .hc-island{position:absolute;z-index:6;top:6px;left:50%;width:34%;height:16px;border-radius:99px;background:#000;transform:translateX(-50%) scale(var(--isl,0));transition:transform .6s}
+  .hc-screen{position:relative;width:100%;height:100%;border-radius:calc(var(--r) - var(--p) + 2px);overflow:hidden;background:#f6f4f1;container-type:size;transition:border-radius .9s var(--ease)}
+  .hc-glare{position:absolute;inset:0;z-index:8;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.16) 0%,rgba(255,255,255,0) 40%)}
+  .hc-island{position:absolute;z-index:9;top:6px;left:50%;width:34%;height:16px;border-radius:99px;background:#000;transform:translateX(-50%) scale(var(--isl,0));transition:transform .6s}
   .hc-neck,.hc-base,.hc-kb{position:absolute;left:50%;transform:translateX(-50%);opacity:0;transition:opacity .4s}
   .hc-neck{bottom:3%;width:14%;height:16%;background:linear-gradient(90deg,#1b1d22,#4a4e57 50%,#1b1d22);clip-path:polygon(12% 0,88% 0,100% 100%,0 100%)}
   .hc-base{bottom:1%;width:36%;height:2.5%;border-radius:8px 8px 14px 14px;background:linear-gradient(180deg,#4a4e57,#17191d);box-shadow:0 30px 40px -10px rgba(0,0,0,.9)}
@@ -151,29 +188,87 @@ const dispositivos = [
   .hc-modes{display:flex;gap:6px;margin-top:20px;padding:5px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
   .hc-modes button{display:flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border:0;border-radius:999px;background:none;color:#aeb4bd;font:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:background .3s,color .3s}
   .hc-modes button.on{background:#ff6900;color:#141006}
-  @media (prefers-reduced-motion: reduce){.hc-dev,.hc-bezel,.hc-screen,.hc-island,.hc-neck,.hc-base,.hc-kb{transition:none !important}}
   @media(max-width:520px){.hc-modes button span{display:none}.hc-modes button.on span{display:inline}}
+  .hc-note{margin-top:14px;font-size:13px;color:#aeb4bd}
 
-  .hc-app{position:absolute;inset:0;padding:4cqh 4.5cqw;display:flex;flex-direction:column;gap:3cqh;font-size:clamp(7px,2.3cqw,13px)}
-  .hc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
-  .hc-top small{display:block;font-size:.8em;letter-spacing:.14em;text-transform:uppercase;color:#ff8a24;font-weight:700}
-  .hc-top strong{font-family:var(--ff-tit);font-size:1.7em;text-transform:uppercase;line-height:1}
-  .hc-tabs{display:flex;gap:4px;background:rgba(255,255,255,.05);border-radius:999px;padding:3px}
-  .hc-tabs button{white-space:nowrap;font:inherit;font-size:.85em;font-weight:700;color:#aeb4bd;background:none;border:0;border-radius:999px;padding:.4em .9em;cursor:pointer}
-  .hc-tabs button.on{background:#ff6900;color:#141006}
-  .hc-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:3%}
-  .hc-kpi{background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:.7em .9em}
-  .hc-kpi small{display:block;color:#aeb4bd;font-size:.8em}
-  .hc-kpi b{font-family:var(--ff-tit);font-size:2em;line-height:1.05;color:#ff8a24}
-  .hc-kpi-g b{color:#3ddc97}
-  .hc-chart{position:relative;flex:1;min-height:22cqh}
-  .hc-chart svg{width:100%;height:100%;overflow:visible}
-  .hc-gl line{stroke:rgba(255,255,255,.06);stroke-width:1}
-  .hc-bars rect{fill:rgba(255,255,255,.07)}
-  .hc-dot{position:absolute;left:0;top:0;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;background:#fff;border:3px solid #ff6900;box-shadow:0 0 10px #ff6900}
-  .hc-tip{position:absolute;top:0;right:0;background:#ff6900;color:#141006;font-weight:800;font-size:.9em;padding:.3em .8em;border-radius:999px;box-shadow:0 8px 20px -6px rgba(255,105,0,.8)}
-  .hc-foot{display:flex;justify-content:space-between;color:#7d8591;font-size:.8em}
+  /* ---------- projetos dentro da tela ---------- */
+  .pj{position:absolute;inset:0;display:none;flex-direction:column;color:#1b1d22;font-size:clamp(7px,2.1cqw,12px);line-height:1.2}
+  .hc-stage[data-mode="desktop"] .pj-site,.hc-stage[data-mode="notebook"] .pj-loja,
+  .hc-stage[data-mode="tablet"] .pj-sis,.hc-stage[data-mode="celular"] .pj-app{display:flex}
+  .bar{display:flex;align-items:center;gap:.5em;padding:.6em .9em;background:#e7e4e0;border-bottom:1px solid #d8d4cf}
+  .bar i{width:.7em;height:.7em;border-radius:50%;background:#c9c4be}
+  .bar i:first-child{background:#ff6b5e}
+  .bar span{margin-left:.6em;flex:1;max-width:60%;padding:.25em .9em;border-radius:99px;background:#fff;color:#6b6f76;font-size:.85em}
+  .pg{flex:1;min-height:0;padding:3cqh 4cqw 9cqh;display:flex;flex-direction:column;gap:3cqh;overflow:hidden}
+  .nav{display:flex;align-items:center;gap:1.2em;padding:.5em 0}
+  .nav em{width:3.2em;height:.45em;border-radius:9px;background:#d9d5d0}
+  .lg{font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:1.25em;margin-right:auto;color:#141006}
+  .bt{display:inline-block;background:#ff6900;color:#141006;font-weight:800;border-radius:99px;padding:.45em 1em;font-size:.9em;white-space:nowrap}
+  .ln{height:.55em;border-radius:9px;background:#d9d5d0;width:80%}
+  .ln.s{width:55%}
+  .img{border-radius:8px}
+  .img-a{background:linear-gradient(135deg,#ffb36b,#ff6900 60%,#b84a00)}
+  .img-b{background:linear-gradient(135deg,#ffd9a8,#e7a45a)}
+  .img-c{background:linear-gradient(135deg,#2a2a2e,#55585f)}
+  .img-d{background:linear-gradient(135deg,#f3d1b4,#c98a5d)}
 
+  .sh{display:grid;grid-template-columns:1.1fr 1fr;grid-template-rows:minmax(0,1fr);gap:4cqw;flex:1;min-height:0}
+  .sh-t{display:flex;flex-direction:column;justify-content:center;gap:1.8cqh;align-items:flex-start;min-height:0}
+  .ttl{font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:2.3em;line-height:.92;color:#141006}
+  .sh{overflow:hidden}
+  .sh .img{align-self:stretch;min-height:0}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:3cqw;height:17cqh;flex:none}
+  .cd{background:#fff;border-radius:10px;padding:.5em;display:flex;flex-direction:column;gap:.5em;box-shadow:0 4px 14px rgba(0,0,0,.06)}
+  .cd .img{flex:1}
+
+  .cart{display:inline-flex;align-items:center;gap:.3em;font-weight:800;background:#141006;color:#fff;border-radius:99px;padding:.3em .8em}
+  .banner{border-radius:10px;background:linear-gradient(100deg,#141006,#3a2410);color:#fff;font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:1.5em;padding:.9em 1em}
+  .banner span{color:#ff8a24}
+  .prods{display:grid;grid-template-columns:repeat(4,1fr);gap:2.5cqw;flex:1;min-height:0}
+  .pd{background:#fff;border-radius:10px;padding:.5em;display:flex;flex-direction:column;gap:.5em;box-shadow:0 4px 14px rgba(0,0,0,.06)}
+  .pd .img{flex:1}
+  .pd b{font-weight:800;color:#a84300}
+
+  .pj-sis .pg{padding-top:5cqh}
+  .sis-top{display:flex;align-items:center;justify-content:space-between}
+  .sis-kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:3cqw}
+  .sis-kpi div{background:#fff;border-radius:10px;padding:.6em .8em;box-shadow:0 4px 14px rgba(0,0,0,.06)}
+  .sis-kpi small{display:block;color:#6b6f76}
+  .sis-kpi b{font-family:var(--ff-tit);font-size:2em;line-height:1}
+  .cal{flex:1;min-height:0;display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:auto repeat(5,1fr);gap:1.6cqw;background:#fff;border-radius:12px;padding:3cqw;box-shadow:0 4px 14px rgba(0,0,0,.06)}
+  .dia{text-align:center;font-weight:800;color:#6b6f76;font-size:.9em}
+  .ev{border-radius:6px;background:#fff1e6;border-left:3px solid #ff6900;color:#a84300;font-weight:700;font-size:.8em;padding:.3em;overflow:hidden}
+  .ev:nth-child(3n){background:#e8f7ef;border-left-color:#0b7544;color:#0b7544}
+
+  .pj-app{font-size:clamp(8px,6cqw,12px)}
+  .pj-app .pg{padding:9cqh 5cqw 0;gap:2.2cqh}
+  .app-top small{display:block;color:#6b6f76;font-size:.85em}
+  .app-top b{font-weight:800}
+  .busca{background:#fff;border-radius:99px;padding:.7em 1em;color:#9a9ea5;box-shadow:0 4px 14px rgba(0,0,0,.06)}
+  .chips{display:flex;gap:.5em}
+  .chips span{border-radius:99px;padding:.4em .9em;background:#fff;font-weight:700;font-size:.9em}
+  .chips span.on{background:#ff6900;color:#141006}
+  .item{display:flex;gap:.7em;align-items:center;background:#fff;border-radius:12px;padding:.5em;box-shadow:0 4px 14px rgba(0,0,0,.06)}
+  .item .img{width:3.4em;height:3.4em;flex:none}
+  .item b{display:block;font-weight:800}
+  .item small{color:#a84300;font-weight:800}
+  .tabbar{margin-top:auto;margin-inline:-5cqw;display:flex;justify-content:space-around;padding:1em 0 1.4em;background:#fff;border-top:1px solid #eee}
+  .tabbar i{width:1.4em;height:1.4em;border-radius:6px;background:#d9d5d0}
+  .tabbar i.on{background:#ff6900}
+
+  /* peça em construção: só o contorno tracejado */
+  .b{transition:background-color .4s,box-shadow .4s,opacity .4s}
+  .b.wire{background:transparent !important;box-shadow:none !important;outline:1.5px dashed #ff8a24;outline-offset:-1px;color:transparent !important;border-color:transparent !important}
+  .b.wire *{opacity:0}
+
+  .hc-cursor{position:absolute;z-index:7;left:50%;top:50%;pointer-events:none;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4));opacity:0}
+  .hc-status{position:absolute;z-index:7;left:50%;bottom:3cqh;transform:translateX(-50%);display:flex;align-items:center;gap:.6em;white-space:nowrap;padding:.45em .9em .55em;border-radius:99px;background:#141006;color:#fff;font-size:clamp(8px,2.2cqw,12px);font-weight:700;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,.35)}
+  .hc-st-pct{color:#ff8a24}
+  .hc-st-bar{position:absolute;left:0;bottom:0;height:3px;width:0;background:#ff6900}
+  .hc-status.ok{background:#0b7544}
+  .hc-status.ok .hc-st-pct{color:#fff}
+
+  /* ---------- selos ---------- */
   .hc-badge{position:absolute;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;color:#fff;background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(255,255,255,.03));backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 0 0 1px rgba(255,255,255,.12),0 25px 50px -12px rgba(0,0,0,.8);transform:translateZ(80px)}
   .hc-badge b{display:block;font-size:13px;line-height:1.2}
   .hc-badge em{display:block;font-style:normal;font-size:11px;color:#c3c8cf}
@@ -182,94 +277,95 @@ const dispositivos = [
   .hc-b1{bottom:26%;left:-4%}
   .hc-b2{top:4%;right:-3%}
   @media(max-width:600px){.hc-b1{display:none}.hc-b2{right:-2%;top:0}}
-  @media(min-width:1024px){.hc-stage{margin-top:0}}
-  .hc-note{margin-top:16px;font-size:12px;color:#7d8591}
 
-  @container (max-width:420px){.hc-app{padding-top:max(4cqh,28px);font-size:clamp(8px,4.2cqw,12px)}.hc-kpis{grid-template-columns:1fr 1fr}.hc-kpi-g{display:none}.hc-foot span:nth-child(2){display:none}}
-  @container (max-width:300px){.hc-top{flex-direction:column}}
-  @container (max-width:260px){.hc-app{font-size:clamp(8px,5.2cqw,11px);gap:4cqh}.hc-tabs{display:none}.hc-kpis{grid-template-columns:1fr}.hc-tip{font-size:.8em}}
+  @media (prefers-reduced-motion: reduce){
+    .hc-lines{display:none}
+    .hc-dev,.hc-bezel,.hc-screen,.hc-island,.hc-neck,.hc-base,.hc-kb{transition:none !important}
+  }
+  @container (max-width:300px){.sh{grid-template-columns:1fr}.sh .img{display:none}.prods{grid-template-columns:1fr 1fr}}
 </style>
 
 <script>
   import { gsap } from 'gsap';
   const root = document.getElementById('hero')!;
-  const periodos: { rotulo: string; contatos: number; receita: number; pontos: number[] }[] = JSON.parse(root.dataset.periodos!);
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = <T extends Element>(s: string) => root.querySelector<T>(s)!;
-
-  // ---- gráfico ----
-  const W = 600, H = 220, PAD = 16;
-  let MAX = 130;
-  const path = $<SVGPathElement>('.hc-path'), fill = $<SVGPathElement>('.hc-fill'), dot = $<HTMLElement>('.hc-dot');
-  const moverPonto = (x: number, y: number) => { dot.style.left = `${(x / W) * 100}%`; dot.style.top = `${(y / H) * 100}%`; };
-  const bars = $<SVGGElement>('.hc-bars');
-  const k1 = $('#hc-k1'), k2 = $('#hc-k2'), tip = $('#hc-tip');
-  const xy = (p: number[]) => p.map((v, i) => [PAD + (i * (W - PAD * 2)) / (p.length - 1), H - PAD - (v / MAX) * (H - PAD * 2)]);
-  const linha = (pts: number[][]) => pts.reduce((d, [x, y], i, a) => {
-    if (!i) return `M${x},${y}`;
-    const [px, py] = a[i - 1]; const cx = (px + x) / 2;
-    return `${d} C${cx},${py} ${cx},${y} ${x},${y}`;
-  }, '');
   const contar = (el: Element, to: number, dur = 1.6) =>
     reduce ? (el.textContent = String(to)) : gsap.to({ v: Number(el.textContent) || 0 }, { v: to, duration: dur, ease: 'expo.out', onUpdate() { el.textContent = String(Math.round(this.targets()[0].v)); } });
 
-  let atual = 0;
-  function desenhar(i: number) {
-    atual = i;
-    root.querySelectorAll('.hc-tabs button').forEach((b, j) => b.classList.toggle('on', j === i));
-    const p = periodos[i]; MAX = Math.max(...p.pontos) * 1.12;
-    const pts = xy(p.pontos), d = linha(pts);
-    const [lx, ly] = pts[pts.length - 1];
-    path.setAttribute('d', d);
-    fill.setAttribute('d', `${d} L${lx},${H} L${pts[0][0]},${H} Z`);
-    bars.innerHTML = pts.map(([x, y]) => `<rect x="${x - 14}" y="${y}" width="28" height="${H - y}" rx="5"/>`).join('');
-    contar(k1, p.contatos); contar(k2, p.receita); contar(tip, p.contatos);
-    if (reduce) { moverPonto(lx, ly); return; }
-    const len = path.getTotalLength();
-    gsap.fromTo(path, { strokeDasharray: len, strokeDashoffset: len }, { strokeDashoffset: 0, duration: 1.8, ease: 'power3.inOut' });
-    gsap.fromTo(fill, { opacity: 0 }, { opacity: 1, duration: 1.2, delay: .8 });
-    gsap.fromTo(bars.children, { scaleY: 0, transformOrigin: '50% 100%' }, { scaleY: 1, duration: .9, stagger: .08, ease: 'back.out(1.4)' });
-    const prog = { t: 0 };
-    gsap.to(prog, { t: 1, duration: 1.8, ease: 'power3.inOut', onUpdate() {
-      const pt = path.getPointAtLength(len * prog.t); moverPonto(pt.x, pt.y);
-    } });
+  // ---- construção do projeto: cada peça surge do contorno tracejado, com o cursor "montando" ----
+  const screen = $<HTMLElement>('.hc-screen');
+  const cursor = $<HTMLElement>('.hc-cursor');
+  const status = $<HTMLElement>('.hc-status');
+  const stTxt = $('.hc-st-txt'), stPct = $('.hc-st-pct'), stBar = $<HTMLElement>('.hc-st-bar');
+  let build: gsap.core.Timeline | undefined;
+
+  function construir(id: string, projeto: string) {
+    build?.kill();
+    const pecas = Array.from(root.querySelectorAll<HTMLElement>(`.pj[data-p="${id}"] .b`));
+    const verbo = projeto.startsWith('Aplicativo') || projeto.startsWith('Sistema') ? 'Desenvolvendo' : 'Criando';
+    status.classList.remove('ok');
+    stTxt.textContent = `${verbo} ${projeto.toLowerCase()}…`;
+    if (reduce) {
+      pecas.forEach((p) => p.classList.remove('wire'));
+      status.classList.add('ok'); stTxt.textContent = `${projeto} publicado`; stPct.textContent = '100%'; stBar.style.width = '100%';
+      return;
+    }
+    pecas.forEach((p) => p.classList.add('wire'));
+    stPct.textContent = '0%'; stBar.style.width = '0%';
+    const tela = screen.getBoundingClientRect();
+    build = gsap.timeline({ delay: .5 });
+    build.to(cursor, { opacity: 1, duration: .2 });
+    pecas.forEach((p, i) => {
+      const r = p.getBoundingClientRect();
+      const x = ((r.left + r.width * .6 - tela.left) / tela.width) * 100;
+      const y = ((r.top + r.height * .6 - tela.top) / tela.height) * 100;
+      const pct = Math.round(((i + 1) / pecas.length) * 100);
+      build!
+        .to(cursor, { left: `${x}%`, top: `${y}%`, duration: .32, ease: 'power2.inOut' })
+        .add(() => { p.classList.remove('wire'); stPct.textContent = `${pct}%`; stBar.style.width = `${pct}%`; })
+        .fromTo(p, { scale: .92 }, { scale: 1, duration: .35, ease: 'back.out(2)' }, '<');
+    });
+    build
+      .to(cursor, { opacity: 0, duration: .3 }, '+=.2')
+      .add(() => { status.classList.add('ok'); stTxt.textContent = `${projeto} publicado`; stPct.textContent = '100%'; })
+      .fromTo(status, { scale: .9 }, { scale: 1, duration: .5, ease: 'back.out(3)' }, '<');
   }
-  root.querySelectorAll<HTMLButtonElement>('.hc-tabs button').forEach((b) =>
-    b.addEventListener('click', () => desenhar(Number(b.dataset.i))));
 
   // ---- troca de aparelho: desktop -> notebook -> tablet -> celular ----
   const stage = $<HTMLElement>('.hc-stage');
-  const modos: string[] = JSON.parse(root.dataset.dispositivos!);
+  const modos: [string, string, string][] = JSON.parse(root.dataset.dispositivos!);
   const modoBtns = root.querySelectorAll<HTMLButtonElement>('.hc-modes button');
-  const devNome = $('#hc-dev-nome');
+  const devNome = $('#hc-dev-nome'), devSub = $('#hc-dev-sub');
   let modo = 0;
   function mudarModo(i: number) {
     modo = i;
-    stage.dataset.mode = modos[i];
+    const [id, nome, projeto] = modos[i];
+    stage.dataset.mode = id;
     modoBtns.forEach((b, j) => { b.classList.toggle('on', j === i); b.setAttribute('aria-selected', String(j === i)); });
-    devNome.textContent = modoBtns[i].getAttribute('aria-label');
-    if (!reduce) {
-      gsap.fromTo('.hc-b2', { scale: .85, opacity: .4 }, { scale: 1, opacity: 1, duration: .6, ease: 'back.out(2)' });
-      gsap.delayedCall(.9, () => desenhar(atual));
-    }
+    devNome.textContent = projeto;
+    devSub.textContent = `${nome} · layout adaptado`;
+    if (!reduce) gsap.fromTo('.hc-b2', { scale: .85, opacity: .4 }, { scale: 1, opacity: 1, duration: .6, ease: 'back.out(2)' });
+    if (reduce) construir(id, projeto);
+    else gsap.delayedCall(.9, () => construir(id, projeto)); // espera o aparelho terminar de mudar de forma
   }
   let ciclo: number | undefined;
-  const reiniciarCiclo = () => { clearInterval(ciclo); if (!reduce) ciclo = window.setInterval(() => mudarModo((modo + 1) % modos.length), 4000); };
+  const reiniciarCiclo = () => { clearInterval(ciclo); if (!reduce) ciclo = window.setInterval(() => mudarModo((modo + 1) % modos.length), 7000); };
   modoBtns.forEach((b) => b.addEventListener('click', () => { mudarModo(Number(b.dataset.m)); reiniciarCiclo(); }));
 
   // ?dispositivo=celular abre o hero direto num aparelho (útil para apresentar)
-  const inicial = modos.indexOf(new URLSearchParams(location.search).get('dispositivo') || '');
-  if (inicial > 0) mudarModo(inicial);
+  const inicial = Math.max(0, modos.findIndex(([id]) => id === new URLSearchParams(location.search).get('dispositivo')));
 
   // ---- entrada ----
   if (reduce) {
-    desenhar(0);
+    mudarModo(inicial);
     root.querySelectorAll('.hc-n').forEach((n) => (n.textContent = (n as HTMLElement).dataset.to!));
   } else {
+    root.querySelectorAll('.pj .b').forEach((p) => p.classList.add('wire'));
     const tl = gsap.timeline({ delay: .2 });
     tl.from('.hc-w', { yPercent: 110, rotationX: -60, opacity: 0, filter: 'blur(12px)', duration: 1.2, stagger: .08, ease: 'expo.out' })
       .from('.hc-r', { y: 30, opacity: 0, filter: 'blur(10px)', duration: .9, stagger: .12, ease: 'power3.out' }, '-=.8')
-      .from('.hc-pc', { opacity: 0, rotationY: -55, rotationX: 20, z: -400, y: 80, duration: 1.8, ease: 'expo.out', onComplete: () => { desenhar(0); reiniciarCiclo(); } }, .3)
+      .from('.hc-pc', { opacity: 0, rotationY: -55, rotationX: 20, z: -400, y: 80, duration: 1.8, ease: 'expo.out', onComplete: () => { mudarModo(inicial); reiniciarCiclo(); } }, .3)
       .from('.hc-badge', { opacity: 0, scale: .6, y: 40, duration: 1, stagger: .25, ease: 'back.out(1.6)' }, '-=.6')
       .add(() => root.querySelectorAll<HTMLElement>('.hc-n').forEach((n) => contar(n, Number(n.dataset.to), 2)), '-=1.2');
 
