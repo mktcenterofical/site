@@ -4,8 +4,14 @@
 // enviada pelo cliente, recriada em código). Produtos, preços e loja são fictícios — ver CLAUDE.md.
 import { waLink } from '../config';
 import Icon from './Icon.astro';
+const dispositivos = [
+  { id: 'desktop', nome: 'Desktop', icone: '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>' },
+  { id: 'notebook', nome: 'Notebook', icone: '<rect x="4" y="4" width="16" height="11" rx="2"/><path d="M2 19h20"/>' },
+  { id: 'tablet', nome: 'Tablet', icone: '<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/>' },
+  { id: 'celular', nome: 'Celular', icone: '<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/>' },
+];
 ---
-<section class="hc" id="hero">
+<section class="hc" id="hero" data-dispositivos={JSON.stringify(dispositivos.map((d) => d.id))}>
   <div class="hc-glow" aria-hidden="true"></div>
   <div class="hc-grid" aria-hidden="true"></div>
   <div class="hc-lines" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -30,15 +36,17 @@ import Icon from './Icon.astro';
       </ul>
     </div>
 
-    <div class="ex" aria-hidden="true">
-      <div class="ex-scene">
+    <div class="ex" data-mode="celular">
+      <div class="ex-scene" aria-hidden="true">
         <div class="ex-luz"></div>
         <div class="ex-chao"></div>
 
-        <!-- celular -->
+        <!-- aparelho que muda de forma: desktop, notebook, tablet e celular -->
+        <div class="ex-stand" aria-hidden="true"></div>
+        <div class="ex-kb" aria-hidden="true"></div>
         <div class="ex-phone">
           <div class="ex-screen">
-            <div class="ex-status"><b>9:41</b><span class="ex-notch"></span><i></i></div>
+            <div class="ex-status"><b>9:41</b><span class="ex-notch"></span><span class="ex-url">rsmoda.com.br</span><i></i></div>
             <div class="ex-app">
               <div class="ex-head"><span class="ex-logo">RS Moda</span><span class="ex-cart"><Icon name="cart" size={12} /><em>3</em></span></div>
               <div class="ex-busca">Buscar produtos</div>
@@ -67,6 +75,15 @@ import Icon from './Icon.astro';
         <div class="ex-f f-pix ex-pill" data-z="110"><span class="ex-ok"><Icon name="check" size={12} /></span>Pix aprovado · R$ 189,90</div>
         <div class="ex-f f-bot ex-card" data-z="50"><img src="/mock/fitness2.webp" alt="" width="320" height="360" /><img src="/mock/camiseta.webp" alt="" width="480" height="560" /></div>
       </div>
+      <div class="ex-modes" role="tablist" aria-label="Aparelho">
+        {dispositivos.map((d) => (
+          <button type="button" role="tab" data-m={d.id} aria-label={d.nome}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={d.icone} />
+            <span>{d.nome}</span>
+          </button>
+        ))}
+      </div>
+      <p class="ex-note">A mesma loja, perfeita em todas as telas</p>
     </div>
   </div>
 </section>
@@ -99,13 +116,13 @@ import Icon from './Icon.astro';
   .hc-stats small{color:#aeb4bd;font-size:14px}
 
   /* ---------- cena 3D: celular com produtos saltando da tela ---------- */
-  .ex{position:relative;display:flex;justify-content:center;perspective:1400px}
-  .ex-scene{--s:1;position:relative;width:min(100%,560px);aspect-ratio:1/1.08;transform-style:preserve-3d;transform:rotateY(-14deg) rotateX(6deg);font-size:calc(12px * var(--s))}
+  .ex{position:relative;display:flex;flex-direction:column;align-items:center;perspective:1400px}
+  .ex-scene{--s:1;position:relative;width:min(100%,560px);aspect-ratio:1/1.08;text-align:left;transform-style:preserve-3d;transform:rotateY(-14deg) rotateX(6deg);font-size:calc(12px * var(--s))}
   .ex-luz{position:absolute;left:50%;top:50%;width:70%;height:80%;transform:translate(-50%,-50%) translateZ(-60px);border-radius:50%;background:radial-gradient(closest-side,rgba(255,170,90,.55),rgba(255,105,0,.18) 55%,transparent 75%);filter:blur(8px)}
   .ex-chao{position:absolute;left:50%;bottom:1%;width:62%;height:7%;transform:translateX(-50%) rotateX(80deg);border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.65),transparent)}
 
-  .ex-phone{position:absolute;left:50%;top:50%;width:46%;height:90%;transform:translate(-50%,-50%);border-radius:2.6em;padding:.55em;background:linear-gradient(150deg,#ffffff,#e9e6e2 45%,#cfcac4);box-shadow:0 0 0 1px rgba(255,255,255,.6) inset,0 40px 90px -30px rgba(0,0,0,.9),0 0 80px -10px rgba(255,140,60,.45)}
-  .ex-screen{position:relative;width:100%;height:100%;border-radius:2.1em;overflow:hidden;background:#f6f4f1;color:#1b1d22;text-align:left}
+  .ex-phone{--ease:cubic-bezier(.7,0,.2,1);position:absolute;left:calc((100% - var(--w)) / 2);top:calc(var(--t) - var(--h) / 2);width:var(--w);height:var(--h);border-radius:var(--r);padding:var(--p);container-type:size;transition:width .9s var(--ease),height .9s var(--ease),top .9s var(--ease),left .9s var(--ease),border-radius .9s var(--ease),padding .9s var(--ease);background:linear-gradient(150deg,#ffffff,#e9e6e2 45%,#cfcac4);box-shadow:0 0 0 1px rgba(255,255,255,.6) inset,0 40px 90px -30px rgba(0,0,0,.9),0 0 80px -10px rgba(255,140,60,.45)}
+  .ex-screen{position:relative;width:100%;height:100%;border-radius:calc(var(--r) - var(--p));transition:border-radius .9s;overflow:hidden;background:#f6f4f1;color:#1b1d22;text-align:left}
   .ex-status{display:flex;align-items:center;justify-content:space-between;padding:.7em 1.2em .3em;font-size:.8em}
   .ex-notch{width:34%;height:1.5em;border-radius:99px;background:#111}
   .ex-status i{width:1.6em;height:.7em;border-radius:3px;border:1.5px solid #1b1d22}
@@ -127,8 +144,39 @@ import Icon from './Icon.astro';
   .ex-nav i{width:1.3em;height:1.3em;border-radius:.4em;background:#d9d5d0}
   .ex-nav i.on{background:#ff6900}
 
+  .ex-url{display:none;flex:1;margin:0 1em;padding:.25em .9em;border-radius:99px;background:#fff;color:#6b6f76;font-size:.9em}
+  .ex-stand,.ex-kb{position:absolute;left:50%;transform:translateX(-50%);opacity:0;transition:opacity .4s}
+  .ex-stand{top:68%;width:22%;height:22%;background:linear-gradient(90deg,#b9b4ae,#efebe6 50%,#b9b4ae);clip-path:polygon(30% 0,70% 0,100% 86%,100% 100%,0 100%,0 86%)}
+  .ex-kb{top:75%;width:104%;height:4%;border-radius:3px 3px 18px 18px;background:linear-gradient(180deg,#f2efeb,#bdb7b0);box-shadow:0 30px 40px -12px rgba(0,0,0,.8)}
+
+  /* formatos do aparelho */
+  .ex[data-mode="celular"]{--w:46%;--h:90%;--t:50%;--r:2.6em;--p:.55em}
+  .ex[data-mode="tablet"]{--w:70%;--h:86%;--t:50%;--r:1.9em;--p:.9em}
+  .ex[data-mode="notebook"]{--w:92%;--h:56%;--t:46%;--r:1em;--p:.6em}
+  .ex[data-mode="notebook"] .ex-kb{opacity:1;transition-delay:.6s}
+  .ex[data-mode="desktop"]{--w:96%;--h:56%;--t:40%;--r:1em;--p:.6em}
+  .ex[data-mode="desktop"] .ex-stand{opacity:1;transition-delay:.6s}
+
+  /* a loja se reorganiza em telas largas (notebook, desktop, tablet deitado) */
+  @container (min-width:380px){
+    .ex-notch{display:none}
+    .ex-url{display:block}
+    .ex-app{display:grid;grid-template-columns:1.25fr 1fr;grid-template-rows:auto auto 1fr auto;gap:.7em}
+    .ex-head,.ex-busca,.ex-nav{grid-column:1 / -1}
+    .ex-dest{grid-row:3}
+    .ex-mini{grid-row:3;height:auto;grid-template-columns:1fr;grid-template-rows:1fr 1fr}
+    .ex-nav{display:none}
+  }
+  @container (min-width:300px) and (max-width:379px){.ex-mini{height:30%}}
+
+  .ex-modes{display:flex;gap:6px;margin-top:18px;padding:5px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+  .ex-modes button{display:flex;align-items:center;gap:6px;min-height:38px;padding:0 13px;border:0;border-radius:999px;background:none;color:#aeb4bd;font:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:background .3s,color .3s}
+  .ex-modes button.on{background:#ff6900;color:#141006}
+  @media(max-width:520px){.ex-modes button span{display:none}.ex-modes button.on span{display:inline}}
+  .ex-note{margin-top:12px;font-size:13px;color:#aeb4bd}
+
   /* flutuantes */
-  .ex-f{position:absolute;will-change:transform}
+  .ex-f{position:absolute;will-change:transform;font-size:.85em}
   .ex-card{background:#fff;border-radius:1em;padding:.45em;color:#1b1d22;text-align:left;box-shadow:0 24px 50px -18px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.7) inset}
   .ex-card img{border-radius:.7em}
   .ex-card b{display:block;font-weight:800;font-size:.9em;margin-top:.35em}
@@ -137,22 +185,22 @@ import Icon from './Icon.astro';
   .ex-pill svg{color:#0b7544}
   .ex-ok{display:grid;place-items:center;width:1.7em;height:1.7em;border-radius:50%;background:#0b7544;color:#fff;flex:none}
 
-  .f-bone{left:6%;top:6%;width:30%;aspect-ratio:1;border-radius:50%;overflow:hidden;box-shadow:0 30px 60px -20px rgba(0,0,0,.8),0 0 0 4px rgba(255,255,255,.9)}
-  .f-jaq{left:0;top:40%;width:24%}
+  .f-bone{left:4%;top:4%;width:25.5%;aspect-ratio:1;border-radius:50%;overflow:hidden;box-shadow:0 30px 60px -20px rgba(0,0,0,.8),0 0 0 4px rgba(255,255,255,.9)}
+  .f-jaq{left:0;top:40%;width:20.4%}
   .f-jaq img{aspect-ratio:1;height:auto}
-  .f-add{right:0;top:12%;width:36%}
+  .f-add{right:0;top:8%;width:30.6%}
   .ex-add-top{display:flex;align-items:center;gap:.4em;padding:.2em .2em .5em}
   .ex-add-top b{margin:0;font-size:.82em}
   .ex-add-row{display:flex;gap:.5em;align-items:center}
   .ex-add-row img{width:3.6em;height:3.6em;flex:none}
   .ex-add-row b{margin:0}
   .ex-add-row em{display:block;font-style:normal;color:#6b6f76;font-size:.75em}
-  .f-rel{right:4%;top:50%;width:19%}
+  .f-rel{right:2%;top:50%;width:16.2%}
   .f-rel img{aspect-ratio:1;height:auto}
-  .f-mol{left:12%;bottom:6%;width:18%}
+  .f-mol{left:8%;bottom:4%;width:15.3%}
   .f-mol img{aspect-ratio:1/1.1;height:auto}
   .f-pix{right:6%;bottom:16%}
-  .f-bot{right:20%;bottom:2%;width:24%;display:grid;grid-template-columns:1fr 1fr;gap:.35em}
+  .f-bot{right:18%;bottom:1%;width:20.4%;display:grid;grid-template-columns:1fr 1fr;gap:.35em}
   .f-bot img{aspect-ratio:1;height:auto}
 
   /* ----- hero por dispositivo ----- */
@@ -183,7 +231,7 @@ import Icon from './Icon.astro';
     .hc-stats b{font-size:48px}
     .ex-scene{width:min(100%,640px);--s:1.12}
   }
-  @media (prefers-reduced-motion: reduce){.hc-lines{display:none}}
+  @media (prefers-reduced-motion: reduce){.hc-lines{display:none}.ex-phone,.ex-stand,.ex-kb{transition:none}}
 </style>
 
 <script>
@@ -195,6 +243,19 @@ import Icon from './Icon.astro';
 
   const scene = root.querySelector<HTMLElement>('.ex-scene')!;
   const phone = root.querySelector<HTMLElement>('.ex-phone')!;
+  const ex = root.querySelector<HTMLElement>('.ex')!;
+  const modos: string[] = JSON.parse(root.dataset.dispositivos!);
+  const botoes = root.querySelectorAll<HTMLButtonElement>('.ex-modes button');
+  // começa pelo aparelho de quem está vendo
+  let modo = new URLSearchParams(location.search).get('dispositivo') || (innerWidth < 768 ? 'celular' : innerWidth < 1024 ? 'tablet' : innerWidth < 1440 ? 'notebook' : 'desktop');
+  if (!modos.includes(modo)) modo = 'celular';
+  let escolhido = false; // se a pessoa clicou num aparelho, o ciclo para de trocar sozinho
+  function mudarModo(m: string) {
+    modo = m;
+    ex.dataset.mode = m;
+    botoes.forEach((b) => { const on = b.dataset.m === m; b.classList.toggle('on', on); b.setAttribute('aria-selected', String(on)); });
+  }
+  mudarModo(modo);
   const itens = Array.from(root.querySelectorAll<HTMLElement>('.ex-f'));
   itens.forEach((el) => gsap.set(el, { z: Number(el.dataset.z || 60) })); // profundidade: quanto maior, mais "fora" da tela
 
@@ -205,6 +266,7 @@ import Icon from './Icon.astro';
   }
 
   if (reduce) {
+    botoes.forEach((b) => b.addEventListener('click', () => mudarModo(b.dataset.m!)));
     root.querySelectorAll('.hc-n').forEach((n) => (n.textContent = (n as HTMLElement).dataset.to!));
   } else {
     // entrada dos textos
@@ -218,9 +280,18 @@ import Icon from './Icon.astro';
 
     // ciclo: produtos saltam da tela, flutuam e voltam para dentro do celular
     const flutuar: gsap.core.Tween[] = [];
+    let primeiro = true;
+    let atual: gsap.core.Timeline | undefined;
     function ciclo() {
       flutuar.forEach((t) => t.kill()); flutuar.length = 0;
+      // a partir do 2º ciclo troca de aparelho e espera ele terminar de mudar de forma
+      if (!primeiro && !escolhido) { mudarModo(modos[(modos.indexOf(modo) + 1) % modos.length]); gsap.delayedCall(.95, explodir); }
+      else explodir();
+      primeiro = false;
+    }
+    function explodir() {
       const c = gsap.timeline({ onComplete: ciclo });
+      atual = c;
       itens.forEach((el, i) => {
         const d = aoCentro(el);
         gsap.set(el, { x: d.x, y: d.y, scale: .2, opacity: 0, rotationY: -25 });
@@ -233,7 +304,15 @@ import Icon from './Icon.astro';
         .to({}, { duration: .5 });
     }
 
-    // celular "respira" e a cena acompanha o mouse
+    botoes.forEach((b) => b.addEventListener('click', () => {
+      escolhido = true;
+      atual?.kill(); flutuar.forEach((t) => t.kill()); flutuar.length = 0;
+      gsap.to(itens, { scale: .2, opacity: 0, duration: .3 });
+      mudarModo(b.dataset.m!);
+      gsap.delayedCall(.95, explodir);
+    }));
+
+    // aparelho "respira" e a cena acompanha o mouse
     gsap.to(phone, { y: -8, duration: 3, yoyo: true, repeat: -1, ease: 'sine.inOut' });
     root.addEventListener('mousemove', (e) => {
       const r = root.getBoundingClientRect();
