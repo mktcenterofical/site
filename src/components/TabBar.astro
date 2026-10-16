@@ -1,21 +1,21 @@
 ---
+import Icon from './Icon.astro';
 const path = Astro.url.pathname;
 const itens: [string, string, string][] = [
-  ['/', '🏠', 'Início'],
-  ['/#servicos', '🧩', 'Serviços'],
-  ['/portfolio/', '🗂️', 'Portfólio'],
-  ['/contato/', '✉️', 'Contato'],
+  ['/', 'home', 'Início'],
+  ['/#servicos', 'grid', 'Serviços'],
+  ['/portfolio/', 'folder', 'Portfólio'],
+  ['/contato/', 'mail', 'Contato'],
 ];
 ---
 <nav class="tab" aria-label="Navegação rápida">
   {itens.map(([u, i, n]) => (
-    <a href={u} aria-current={path === u ? 'page' : undefined}><span aria-hidden="true">{i}</span>{n}</a>
+    <a href={u} aria-current={path === u ? 'page' : undefined}><Icon name={i} size={22} />{n}</a>
   ))}
 </nav>
 <style>
-  .tab{position:fixed;bottom:0;left:0;right:0;z-index:60;display:grid;grid-template-columns:repeat(4,1fr);background:var(--grafite);border-top:1px solid var(--linha);height:64px}
-  .tab a{display:grid;place-items:center;align-content:center;gap:2px;font-size:.72rem;text-decoration:none;color:var(--prata)}
-  .tab a span{font-size:1.2rem}
-  .tab a[aria-current]{color:var(--laranja)}
+  .tab{position:fixed;bottom:0;left:0;right:0;z-index:60;display:grid;grid-template-columns:repeat(4,1fr);background:var(--carbon);border-top:1px solid #1d2026;height:64px}
+  .tab a{display:grid;place-items:center;align-content:center;gap:4px;font-size:12px;line-height:1;font-weight:600;text-decoration:none;color:#c3c8cf}
+  .tab a[aria-current]{color:var(--orange-hot)}
   @media(min-width:1180px){.tab{display:none}}
 </style>

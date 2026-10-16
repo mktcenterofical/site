@@ -6,14 +6,17 @@ const { titulo = 'Vamos tirar seu projeto do papel?', msg } = Astro.props;
   <div class="wrap in">
     <h2>{titulo}</h2>
     <div class="acoes" style="margin-top:0">
-      <a class="btn btn-primary" href={waLink(msg)} target="_blank" rel="noopener">Chamar no WhatsApp</a>
-      <a class="btn btn-ghost" href="/contato/">Pedir orçamento</a>
+      <a class="btn escuro" href={waLink(msg)} target="_blank" rel="noopener">Chamar no WhatsApp</a>
+      <a class="btn contorno" href="/contato/">Quero meu orçamento</a>
     </div>
   </div>
 </section>
 <style>
-  .faixa{background:linear-gradient(135deg,#fff1e6,var(--grafite));border-top:1px solid var(--linha)}
-  .in{display:grid;gap:20px;align-items:center}
+  .faixa{background:var(--orange);color:var(--on-orange)}
+  .in{display:grid;gap:24px;align-items:center}
   h2{margin:0}
+  .escuro{background:var(--carbon);color:#fff}
+  .escuro:hover{transform:translateY(-1px)}
+  .contorno{border-color:var(--on-orange);color:var(--on-orange)}
   @media(min-width:900px){.in{grid-template-columns:1fr auto}}
 </style>

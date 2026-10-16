@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import CinematicHero from '../components/CinematicHero.astro';
+import Icon from '../components/Icon.astro';
 import FaixaCTA from '../components/FaixaCTA.astro';
 import { servicos } from '../data/servicos';
 import { config, waLink } from '../config';
@@ -21,7 +22,7 @@ const schema = [
       <div class="grid">
         {servicos.map((s) => (
           <a class="card" href={`/${s.slug}/`}>
-            <span class="icone" aria-hidden="true">{s.icone}</span>
+            <span class="icone"><Icon name={s.icone} /></span>
             <h3>{s.nome}</h3>
             <p>{s.curto}</p>
             <span class="mais">Saiba mais →</span>
@@ -57,7 +58,7 @@ const schema = [
           ['Equipe atenciosa, entregou no prazo e explicou tudo sem complicação.', 'Dra. Juliana Prado', 'Clínica Sorriso Vivo'],
         ].map(([t, n, e]) => (
           <figure class="card">
-            <div style="color:var(--laranja-escuro)" aria-label="5 estrelas">★★★★★</div>
+            <div style="color:var(--orange);display:flex;gap:2px" role="img" aria-label="5 estrelas">{[1,2,3,4,5].map(() => <Icon name="star" size={18} />)}</div>
             <blockquote style="margin-top:10px">“{t}”</blockquote>
             <figcaption style="margin-top:14px;color:var(--prata)"><strong style="color:var(--papel)">{n}</strong> · {e}</figcaption>
           </figure>

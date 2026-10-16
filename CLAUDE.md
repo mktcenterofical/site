@@ -7,10 +7,13 @@ Público: donos de comércio, empresas e políticos. Maioria no celular.
 Objetivo do site: gerar contatos pelo WhatsApp e pelo formulário.
 
 ## Marca
+- Seguir o Design System MKT Center: https://claude.ai/artifact/FuqM2mZiv4nB2v4R81pfat (tokens em src/styles/global.css)
+- Ícones: src/components/Icon.astro (traço 2px). Nunca emojis como ícones
+- Favicon: emblema circular (referencia/emblema-mkt.png)
 - Laranja #ff6900 (destaques e botões, no máximo ~10% da tela)
 - Menu do topo com fundo preto #090a0c (preto da logo), links claros
 - Tema CLARO: fundo branco, seções alternadas #f3f4f5, texto #111317, texto secundário #545a63
-- Laranja em texto pequeno usa #b84a00 (contraste no fundo claro)
+- Laranja em texto pequeno usa #a84300 (orange-text) (contraste no fundo claro)
 - Botão laranja sempre com texto escuro #141006 (contraste)
 - Fontes: Barlow Condensed (títulos), DM Sans (texto)
 - Logo: public/logo.webp (topo e rodapé)

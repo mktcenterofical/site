@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
 import FaixaCTA from '../components/FaixaCTA.astro';
 const schema = [{ '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Portfólio MKT Center' }];
 ---
@@ -17,15 +18,15 @@ const schema = [{ '@context': 'https://schema.org', '@type': 'CollectionPage', n
     <div class="wrap">
       <div class="grid">
         {[
-          ['Padaria Pão Dourado', 'Criação de Sites', '🥐', '+112% pedidos pelo WhatsApp', 'Site com cardápio e pedido direto no WhatsApp.'],
-          ['RS Moda Fitness', 'Loja Virtual', '👟', 'R$ 48 mil vendidos no 1º trimestre', 'Loja com Pix, frete automático e catálogo no Instagram.'],
-          ['Clínica Sorriso Vivo', 'Tráfego e SEO', '🦷', '1º lugar no Google na cidade', 'SEO local e campanhas de agendamento.'],
-          ['AgendaFácil', 'Aplicativos e Sistemas', '📅', '3.000 agendamentos por mês', 'App de agendamento para salões de beleza.'],
-          ['Auto Peças Central', 'Tráfego e SEO', '🔧', 'Custo por contato 40% menor', 'Campanhas no Google e Meta para o WhatsApp.'],
-          ['Mandato Vereador Exemplo', 'Marketing Político', '🏛️', '25 mil seguidores em 1 ano', 'Redes sociais e site de prestação de contas.'],
+          ['Padaria Pão Dourado', 'Criação de Sites', 'store', '+112% pedidos pelo WhatsApp', 'Site com cardápio e pedido direto no WhatsApp.'],
+          ['RS Moda Fitness', 'Loja Virtual', 'cart', 'R$ 48 mil vendidos no 1º trimestre', 'Loja com Pix, frete automático e catálogo no Instagram.'],
+          ['Clínica Sorriso Vivo', 'Tráfego e SEO', 'smile', '1º lugar no Google na cidade', 'SEO local e campanhas de agendamento.'],
+          ['AgendaFácil', 'Aplicativos e Sistemas', 'calendar', '3.000 agendamentos por mês', 'App de agendamento para salões de beleza.'],
+          ['Auto Peças Central', 'Tráfego e SEO', 'wrench', 'Custo por contato 40% menor', 'Campanhas no Google e Meta para o WhatsApp.'],
+          ['Mandato Vereador Exemplo', 'Marketing Político', 'landmark', '25 mil seguidores em 1 ano', 'Redes sociais e site de prestação de contas.'],
         ].map(([n, c, i, r, d]) => (
           <div class="card">
-            <div style="aspect-ratio:16/10;background:linear-gradient(135deg,#ffe6d2,var(--grafite));border-radius:10px;display:grid;place-items:center;font-size:3rem" aria-hidden="true">{i}</div>
+            <div style="aspect-ratio:16/10;background:linear-gradient(135deg,#ffe6d2,var(--grafite));border-radius:10px;display:grid;place-items:center;color:var(--orange)"><Icon name={i} size={56} /></div>
             <span class="eyebrow" style="margin:16px 0 4px">{c}</span>
             <h3>{n}</h3>
             <p style="color:var(--laranja-escuro);font-weight:700">{r}</p>

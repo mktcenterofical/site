@@ -6,7 +6,7 @@ export type Servico = {
 
 export const servicos: Servico[] = [
   {
-    slug: 'criacao-de-sites', nome: 'Criação de Sites', icone: '🌐',
+    slug: 'criacao-de-sites', nome: 'Criação de Sites', icone: 'globe',
     curto: 'Sites rápidos, bonitos no celular e prontos para aparecer no Google.',
     title: 'Criação de Sites Profissionais | MKT Center',
     description: 'Criação de sites rápidos, responsivos e otimizados para o Google. Peça seu orçamento pelo WhatsApp com a MKT Center.',
@@ -21,7 +21,7 @@ export const servicos: Servico[] = [
     ],
   },
   {
-    slug: 'aplicativos-e-sistemas', nome: 'Aplicativos e Sistemas', icone: '📱',
+    slug: 'aplicativos-e-sistemas', nome: 'Aplicativos e Sistemas', icone: 'smartphone',
     curto: 'Apps e sistemas sob medida para organizar e escalar sua operação.',
     title: 'Aplicativos e Sistemas sob Medida | MKT Center',
     description: 'Desenvolvimento de aplicativos e sistemas web sob medida para sua empresa. Fale com a MKT Center e tire sua ideia do papel.',
@@ -32,7 +32,7 @@ export const servicos: Servico[] = [
     faq: [],
   },
   {
-    slug: 'loja-virtual', nome: 'Loja Virtual', icone: '🛒',
+    slug: 'loja-virtual', nome: 'Loja Virtual', icone: 'cart',
     curto: 'E-commerce completo com pagamento, frete e gestão de pedidos.',
     title: 'Criação de Loja Virtual | MKT Center',
     description: 'Criação de loja virtual com Pix, cartão, frete e gestão de pedidos. Comece a vender online com a MKT Center.',
@@ -46,7 +46,7 @@ export const servicos: Servico[] = [
     ],
   },
   {
-    slug: 'trafego-e-seo', nome: 'Tráfego e SEO', icone: '📈',
+    slug: 'trafego-e-seo', nome: 'Tráfego e SEO', icone: 'trending',
     curto: 'Anúncios no Google e Meta e SEO para trazer clientes todo mês.',
     title: 'Gestão de Tráfego Pago e SEO | MKT Center',
     description: 'Gestão de tráfego pago no Google e Meta Ads e SEO para sua empresa ser encontrada. Fale com a MKT Center.',
@@ -57,7 +57,7 @@ export const servicos: Servico[] = [
     faq: [],
   },
   {
-    slug: 'marketing-politico', nome: 'Marketing Político', icone: '🗳️',
+    slug: 'marketing-politico', nome: 'Marketing Político', icone: 'landmark',
     curto: 'Presença digital para candidatos e mandatos, de todos os partidos.',
     title: 'Marketing Político Digital | MKT Center',
     description: 'Marketing político digital para candidatos e mandatos de todos os partidos, dentro das regras do TSE. Fale com a MKT Center.',
