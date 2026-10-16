@@ -8,7 +8,8 @@ Objetivo do site: gerar contatos pelo WhatsApp e pelo formulário.
 
 ## Marca
 - Laranja #ff6900 (destaques e botões, no máximo ~10% da tela)
-- Preto #090a0c, grafite #111317, papel #f3f4f5, prata #aeb4bd
+- Tema CLARO: fundo branco, seções alternadas #f3f4f5, texto #111317, texto secundário #545a63
+- Laranja em texto pequeno usa #b84a00 (contraste no fundo claro)
 - Botão laranja sempre com texto escuro #141006 (contraste)
 - Fontes: Barlow Condensed (títulos), DM Sans (texto)
 - Logo: public/logo.webp (topo e rodapé), logo-grande.webp no hero da home
