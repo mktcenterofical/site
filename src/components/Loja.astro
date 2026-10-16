@@ -1,0 +1,101 @@
+---
+// Tela de loja virtual fictícia (RS Moda) usada dentro dos aparelhos do hero.
+// O layout muda conforme o aparelho (prop "tipo"); tudo é medido em em, e o tamanho da fonte
+// acompanha a largura da tela (cqw), então cada tela parece um print real reduzido.
+interface Props { tipo: 'desk' | 'lap' | 'tab' | 'cel' }
+const { tipo } = Astro.props;
+const produtos: [string, string, string][] = [
+  ['moletom', 'Moletom Basic', 'R$ 129,90'],
+  ['fitness2', 'Calça Jogger', 'R$ 89,90'],
+  ['jaqueta', 'Jaqueta Couro', 'R$ 349,90'],
+  ['relogio', 'Relógio Smart', 'R$ 259,90'],
+];
+---
+<div class={`lj lj--${tipo}`}>
+  {(tipo === 'desk' || tipo === 'lap') && <div class="lj-bar"><i></i><i></i><i></i><span>rsmoda.com.br</span></div>}
+  {(tipo === 'tab' || tipo === 'cel') && <div class="lj-status"><b>9:41</b>{tipo === 'cel' && <span class="lj-isl"></span>}<i></i></div>}
+  <div class="lj-top">
+    <span class="lj-logo">RS Moda</span>
+    <nav><span>Feminino</span><span>Masculino</span><span>Acessórios</span></nav>
+    <span class="lj-cart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg><em class="lj-qtd">2</em></span>
+  </div>
+  <div class="lj-hero">
+    <div class="lj-hero-t">
+      <small>Nova coleção</small>
+      <b>Básicos<br />premium</b>
+      <span class="lj-bt">Comprar</span>
+    </div>
+    <div class="lj-hero-img"><img src="/mock/camiseta.webp" alt="" width="480" height="560" loading="lazy" decoding="async" /></div>
+  </div>
+  <div class="lj-sec"><b>Mais vendidos</b><span>Ver tudo</span></div>
+  <div class="lj-prods">
+    {produtos.map(([img, n, p]) => (
+      <div class="lj-p">
+        <div class="lj-p-img"><img src={`/mock/${img}.webp`} alt="" width="320" height="320" loading="lazy" decoding="async" /></div>
+        <span>{n}</span><b>{p}</b>
+      </div>
+    ))}
+  </div>
+  {tipo === 'cel' && <div class="lj-nav"><i class="on"></i><i></i><i></i><i></i></div>}
+  <div class="lj-toast"><span>✓</span>Adicionado ao carrinho</div>
+</div>
+
+<style>
+  .lj{position:absolute;inset:0;display:flex;flex-direction:column;background:#f7f5f2;color:#17181c;font-family:var(--ff-txt);line-height:1.2;text-align:left;overflow:hidden}
+  .lj--desk,.lj--lap{font-size:1.75cqw}
+  .lj--tab{font-size:4.1cqw}
+  .lj--cel{font-size:7.2cqw}
+  .lj img{display:block;width:100%;height:100%;object-fit:cover}
+
+  .lj-bar{display:flex;align-items:center;gap:.45em;padding:.55em .9em;background:#e9e6e2;border-bottom:1px solid #dcd8d3}
+  .lj-bar i{width:.65em;height:.65em;border-radius:50%;background:#cbc6c0}
+  .lj-bar i:first-child{background:#ff6b5e}
+  .lj-bar span{margin-left:.8em;padding:.2em 1.2em;border-radius:99px;background:#fff;color:#6b6f76;font-size:.85em;min-width:40%}
+  .lj-status{display:flex;align-items:center;justify-content:space-between;padding:.6em 1.1em .2em;font-size:.75em}
+  .lj-isl{width:34%;height:1.5em;border-radius:99px;background:#0b0b0d}
+  .lj-status i{width:1.7em;height:.75em;border-radius:3px;border:1.5px solid #17181c}
+
+  .lj-top{display:flex;align-items:center;gap:1.4em;padding:.8em 1.6em}
+  .lj-logo{font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:1.45em;letter-spacing:.02em;margin-right:auto}
+  .lj-top nav{display:flex;gap:1.4em;color:#55585f;font-weight:600;font-size:.9em}
+  .lj-cart{position:relative;display:grid;place-items:center;width:2.3em;height:2.3em;border-radius:50%;background:#17181c;color:#fff}
+  .lj-cart svg{width:1.15em;height:1.15em}
+  .lj-qtd{position:absolute;top:-.35em;right:-.35em;min-width:1.4em;height:1.4em;padding:0 .25em;border-radius:99px;background:#ff6900;color:#141006;font-style:normal;font-weight:800;font-size:.75em;display:grid;place-items:center}
+
+  .lj-hero{display:grid;grid-template-columns:1fr 1.05fr;margin:0 1.6em;border-radius:1em;overflow:hidden;background:linear-gradient(120deg,#17181c,#2b1c10);height:42%;flex:none}
+  .lj-hero-t{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:.6em;padding:0 1.6em;color:#fff}
+  .lj-hero-t small{color:#ff8a24;font-weight:800;text-transform:uppercase;letter-spacing:.12em;font-size:.72em}
+  .lj-hero-t b{font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:2.5em;line-height:.92}
+  .lj-bt{position:relative;background:#ff6900;color:#141006;font-weight:800;border-radius:99px;padding:.5em 1.2em;font-size:.85em}
+  .lj-hero-img{min-height:0}
+
+  .lj-sec{display:flex;justify-content:space-between;align-items:baseline;margin:1em 1.6em .6em}
+  .lj-sec b{font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:1.15em}
+  .lj-sec span{color:#a84300;font-weight:700;font-size:.8em}
+  .lj-prods{display:grid;grid-template-columns:repeat(4,1fr);gap:1em;margin:0 1.6em;flex:1;min-height:0}
+  .lj-p{display:flex;flex-direction:column;gap:.3em;min-height:0}
+  .lj-p-img{flex:1;min-height:0;border-radius:.7em;overflow:hidden;background:#e7e3de}
+  .lj-p span{font-size:.85em;font-weight:600}
+  .lj-p b{font-size:.9em;font-weight:800;color:#a84300;padding-bottom:1em}
+
+  /* tablet e celular: layout de app */
+  .lj--tab .lj-top nav,.lj--cel .lj-top nav{display:none}
+  .lj--tab .lj-top,.lj--cel .lj-top{padding:.6em 1.1em}
+  .lj--tab .lj-hero,.lj--cel .lj-hero{margin:0 1.1em;grid-template-columns:1fr;position:relative;height:40%}
+  .lj--tab .lj-hero-t,.lj--cel .lj-hero-t{position:absolute;inset:auto 0 0 0;padding:2.4em 1em 1em;background:linear-gradient(transparent,rgba(0,0,0,.7));z-index:1}
+  .lj--tab .lj-hero-t b,.lj--cel .lj-hero-t b{font-size:1.9em}
+  .lj--tab .lj-sec,.lj--cel .lj-sec{margin:.9em 1.1em .5em}
+  .lj--tab .lj-prods,.lj--cel .lj-prods{margin:0 1.1em;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:.7em}
+  .lj--cel .lj-hero{height:36%}
+  .lj--cel .lj-prods{grid-template-rows:1fr}
+  .lj--cel .lj-p:nth-child(n+3){display:none}
+  .lj--cel .lj-p b{padding-bottom:.4em}
+  .lj-nav{display:flex;justify-content:space-around;padding:.9em 0 1.3em;background:#fff;border-top:1px solid #ece9e5}
+  .lj-nav i{width:1.3em;height:1.3em;border-radius:.4em;background:#d9d5d0}
+  .lj-nav i.on{background:#ff6900}
+
+  /* aviso que aparece em todas as telas ao mesmo tempo */
+  .lj-toast{position:absolute;left:50%;top:1.2em;transform:translate(-50%,-180%);display:flex;align-items:center;gap:.6em;white-space:nowrap;background:#17181c;color:#fff;font-weight:700;font-size:.9em;padding:.6em 1.1em .6em .6em;border-radius:99px;box-shadow:0 .8em 2em rgba(0,0,0,.35);z-index:5}
+  .lj-toast span{display:grid;place-items:center;width:1.6em;height:1.6em;border-radius:50%;background:#0b7544;font-size:.85em}
+  .lj--cel .lj-toast,.lj--tab .lj-toast{top:2.4em;font-size:.8em}
+</style>

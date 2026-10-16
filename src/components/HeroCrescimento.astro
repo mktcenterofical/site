@@ -1,17 +1,25 @@
 ---
-// Hero cinematográfico: textos animados à esquerda e, à direita, um celular com uma loja virtual de onde
-// os produtos e cards "saltam" da tela em 3D e ficam flutuando (inspirado em animação de referência
-// enviada pelo cliente, recriada em código). Produtos, preços e loja são fictícios — ver CLAUDE.md.
+// Hero cinematográfico: textos animados à esquerda e, à direita, os 4 aparelhos (desktop, notebook,
+// tablet e celular) juntos mostrando a mesma loja, cada um com layout próprio. Um destaque passa de
+// aparelho em aparelho e faz produtos saltarem da tela em 3D; uma compra no celular aparece em todas
+// as telas ao mesmo tempo. Loja, produtos e preços são fictícios — ver CLAUDE.md.
 import { waLink } from '../config';
-import Icon from './Icon.astro';
+import Loja from './Loja.astro';
 const dispositivos = [
-  { id: 'desktop', nome: 'Desktop', icone: '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>' },
-  { id: 'notebook', nome: 'Notebook', icone: '<rect x="4" y="4" width="16" height="11" rx="2"/><path d="M2 19h20"/>' },
-  { id: 'tablet', nome: 'Tablet', icone: '<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/>' },
-  { id: 'celular', nome: 'Celular', icone: '<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/>' },
+  { id: 'desk', nome: 'Desktop', icone: '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>' },
+  { id: 'lap', nome: 'Notebook', icone: '<rect x="4" y="4" width="16" height="11" rx="2"/><path d="M2 19h20"/>' },
+  { id: 'tab', nome: 'Tablet', icone: '<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/>' },
+  { id: 'cel', nome: 'Celular', icone: '<rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/>' },
 ];
+// produtos que saltam da tela de cada aparelho quando ele está em destaque
+const saltos: Record<string, [string, string, string][]> = {
+  desk: [['jaqueta', 'Jaqueta Couro', 'R$ 349,90'], ['bone', 'Boné Trucker', 'R$ 79,90']],
+  lap: [['moletom', 'Moletom Basic', 'R$ 129,90'], ['relogio', 'Relógio Smart', 'R$ 259,90']],
+  tab: [['modelo', 'Casaco Inverno', 'R$ 199,90'], ['fitness2', 'Calça Jogger', 'R$ 89,90']],
+  cel: [['camiseta', 'Camiseta Premium', 'R$ 69,90'], ['bone', 'Boné Trucker', 'R$ 79,90']],
+};
 ---
-<section class="hc" id="hero" data-dispositivos={JSON.stringify(dispositivos.map((d) => d.id))}>
+<section class="hc" id="hero" data-saltos={JSON.stringify(saltos)}>
   <div class="hc-glow" aria-hidden="true"></div>
   <div class="hc-grid" aria-hidden="true"></div>
   <div class="hc-lines" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -36,62 +44,50 @@ const dispositivos = [
       </ul>
     </div>
 
-    <div class="ex" data-mode="celular">
-      <div class="ex-scene" aria-hidden="true">
-        <div class="ex-luz"></div>
-        <div class="ex-chao"></div>
+    <div class="sv">
+      <div class="sv-scene" aria-hidden="true">
+        <div class="sv-aura"></div>
 
-        <!-- aparelho que muda de forma: desktop, notebook, tablet e celular -->
-        <div class="ex-stand" aria-hidden="true"></div>
-        <div class="ex-kb" aria-hidden="true"></div>
-        <div class="ex-phone">
-          <div class="ex-screen">
-            <div class="ex-status"><b>9:41</b><span class="ex-notch"></span><span class="ex-url">rsmoda.com.br</span><i></i></div>
-            <div class="ex-app">
-              <div class="ex-head"><span class="ex-logo">RS Moda</span><span class="ex-cart"><Icon name="cart" size={12} /><em>3</em></span></div>
-              <div class="ex-busca">Buscar produtos</div>
-              <div class="ex-dest">
-                <img src="/mock/camiseta.webp" alt="" width="480" height="560" />
-                <div><small>Nova coleção</small><b>Básicos premium</b></div>
-              </div>
-              <div class="ex-mini">
-                <div><img src="/mock/moletom.webp" alt="" width="320" height="360" /><span>R$ 129,90</span></div>
-                <div><img src="/mock/fitness2.webp" alt="" width="320" height="360" /><span>R$ 89,90</span></div>
-              </div>
-              <div class="ex-nav"><i class="on"></i><i></i><i></i><i></i></div>
-            </div>
-          </div>
+        <div class="dv dv-desk" data-d="desk">
+          <div class="dv-frame"><div class="dv-scr"><Loja tipo="desk" /><i class="dv-on"></i></div></div>
+          <div class="dv-neck"></div><div class="dv-foot"></div>
+        </div>
+        <div class="dv dv-lap" data-d="lap">
+          <div class="dv-frame"><div class="dv-scr"><Loja tipo="lap" /><i class="dv-on"></i></div></div>
+          <div class="dv-deck"></div>
+        </div>
+        <div class="dv dv-tab" data-d="tab">
+          <div class="dv-frame"><div class="dv-scr"><Loja tipo="tab" /><i class="dv-on"></i></div></div>
+        </div>
+        <div class="dv dv-cel" data-d="cel">
+          <div class="dv-frame"><div class="dv-scr"><Loja tipo="cel" /><i class="dv-on"></i><span class="dv-tap"></span></div></div>
         </div>
 
-        <!-- elementos que saltam da tela -->
-        <div class="ex-f f-bone" data-z="140"><img src="/mock/bone.webp" alt="" width="320" height="320" /></div>
-        <div class="ex-f f-jaq ex-card" data-z="90"><img src="/mock/jaqueta.webp" alt="" width="320" height="320" /><b>Jaqueta Couro</b><small>R$ 349,90</small></div>
-        <div class="ex-f f-add ex-card" data-z="120">
-          <div class="ex-add-top"><span class="ex-ok"><Icon name="check" size={12} /></span><b>Adicionado ao carrinho</b></div>
-          <div class="ex-add-row"><img src="/mock/modelo.webp" alt="" width="320" height="360" /><div><b>Casaco Inverno</b><small>R$ 199,90</small><em>Tam. M · 1 un.</em></div></div>
-        </div>
-        <div class="ex-f f-rel ex-card" data-z="70"><img src="/mock/relogio.webp" alt="" width="240" height="240" /><small>R$ 259,90</small></div>
-        <div class="ex-f f-mol ex-card" data-z="60"><img src="/mock/moletom.webp" alt="" width="320" height="360" /></div>
-        <div class="ex-f f-pix ex-pill" data-z="110"><span class="ex-ok"><Icon name="check" size={12} /></span>Pix aprovado · R$ 189,90</div>
-        <div class="ex-f f-bot ex-card" data-z="50"><img src="/mock/fitness2.webp" alt="" width="320" height="360" /><img src="/mock/camiseta.webp" alt="" width="480" height="560" /></div>
+        <!-- produtos que saltam da tela do aparelho em destaque -->
+        <div class="pop"><div class="pop-img"><img src="/mock/jaqueta.webp" alt="" width="320" height="320" /></div><div><b>Jaqueta Couro</b><small>R$ 349,90</small></div></div>
+        <div class="pop"><div class="pop-img"><img src="/mock/bone.webp" alt="" width="320" height="320" /></div><div><b>Boné Trucker</b><small>R$ 79,90</small></div></div>
+
+        <div class="chip chip-a"><span class="chip-ok">✓</span><div><b>Pix aprovado</b><small>Pedido #1024 · R$ 189,90</small></div></div>
+        <div class="chip chip-b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg><div><b>+38% em vendas</b><small>depois da loja nova</small></div></div>
       </div>
-      <div class="ex-modes" role="tablist" aria-label="Aparelho">
-        {dispositivos.map((d) => (
-          <button type="button" role="tab" data-m={d.id} aria-label={d.nome}>
+
+      <div class="sv-modes" role="tablist" aria-label="Destacar aparelho">
+        {dispositivos.map((d, i) => (
+          <button type="button" role="tab" data-m={d.id} class={i === 0 ? 'on' : ''} aria-label={d.nome}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={d.icone} />
             <span>{d.nome}</span>
           </button>
         ))}
       </div>
-      <p class="ex-note">A mesma loja, perfeita em todas as telas</p>
+      <p class="sv-note">Uma loja, quatro telas, um só sistema</p>
     </div>
   </div>
 </section>
 
 <style>
   .hc{position:relative;overflow:hidden;background:var(--carbon);color:#fff;padding:56px 0 72px;isolation:isolate}
-  @media(min-width:1024px){.hc{padding:56px 0 72px;min-height:calc(100vh - 114px);display:flex;align-items:center}}
-  .hc-glow{position:absolute;inset:-20%;z-index:-1;background:radial-gradient(600px 420px at 75% 45%,rgba(255,105,0,.28),transparent 65%),radial-gradient(500px 360px at 10% 90%,rgba(255,138,36,.12),transparent 70%)}
+  @media(min-width:1024px){.hc{min-height:calc(100vh - 114px);display:flex;align-items:center}}
+  .hc-glow{position:absolute;inset:-20%;z-index:-1;background:radial-gradient(600px 420px at 75% 45%,rgba(255,105,0,.22),transparent 65%),radial-gradient(500px 360px at 10% 90%,rgba(255,138,36,.1),transparent 70%)}
   .hc-grid{position:absolute;inset:0;z-index:-1;background-size:56px 56px;background-image:linear-gradient(to right,rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.05) 1px,transparent 1px);mask-image:radial-gradient(ellipse at 60% 50%,#000 0%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse at 60% 50%,#000 0%,transparent 70%)}
   .hc-lines{position:absolute;inset:0;z-index:-1;pointer-events:none}
   .hc-lines i{position:absolute;height:2px;width:220px;background:linear-gradient(90deg,transparent,#ff6900,transparent);transform:skewX(-30deg);opacity:.5;animation:hc-speed 5s linear infinite}
@@ -101,8 +97,7 @@ const dispositivos = [
   @keyframes hc-speed{from{left:-20%}to{left:110%}}
 
   .hc-in{display:grid;gap:40px;align-items:center;width:100%}
-  @media(min-width:1024px){.hc-in{grid-template-columns:1fr 1.1fr;gap:32px}}
-
+  @media(min-width:1024px){.hc-in{grid-template-columns:1fr 1.15fr;gap:32px}}
   .hc .eyebrow{color:var(--orange-hot)}
   .hc-h1{font-size:clamp(46px,5.6vw,76px);line-height:.9;letter-spacing:-.02em;display:flex;flex-direction:column}
   .hc-line{display:block;overflow:hidden;padding-bottom:.04em}
@@ -115,93 +110,60 @@ const dispositivos = [
   .hc-stats b{display:block;font-family:var(--ff-tit);font-weight:800;font-size:40px;line-height:1}
   .hc-stats small{color:#aeb4bd;font-size:14px}
 
-  /* ---------- cena 3D: celular com produtos saltando da tela ---------- */
-  .ex{position:relative;display:flex;flex-direction:column;align-items:center;perspective:1400px}
-  .ex-scene{--s:1;position:relative;width:min(100%,560px);aspect-ratio:1/1.08;text-align:left;transform-style:preserve-3d;transform:rotateY(-14deg) rotateX(6deg);font-size:calc(12px * var(--s))}
-  .ex-luz{position:absolute;left:50%;top:50%;width:70%;height:80%;transform:translate(-50%,-50%) translateZ(-60px);border-radius:50%;background:radial-gradient(closest-side,rgba(255,170,90,.55),rgba(255,105,0,.18) 55%,transparent 75%);filter:blur(8px)}
-  .ex-chao{position:absolute;left:50%;bottom:1%;width:62%;height:7%;transform:translateX(-50%) rotateX(80deg);border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.65),transparent)}
+  /* ---------- vitrine com os 4 aparelhos (tudo medido em cqw da cena) ---------- */
+  .sv{display:flex;flex-direction:column;align-items:center;perspective:1600px}
+  .sv-scene{position:relative;width:min(100%,640px);aspect-ratio:100/76;container-type:inline-size;transform-style:preserve-3d;transform:rotateX(4deg) rotateY(-6deg);text-align:left}
+  .sv-aura{position:absolute;left:12cqw;top:6cqw;width:76cqw;height:62cqw;border-radius:50%;background:radial-gradient(closest-side,rgba(255,120,30,.32),rgba(255,105,0,.08) 60%,transparent);filter:blur(2cqw);pointer-events:none}
 
-  .ex-phone{--ease:cubic-bezier(.7,0,.2,1);position:absolute;left:calc((100% - var(--w)) / 2);top:calc(var(--t) - var(--h) / 2);width:var(--w);height:var(--h);border-radius:var(--r);padding:var(--p);container-type:size;transition:width .9s var(--ease),height .9s var(--ease),top .9s var(--ease),left .9s var(--ease),border-radius .9s var(--ease),padding .9s var(--ease);background:linear-gradient(150deg,#ffffff,#e9e6e2 45%,#cfcac4);box-shadow:0 0 0 1px rgba(255,255,255,.6) inset,0 40px 90px -30px rgba(0,0,0,.9),0 0 80px -10px rgba(255,140,60,.45)}
-  .ex-screen{position:relative;width:100%;height:100%;border-radius:calc(var(--r) - var(--p));transition:border-radius .9s;overflow:hidden;background:#f6f4f1;color:#1b1d22;text-align:left}
-  .ex-status{display:flex;align-items:center;justify-content:space-between;padding:.7em 1.2em .3em;font-size:.8em}
-  .ex-notch{width:34%;height:1.5em;border-radius:99px;background:#111}
-  .ex-status i{width:1.6em;height:.7em;border-radius:3px;border:1.5px solid #1b1d22}
-  .ex-app{display:flex;flex-direction:column;gap:.7em;padding:.4em .9em 0;height:calc(100% - 2.6em)}
-  .ex-head{display:flex;align-items:center;justify-content:space-between}
-  .ex-logo{font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:1.35em}
-  .ex-cart{position:relative;display:grid;place-items:center;width:2.2em;height:2.2em;border-radius:50%;background:#141006;color:#fff}
-  .ex-cart em{position:absolute;top:-.3em;right:-.3em;min-width:1.3em;height:1.3em;border-radius:99px;background:#ff6900;color:#141006;font-style:normal;font-weight:800;font-size:.7em;display:grid;place-items:center}
-  .ex-busca{background:#fff;border-radius:99px;padding:.6em 1em;color:#9a9ea5;font-size:.85em;box-shadow:0 3px 10px rgba(0,0,0,.06)}
-  .ex-dest{position:relative;flex:1;min-height:0;border-radius:1em;overflow:hidden;background:#e4e0db}
-  .ex-dest img,.ex-mini img,.ex-f img{display:block;width:100%;height:100%;object-fit:cover}
-  .ex-dest div{position:absolute;left:0;right:0;bottom:0;padding:1.6em .9em .7em;background:linear-gradient(transparent,rgba(0,0,0,.65));color:#fff}
-  .ex-dest small{display:block;color:#ff8a24;font-weight:800;text-transform:uppercase;letter-spacing:.1em;font-size:.7em}
-  .ex-dest b{font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:1.4em;line-height:1}
-  .ex-mini{display:grid;grid-template-columns:1fr 1fr;gap:.6em;height:24%}
-  .ex-mini div{position:relative;border-radius:.8em;overflow:hidden;background:#fff}
-  .ex-mini span{position:absolute;left:.4em;bottom:.4em;background:#fff;border-radius:99px;padding:.15em .55em;font-weight:800;font-size:.75em;color:#a84300}
-  .ex-nav{display:flex;justify-content:space-around;padding:.8em 0 1.1em;margin:0 -.9em;background:#fff;border-top:1px solid #eee}
-  .ex-nav i{width:1.3em;height:1.3em;border-radius:.4em;background:#d9d5d0}
-  .ex-nav i.on{background:#ff6900}
+  .dv{position:absolute;transform-style:preserve-3d;will-change:transform}
+  .dv-frame{position:relative;background:linear-gradient(155deg,#3b3e45,#1a1c20 38%,#0e0f12);box-shadow:0 0 0 1px rgba(255,255,255,.07),inset 0 1px 0 rgba(255,255,255,.14),0 3cqw 6cqw -2cqw rgba(0,0,0,.85);transition:box-shadow .5s}
+  .dv-scr{position:relative;overflow:hidden;container-type:inline-size;background:#f7f5f2}
+  .dv-on{position:absolute;inset:0;z-index:6;background:#050506;pointer-events:none}
+  .dv-scr::after{content:'';position:absolute;inset:0;z-index:7;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.14),rgba(255,255,255,0) 38%)}
+  .dv.ativo .dv-frame{box-shadow:0 0 0 1px rgba(255,138,36,.7),0 0 4cqw -.5cqw rgba(255,105,0,.65),inset 0 1px 0 rgba(255,255,255,.2),0 4cqw 7cqw -2cqw rgba(0,0,0,.9)}
 
-  .ex-url{display:none;flex:1;margin:0 1em;padding:.25em .9em;border-radius:99px;background:#fff;color:#6b6f76;font-size:.9em}
-  .ex-stand,.ex-kb{position:absolute;left:50%;transform:translateX(-50%);opacity:0;transition:opacity .4s}
-  .ex-stand{top:68%;width:22%;height:22%;background:linear-gradient(90deg,#b9b4ae,#efebe6 50%,#b9b4ae);clip-path:polygon(30% 0,70% 0,100% 86%,100% 100%,0 100%,0 86%)}
-  .ex-kb{top:75%;width:104%;height:4%;border-radius:3px 3px 18px 18px;background:linear-gradient(180deg,#f2efeb,#bdb7b0);box-shadow:0 30px 40px -12px rgba(0,0,0,.8)}
+  .dv-desk{left:19cqw;top:0;width:64cqw}
+  .dv-desk .dv-frame{padding:.8cqw;border-radius:1.4cqw}
+  .dv-desk .dv-scr{aspect-ratio:16/10;border-radius:.6cqw}
+  .dv-neck{width:9cqw;height:7cqw;margin:0 auto;background:linear-gradient(90deg,#16171a,#4a4d55 50%,#16171a);clip-path:polygon(18% 0,82% 0,100% 100%,0 100%)}
+  .dv-foot{width:24cqw;height:1.2cqw;margin:0 auto;border-radius:.6cqw .6cqw 1cqw 1cqw;background:linear-gradient(180deg,#4a4d55,#16171a)}
 
-  /* formatos do aparelho */
-  .ex[data-mode="celular"]{--w:46%;--h:90%;--t:50%;--r:2.6em;--p:.55em}
-  .ex[data-mode="tablet"]{--w:70%;--h:86%;--t:50%;--r:1.9em;--p:.9em}
-  .ex[data-mode="notebook"]{--w:92%;--h:56%;--t:46%;--r:1em;--p:.6em}
-  .ex[data-mode="notebook"] .ex-kb{opacity:1;transition-delay:.6s}
-  .ex[data-mode="desktop"]{--w:96%;--h:56%;--t:40%;--r:1em;--p:.6em}
-  .ex[data-mode="desktop"] .ex-stand{opacity:1;transition-delay:.6s}
+  .dv-lap{left:0;top:29cqw;width:48cqw}
+  .dv-lap .dv-frame{padding:.8cqw .8cqw 1.1cqw;border-radius:1.4cqw 1.4cqw .4cqw .4cqw}
+  .dv-lap .dv-scr{aspect-ratio:16/10;border-radius:.5cqw}
+  .dv-deck{position:relative;width:112%;margin-left:-6%;height:2cqw;border-radius:.3cqw .3cqw 1.6cqw 1.6cqw;background:linear-gradient(180deg,#55585f,#1b1c20);box-shadow:0 2cqw 3cqw -1cqw rgba(0,0,0,.9)}
+  .dv-deck::after{content:'';position:absolute;left:50%;top:0;transform:translateX(-50%);width:16%;height:45%;border-radius:0 0 .8cqw .8cqw;background:#2a2c31}
 
-  /* a loja se reorganiza em telas largas (notebook, desktop, tablet deitado) */
-  @container (min-width:380px){
-    .ex-notch{display:none}
-    .ex-url{display:block}
-    .ex-app{display:grid;grid-template-columns:1.25fr 1fr;grid-template-rows:auto auto 1fr auto;gap:.7em}
-    .ex-head,.ex-busca,.ex-nav{grid-column:1 / -1}
-    .ex-dest{grid-row:3}
-    .ex-mini{grid-row:3;height:auto;grid-template-columns:1fr;grid-template-rows:1fr 1fr}
-    .ex-nav{display:none}
-  }
-  @container (min-width:300px) and (max-width:379px){.ex-mini{height:30%}}
+  .dv-tab{left:72cqw;top:24cqw;width:27cqw}
+  .dv-tab .dv-frame{padding:1.1cqw;border-radius:2.4cqw}
+  .dv-tab .dv-scr{aspect-ratio:3/4.1;border-radius:1.3cqw}
 
-  .ex-modes{display:flex;gap:6px;margin-top:18px;padding:5px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
-  .ex-modes button{display:flex;align-items:center;gap:6px;min-height:38px;padding:0 13px;border:0;border-radius:999px;background:none;color:#aeb4bd;font:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:background .3s,color .3s}
-  .ex-modes button.on{background:#ff6900;color:#141006}
-  @media(max-width:520px){.ex-modes button span{display:none}.ex-modes button.on span{display:inline}}
-  .ex-note{margin-top:12px;font-size:13px;color:#aeb4bd}
+  .dv-cel{left:53cqw;top:38cqw;width:15cqw}
+  .dv-cel .dv-frame{padding:.6cqw;border-radius:2.6cqw}
+  .dv-cel .dv-scr{aspect-ratio:9/19;border-radius:2cqw}
+  .dv-tap{position:absolute;z-index:8;left:24%;top:31%;width:5cqw;height:5cqw;margin:-2.5cqw 0 0 -2.5cqw;border-radius:50%;border:.35cqw solid #ff6900;opacity:0;pointer-events:none}
 
-  /* flutuantes */
-  .ex-f{position:absolute;will-change:transform;font-size:.85em}
-  .ex-card{background:#fff;border-radius:1em;padding:.45em;color:#1b1d22;text-align:left;box-shadow:0 24px 50px -18px rgba(0,0,0,.75),0 0 0 1px rgba(255,255,255,.7) inset}
-  .ex-card img{border-radius:.7em}
-  .ex-card b{display:block;font-weight:800;font-size:.9em;margin-top:.35em}
-  .ex-card small{display:block;color:#a84300;font-weight:800;font-size:.85em}
-  .ex-pill{display:flex;align-items:center;gap:.5em;white-space:nowrap;background:#fff;color:#1b1d22;font-weight:800;font-size:.9em;padding:.55em .9em .55em .55em;border-radius:99px;box-shadow:0 20px 40px -16px rgba(0,0,0,.75)}
-  .ex-pill svg{color:#0b7544}
-  .ex-ok{display:grid;place-items:center;width:1.7em;height:1.7em;border-radius:50%;background:#0b7544;color:#fff;flex:none}
+  /* produtos que saltam */
+  .pop{position:absolute;left:0;top:0;z-index:20;display:flex;align-items:center;gap:1cqw;width:21cqw;padding:.8cqw;border-radius:1.6cqw;background:rgba(255,255,255,.97);color:#17181c;box-shadow:0 3cqw 5cqw -1.5cqw rgba(0,0,0,.85),0 0 0 1px rgba(255,255,255,.8) inset;opacity:0;pointer-events:none;will-change:transform}
+  .pop-img{width:7.5cqw;height:7.5cqw;flex:none;border-radius:1.1cqw;overflow:hidden;background:#eee}
+  .pop img{display:block;width:100%;height:100%;object-fit:cover}
+  .pop b{display:block;font-size:1.7cqw;font-weight:800;line-height:1.15}
+  .pop small{display:block;font-size:1.6cqw;font-weight:800;color:#a84300;margin-top:.3cqw}
 
-  .f-bone{left:4%;top:4%;width:25.5%;aspect-ratio:1;border-radius:50%;overflow:hidden;box-shadow:0 30px 60px -20px rgba(0,0,0,.8),0 0 0 4px rgba(255,255,255,.9)}
-  .f-jaq{left:0;top:40%;width:20.4%}
-  .f-jaq img{aspect-ratio:1;height:auto}
-  .f-add{right:0;top:8%;width:30.6%}
-  .ex-add-top{display:flex;align-items:center;gap:.4em;padding:.2em .2em .5em}
-  .ex-add-top b{margin:0;font-size:.82em}
-  .ex-add-row{display:flex;gap:.5em;align-items:center}
-  .ex-add-row img{width:3.6em;height:3.6em;flex:none}
-  .ex-add-row b{margin:0}
-  .ex-add-row em{display:block;font-style:normal;color:#6b6f76;font-size:.75em}
-  .f-rel{right:2%;top:50%;width:16.2%}
-  .f-rel img{aspect-ratio:1;height:auto}
-  .f-mol{left:8%;bottom:4%;width:15.3%}
-  .f-mol img{aspect-ratio:1/1.1;height:auto}
-  .f-pix{right:6%;bottom:16%}
-  .f-bot{right:18%;bottom:1%;width:20.4%;display:grid;grid-template-columns:1fr 1fr;gap:.35em}
-  .f-bot img{aspect-ratio:1;height:auto}
+  /* selos discretos */
+  .chip{position:absolute;z-index:15;display:flex;align-items:center;gap:1cqw;padding:.9cqw 1.6cqw .9cqw .9cqw;border-radius:1.4cqw;background:rgba(20,21,25,.92);border:1px solid rgba(255,255,255,.1);box-shadow:0 2cqw 4cqw -1cqw rgba(0,0,0,.8);color:#fff;white-space:nowrap}
+  .chip b{display:block;font-size:1.65cqw;line-height:1.2}
+  .chip small{display:block;font-size:1.3cqw;color:#aeb4bd}
+  .chip-ok{display:grid;place-items:center;width:3.2cqw;height:3.2cqw;border-radius:50%;background:#0b7544;font-size:1.5cqw;font-weight:800}
+  .chip svg{width:3.2cqw;height:3.2cqw;padding:.7cqw;border-radius:50%;background:rgba(255,105,0,.18);color:#ff8a24}
+  .chip-a{left:3cqw;top:66cqw}
+  .chip-b{right:0;top:12cqw}
+
+  .sv-modes{display:flex;gap:6px;margin-top:14px;padding:5px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+  .sv-modes button{display:flex;align-items:center;gap:6px;min-height:38px;padding:0 13px;border:0;border-radius:999px;background:none;color:#aeb4bd;font:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:background .3s,color .3s}
+  .sv-modes button.on{background:#ff6900;color:#141006}
+  @media(max-width:520px){.sv-modes button span{display:none}.sv-modes button.on span{display:inline}}
+  .sv-note{margin-top:10px;font-size:13px;color:#aeb4bd}
 
   /* ----- hero por dispositivo ----- */
   @media(max-width:767px){
@@ -213,7 +175,7 @@ const dispositivos = [
     .hc-stats li{flex:1;text-align:center}
     .hc-stats b{font-size:32px}
     .hc-stats small{font-size:12px}
-    .ex-scene{--s:.72;width:86%;transform:rotateY(-8deg) rotateX(4deg)}
+    .sv-scene{transform:none}
   }
   @media(min-width:768px) and (max-width:1023px){
     .hc{padding:56px 0 64px;text-align:center}
@@ -221,104 +183,120 @@ const dispositivos = [
     .hc-h1{font-size:68px;align-items:center}
     .hc-lead{margin-inline:auto}
     .hc .acoes,.hc-stats{justify-content:center}
-    .ex-scene{width:min(100%,520px);--s:1}
   }
-  @media(min-width:1024px) and (max-width:1439px){.ex-scene{--s:.95}}
   @media(min-width:1440px){
-    .hc-in{grid-template-columns:1fr 1.15fr;gap:48px}
+    .hc-in{grid-template-columns:1fr 1.2fr;gap:48px}
     .hc-h1{font-size:80px}
     .hc-lead{font-size:20px;line-height:31px}
     .hc-stats b{font-size:48px}
-    .ex-scene{width:min(100%,640px);--s:1.12}
+    .sv-scene{width:min(100%,700px)}
   }
-  @media (prefers-reduced-motion: reduce){.hc-lines{display:none}.ex-phone,.ex-stand,.ex-kb{transition:none}}
+  @media (prefers-reduced-motion: reduce){.hc-lines{display:none}.dv-on{display:none}}
 </style>
 
 <script>
   import { gsap } from 'gsap';
   const root = document.getElementById('hero')!;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const scene = root.querySelector<HTMLElement>('.sv-scene')!;
+  const aparelhos = Array.from(root.querySelectorAll<HTMLElement>('.dv'));
+  const botoes = Array.from(root.querySelectorAll<HTMLButtonElement>('.sv-modes button'));
+  const pops = Array.from(root.querySelectorAll<HTMLElement>('.pop'));
+  const toasts = root.querySelectorAll<HTMLElement>('.lj-toast');
+  const saltos: Record<string, [string, string, string][]> = JSON.parse(root.dataset.saltos!);
+  const ordem = ['desk', 'lap', 'tab', 'cel'];
+  let qtd = 2;
+  gsap.set(toasts, { xPercent: -50, yPercent: -220 });
+
   const contar = (el: Element, to: number, dur = 1.6) =>
     reduce ? (el.textContent = String(to)) : gsap.to({ v: 0 }, { v: to, duration: dur, ease: 'expo.out', onUpdate() { el.textContent = String(Math.round(this.targets()[0].v)); } });
 
-  const scene = root.querySelector<HTMLElement>('.ex-scene')!;
-  const phone = root.querySelector<HTMLElement>('.ex-phone')!;
-  const ex = root.querySelector<HTMLElement>('.ex')!;
-  const modos: string[] = JSON.parse(root.dataset.dispositivos!);
-  const botoes = root.querySelectorAll<HTMLButtonElement>('.ex-modes button');
-  // começa pelo aparelho de quem está vendo
-  let modo = new URLSearchParams(location.search).get('dispositivo') || (innerWidth < 768 ? 'celular' : innerWidth < 1024 ? 'tablet' : innerWidth < 1440 ? 'notebook' : 'desktop');
-  if (!modos.includes(modo)) modo = 'celular';
-  let escolhido = false; // se a pessoa clicou num aparelho, o ciclo para de trocar sozinho
-  function mudarModo(m: string) {
-    modo = m;
-    ex.dataset.mode = m;
-    botoes.forEach((b) => { const on = b.dataset.m === m; b.classList.toggle('on', on); b.setAttribute('aria-selected', String(on)); });
+  function marcar(id: string) {
+    aparelhos.forEach((d) => d.classList.toggle('ativo', d.dataset.d === id));
+    botoes.forEach((b) => { const on = b.dataset.m === id; b.classList.toggle('on', on); b.setAttribute('aria-selected', String(on)); });
   }
-  mudarModo(modo);
-  const itens = Array.from(root.querySelectorAll<HTMLElement>('.ex-f'));
-  itens.forEach((el) => gsap.set(el, { z: Number(el.dataset.z || 60) })); // profundidade: quanto maior, mais "fora" da tela
 
-  // distância de cada item até o centro da tela do celular (de onde ele "sai")
-  function aoCentro(el: HTMLElement) {
-    const s = scene.getBoundingClientRect(), r = el.getBoundingClientRect();
-    return { x: s.left + s.width / 2 - (r.left + r.width / 2), y: s.top + s.height / 2 - (r.top + r.height / 2) };
+  // centro da tela de um aparelho, em px relativos à cena
+  function centroTela(d: HTMLElement) {
+    const s = scene.getBoundingClientRect(), r = d.querySelector('.dv-scr')!.getBoundingClientRect();
+    return { x: r.left - s.left + r.width / 2, y: r.top - s.top + r.height / 2, w: s.width };
+  }
+
+  // compra no celular -> aviso e carrinho atualizados em todas as telas ao mesmo tempo
+  function compra() {
+    const tap = root.querySelector<HTMLElement>('.dv-tap')!;
+    return gsap.timeline()
+      .fromTo(tap, { scale: .3, opacity: 1 }, { scale: 1.6, opacity: 0, duration: .6, ease: 'power2.out' })
+      .add(() => {
+        qtd = qtd >= 9 ? 1 : qtd + 1;
+        root.querySelectorAll('.lj-qtd').forEach((q) => (q.textContent = String(qtd)));
+        gsap.fromTo(root.querySelectorAll('.lj-qtd'), { scale: 1.9 }, { scale: 1, duration: .5, ease: 'back.out(3)' });
+      }, .15)
+      .to(toasts, { yPercent: 0, duration: .5, stagger: .07, ease: 'back.out(1.6)' }, .2)
+      .to(toasts, { yPercent: -220, duration: .4, stagger: .05, ease: 'power2.in' }, '+=1.5');
+  }
+
+  // destaque de um aparelho: ele sobe, brilha e dois produtos saltam da tela dele
+  function destacar(id: string) {
+    marcar(id);
+    const d = aparelhos.find((a) => a.dataset.d === id)!;
+    const c = centroTela(d);
+    const t = gsap.timeline();
+    t.to(aparelhos, { z: (_i: number, el: HTMLElement) => (el === d ? 50 : 0), y: (_i: number, el: HTMLElement) => (el === d ? -c.w * .012 : 0), duration: .8, ease: 'power3.out' }, 0);
+    pops.forEach((p, i) => {
+      const [img, nome, preco] = saltos[id][i];
+      p.querySelector('img')!.src = `/mock/${img}.webp`;
+      p.querySelector('b')!.textContent = nome;
+      p.querySelector('small')!.textContent = preco;
+      const lado = i === 0 ? -1 : 1;
+      const ox = c.x - p.offsetWidth / 2, oy = c.y - p.offsetHeight / 2;
+      const dx = Math.min(Math.max(ox + lado * c.w * .17, 0), c.w - p.offsetWidth);
+      const dy = Math.max(oy - c.w * (.1 - i * .15), 0);
+      t.fromTo(p, { x: ox, y: oy, z: 0, scale: .25, opacity: 0, rotationY: lado * 30 },
+        { x: dx, y: dy, z: 140 + i * 40, scale: 1, opacity: 1, rotationY: lado * -8, duration: 1, ease: 'expo.out' }, .35 + i * .15)
+        .to(p, { y: dy - c.w * .012, duration: 1.4, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 1.4)
+        .to(p, { x: ox, y: oy, z: 0, scale: .25, opacity: 0, rotationY: 0, duration: .6, ease: 'power3.in' }, 4.3 + i * .08);
+    });
+    if (id === 'cel') t.add(compra(), 1.2);
+    return t;
+  }
+
+  let indice = 0, loop: gsap.core.Timeline | undefined;
+  function proximo() {
+    loop = destacar(ordem[indice]);
+    loop.eventCallback('onComplete', () => { indice = (indice + 1) % ordem.length; proximo(); });
   }
 
   if (reduce) {
-    botoes.forEach((b) => b.addEventListener('click', () => mudarModo(b.dataset.m!)));
+    marcar('desk');
     root.querySelectorAll('.hc-n').forEach((n) => (n.textContent = (n as HTMLElement).dataset.to!));
+    botoes.forEach((b) => b.addEventListener('click', () => marcar(b.dataset.m!)));
   } else {
-    // entrada dos textos
-    const tl = gsap.timeline({ delay: .2 });
-    tl.from('.hc-w', { yPercent: 110, rotationX: -60, opacity: 0, filter: 'blur(12px)', duration: 1.2, stagger: .08, ease: 'expo.out' })
-      .from('.hc-r', { y: 30, opacity: 0, filter: 'blur(10px)', duration: .9, stagger: .12, ease: 'power3.out' }, '-=.8')
-      .from(phone, { opacity: 0, y: 80, rotationY: -40, scale: .85, duration: 1.4, ease: 'expo.out' }, .3)
-      .from('.ex-luz', { opacity: 0, scale: .6, duration: 1.6, ease: 'power2.out' }, .5)
-      .add(() => root.querySelectorAll<HTMLElement>('.hc-n').forEach((n) => contar(n, Number(n.dataset.to), 2)), 1.2)
-      .add(() => ciclo(), 1.1);
-
-    // ciclo: produtos saltam da tela, flutuam e voltam para dentro do celular
-    const flutuar: gsap.core.Tween[] = [];
-    let primeiro = true;
-    let atual: gsap.core.Timeline | undefined;
-    function ciclo() {
-      flutuar.forEach((t) => t.kill()); flutuar.length = 0;
-      // a partir do 2º ciclo troca de aparelho e espera ele terminar de mudar de forma
-      if (!primeiro && !escolhido) { mudarModo(modos[(modos.indexOf(modo) + 1) % modos.length]); gsap.delayedCall(.95, explodir); }
-      else explodir();
-      primeiro = false;
-    }
-    function explodir() {
-      const c = gsap.timeline({ onComplete: ciclo });
-      atual = c;
-      itens.forEach((el, i) => {
-        const d = aoCentro(el);
-        gsap.set(el, { x: d.x, y: d.y, scale: .2, opacity: 0, rotationY: -25 });
-        c.to(el, { x: 0, y: 0, scale: 1, opacity: 1, rotationY: 0, duration: 1.1, ease: 'expo.out' }, i * .12);
-      });
-      c.add(() => itens.forEach((el, i) => flutuar.push(gsap.to(el, { y: (i % 2 ? 1 : -1) * 10, rotation: (i % 2 ? .8 : -.8), duration: 2.2 + (i % 3) * .4, yoyo: true, repeat: -1, ease: 'sine.inOut' }))))
-        .to({}, { duration: 5.5 })
-        .add(() => { flutuar.forEach((t) => t.kill()); flutuar.length = 0; })
-        .to(itens, { x: (_i: number, el: HTMLElement) => aoCentro(el).x + Number(gsap.getProperty(el, 'x')), y: (_i: number, el: HTMLElement) => aoCentro(el).y + Number(gsap.getProperty(el, 'y')), scale: .2, opacity: 0, rotation: 0, duration: .7, stagger: .05, ease: 'power3.in' })
-        .to({}, { duration: .5 });
-    }
-
     botoes.forEach((b) => b.addEventListener('click', () => {
-      escolhido = true;
-      atual?.kill(); flutuar.forEach((t) => t.kill()); flutuar.length = 0;
-      gsap.to(itens, { scale: .2, opacity: 0, duration: .3 });
-      mudarModo(b.dataset.m!);
-      gsap.delayedCall(.95, explodir);
+      loop?.kill(); gsap.set(pops, { opacity: 0 });
+      indice = ordem.indexOf(b.dataset.m!);
+      proximo();
     }));
 
-    // aparelho "respira" e a cena acompanha o mouse
-    gsap.to(phone, { y: -8, duration: 3, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+    gsap.timeline({ delay: .2 })
+      .from('.hc-w', { yPercent: 110, rotationX: -60, opacity: 0, filter: 'blur(12px)', duration: 1.2, stagger: .08, ease: 'expo.out' })
+      .from('.hc-r', { y: 30, opacity: 0, filter: 'blur(10px)', duration: .9, stagger: .12, ease: 'power3.out' }, '-=.8')
+      .from(['.dv-desk', '.dv-lap', '.dv-tab', '.dv-cel'], { y: 80, z: -300, opacity: 0, filter: 'blur(10px)', duration: 1.3, stagger: .14, ease: 'expo.out', clearProps: 'filter' }, .3)
+      .to('.dv-on', { opacity: 0, duration: .5, stagger: .14, ease: 'power2.out' }, 1.1)
+      .from('.chip', { opacity: 0, scale: .7, y: 20, duration: .8, stagger: .2, ease: 'back.out(1.8)' }, 1.6)
+      .from('.sv-aura', { opacity: 0, scale: .6, duration: 1.8, ease: 'power2.out' }, .4)
+      .add(() => root.querySelectorAll<HTMLElement>('.hc-n').forEach((n) => contar(n, Number(n.dataset.to), 2)), 1.2)
+      .add(proximo, 2);
+
+    gsap.to('.chip-a', { y: -8, duration: 2.6, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+    gsap.to('.chip-b', { y: 8, duration: 3, yoyo: true, repeat: -1, ease: 'sine.inOut' });
+
+    // a cena acompanha o mouse
     root.addEventListener('mousemove', (e) => {
       const r = root.getBoundingClientRect();
       const x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
-      gsap.to(scene, { rotationY: -14 + x * 18, rotationX: 6 - y * 12, duration: 1.2, ease: 'power3.out' });
+      gsap.to(scene, { rotationY: -6 + x * 12, rotationX: 4 - y * 8, duration: 1.2, ease: 'power3.out' });
     });
-    root.addEventListener('mouseleave', () => gsap.to(scene, { rotationY: -14, rotationX: 6, duration: 1.4, ease: 'power3.out' }));
+    root.addEventListener('mouseleave', () => gsap.to(scene, { rotationY: -6, rotationX: 4, duration: 1.4, ease: 'power3.out' }));
   }
 </script>
