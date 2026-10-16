@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import CinematicHero from '../components/CinematicHero.astro';
 import FaixaCTA from '../components/FaixaCTA.astro';
 import { servicos } from '../data/servicos';
 import { config, waLink } from '../config';
@@ -11,18 +12,7 @@ const schema = [
 <Base title="Agência de Marketing Digital | MKT Center"
   description="Agência de marketing digital: criação de sites, apps, lojas virtuais, tráfego pago, SEO e marketing político. Fale no WhatsApp."
   schema={schema}>
-  <section class="hero">
-    <div class="wrap">
-      <img src="/logo-grande.webp" alt="" width="600" height="200" fetchpriority="high" style="width:min(100%,600px);height:auto;margin-bottom:32px" />
-      <span class="eyebrow">Agência de marketing digital</span>
-      <h1>Sua empresa <span class="destaque">vendendo mais</span> na internet</h1>
-      <p class="lead">Sites, aplicativos, lojas virtuais, tráfego pago e marketing político. Tudo pensado para o celular e para trazer clientes pelo WhatsApp.</p>
-      <div class="acoes">
-        <a class="btn btn-primary" href={waLink()} target="_blank" rel="noopener">Quero um orçamento</a>
-        <a class="btn btn-ghost" href="#servicos">Ver serviços</a>
-      </div>
-    </div>
-  </section>
+  <CinematicHero />
 
   <section id="servicos" class="alt">
     <div class="wrap">

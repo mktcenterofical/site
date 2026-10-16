@@ -13,7 +13,8 @@ Objetivo do site: gerar contatos pelo WhatsApp e pelo formulário.
 - Laranja em texto pequeno usa #b84a00 (contraste no fundo claro)
 - Botão laranja sempre com texto escuro #141006 (contraste)
 - Fontes: Barlow Condensed (títulos), DM Sans (texto)
-- Logo: public/logo.webp (topo e rodapé), logo-grande.webp no hero da home
+- Logo: public/logo.webp (topo e rodapé)
+- Hero da home: src/components/CinematicHero.astro (GSAP + ScrollTrigger, card preto/laranja da marca)
 - Menu sem submenus (links simples)
 
 ## Regras técnicas
