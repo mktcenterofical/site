@@ -120,11 +120,8 @@ const principais: [string, string, string][] = [
   .g-tit{margin:20px 10px 6px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--orange-hot)}
   .g-base{margin-top:auto;padding-top:24px;display:grid;gap:10px;text-align:center}
   .g-base small{color:#aeb4bd;font-size:13px}
-  /* ao rolar (tablet em diante): some a faixa e os links, entra o menu off-canvas */
+  /* ao rolar (tablet em diante): só a faixa de serviços some; o menu horizontal continua */
   @media(min-width:768px){
-    .topo.compacto .menu{display:none}
-    .topo.compacto .cta{margin-left:auto}
-    .topo.compacto .burger{display:grid}
     .topo.compacto .faixa{max-height:0;opacity:0;border-top-color:transparent}
     .topo.compacto .barra{height:64px}
     .barra{transition:height .3s}
@@ -151,7 +148,7 @@ const principais: [string, string, string][] = [
   addEventListener('keydown', (e) => { if (e.key === 'Escape' && gaveta.classList.contains('on')) abrir(false); });
   if (location.hash === '#menu') abrir(true);
 
-  // ao rolar a página o cabeçalho fica compacto (sem faixa de serviços, com menu off-canvas)
+  // ao rolar a página o cabeçalho fica compacto (some só a faixa de serviços)
   const topo = document.querySelector<HTMLElement>('.topo')!;
   let compacto = false;
   const checar = () => { const c = compacto ? scrollY > 60 : scrollY > 140; if (c !== compacto) { compacto = c; topo.classList.toggle('compacto', c); } };
