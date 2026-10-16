@@ -9,7 +9,7 @@
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--preto);color:var(--papel);font-family:var(--ff-txt);line-height:1.6;font-size:17px;padding-bottom:64px;overflow-x:hidden}
-@media(min-width:900px){body{padding-bottom:0}}
+@media(min-width:1180px){body{padding-bottom:0}}
 img{max-width:100%;display:block}
 a{color:inherit}
 h1,h2,h3{font-family:var(--ff-tit);text-transform:uppercase;line-height:1.05;letter-spacing:.01em}
