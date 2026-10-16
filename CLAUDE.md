@@ -17,7 +17,7 @@ Objetivo do site: gerar contatos pelo WhatsApp e pelo formulário.
 - Botão laranja sempre com texto escuro #141006 (contraste)
 - Fontes: Barlow Condensed (títulos), DM Sans (texto)
 - Logo em fundo escuro: public/logo-escuro.webp (cabeçalho, fundo #000). Em fundo claro: public/logo-claro.webp (rodapé). Originais em referencia/logo-fundo-*.png
-- Hero da home: src/components/HeroCrescimento.astro (textos animados à esquerda; à direita um aparelho 3D que alterna desktop/notebook/tablet/celular, cada um com um projeto fictício sendo montado em etapas: rascunho tracejado → esqueleto → foto nítida e texto digitado. Fotos em public/mock/ (Unsplash, originais em referencia/mock-src/). ?dispositivo=celular abre direto num aparelho)
+- Hero da home: src/components/HeroCrescimento.astro (textos animados à esquerda; à direita um celular branco com loja virtual de onde produtos e cards saltam em 3D, flutuam e voltam para a tela em ciclo; recriado em código a partir de referência do Pinterest enviada pelo cliente. Fotos em public/mock/ (Unsplash, originais em referencia/mock-src/))
 - Menu: topo com Início, Quem somos, Portfólio e botão Contato (/contato/); faixa fina abaixo com os 5 serviços e ícones. Fundo dos menus #090a0c (mesmo tom do hero). Ao rolar (tablet em diante) só a faixa de serviços some e aparece um botão hambúrguer (☰) que a mostra de novo; o menu horizontal (Início, Quem somos, Portfólio, Contato) continua. Off-canvas só no celular
 - Celular: tudo centralizado, margem lateral de 10px, sem nenhuma rolagem horizontal (html/body overflow-x:clip, sem carrosséis)
 
