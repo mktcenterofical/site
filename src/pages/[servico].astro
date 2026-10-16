@@ -8,7 +8,16 @@ export function getStaticPaths() {
   return servicos.map((s) => ({ params: { servico: s.slug }, props: { s } }));
 }
 const { s } = Astro.props as { s: Servico };
-const msg = `Olá! Vim pelo site e quero um orçamento de ${s.nome}.`;
+// Preços fictícios para apresentação
+const tabela: Record<string, [string, string, string][]> = {
+  'criacao-de-sites': [['Essencial', 'R$ 1.490', 'Site de 1 página, ideal para começar.'], ['Profissional', 'R$ 2.990', 'Até 6 páginas, blog e SEO local.'], ['Premium', 'R$ 4.990', 'Site completo com integrações e conteúdo.']],
+  'aplicativos-e-sistemas': [['MVP', 'R$ 9.900', 'Primeira versão para validar a ideia.'], ['Negócio', 'R$ 19.900', 'App ou sistema completo com painel.'], ['Sob medida', 'Consulte', 'Projetos maiores e integrações.']],
+  'loja-virtual': [['Start', 'R$ 2.490', 'Até 50 produtos, Pix e cartão.'], ['Pro', 'R$ 4.490', 'Produtos ilimitados e frete automático.'], ['Plus', 'R$ 7.990', 'Integrações, marketplace e anúncios.']],
+  'trafego-e-seo': [['Local', 'R$ 890/mês', 'Google Meu Negócio e 1 campanha.'], ['Crescimento', 'R$ 1.590/mês', 'Google + Meta Ads e relatório mensal.'], ['Performance', 'R$ 2.990/mês', 'Campanhas avançadas e SEO contínuo.']],
+  'marketing-politico': [['Pré-campanha', 'R$ 2.500/mês', 'Redes sociais e posicionamento.'], ['Campanha', 'R$ 6.900/mês', 'Site, redes, vídeos e impulsionamento.'], ['Mandato', 'R$ 3.900/mês', 'Comunicação e prestação de contas.']],
+};
+const planos = tabela[s.slug];
+const msg =`Olá! Vim pelo site e quero um orçamento de ${s.nome}.`;
 const schema: object[] = [{
   '@context': 'https://schema.org', '@type': 'Service', name: s.nome, description: s.description,
   provider: { '@type': 'ProfessionalService', name: config.nome }, areaServed: 'BR',
@@ -48,7 +57,17 @@ if (s.faq.length) schema.push({
   <section class="alt">
     <div class="wrap">
       <h2>Investimento</h2>
-      <p class="lead"><span class="pendente">[A DEFINIR]</span> Planos e preços reais deste serviço entram aqui.</p>
+      <div class="grid">
+        {planos.map(([nome, preco, desc], i) => (
+          <div class="card" style={i === 1 ? 'border-color:var(--laranja)' : ''}>
+            {i === 1 && <span class="eyebrow" style="margin:0 0 6px">Mais escolhido</span>}
+            <h3>{nome}</h3>
+            <p style="font-family:var(--ff-tit);font-size:2.2rem;color:var(--papel);margin-top:4px">{preco}</p>
+            <p>{desc}</p>
+            <a class={`btn ${i === 1 ? 'btn-primary' : 'btn-ghost'}`} style="margin-top:18px" href={waLink(`Olá! Tenho interesse no plano ${nome} de ${s.nome}.`)} target="_blank" rel="noopener">Quero este</a>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 

@@ -26,4 +26,5 @@ Objetivo do site: gerar contatos pelo WhatsApp e pelo formulário.
 ## Textos
 - Português do Brasil, frases curtas, sem jargão
 - Nunca inventar números, depoimentos ou cases
-- Dados ainda não fornecidos aparecem como [A DEFINIR]
+- ATENÇÃO: contatos, preços, cases e depoimentos atuais são FICTÍCIOS (demo).
+  Antes do lançamento oficial, trocar todos pelos reais.

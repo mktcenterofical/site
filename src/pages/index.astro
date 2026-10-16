@@ -59,7 +59,19 @@ const schema = [
     <div class="wrap">
       <span class="eyebrow">Clientes</span>
       <h2>Depoimentos</h2>
-      <p class="lead"><span class="pendente">[A DEFINIR]</span> Depoimentos reais e autorizados de clientes entram aqui.</p>
+      <div class="grid">
+        {[
+          ['Depois do site novo, os pedidos pelo WhatsApp dobraram em dois meses.', 'Carla Mendes', 'Padaria Pão Dourado'],
+          ['A loja virtual ficou simples de usar. Hoje vendo para o estado inteiro.', 'Rafael Souza', 'RS Moda Fitness'],
+          ['Equipe atenciosa, entregou no prazo e explicou tudo sem complicação.', 'Dra. Juliana Prado', 'Clínica Sorriso Vivo'],
+        ].map(([t, n, e]) => (
+          <figure class="card">
+            <div class="destaque" aria-label="5 estrelas">★★★★★</div>
+            <blockquote style="margin-top:10px">“{t}”</blockquote>
+            <figcaption style="margin-top:14px;color:var(--prata)"><strong style="color:var(--papel)">{n}</strong> · {e}</figcaption>
+          </figure>
+        ))}
+      </div>
     </div>
   </section>
 

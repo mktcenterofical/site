@@ -1,14 +1,14 @@
-// Dados da empresa — substitua os valores [A DEFINIR] pelos reais.
+// Dados da empresa. ATENÇÃO: valores fictícios para apresentação — trocar pelos reais.
 export const config = {
   nome: 'MKT Center',
-  whatsapp: '5500000000000', // só números, com DDI 55 + DDD
+  whatsapp: '5511999999999', // só números, com DDI 55 + DDD
   whatsappMsg: 'Olá! Vim pelo site da MKT Center e quero um orçamento.',
-  telefone: '[A DEFINIR]',
-  email: '[A DEFINIR]',
-  cnpj: '[A DEFINIR]',
+  telefone: '(11) 99999-9999',
+  email: 'contato@mktcenter.com.br',
+  cnpj: '00.000.000/0001-00',
   horario: 'Seg a sex, 9h às 18h',
-  cidade: '[A DEFINIR]',
-  instagram: '',
+  cidade: 'São Paulo - SP',
+  instagram: '@mktcenter',
 };
 export const waLink = (msg = config.whatsappMsg) =>
   `https://wa.me/${config.whatsapp}?text=${encodeURIComponent(msg)}`;

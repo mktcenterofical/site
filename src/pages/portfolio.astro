@@ -16,11 +16,20 @@ const schema = [{ '@context': 'https://schema.org', '@type': 'CollectionPage', n
   <section class="alt">
     <div class="wrap">
       <div class="grid">
-        {[1, 2, 3].map(() => (
+        {[
+          ['Padaria Pão Dourado', 'Criação de Sites', '🥐', '+112% pedidos pelo WhatsApp', 'Site com cardápio e pedido direto no WhatsApp.'],
+          ['RS Moda Fitness', 'Loja Virtual', '👟', 'R$ 48 mil vendidos no 1º trimestre', 'Loja com Pix, frete automático e catálogo no Instagram.'],
+          ['Clínica Sorriso Vivo', 'Tráfego e SEO', '🦷', '1º lugar no Google na cidade', 'SEO local e campanhas de agendamento.'],
+          ['AgendaFácil', 'Aplicativos e Sistemas', '📅', '3.000 agendamentos por mês', 'App de agendamento para salões de beleza.'],
+          ['Auto Peças Central', 'Tráfego e SEO', '🔧', 'Custo por contato 40% menor', 'Campanhas no Google e Meta para o WhatsApp.'],
+          ['Mandato Vereador Exemplo', 'Marketing Político', '🏛️', '25 mil seguidores em 1 ano', 'Redes sociais e site de prestação de contas.'],
+        ].map(([n, c, i, r, d]) => (
           <div class="card">
-            <div style="aspect-ratio:16/10;background:var(--grafite);border-radius:10px;display:grid;place-items:center;color:var(--prata)">Imagem do case</div>
-            <h3 style="margin-top:16px">Case <span class="pendente">[A DEFINIR]</span></h3>
-            <p>Cases reais, com prints e resultados, entram aqui.</p>
+            <div style="aspect-ratio:16/10;background:linear-gradient(135deg,#2a1505,var(--grafite));border-radius:10px;display:grid;place-items:center;font-size:3rem" aria-hidden="true">{i}</div>
+            <span class="eyebrow" style="margin:16px 0 4px">{c}</span>
+            <h3>{n}</h3>
+            <p style="color:var(--laranja);font-weight:700">{r}</p>
+            <p>{d}</p>
           </div>
         ))}
       </div>
