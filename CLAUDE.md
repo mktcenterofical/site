@@ -17,6 +17,7 @@ Objetivo do site: gerar contatos pelo WhatsApp e pelo formulário.
 
 ## Regras técnicas
 - Mobile-first; testar sempre em 390px de largura
+- Todo o conteúdo (cabeçalho, seções, rodapé) usa a largura total de 1140px (.wrap)
 - Sem frameworks de JS no cliente; JS mínimo
 - Imagens em WebP/AVIF com width e height
 - Cada página: title único (até 60 caracteres), meta description
