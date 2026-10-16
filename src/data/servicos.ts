@@ -32,7 +32,7 @@ export const servicos: Servico[] = [
     faq: [],
   },
   {
-    slug: 'loja-virtual', nome: 'Loja Virtual', icone: 'cart',
+    slug: 'loja-virtual', nome: 'Lojas Virtuais', icone: 'cart',
     curto: 'E-commerce completo com pagamento, frete e gestão de pedidos.',
     title: 'Criação de Loja Virtual | MKT Center',
     description: 'Criação de loja virtual com Pix, cartão, frete e gestão de pedidos. Comece a vender online com a MKT Center.',

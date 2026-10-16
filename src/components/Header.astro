@@ -24,7 +24,7 @@ const principais: [string, string][] = [
     <div class="wrap faixa-in">
       {servicos.map((s) => (
         <a href={`/${s.slug}/`} aria-current={atual(`/${s.slug}/`)}>
-          <span class="ic"><Icon name={s.icone} size={18} /></span>{s.nome}
+          <span class="ic"><Icon name={s.icone} size={15} /></span>{s.nome}
         </a>
       ))}
     </div>
@@ -45,12 +45,12 @@ const principais: [string, string][] = [
   .cta{margin-left:auto;min-height:44px;padding:10px 26px}
   @media(min-width:768px){.menu{display:flex}.cta{margin-left:0}}
 
-  .faixa{background:#141519;border-top:1px solid #23252b;border-bottom:1px solid #23252b}
-  .faixa-in{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding-top:8px;padding-bottom:8px}
+  .faixa{background:#000;border-top:1px solid #1a1b1f}
+  .faixa-in{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-top:4px;padding-bottom:4px}
   .faixa-in::-webkit-scrollbar{display:none}
-  .faixa a{flex:none;display:flex;align-items:center;gap:10px;padding:6px 14px 6px 6px;border-radius:999px;text-decoration:none;color:#c3c8cf;font-size:14px;font-weight:600;white-space:nowrap;transition:background .2s,color .2s}
-  .ic{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:#22242a;color:var(--orange-hot);transition:background .2s,color .2s}
-  .faixa a:hover{background:#1f2126;color:#fff}
+  .faixa a{flex:none;display:flex;align-items:center;gap:8px;padding:4px 12px 4px 4px;border-radius:999px;text-decoration:none;color:#c3c8cf;font-size:13px;font-weight:600;white-space:nowrap;transition:background .2s,color .2s}
+  .ic{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:transparent;color:var(--orange-hot);transition:background .2s,color .2s}
+  .faixa a:hover{background:#16171b;color:#fff}
   .faixa a[aria-current]{background:rgba(255,105,0,.14);color:#fff}
   .faixa a[aria-current] .ic,.faixa a:hover .ic{background:var(--orange);color:var(--on-orange)}
   @media(min-width:1100px){.faixa-in{justify-content:space-between}}
