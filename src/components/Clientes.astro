@@ -1,0 +1,74 @@
+---
+// Faixa de logos dos sites criados pela MKT Center, rolando sem parar (abaixo do hero).
+// Clientes sem logo disponível aparecem como nome escrito. Logos em public/clientes/ (originais em referencia/clientes/).
+type Cliente = { nome: string; url?: string; logo?: string; w?: number; h?: number };
+const clientes: Cliente[] = [
+  { nome: 'Nexcabos', url: 'https://nexcabos.com.br/', logo: 'nexcabos', w: 320, h: 91 },
+  { nome: 'Eletro EPI', url: 'https://eletroepi.com.br/', logo: 'eletroepi', w: 320, h: 69 },
+  { nome: 'Igreja Ortodoxa Grega no Brasil', url: 'https://igrejaortodoxagregabrasil.com.br/', logo: 'igreja-ortodoxa', w: 284, h: 96 },
+  { nome: 'Padre Kelmon' },
+  { nome: '3J Ranch' },
+  { nome: 'Rollerport', url: 'https://rollerport.com.br/', logo: 'rollerport', w: 141, h: 96 },
+  { nome: 'Sanremax', url: 'https://sanremax.com.br/', logo: 'sanremax', w: 320, h: 82 },
+  { nome: 'Reginaldo Pugas' },
+  { nome: 'Kimax', url: 'https://www.kimax.com.br/', logo: 'kimax', w: 196, h: 96 },
+  { nome: 'Pugas News', url: 'https://pugasnews.com.br/', logo: 'pugas-news', w: 248, h: 96 },
+  { nome: 'Rádio Conexão Católica', url: 'https://www.radioconexaocatolica.com.br/', logo: 'radio-conexao-catolica', w: 275, h: 96 },
+  { nome: 'Pousada São José de Anchieta', url: 'https://pousadasaojosedeanchieta.com.br/', logo: 'pousada-anchieta', w: 320, h: 65 },
+  { nome: 'Roberto Pires' },
+  { nome: 'Dra. Camila Bettiati' },
+  { nome: 'Nano Dev', url: 'https://www.nanodev.com.br/', logo: 'nanodev', w: 320, h: 82 },
+];
+---
+<section class="cl" aria-labelledby="cl-tit">
+  <div class="wrap">
+    <h2 id="cl-tit" class="cl-tit">Empresas que confiam na MKT Center</h2>
+  </div>
+  <div class="cl-faixa">
+    {[0, 1].map((copia) => (
+      <ul class="cl-trilho" aria-hidden={copia === 1 ? 'true' : undefined}>
+        {clientes.map((c) => {
+          const conteudo = c.logo
+            ? <img src={`/clientes/${c.logo}.webp`} alt={copia === 0 ? c.nome : ''} width={c.w} height={c.h} loading="lazy" decoding="async" style={`aspect-ratio:${c.w}/${c.h}`} />
+            : <span class="cl-nome">{c.nome}</span>;
+          return (
+            <li>
+              {c.url
+                ? <a href={c.url} target="_blank" rel="noopener" tabindex={copia === 1 ? -1 : undefined} title={c.nome}>{conteudo}</a>
+                : <span class="cl-item" title={c.nome}>{conteudo}</span>}
+            </li>
+          );
+        })}
+      </ul>
+    ))}
+  </div>
+</section>
+
+<style>
+  .cl{padding:36px 0 40px;background:var(--surface-raised);border-bottom:1px solid var(--line)}
+  .cl-tit{font-family:var(--ff-txt);font-size:15px;line-height:1.3;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-align:center;color:var(--ink);margin:0 0 24px}
+  .cl-faixa{display:flex;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+  .cl-trilho{flex:none;display:flex;align-items:center;gap:56px;padding-right:56px;list-style:none;margin:0;animation:cl-rolar 55s linear infinite}
+  .cl-faixa:hover .cl-trilho{animation-play-state:paused}
+  @keyframes cl-rolar{to{transform:translateX(-100%)}}
+  .cl li{flex:none;display:flex;align-items:center;height:56px}
+  .cl a,.cl-item{display:flex;align-items:center;height:100%;text-decoration:none}
+  .cl img{height:48px;width:auto;max-width:180px;object-fit:contain;filter:grayscale(1) contrast(1.1);opacity:.6;transition:filter .3s,opacity .3s}
+  .cl a:hover img,.cl a:focus-visible img{filter:none;opacity:1}
+  .cl-nome{font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:24px;letter-spacing:.02em;white-space:nowrap;color:#8a9099;transition:color .3s}
+  .cl-item:hover .cl-nome{color:var(--ink)}
+  @media(max-width:767px){
+    .cl{padding:28px 0 32px}
+    .cl-tit{font-size:13px;margin-bottom:18px}
+    .cl-trilho{gap:36px;padding-right:36px;animation-duration:40s}
+    .cl li{height:44px}
+    .cl img{height:38px;max-width:140px}
+    .cl-nome{font-size:19px}
+  }
+  @media(min-width:1440px){.cl img{height:54px;max-width:200px}}
+  @media (prefers-reduced-motion: reduce){
+    .cl-faixa{mask-image:none;-webkit-mask-image:none;flex-wrap:wrap;justify-content:center}
+    .cl-trilho{animation:none;flex-wrap:wrap;justify-content:center;gap:24px 40px;padding:0 10px}
+    .cl-trilho[aria-hidden]{display:none}
+  }
+</style>
