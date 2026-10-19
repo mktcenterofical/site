@@ -1,13 +1,18 @@
 ---
+// Cabeçalho minimalista: logo, links em pílula (o ativo ganha contorno) e botão "Fale conosco".
+// No celular: logo + botão que abre o menu off-canvas.
 import Icon from './Icon.astro';
-import { servicos } from '../data/servicos';
 import { config, waLink } from '../config';
 const path = Astro.url.pathname;
 const atual = (u: string) => (path === u ? 'page' : undefined);
-const principais: [string, string, string][] = [
+const links: [string, string, string][] = [
   ['/', 'Início', 'home'],
-  ['/quem-somos/', 'Quem somos', 'smile'],
+  ['/quem-somos/', 'Sobre', 'smile'],
+  ['/criacao-de-sites/', 'Sites', 'globe'],
+  ['/loja-virtual/', 'Lojas', 'cart'],
+  ['/trafego-e-seo/', 'Redes', 'trending'],
   ['/portfolio/', 'Portfólio', 'folder'],
+  ['/marketing-politico/', 'Política', 'landmark'],
 ];
 ---
 <header class="topo">
@@ -16,24 +21,13 @@ const principais: [string, string, string][] = [
       <img src="/logo-escuro.webp" alt="MKT Marketing Digital" width="208" height="32" fetchpriority="high" />
     </a>
     <nav class="menu" aria-label="Principal">
-      {principais.map(([u, n]) => <a href={u} aria-current={atual(u)}>{n}</a>)}
+      {links.map(([u, n]) => <a href={u} aria-current={atual(u)}>{n}</a>)}
     </nav>
-    <a href="/contato/" class="btn btn-primary cta" aria-current={atual('/contato/')}>Fale conosco</a>
-    <button class="mostrar" type="button" aria-label="Mostrar menu de serviços" aria-expanded="false" aria-controls="faixa-servicos"><span></span><span></span><span></span></button>
+    <a href="/contato/" class="cta" aria-current={atual('/contato/')}>Fale conosco <span aria-hidden="true">↗</span></a>
     <button class="burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="gaveta">
       <span></span><span></span><span></span>
     </button>
   </div>
-
-  <nav class="faixa" id="faixa-servicos" aria-label="Serviços">
-    <div class="wrap faixa-in">
-      {servicos.map((s) => (
-        <a href={`/${s.slug}/`} aria-current={atual(`/${s.slug}/`)}>
-          <span class="ic"><Icon name={s.icone} size={15} /></span>{s.nome}
-        </a>
-      ))}
-    </div>
-  </nav>
 </header>
 
 <!-- Menu off-canvas do celular -->
@@ -46,16 +40,10 @@ const principais: [string, string, string][] = [
     </button>
   </div>
   <nav class="g-nav" aria-label="Páginas">
-    {principais.map(([u, n, i]) => (
+    {links.map(([u, n, i]) => (
       <a href={u} aria-current={atual(u)}><span class="g-ic"><Icon name={i} size={18} /></span>{n}</a>
     ))}
     <a href="/contato/" aria-current={atual('/contato/')}><span class="g-ic"><Icon name="mail" size={18} /></span>Contato</a>
-  </nav>
-  <p class="g-tit">Serviços</p>
-  <nav class="g-serv" aria-label="Serviços">
-    {servicos.map((s) => (
-      <a href={`/${s.slug}/`} aria-current={atual(`/${s.slug}/`)}><span class="g-ic"><Icon name={s.icone} size={18} /></span>{s.nome}</a>
-    ))}
   </nav>
   <div class="g-base">
     <a class="btn btn-whatsapp" href={waLink()} target="_blank" rel="noopener">Falar no WhatsApp</a>
@@ -64,55 +52,31 @@ const principais: [string, string, string][] = [
 </aside>
 
 <style>
-  .topo{position:sticky;top:0;z-index:50;background:rgba(9,10,12,.92);backdrop-filter:blur(12px);box-shadow:0 8px 24px -12px rgba(0,0,0,.5)}
-  .barra{display:flex;align-items:center;gap:40px;height:72px}
+  .topo{position:sticky;top:0;z-index:50;background:rgba(9,10,12,.78);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.06)}
+  .barra{display:flex;align-items:center;justify-content:space-between;gap:24px;height:64px}
   .logo{flex:none;display:flex}
-  .logo img{height:32px;width:auto}
-  .menu{display:none;align-items:center;gap:36px;margin-left:auto}
-  .menu a{position:relative;text-decoration:none;font-weight:600;font-size:15px;color:#c3c8cf;padding:8px 0;transition:color .2s}
-  .menu a::after{content:'';position:absolute;left:0;right:0;bottom:0;height:2px;border-radius:2px;background:var(--orange);transform:scaleX(0);transition:transform .25s}
+  .logo img{height:26px;width:auto}
+
+  .menu{display:none;align-items:center;gap:4px}
+  .menu a{padding:7px 16px;border-radius:999px;border:1px solid transparent;color:rgba(255,255,255,.62);font-size:14px;font-weight:500;text-decoration:none;white-space:nowrap;transition:color .2s,border-color .2s}
   .menu a:hover{color:#fff}
-  .menu a:hover::after,.menu a[aria-current]::after{transform:scaleX(1)}
-  .menu a[aria-current]{color:#fff}
-  .cta{display:none;min-height:44px;padding:10px 26px}
+  .menu a[aria-current]{color:#fff;border-color:rgba(255,255,255,.35)}
 
-  .faixa{display:none;background:#090a0c;border-top:1px solid #1a1b1f;max-height:60px;overflow:hidden;transition:max-height .3s,opacity .3s}
-  .faixa-in{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;padding-top:3px;padding-bottom:3px}
-  .faixa-in::-webkit-scrollbar{display:none}
-  .faixa a{flex:none;display:flex;align-items:center;gap:8px;padding:3px 12px 3px 4px;border-radius:999px;text-decoration:none;color:#c3c8cf;font-size:13px;font-weight:600;white-space:nowrap;transition:background .2s,color .2s}
-  .ic{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;color:var(--orange-hot);transition:background .2s,color .2s}
-  .faixa a:hover{background:#16171b;color:#fff}
-  .faixa a[aria-current]{background:rgba(255,105,0,.14);color:#fff}
-  .faixa a[aria-current] .ic,.faixa a:hover .ic{background:var(--orange);color:var(--on-orange)}
+  .cta{display:none;align-items:center;gap:6px;padding:9px 18px;border-radius:999px;background:#f3ede6;color:#141006;font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap;transition:background .2s,transform .2s}
+  .cta:hover{background:#fff;transform:translateY(-1px)}
+  .cta span{font-size:13px}
 
-  /* celular: só logo + hambúrguer */
-  .barra{height:64px;justify-content:space-between}
-  .logo img{height:26px}
-  .burger{display:grid;gap:5px;place-content:center;width:44px;height:44px;border:1px solid #2a2d33;border-radius:12px;background:#111317;cursor:pointer}
-  .burger span{display:block;width:20px;height:2px;border-radius:2px;background:#fff;transition:transform .3s,opacity .3s}
-  .burger span:nth-child(2){width:14px;background:var(--orange)}
+  .burger{display:grid;gap:5px;place-content:center;width:44px;height:44px;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:transparent;cursor:pointer}
+  .burger span{display:block;width:18px;height:1.5px;border-radius:2px;background:#fff}
+  .burger span:nth-child(2){width:12px;justify-self:end}
 
-  /* tablet em diante: menu completo + faixa de serviços */
-  @media(min-width:768px){
-    .barra{height:72px;justify-content:flex-start}
-    .logo img{height:30px}
-    .menu{display:flex;gap:28px}
-    .cta{display:inline-flex}
+  @media(min-width:900px){
+    .barra{height:72px}
+    .logo img{height:28px}
+    .menu,.cta{display:flex}
     .burger{display:none}
-    .faixa{display:block}
   }
-  @media(min-width:1024px){.logo img{height:32px}.menu{gap:36px}.faixa-in{justify-content:space-between}}
-  @media(min-width:1440px){.barra{height:80px}.menu a{font-size:16px}.faixa a{font-size:14px}}
-
-  /* botão que mostra de novo a faixa de serviços escondida ao rolar */
-  .mostrar{display:none;flex-direction:column;justify-content:center;align-items:center;gap:5px;width:44px;height:44px;border:1px solid #2a2d33;border-radius:12px;background:#111317;cursor:pointer;transition:border-color .2s,background .2s}
-  .mostrar:hover{border-color:var(--orange)}
-  .mostrar span{display:block;width:20px;height:2px;border-radius:2px;background:#fff;transition:transform .3s,opacity .3s}
-  .mostrar span:nth-child(2){width:14px;background:var(--orange)}
-  .topo.aberta .mostrar{border-color:var(--orange);background:rgba(255,105,0,.14)}
-  .topo.aberta .mostrar span:nth-child(1){transform:translateY(7px) rotate(45deg)}
-  .topo.aberta .mostrar span:nth-child(2){opacity:0}
-  .topo.aberta .mostrar span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  @media(min-width:900px) and (max-width:1100px){.menu a{padding:7px 11px;font-size:13px}}
 
   /* gaveta */
   .veu{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.55);backdrop-filter:blur(3px);opacity:0;transition:opacity .3s}
@@ -121,22 +85,14 @@ const principais: [string, string, string][] = [
   .gaveta.on{transform:none}
   .g-topo{display:flex;align-items:center;justify-content:space-between;height:48px;margin-bottom:16px}
   .g-topo img{height:26px;width:auto}
-  .fechar{width:44px;height:44px;border-radius:12px;border:1px solid #2a2d33;background:#111317;color:#fff;display:grid;place-items:center;cursor:pointer}
-  .g-nav,.g-serv{display:grid;gap:4px}
-  .g-nav a,.g-serv a{display:flex;align-items:center;gap:12px;min-height:48px;padding:6px 10px;border-radius:12px;text-decoration:none;font-weight:700;color:#e4e6ea}
-  .g-nav a,.g-serv a{font-size:15px;font-weight:600;color:#c3c8cf}
-  .g-nav a[aria-current],.g-serv a[aria-current]{background:rgba(255,105,0,.14);color:#fff}
-  .g-ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:#16171b;color:var(--orange-hot);flex:none}
-  .g-tit{margin:20px 10px 6px;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--orange-hot)}
+  .fechar{width:44px;height:44px;border-radius:999px;border:1px solid rgba(255,255,255,.18);background:transparent;color:#fff;display:grid;place-items:center;cursor:pointer}
+  .g-nav{display:grid;gap:4px}
+  .g-nav a{display:flex;align-items:center;gap:12px;min-height:48px;padding:6px 10px;border-radius:999px;border:1px solid transparent;text-decoration:none;font-size:15px;font-weight:600;color:#c3c8cf}
+  .g-nav a[aria-current]{border-color:rgba(255,255,255,.3);color:#fff}
+  .g-ic{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#16171b;color:var(--orange-hot);flex:none}
   .g-base{margin-top:auto;padding-top:24px;display:grid;gap:10px;text-align:center}
   .g-base small{color:#aeb4bd;font-size:13px}
-  /* ao rolar (tablet em diante): só a faixa de serviços some; o menu horizontal continua */
-  @media(min-width:768px){
-    .topo.compacto:not(.aberta) .faixa{max-height:0;opacity:0;border-top-color:transparent}
-    .topo.compacto .mostrar{display:flex}
-    .topo.compacto .barra{height:64px}
-    .barra{transition:height .3s}
-  }
+  @media(min-width:900px){.veu,.gaveta{display:none}}
   @media (prefers-reduced-motion: reduce){.gaveta,.veu{transition:none}}
 </style>
 
@@ -158,14 +114,4 @@ const principais: [string, string, string][] = [
   veu.addEventListener('click', () => abrir(false));
   addEventListener('keydown', (e) => { if (e.key === 'Escape' && gaveta.classList.contains('on')) abrir(false); });
   if (location.hash === '#menu') abrir(true);
-
-  // ao rolar a página o cabeçalho fica compacto (some só a faixa de serviços)
-  const topo = document.querySelector<HTMLElement>('.topo')!;
-  let compacto = false;
-  const mostrar = topo.querySelector<HTMLButtonElement>('.mostrar')!;
-  const mostrarFaixa = (on: boolean) => { topo.classList.toggle('aberta', on); mostrar.setAttribute('aria-expanded', String(on)); };
-  mostrar.addEventListener('click', () => mostrarFaixa(!topo.classList.contains('aberta')));
-  const checar = () => { const c = compacto ? scrollY > 60 : scrollY > 140; if (c !== compacto) { compacto = c; topo.classList.toggle('compacto', c); if (!c) mostrarFaixa(false); } };
-  addEventListener('scroll', checar, { passive: true });
-  checar();
 </script>
