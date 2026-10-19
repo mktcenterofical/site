@@ -94,16 +94,15 @@ const numeros = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((n, i) => {
     </div>
 
     <div class="s10-texto">
-      <h2>Seu site explica o que você vende em <span class="destaque s10-nw">10 segundos?</span></h2>
-      <p class="lead">É o tempo que um visitante leva para decidir se fica ou vai embora. A MKT Center cria sites, lojas e campanhas que mostram na hora o que você faz e levam o cliente direto para o seu WhatsApp, para o seu negócio ter sucesso na internet.</p>
-      <ul class="s10-lista">
-        <li><Icon name="check" size={16} />Mensagem clara logo na primeira tela</li>
-        <li><Icon name="check" size={16} />Rápido no celular, onde está o seu cliente</li>
-        <li><Icon name="check" size={16} />Um botão que leva direto ao seu WhatsApp</li>
-      </ul>
+      <h2 class="s10-h">
+        <span>Seu site explica</span>
+        <span>o que você vende</span>
+        <span class="s10-or">em 10 segundos?</span>
+      </h2>
+      <p class="s10-lead">Criamos sites que mostram na hora o que você faz e levam o cliente direto para o seu WhatsApp.</p>
       <div class="acoes">
         <a class="btn btn-primary" href={waLink('Olá! Quero que meu site explique o meu negócio em 10 segundos.')} target="_blank" rel="noopener">Quero um site assim</a>
-        <a class="btn btn-ghost" href="/portfolio/">Ver projetos</a>
+        <a class="btn s10-ghost" href="/portfolio/">Ver projetos</a>
       </div>
     </div>
   </div>
@@ -175,15 +174,17 @@ const numeros = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((n, i) => {
   .s10-arte.montando .pc.on{opacity:1;transform:none}
 
   /* ---------- texto ---------- */
-  .s10-nw{white-space:nowrap}
-  .s10-texto h2{font-size:clamp(38px,4.6vw,58px);line-height:.95;margin-bottom:0}
-  .s10-lista{list-style:none;display:grid;gap:10px;margin-top:24px}
-  .s10-lista li{display:flex;align-items:center;gap:10px;color:var(--ink);font-weight:600}
-  .s10-lista :global(svg){flex:none;width:24px;height:24px;padding:4px;border-radius:50%;background:var(--orange);color:var(--on-orange)}
+  /* textos no mesmo estilo do hero */
+  .s10-h{display:flex;flex-direction:column;font-size:clamp(42px,4.6vw,66px);line-height:.9;letter-spacing:-.02em;margin:0;color:#fff}
+  .s10-h span{display:block}
+  .s10-or{background:linear-gradient(180deg,#ff8a24,#ff6900);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .s10-lead{color:#aeb4bd;font-size:18px;line-height:28px;max-width:46ch;margin-top:24px}
+  .s10-ghost{border-color:#5b616b;color:#fff;background:transparent}
+  .s10-ghost:hover{border-color:#fff}
 
   @media(max-width:767px){
-    .s10-lista{justify-items:center}
-    .s10-lista li{text-align:left}
+    .s10-h{font-size:40px;align-items:center}
+    .s10-lead{font-size:16px;line-height:26px;margin-inline:auto}
   }
 </style>
 
