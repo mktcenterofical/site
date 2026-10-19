@@ -1,10 +1,14 @@
 ---
 // Hero cinematográfico: textos animados à esquerda e, à direita, os 4 aparelhos (desktop, notebook,
-// tablet e celular) juntos mostrando a mesma loja, cada um com layout próprio. Um destaque passa de
+// tablet e celular) juntos, cada um com um tipo de projeto. Um destaque passa de
 // aparelho em aparelho e faz produtos saltarem da tela em 3D; uma compra no celular aparece em todas
-// as telas ao mesmo tempo. Loja, produtos e preços são fictícios — ver CLAUDE.md.
+// as telas ao mesmo tempo. Desktop = ERP, notebook = site institucional, tablet = loja virtual,
+// celular = app de delivery. Tudo fictício — ver CLAUDE.md.
 import { waLink } from '../config';
 import Loja from './Loja.astro';
+import TelaErp from './TelaErp.astro';
+import TelaSite from './TelaSite.astro';
+import TelaApp from './TelaApp.astro';
 const dispositivos = [
   { id: 'desk', nome: 'Desktop', icone: '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>' },
   { id: 'lap', nome: 'Notebook', icone: '<rect x="4" y="4" width="16" height="11" rx="2"/><path d="M2 19h20"/>' },
@@ -13,10 +17,10 @@ const dispositivos = [
 ];
 // produtos que saltam da tela de cada aparelho quando ele está em destaque
 const saltos: Record<string, [string, string, string][]> = {
-  desk: [['jaqueta', 'Jaqueta Couro', 'R$ 349,90'], ['bone', 'Boné Trucker', 'R$ 79,90']],
-  lap: [['moletom', 'Moletom Basic', 'R$ 129,90'], ['relogio', 'Relógio Smart', 'R$ 259,90']],
+  desk: [['pessoa2', 'Pedido #1025 faturado', 'R$ 1.280,00'], ['pessoa1', 'Nova cliente', 'Ana Paula · cadastrada']],
+  lap: [['padaria', 'Novo contato pelo site', 'via formulário'], ['pao', 'Cardápio online', '12 produtos']],
   tab: [['modelo', 'Casaco Inverno', 'R$ 199,90'], ['fitness2', 'Calça Jogger', 'R$ 89,90']],
-  cel: [['camiseta', 'Camiseta Premium', 'R$ 69,90'], ['bone', 'Boné Trucker', 'R$ 79,90']],
+  cel: [['burger', 'Burger da Casa', 'R$ 32,90'], ['pizza', 'Pizza Calabresa', 'R$ 54,90']],
 };
 ---
 <section class="hc" id="hero" data-saltos={JSON.stringify(saltos)}>
@@ -49,18 +53,18 @@ const saltos: Record<string, [string, string, string][]> = {
         <div class="sv-aura"></div>
 
         <div class="dv dv-desk" data-d="desk">
-          <div class="dv-frame"><div class="dv-scr"><Loja tipo="desk" /><i class="dv-on"></i></div></div>
+          <div class="dv-frame"><div class="dv-scr"><TelaErp /><i class="dv-on"></i></div></div>
           <div class="dv-neck"></div><div class="dv-foot"></div>
         </div>
         <div class="dv dv-lap" data-d="lap">
-          <div class="dv-frame"><div class="dv-scr"><Loja tipo="lap" /><i class="dv-on"></i></div></div>
+          <div class="dv-frame"><div class="dv-scr"><TelaSite /><i class="dv-on"></i></div></div>
           <div class="dv-deck"></div>
         </div>
         <div class="dv dv-tab" data-d="tab">
           <div class="dv-frame"><div class="dv-scr"><Loja tipo="tab" /><i class="dv-on"></i></div></div>
         </div>
         <div class="dv dv-cel" data-d="cel">
-          <div class="dv-frame"><div class="dv-scr"><Loja tipo="cel" /><i class="dv-on"></i><span class="dv-tap"></span></div></div>
+          <div class="dv-frame"><div class="dv-scr"><TelaApp /><i class="dv-on"></i><span class="dv-tap"></span></div></div>
         </div>
 
         <!-- produtos que saltam da tela do aparelho em destaque -->
@@ -68,7 +72,7 @@ const saltos: Record<string, [string, string, string][]> = {
         <div class="pop"><div class="pop-img"><img src="/mock/bone.webp" alt="" width="320" height="320" /></div><div><b>Boné Trucker</b><small>R$ 79,90</small></div></div>
 
         <div class="chip chip-a"><span class="chip-ok">✓</span><div><b>Pix aprovado</b><small>Pedido #1024 · R$ 189,90</small></div></div>
-        <div class="chip chip-b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg><div><b>+38% em vendas</b><small>depois da loja nova</small></div></div>
+        <div class="chip chip-b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg><div><b>+38% em vendas</b><small>depois do projeto novo</small></div></div>
       </div>
 
       <div class="sv-modes" role="tablist" aria-label="Destacar aparelho">
@@ -79,7 +83,7 @@ const saltos: Record<string, [string, string, string][]> = {
           </button>
         ))}
       </div>
-      <p class="sv-note">Uma loja, quatro telas, um só sistema</p>
+      <p class="sv-note">Sistema, site, loja e app: tudo integrado, em qualquer tela</p>
     </div>
   </div>
 </section>
@@ -141,7 +145,7 @@ const saltos: Record<string, [string, string, string][]> = {
   .dv-cel{left:53cqw;top:38cqw;width:15cqw}
   .dv-cel .dv-frame{padding:.6cqw;border-radius:2.6cqw}
   .dv-cel .dv-scr{aspect-ratio:9/19;border-radius:2cqw}
-  .dv-tap{position:absolute;z-index:8;left:24%;top:31%;width:5cqw;height:5cqw;margin:-2.5cqw 0 0 -2.5cqw;border-radius:50%;border:.35cqw solid #ff6900;opacity:0;pointer-events:none}
+  .dv-tap{position:absolute;z-index:8;left:82%;top:59%;width:5cqw;height:5cqw;margin:-2.5cqw 0 0 -2.5cqw;border-radius:50%;border:.35cqw solid #ff6900;opacity:0;pointer-events:none}
 
   /* produtos que saltam */
   .pop{position:absolute;left:0;top:0;z-index:20;display:flex;align-items:center;gap:1cqw;width:21cqw;padding:.8cqw;border-radius:1.6cqw;background:rgba(255,255,255,.97);color:#17181c;box-shadow:0 3cqw 5cqw -1.5cqw rgba(0,0,0,.85),0 0 0 1px rgba(255,255,255,.8) inset;opacity:0;pointer-events:none;will-change:transform}
@@ -163,6 +167,10 @@ const saltos: Record<string, [string, string, string][]> = {
   .sv-modes button{display:flex;align-items:center;gap:6px;min-height:38px;padding:0 13px;border:0;border-radius:999px;background:none;color:#aeb4bd;font:inherit;font-size:13px;font-weight:700;cursor:pointer;transition:background .3s,color .3s}
   .sv-modes button.on{background:#ff6900;color:#141006}
   @media(max-width:520px){.sv-modes button span{display:none}.sv-modes button.on span{display:inline}}
+  /* aviso que desce em todas as telas ao mesmo tempo (usado por Loja, TelaErp, TelaSite e TelaApp) */
+  :global(.lj-toast){position:absolute;left:50%;top:1.2em;transform:translate(-50%,-220%);display:flex;align-items:center;gap:.6em;white-space:nowrap;background:#17181c;color:#fff;font-weight:700;font-size:.9em;padding:.6em 1.1em .6em .6em;border-radius:99px;box-shadow:0 .8em 2em rgba(0,0,0,.35);z-index:5}
+  :global(.lj-toast span){display:grid;place-items:center;width:1.6em;height:1.6em;border-radius:50%;background:#0b7544;font-size:.85em}
+  :global(.app .lj-toast),:global(.lj--tab .lj-toast){top:2.4em;font-size:.8em}
   .sv-note{margin-top:10px;font-size:13px;color:#aeb4bd}
 
   /* ----- hero por dispositivo ----- */
@@ -205,7 +213,6 @@ const saltos: Record<string, [string, string, string][]> = {
   const toasts = root.querySelectorAll<HTMLElement>('.lj-toast');
   const saltos: Record<string, [string, string, string][]> = JSON.parse(root.dataset.saltos!);
   const ordem = ['desk', 'lap', 'tab', 'cel'];
-  let qtd = 2;
   gsap.set(toasts, { xPercent: -50, yPercent: -220 });
 
   const contar = (el: Element, to: number, dur = 1.6) =>
@@ -228,8 +235,7 @@ const saltos: Record<string, [string, string, string][]> = {
     return gsap.timeline()
       .fromTo(tap, { scale: .3, opacity: 1 }, { scale: 1.6, opacity: 0, duration: .6, ease: 'power2.out' })
       .add(() => {
-        qtd = qtd >= 9 ? 1 : qtd + 1;
-        root.querySelectorAll('.lj-qtd').forEach((q) => (q.textContent = String(qtd)));
+        root.querySelectorAll('.lj-qtd').forEach((q) => { const n = Number(q.textContent) + 1; q.textContent = String(n > 99 ? 1 : n); });
         gsap.fromTo(root.querySelectorAll('.lj-qtd'), { scale: 1.9 }, { scale: 1, duration: .5, ease: 'back.out(3)' });
       }, .15)
       .to(toasts, { yPercent: 0, duration: .5, stagger: .07, ease: 'back.out(1.6)' }, .2)

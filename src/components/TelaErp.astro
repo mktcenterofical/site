@@ -1,0 +1,84 @@
+---
+// Tela fictícia de um sistema ERP ("Gestão Pro") usada no desktop do hero.
+// Medidas em em; o tamanho da fonte acompanha a largura da tela (cqw).
+const menu = ['Painel', 'Vendas', 'Estoque', 'Financeiro', 'Clientes', 'Notas fiscais'];
+const barras = [42, 58, 49, 66, 61, 78, 72, 88, 81, 95];
+const pedidos: [string, string, string, string][] = [
+  ['#1024', 'Ana Paula', 'R$ 189,90', 'Pago'],
+  ['#1023', 'Marcos Lima', 'R$ 1.280,00', 'Faturado'],
+  ['#1022', 'Padaria Sol', 'R$ 452,30', 'Pendente'],
+  ['#1021', 'Juliana Prado', 'R$ 96,00', 'Pago'],
+];
+---
+<div class="erp">
+  <aside class="erp-side">
+    <span class="erp-logo"><i></i>Gestão Pro</span>
+    {menu.map((m, i) => <span class={i === 0 ? 'on' : ''}><i></i>{m}</span>)}
+  </aside>
+  <div class="erp-main">
+    <div class="erp-top">
+      <b>Painel</b>
+      <span class="erp-busca">Buscar pedido, cliente…</span>
+      <img src="/mock/pessoa2.webp" alt="" width="96" height="96" loading="lazy" decoding="async" />
+    </div>
+    <div class="erp-kpis">
+      <div><small>Faturamento do mês</small><b>R$ 48.290</b><em>+12%</em></div>
+      <div><small>Pedidos hoje</small><b class="lj-qtd">37</b><em>+5</em></div>
+      <div><small>Ticket médio</small><b>R$ 130</b><em>+3%</em></div>
+      <div><small>Estoque baixo</small><b>5 itens</b><em class="alerta">repor</em></div>
+    </div>
+    <div class="erp-body">
+      <div class="erp-card">
+        <div class="erp-h"><b>Vendas por semana</b><span>Últimos 10</span></div>
+        <div class="erp-chart">{barras.map((v, i) => <i style={`height:${v}%`} class={i === barras.length - 1 ? 'hoje' : ''}></i>)}</div>
+      </div>
+      <div class="erp-card">
+        <div class="erp-h"><b>Últimos pedidos</b><span>Ver todos</span></div>
+        <div class="erp-tab">
+          {pedidos.map(([n, c, v, s]) => (
+            <div><span>{n}</span><span>{c}</span><b>{v}</b><em class={`st st-${s.toLowerCase()}`}>{s}</em></div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="lj-toast"><span>✓</span>Novo pedido recebido do app</div>
+</div>
+
+<style>
+  .erp{position:absolute;inset:0;display:flex;background:#f3f4f6;color:#17181c;font-size:1.6cqw;line-height:1.2;text-align:left;font-family:var(--ff-txt);overflow:hidden}
+  .erp img{display:block;object-fit:cover}
+  .erp-side{width:17%;flex:none;display:flex;flex-direction:column;gap:.35em;padding:1em .7em;background:#111317;color:#aeb4bd;font-size:.9em}
+  .erp-side span{display:flex;align-items:center;gap:.55em;padding:.55em .6em;border-radius:.5em;white-space:nowrap}
+  .erp-side span i{width:.9em;height:.9em;border-radius:.25em;background:#3a3d44;flex:none}
+  .erp-side span.on{background:rgba(255,105,0,.16);color:#fff}
+  .erp-side span.on i{background:#ff6900}
+  .erp-logo{color:#fff;font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:1.15em;margin-bottom:.6em}
+  .erp-logo i{background:#ff6900 !important;border-radius:50% !important}
+  .erp-main{flex:1;min-width:0;display:flex;flex-direction:column;gap:1em;padding:1em 1.3em}
+  .erp-top{display:flex;align-items:center;gap:1em}
+  .erp-top b{font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:1.5em;margin-right:auto}
+  .erp-busca{background:#fff;border:1px solid #e1e3e7;border-radius:99px;padding:.4em 1.2em;color:#9a9ea5;font-size:.85em;width:34%}
+  .erp-top img{width:2.2em;height:2.2em;border-radius:50%}
+  .erp-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:.8em}
+  .erp-kpis div{background:#fff;border-radius:.8em;padding:.7em .9em;box-shadow:0 .2em .8em rgba(0,0,0,.05)}
+  .erp-kpis small{display:block;color:#6b6f76;font-size:.8em}
+  .erp-kpis b{display:block;font-family:var(--ff-tit);font-weight:800;font-size:1.6em;margin:.15em 0}
+  .erp-kpis em{font-style:normal;font-weight:700;font-size:.75em;color:#0b7544}
+  .erp-kpis em.alerta{color:#b84a00}
+  .erp-body{flex:1;min-height:0;display:grid;grid-template-columns:1fr 1.15fr;gap:.8em}
+  .erp-card{background:#fff;border-radius:.8em;padding:.8em 1em;display:flex;flex-direction:column;min-height:0;box-shadow:0 .2em .8em rgba(0,0,0,.05)}
+  .erp-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.7em}
+  .erp-h b{font-weight:800;font-size:.95em}
+  .erp-h span{color:#a84300;font-weight:700;font-size:.75em}
+  .erp-chart{flex:1;display:flex;align-items:flex-end;gap:.45em;border-bottom:1px solid #eceef1}
+  .erp-chart i{flex:1;border-radius:.3em .3em 0 0;background:#ffd2ad}
+  .erp-chart i.hoje{background:#ff6900}
+  .erp-tab{display:grid;gap:.15em;font-size:.85em}
+  .erp-tab div{display:grid;grid-template-columns:.8fr 1.6fr 1.3fr 1fr;align-items:center;gap:.5em;padding:.5em 0;border-bottom:1px solid #f0f1f3}
+  .erp-tab span:first-child{color:#6b6f76}
+  .st{font-style:normal;font-weight:700;font-size:.85em;text-align:center;border-radius:99px;padding:.2em .5em}
+  .st-pago{background:#e3f5eb;color:#0b7544}
+  .st-faturado{background:#e8eefc;color:#2b4fb3}
+  .st-pendente{background:#fff1e6;color:#a84300}
+</style>
