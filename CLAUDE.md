@@ -12,13 +12,14 @@ Objetivo do site: gerar contatos pelo WhatsApp e pelo formulário.
 - Favicon: emblema circular (referencia/emblema-mkt.png)
 - Laranja #ff6900 (destaques e botões, no máximo ~10% da tela)
 - Menu do topo com fundo preto #090a0c (preto da logo), links claros
-- Tema CLARO: fundo branco, seções alternadas #f3f4f5, texto #111317, texto secundário #545a63
-- Laranja em texto pequeno usa #a84300 (orange-text) (contraste no fundo claro)
+- Tema ESCURO no site todo (estilo do hero): fundo #090a0c, seções alternadas #111317 com grade sutil, texto #fff, texto secundário #aeb4bd, linhas #23262c
+- Laranja em texto usa #ff8a24 (orange-text) no fundo escuro
 - Botão laranja sempre com texto escuro #141006 (contraste)
 - Fontes: Barlow Condensed (títulos), DM Sans (texto)
-- Logo em fundo escuro: public/logo-escuro.webp (cabeçalho, fundo #000). Em fundo claro: public/logo-claro.webp (rodapé). Originais em referencia/logo-fundo-*.png
+- Logo: public/logo-escuro.webp (fundo transparente, letras brancas) no cabeçalho e no rodapé. logo-claro.webp fica para fundos claros. Originais em referencia/logo-fundo-*.png
 - Hero da home: src/components/HeroCrescimento.astro — textos animados à esquerda; à direita os 4 aparelhos juntos (grafite escuro), cada um com um projeto fictício: desktop = ERP "Gestão Pro" (TelaErp.astro), notebook = site institucional Pão Dourado (TelaSite.astro), tablet = loja virtual RS Moda (Loja.astro), celular = app de delivery Sabor Já (TelaApp.astro). Um destaque percorre os aparelhos: o aparelho sobe, brilha e 2 produtos saltam da tela; no celular um toque no app dispara um aviso em todas as telas ao mesmo tempo e os contadores (.lj-qtd) sobem. Fotos em public/mock/ (Unsplash)
-- Pé do hero: indicador "ROLE" com seta animada (tablet em diante), clicável, leva a #clientes e some ao rolar
+- Pé do hero: indicador "ROLE" com seta animada (tablet em diante), clicável, leva a #sp e some ao rolar
+- Abaixo do hero: seção cinematográfica de São Paulo (src/components/CidadeSP.astro): skyline em SVG com Ponte Estaiada e Obelisco do Ibirapuera; comandada pela rolagem (seção alta + palco sticky, sem travar a página): pôr do sol escurece, janelas acendem, "SEUS PROJETOS COM A" sobe e MKT CENTER surge atrás dos prédios. ?cena=0.7 mostra parado num ponto
 - Abaixo do hero: faixa de logos dos sites criados (src/components/Clientes.astro, logos em public/clientes/, originais em referencia/clientes/). Fundo claro (só o hero é preto), carrossel limitado à largura do site (.wrap 1140), logos em cartões brancos (cinza, cor + borda laranja no hover), cada logo leva ao site
 - Menu: topo com Início, Quem somos, Portfólio e botão Contato (/contato/); faixa fina abaixo com os 5 serviços e ícones. Fundo dos menus #090a0c (mesmo tom do hero). Ao rolar (tablet em diante) só a faixa de serviços some e aparece um botão hambúrguer (☰) que a mostra de novo; o menu horizontal (Início, Quem somos, Portfólio, Contato) continua. Off-canvas só no celular
 - Celular: tudo centralizado, margem lateral de 10px, sem nenhuma rolagem horizontal (html/body overflow-x:clip, sem carrosséis)
