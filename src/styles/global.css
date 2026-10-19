@@ -29,8 +29,9 @@ h1{font-size:clamp(52px,7vw,60px);line-height:.92;letter-spacing:-.015em}
 h2{font-size:clamp(36px,5vw,44px);line-height:.95;letter-spacing:-.01em;margin-bottom:32px}
 h3{font-size:22px;line-height:1.05}
 .wrap{max-width:var(--max);margin:0 auto;padding:0 16px}
-section{padding:64px 0}
-@media(min-width:900px){section{padding:84px 0}}
+/* espaçamento padrão entre seções: o mesmo no site inteiro */
+:root{--sec:40px}
+section{padding:var(--sec) 0}
 .alt{background:var(--surface-raised) linear-gradient(to right,rgba(255,255,255,.025) 1px,transparent 1px) 0 0/56px 56px;border-block:1px solid var(--line)}
 .destaque{color:var(--orange-text)}
 .eyebrow{color:var(--orange-text);font-weight:700;font-size:12px;line-height:16px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;display:block}
@@ -85,7 +86,8 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--focus-ring);outl
 html,body{max-width:100%;overflow-x:clip}
 @media(max-width:767px){
   .wrap{padding:0 10px}
-  section{padding:44px 0;text-align:center}
+  :root{--sec:32px}
+  section{text-align:center}
   h1{font-size:42px}
   h2{font-size:32px;margin-bottom:22px}
   .lead{font-size:17px;line-height:27px;margin-inline:auto}
@@ -133,7 +135,6 @@ html,body{max-width:100%;overflow-x:clip}
 
 /* ---------- DESKTOP: tipografia maior, serviços em uma linha ---------- */
 @media(min-width:1440px){
-  section{padding:104px 0}
   h1{font-size:72px}
   h2{font-size:52px;margin-bottom:40px}
   .lead{font-size:20px;line-height:31px}

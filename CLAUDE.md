@@ -27,6 +27,7 @@ Objetivo do site: gerar contatos pelo WhatsApp e pelo formulário.
 ## Regras técnicas
 - Layout próprio por dispositivo (bloco "LAYOUTS POR DISPOSITIVO" no fim de global.css): celular < 768 (menu off-canvas, conteúdo centralizado e empilhado, botões largos), tablet 768–1023 (2 colunas, hero centralizado), notebook 1024–1439 (3 colunas), desktop ≥ 1440 (tipografia maior, serviços em 5 colunas). O hero começa no aparelho de quem visita. /#menu abre o menu no celular
 - Todo o conteúdo (cabeçalho, seções, rodapé) usa a largura total de 1140px (.wrap)
+- Espaçamento entre seções igual no site todo: section{padding:var(--sec) 0}, --sec 40px (32px no celular). Exceção: hero → seção 1 = 20px
 - Sem frameworks de JS no cliente; JS mínimo
 - Imagens em WebP/AVIF com width e height
 - Cada página: title único (até 60 caracteres), meta description
