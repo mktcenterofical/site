@@ -1,7 +1,8 @@
 ---
-// Faixa de logos dos sites criados pela MKT Center, rolando sem parar (abaixo do hero).
-// Clientes sem logo disponível aparecem como nome escrito. Logos em public/clientes/ (originais em referencia/clientes/).
-type Cliente = { nome: string; url?: string; logo?: string; w?: number; h?: number };
+// Faixa de logos dos sites criados pela MKT Center (abaixo do hero, continuando o fundo escuro dele).
+// Logos em public/clientes/ (originais em referencia/clientes/). Termina num corte diagonal (traço do K)
+// que leva para a seção clara de baixo.
+type Cliente = { nome: string; url: string; logo: string; w: number; h: number };
 const clientes: Cliente[] = [
   { nome: 'Nexcabos', url: 'https://nexcabos.com.br/', logo: 'nexcabos', w: 320, h: 91 },
   { nome: 'Eletro EPI', url: 'https://eletroepi.com.br/', logo: 'eletroepi', w: 320, h: 69 },
@@ -16,54 +17,77 @@ const clientes: Cliente[] = [
 ];
 ---
 <section class="cl" aria-labelledby="cl-tit">
-  <div class="wrap">
-    <h2 id="cl-tit" class="cl-tit">Empresas que confiam na MKT Center</h2>
+  <div class="cl-luz" aria-hidden="true"></div>
+  <div class="wrap cl-cab">
+    <div class="cl-txt">
+      <span class="cl-ey">Portfólio em produção</span>
+      <h2 id="cl-tit" class="cl-tit">Marcas que já estão <span>no digital com a MKT</span></h2>
+    </div>
+    <a class="cl-ver" href="/portfolio/">Ver portfólio <span aria-hidden="true">→</span></a>
   </div>
+
   <div class="cl-faixa">
     {[0, 1].map((copia) => (
       <ul class="cl-trilho" aria-hidden={copia === 1 ? 'true' : undefined}>
-        {clientes.map((c) => {
-          const conteudo = c.logo
-            ? <img src={`/clientes/${c.logo}.webp`} alt={copia === 0 ? c.nome : ''} width={c.w} height={c.h} loading="lazy" decoding="async" style={`aspect-ratio:${c.w}/${c.h}`} />
-            : <span class="cl-nome">{c.nome}</span>;
-          return (
-            <li>
-              {c.url
-                ? <a href={c.url} target="_blank" rel="noopener" tabindex={copia === 1 ? -1 : undefined} title={c.nome}>{conteudo}</a>
-                : <span class="cl-item" title={c.nome}>{conteudo}</span>}
-            </li>
-          );
-        })}
+        {clientes.map((c) => (
+          <li>
+            <a class="cl-card" href={c.url} target="_blank" rel="noopener" tabindex={copia === 1 ? -1 : undefined} title={`${c.nome} · site criado pela MKT Center`}>
+              <img src={`/clientes/${c.logo}.webp`} alt={copia === 0 ? c.nome : ''} width={c.w} height={c.h} loading="lazy" decoding="async" />
+            </a>
+          </li>
+        ))}
       </ul>
     ))}
   </div>
+  <div class="cl-corte" aria-hidden="true"></div>
 </section>
 
 <style>
-  .cl{padding:36px 0 40px;background:var(--surface-raised);border-bottom:1px solid var(--line)}
-  .cl-tit{font-family:var(--ff-txt);font-size:15px;line-height:1.3;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-align:center;color:var(--ink);margin:0 0 24px}
-  .cl-faixa{display:flex;overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-  .cl-trilho{flex:none;display:flex;align-items:center;gap:56px;padding-right:56px;list-style:none;margin:0;animation:cl-rolar 55s linear infinite}
+  /* continua o fundo do hero, sem emenda */
+  .cl{position:relative;background:var(--carbon);color:#fff;padding:8px 0 0;overflow:hidden;isolation:isolate}
+  .cl-luz{position:absolute;left:0;right:0;top:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,105,0,.15) 20%,#ff6900 50%,rgba(255,105,0,.15) 80%,transparent);box-shadow:0 0 18px 1px rgba(255,105,0,.45)}
+  .cl-luz::after{content:'';position:absolute;top:-1px;left:-20%;width:18%;height:3px;border-radius:3px;background:linear-gradient(90deg,transparent,#ffb27a,transparent);animation:cl-corrida 4.5s linear infinite}
+  @keyframes cl-corrida{to{left:110%}}
+
+  .cl-cab{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding-top:36px;padding-bottom:26px}
+  .cl-ey{display:inline-flex;align-items:center;gap:8px;color:var(--orange-hot);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+  .cl-ey::before{content:'';width:22px;height:2px;background:var(--orange);transform:skewX(-35deg)}
+  .cl-tit{font-size:clamp(28px,3.2vw,38px);line-height:.95;margin:10px 0 0;color:#fff}
+  .cl-tit span{color:var(--orange-hot)}
+  .cl-ver{flex:none;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 20px;border-radius:999px;border:1px solid #2f3238;color:#e4e6ea;font-weight:700;font-size:14px;text-decoration:none;transition:border-color .2s,color .2s,background .2s}
+  .cl-ver:hover{border-color:var(--orange);color:#fff;background:rgba(255,105,0,.1)}
+  .cl-ver span{color:var(--orange-hot);transition:transform .2s}
+  .cl-ver:hover span{transform:translateX(3px)}
+
+  .cl-faixa{display:flex;overflow:hidden;padding:10px 0 18px;mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+  .cl-trilho{flex:none;display:flex;align-items:center;gap:16px;padding-right:16px;list-style:none;margin:0;animation:cl-rolar 48s linear infinite}
   .cl-faixa:hover .cl-trilho{animation-play-state:paused}
   @keyframes cl-rolar{to{transform:translateX(-100%)}}
-  .cl li{flex:none;display:flex;align-items:center;height:56px}
-  .cl a,.cl-item{display:flex;align-items:center;height:100%;text-decoration:none}
-  .cl img{height:48px;width:auto;max-width:180px;object-fit:contain;filter:grayscale(1) contrast(1.1);opacity:.6;transition:filter .3s,opacity .3s}
-  .cl a:hover img,.cl a:focus-visible img{filter:none;opacity:1}
-  .cl-nome{font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:24px;letter-spacing:.02em;white-space:nowrap;color:#8a9099;transition:color .3s}
-  .cl-item:hover .cl-nome{color:var(--ink)}
+  .cl li{flex:none}
+  .cl-card{position:relative;display:grid;place-items:center;width:210px;height:96px;padding:16px 22px;border-radius:var(--radius-lg);background:linear-gradient(160deg,#ffffff,#eef0f2);box-shadow:0 0 0 1px rgba(255,255,255,.08),0 14px 30px -14px rgba(0,0,0,.9);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s}
+  .cl-card::after{content:'';position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 2px var(--orange);opacity:0;transition:opacity .3s}
+  .cl-card img{display:block;width:100%;height:100%;min-height:0;object-fit:contain;filter:grayscale(1) contrast(1.05);opacity:.72;transition:filter .3s,opacity .3s}
+  .cl-card:hover,.cl-card:focus-visible{transform:translateY(-4px);box-shadow:0 0 0 1px rgba(255,105,0,.4),0 18px 36px -12px rgba(255,105,0,.45)}
+  .cl-card:hover::after,.cl-card:focus-visible::after{opacity:1}
+  .cl-card:hover img,.cl-card:focus-visible img{filter:none;opacity:1}
+
+  /* corte em diagonal (traço do K) levando para a seção clara */
+  .cl-corte{height:72px;margin-top:18px;margin-bottom:-1px;background:var(--surface-raised);clip-path:polygon(0 100%,0 62%,100% 0,100% 100%);position:relative}
+  .cl-corte::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--orange) 0 18%,transparent 18%);clip-path:polygon(0 62%,100% 0,100% 5%,0 67%);opacity:.9}
+
   @media(max-width:767px){
-    .cl{padding:28px 0 32px}
-    .cl-tit{font-size:13px;margin-bottom:18px}
-    .cl-trilho{gap:36px;padding-right:36px;animation-duration:40s}
-    .cl li{height:44px}
-    .cl img{height:38px;max-width:140px}
-    .cl-nome{font-size:19px}
+    .cl-cab{flex-direction:column;align-items:center;text-align:center;padding-top:28px;padding-bottom:18px;gap:16px}
+    .cl-ey{justify-content:center}
+    .cl-tit{font-size:30px}
+    .cl-trilho{gap:12px;padding-right:12px;animation-duration:36s}
+    .cl-card{width:150px;height:72px;padding:12px 16px}
+    .cl-corte{height:44px}
   }
-  @media(min-width:1440px){.cl img{height:54px;max-width:200px}}
+  @media(min-width:1440px){.cl-card{width:230px;height:104px}}
   @media (prefers-reduced-motion: reduce){
-    .cl-faixa{mask-image:none;-webkit-mask-image:none;flex-wrap:wrap;justify-content:center}
-    .cl-trilho{animation:none;flex-wrap:wrap;justify-content:center;gap:24px 40px;padding:0 10px}
+    .cl-luz::after{display:none}
+    .cl-faixa{mask-image:none;-webkit-mask-image:none;justify-content:center}
+    .cl-trilho{animation:none;flex-wrap:wrap;justify-content:center;gap:12px;padding:0 10px}
     .cl-trilho[aria-hidden]{display:none}
   }
 </style>
