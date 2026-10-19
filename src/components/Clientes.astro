@@ -15,7 +15,7 @@ const clientes: Cliente[] = [
   { nome: 'Nano Dev', url: 'https://www.nanodev.com.br/', logo: 'nanodev', w: 320, h: 82 },
 ];
 ---
-<section class="cl" aria-labelledby="cl-tit">
+<section class="cl" id="clientes" aria-labelledby="cl-tit">
   <div class="wrap cl-cab">
     <div class="cl-txt">
       <h2 id="cl-tit" class="cl-tit">Marcas que já estão <span>no digital com a MKT</span></h2>
@@ -38,7 +38,7 @@ const clientes: Cliente[] = [
 </section>
 
 <style>
-  .cl{background:var(--surface);padding:48px 0 52px;border-bottom:1px solid var(--line)}
+  .cl{background:var(--surface);padding:48px 0 52px;border-bottom:1px solid var(--line);scroll-margin-top:72px}
   .cl-cab{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:24px}
   .cl-ey{display:inline-flex;align-items:center;gap:8px;color:var(--orange-text);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
   .cl-ey::before{content:'';width:22px;height:2px;background:var(--orange);transform:skewX(-35deg)}
