@@ -212,7 +212,8 @@ const saltos: Record<string, [string, string, string][]> = {
   .rolar:hover i{border-color:var(--orange);background:rgba(255,105,0,.12)}
   .rolar.some{opacity:0;pointer-events:none}
   @keyframes rolar-desce{0%{transform:translateY(-22px);opacity:0}35%{opacity:1}70%{transform:translateY(6px);opacity:1}100%{transform:translateY(20px);opacity:0}}
-  @media(min-width:768px){.rolar{display:flex}.hc{padding-bottom:20px}}
+  /* o hero ocupa a tela toda: a seção 1 só aparece ao rolar (20px abaixo) */
+  @media(min-width:768px){.rolar{display:flex}.hc{padding-bottom:20px;min-height:calc(100vh - 72px);min-height:calc(100svh - 72px);display:flex;flex-direction:column}.hc-in{margin-block:auto}}
   @media (prefers-reduced-motion: reduce){.rolar i svg{animation:none}}
   @media (prefers-reduced-motion: reduce){.hc-lines{display:none}.dv-on{display:none}}
 </style>
