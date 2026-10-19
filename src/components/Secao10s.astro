@@ -1,74 +1,65 @@
 ---
-// Seção 1 da home (logo após a faixa de clientes): "Seu site explica o que você vende em 10 segundos?"
-// Esquerda: ilustração animada em código (monitor montando um site + cronômetro de 10 segundos).
+// Seção 1 da home (logo abaixo do hero): "Seu site explica o que você vende em 10 segundos?"
+// Esquerda: monitor e celular realistas (em código) montando o mesmo site em 10 segundos, com cronômetro compacto.
 // Direita: pergunta, descrição curta e CTAs.
 import { waLink } from '../config';
 import Icon from './Icon.astro';
-const marcas = Array.from({ length: 60 }, (_, i) => i);
-const numeros = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 ---
 <section class="s10" id="dez-segundos">
   <div class="wrap s10-in">
     <div class="s10-arte" aria-hidden="true">
       <div class="s10-luz"></div>
 
-      <!-- monitor com um site sendo montado -->
+      <!-- monitor realista com o site sendo montado -->
       <div class="s10-mon">
-        <div class="s10-tela">
-          <div class="s10-bar"><i></i><i></i><i></i><span></span></div>
-          <div class="s10-nav pc"><b></b><em></em><em></em><em></em><span></span></div>
-          <div class="s10-topo">
-            <div class="s10-img pc"><img src="/mock/padaria.webp" alt="" width="640" height="400" loading="lazy" decoding="async" /></div>
-            <div class="s10-txt">
-              <p class="pc l1"></p><p class="pc l2"></p><p class="pc l3"></p>
-              <span class="pc s10-bt"></span>
+        <div class="s10-aro">
+          <div class="s10-tela">
+            <div class="st-bar"><i></i><i></i><i></i><span>padariapaodourado.com.br</span></div>
+            <div class="st-nav pc"><b>Pão Dourado</b><em>Início</em><em>Cardápio</em><em>Contato</em><span>Pedir agora</span></div>
+            <div class="st-hero">
+              <div class="st-txt">
+                <small class="pc">Padaria artesanal desde 1998</small>
+                <strong class="pc">Pão quentinho todo dia</strong>
+                <p class="pc">Três fornadas por dia e pedidos pelo WhatsApp, sem fila.</p>
+                <span class="pc st-bt">Pedir no WhatsApp</span>
+              </div>
+              <div class="st-img pc"><img src="/mock/padaria.webp" alt="" width="640" height="400" loading="lazy" decoding="async" /></div>
             </div>
-          </div>
-          <div class="s10-cards">
-            <div class="pc"><Icon name="cart" size={22} /><i></i><i></i></div>
-            <div class="pc"><Icon name="trending" size={22} /><i></i><i></i></div>
-            <div class="pc"><Icon name="smile" size={22} /><i></i><i></i></div>
-            <div class="pc"><Icon name="message" size={22} /><i></i><i></i></div>
+            <div class="st-cards">
+              <div class="pc"><img src="/mock/pao.webp" alt="" width="320" height="220" loading="lazy" decoding="async" /><b>Pães artesanais</b></div>
+              <div class="pc"><img src="/mock/croissant.webp" alt="" width="320" height="220" loading="lazy" decoding="async" /><b>Confeitaria</b></div>
+              <div class="pc"><img src="/mock/bolo.webp" alt="" width="320" height="220" loading="lazy" decoding="async" /><b>Bolos e tortas</b></div>
+            </div>
+            <i class="s10-reflexo"></i>
           </div>
         </div>
-        <div class="s10-pe"></div>
+        <div class="s10-braco"></div>
         <div class="s10-base"></div>
       </div>
 
-      <!-- cronômetro -->
-      <div class="s10-crono">
-        <span class="s10-coroa"></span><span class="s10-botao"></span>
-        <svg viewBox="0 0 200 200">
-          <defs>
-            <radialGradient id="s10-aro" cx=".35" cy=".3" r=".8">
-              <stop offset="0" stop-color="#f4f5f7" />
-              <stop offset=".5" stop-color="#8d929b" />
-              <stop offset="1" stop-color="#2b2e34" />
-            </radialGradient>
-          </defs>
-          <circle cx="100" cy="100" r="98" fill="url(#s10-aro)" />
-          <circle cx="100" cy="100" r="88" fill="#0d0e11" />
-          <circle cx="100" cy="100" r="79" fill="none" stroke="#1d1f24" stroke-width="14" />
-          <circle class="s10-arco" cx="100" cy="100" r="79" fill="none" stroke="#ff6900" stroke-width="14" pathLength="100" transform="rotate(-90 100 100)" />
-          <g stroke="#e9ebee">
-            {marcas.map((i) => <line x1="100" y1={i % 5 === 0 ? 16 : 18} x2="100" y2={i % 5 === 0 ? 25 : 21} stroke-width={i % 5 === 0 ? 2.4 : 1} transform={`rotate(${i * 6} 100 100)`} />)}
-          </g>
-          <g fill="#e9ebee" font-family="DM Sans, sans-serif" font-weight="700" font-size="11" text-anchor="middle">
-            {numeros.map((n, i) => {
-              const a = (i * 30 - 90) * Math.PI / 180;
-              return <text x={100 + Math.cos(a) * 60} y={104 + Math.sin(a) * 60}>{n}</text>;
-            })}
-          </g>
-          <text class="s10-num" x="100" y="120" text-anchor="middle" fill="#ff6900" font-family="Barlow Condensed, sans-serif" font-weight="800" font-size="66">10</text>
-          <text x="100" y="142" text-anchor="middle" fill="#e9ebee" font-family="DM Sans, sans-serif" font-weight="700" font-size="11" letter-spacing="2">SEGUNDOS</text>
-          <g class="s10-ponteiro"><circle cx="100" cy="21" r="6" fill="#fff" stroke="#ff6900" stroke-width="3" /></g>
-        </svg>
+      <!-- celular realista com a versão mobile do mesmo site -->
+      <div class="s10-cel">
+        <span class="s10-btn b1"></span><span class="s10-btn b2"></span><span class="s10-btn b3"></span>
+        <div class="s10-cel-tela">
+          <span class="s10-ilha"></span>
+          <div class="sc-top pc"><b>Pão Dourado</b><span></span></div>
+          <div class="sc-img pc"><img src="/mock/padaria.webp" alt="" width="640" height="400" loading="lazy" decoding="async" /></div>
+          <strong class="pc">Pão quentinho todo dia</strong>
+          <span class="pc sc-bt">Pedir no WhatsApp</span>
+          <div class="sc-mini pc"><img src="/mock/pao.webp" alt="" width="320" height="220" loading="lazy" decoding="async" /><img src="/mock/croissant.webp" alt="" width="320" height="220" loading="lazy" decoding="async" /></div>
+          <i class="s10-reflexo"></i>
+        </div>
+      </div>
+
+      <!-- cronômetro compacto -->
+      <div class="s10-timer">
+        <svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="18" fill="none" stroke="#2a2d33" stroke-width="4" /><circle class="s10-arco" cx="22" cy="22" r="18" fill="none" stroke="#ff6900" stroke-width="4" stroke-linecap="round" pathLength="100" transform="rotate(-90 22 22)" /></svg>
+        <div><b><span class="s10-num">10</span>s</b><small>para convencer</small></div>
       </div>
     </div>
 
     <div class="s10-texto">
-      <span class="eyebrow">Primeira impressão</span>
-      <h2>Seu site explica o que você vende em <span class="destaque">10 segundos?</span></h2>
+      <h2>Seu site explica o que você vende em <span class="destaque s10-nw">10 segundos?</span></h2>
       <p class="lead">É o tempo que um visitante leva para decidir se fica ou vai embora. A MKT Center cria sites, lojas e campanhas que mostram na hora o que você faz e levam o cliente direto para o seu WhatsApp, para o seu negócio ter sucesso na internet.</p>
       <ul class="s10-lista">
         <li><Icon name="check" size={16} />Mensagem clara logo na primeira tela</li>
@@ -88,48 +79,67 @@ const numeros = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
   .s10-in{display:grid;gap:48px;align-items:center}
   @media(min-width:1024px){.s10-in{grid-template-columns:1.05fr 1fr;gap:56px}}
 
-  /* ---------- ilustração ---------- */
-  .s10-arte{position:relative;width:min(100%,560px);aspect-ratio:1/.86;margin:0 auto;container-type:inline-size}
-  .s10-luz{position:absolute;left:4%;right:10%;bottom:6%;height:20%;border-radius:50%;background:radial-gradient(closest-side,rgba(255,105,0,.55),transparent);filter:blur(10px)}
-  .s10-mon{position:absolute;left:0;top:6%;width:74%}
-  .s10-tela{position:relative;aspect-ratio:16/11;border-radius:2.2cqw;padding:2.2cqw;background:linear-gradient(160deg,#2b2e34,#121316 40%,#0b0c0e);box-shadow:0 0 0 1px rgba(255,255,255,.08),0 4cqw 8cqw -3cqw rgba(0,0,0,.9);display:flex;flex-direction:column;gap:1.8cqw;overflow:hidden}
-  .s10-bar{display:flex;align-items:center;gap:1cqw}
-  .s10-bar i{width:1.6cqw;height:1.6cqw;border-radius:50%;background:#3a3d44}
-  .s10-bar i:nth-child(1){background:#ff5f57}.s10-bar i:nth-child(2){background:#febc2e}.s10-bar i:nth-child(3){background:#28c840}
-  .s10-bar span{margin-left:auto;width:3cqw;height:1.2cqw;border-radius:9px;background:#2a2d33}
-  .s10-nav{display:flex;align-items:center;gap:2cqw}
-  .s10-nav b{width:9cqw;height:1.6cqw;border-radius:9px;background:#4a4e57}
-  .s10-nav em{width:6cqw;height:1.1cqw;border-radius:9px;background:#33363d}
-  .s10-nav span{margin-left:auto;width:8cqw;height:2.2cqw;border-radius:99px;background:#ff6900}
-  .s10-topo{display:grid;grid-template-columns:1.15fr 1fr;gap:2.2cqw;flex:1;min-height:0}
-  .s10-img{border-radius:1.4cqw;overflow:hidden;background:#1d1f24}
-  .s10-img img{width:100%;height:100%;object-fit:cover;filter:saturate(1.1)}
-  .s10-txt{display:flex;flex-direction:column;justify-content:center;gap:1.4cqw}
-  .s10-txt p{height:1.5cqw;border-radius:9px;background:#3a3d44}
-  .s10-txt .l1{width:90%;height:2.2cqw;background:#5b5f68}.s10-txt .l2{width:75%}.s10-txt .l3{width:55%}
-  .s10-bt{width:40%;height:2.6cqw;border-radius:99px;background:#ff6900;margin-top:.6cqw}
-  .s10-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:1.6cqw;height:22%}
-  .s10-cards div{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.8cqw;border-radius:1.2cqw;background:#1a1c20;border:1px solid #26292f;color:#ff8a24}
-  .s10-cards :global(svg){width:4cqw;height:4cqw}
-  .s10-cards i{width:60%;height:.9cqw;border-radius:9px;background:#33363d}
-  .s10-cards i:last-child{width:40%}
-  .s10-pe{width:14%;height:7cqw;margin:0 auto;background:linear-gradient(90deg,#16171a,#4a4d55 50%,#16171a);clip-path:polygon(22% 0,78% 0,100% 100%,0 100%)}
-  .s10-base{width:40%;height:1.6cqw;margin:0 auto;border-radius:1cqw 1cqw 2cqw 2cqw;background:linear-gradient(180deg,#4a4d55,#16171a);box-shadow:0 0 5cqw rgba(255,105,0,.45)}
+  /* ---------- ilustração: monitor e celular realistas ---------- */
+  .s10-arte{position:relative;width:min(100%,580px);aspect-ratio:1/.8;margin:0 auto;container-type:inline-size}
+  .s10-luz{position:absolute;left:6%;right:6%;bottom:2%;height:16%;border-radius:50%;background:radial-gradient(closest-side,rgba(255,105,0,.5),transparent);filter:blur(12px)}
+  .s10-arte img{display:block;width:100%;height:100%;object-fit:cover}
+  .s10-reflexo{position:absolute;inset:0;pointer-events:none;background:linear-gradient(118deg,rgba(255,255,255,.16) 0%,rgba(255,255,255,.04) 34%,rgba(255,255,255,0) 35%)}
+
+  /* monitor: borda de alumínio, vidro preto fino, braço e base */
+  .s10-mon{position:absolute;left:0;top:0;width:84%}
+  .s10-aro{padding:.45cqw;border-radius:2cqw;background:linear-gradient(145deg,#e6e8eb,#9a9ea5 40%,#d4d7db 70%,#7d8188);box-shadow:0 5cqw 9cqw -3cqw rgba(0,0,0,.9)}
+  .s10-tela{position:relative;aspect-ratio:16/10;border-radius:1.6cqw;border:1.3cqw solid #050506;overflow:hidden;background:#fbf8f3;color:#1d1a16;font-size:1.32cqw;line-height:1.2;text-align:left;display:flex;flex-direction:column}
+  .s10-braco{width:15%;height:10cqw;margin:-.2cqw auto 0;background:linear-gradient(90deg,#8d9198,#eceef0 45%,#b9bdc3 60%,#7a7e85);clip-path:polygon(28% 0,72% 0,86% 100%,14% 100%)}
+  .s10-base{width:34%;height:1.4cqw;margin:0 auto;border-radius:.4cqw .4cqw 1.2cqw 1.2cqw;background:linear-gradient(180deg,#f0f1f3,#9fa3aa);box-shadow:0 1.4cqw 2.4cqw rgba(0,0,0,.7)}
+
+  .st-bar{display:flex;align-items:center;gap:.5em;padding:.55em .9em;background:#ece9e5;border-bottom:1px solid #ddd8d2}
+  .st-bar i{width:.7em;height:.7em;border-radius:50%;background:#cbc6c0}
+  .st-bar i:nth-child(1){background:#ff5f57}.st-bar i:nth-child(2){background:#febc2e}.st-bar i:nth-child(3){background:#28c840}
+  .st-bar span{margin-left:1em;padding:.2em 1.3em;border-radius:99px;background:#fff;color:#7a756e;font-size:.85em;min-width:42%}
+  .st-nav{display:flex;align-items:center;gap:1.6em;padding:.9em 2em;font-weight:600;color:#5c564f}
+  .st-nav em{font-style:normal}
+  .st-nav b{margin-right:auto;font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:1.5em;color:#1d1a16}
+  .st-nav span,.st-bt,.sc-bt{background:#ff6900;color:#141006;font-weight:800;border-radius:99px;padding:.5em 1.2em;white-space:nowrap}
+  .st-hero{display:grid;grid-template-columns:1fr 1.1fr;gap:2em;padding:.4em 2em;flex:1;min-height:0}
+  .st-txt{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:.7em}
+  .st-txt small{color:#a84300;font-weight:800;text-transform:uppercase;letter-spacing:.1em;font-size:.75em}
+  .st-txt strong{font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:3em;line-height:.9}
+  .st-txt p{color:#6b655d;max-width:24ch}
+  .st-img{border-radius:1em;overflow:hidden;min-height:0}
+  .st-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2em;padding:1.2em 2em 1.6em;height:30%;flex:none}
+  .st-cards div{display:grid;grid-template-rows:1fr auto;gap:.4em;padding:.5em;border-radius:.9em;background:#fff;box-shadow:0 .4em 1.2em rgba(0,0,0,.08);min-height:0}
+  .st-cards img{border-radius:.6em;min-height:0}
+  .st-cards b{font-weight:800}
+
+  /* celular: moldura de titânio, ilha dinâmica e botões laterais */
+  .s10-cel{position:absolute;right:0;bottom:3%;width:25%;aspect-ratio:9/19.3;padding:.7cqw;border-radius:4.4cqw;background:linear-gradient(135deg,#d7d9dc,#7b7f86 30%,#c9ccd0 55%,#5d6168);box-shadow:0 0 0 .25cqw #2b2d31 inset,0 4cqw 7cqw -2cqw rgba(0,0,0,.9)}
+  .s10-btn{position:absolute;width:.5cqw;border-radius:.3cqw;background:linear-gradient(90deg,#5d6168,#c9ccd0)}
+  .s10-btn.b1{left:-.35cqw;top:18%;height:5%}.s10-btn.b2{left:-.35cqw;top:26%;height:9%}.s10-btn.b3{right:-.35cqw;top:24%;height:13%}
+  .s10-cel-tela{position:relative;height:100%;border-radius:3.8cqw;border:.8cqw solid #050506;overflow:hidden;background:#fbf8f3;color:#1d1a16;font-size:1.25cqw;line-height:1.2;text-align:left;display:flex;flex-direction:column;gap:.9em;padding:3.4em .9em 1em}
+  .s10-ilha{position:absolute;left:50%;top:.8em;width:36%;height:1.7em;transform:translateX(-50%);border-radius:99px;background:#050506}
+  .sc-top{display:flex;align-items:center;justify-content:space-between}
+  .sc-top b{font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:1.4em}
+  .sc-top span{width:1.8em;height:1.2em;border-top:.25em solid #1d1a16;border-bottom:.25em solid #1d1a16}
+  .sc-img{height:30%;flex:none;border-radius:.9em;overflow:hidden}
+  .s10-cel-tela strong{font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:2.1em;line-height:.92}
+  .sc-bt{align-self:flex-start;font-size:.9em}
+  .sc-mini{display:grid;grid-template-columns:1fr 1fr;gap:.6em;flex:1;min-height:0}
+  .sc-mini img{border-radius:.7em}
+
+  /* cronômetro compacto */
+  .s10-timer{position:absolute;left:3%;bottom:6%;display:flex;align-items:center;gap:1.2cqw;padding:1cqw 2.2cqw 1cqw 1cqw;border-radius:99px;background:rgba(17,19,23,.92);border:1px solid #2a2d33;box-shadow:0 2cqw 4cqw -1cqw rgba(0,0,0,.8);text-align:left}
+  .s10-timer svg{width:7cqw;height:7cqw}
+  .s10-timer b{display:block;font-family:var(--ff-tit);font-weight:800;font-size:4cqw;line-height:1;color:#ff8a24}
+  .s10-timer small{display:block;font-size:1.9cqw;color:#aeb4bd;white-space:nowrap}
+  .s10-arco{stroke-dasharray:0 100}
 
   /* peças do site aparecendo ao longo dos 10 segundos */
   .pc{transition:opacity .5s,transform .5s cubic-bezier(.2,.8,.2,1)}
-  .s10-arte.montando .pc{opacity:0;transform:translateY(1.2cqw) scale(.97)}
+  .s10-arte.montando .pc{opacity:0;transform:translateY(.6em) scale(.97)}
   .s10-arte.montando .pc.on{opacity:1;transform:none}
 
-  .s10-crono{position:absolute;right:0;bottom:4%;width:48%;aspect-ratio:1;filter:drop-shadow(0 4cqw 5cqw rgba(0,0,0,.8))}
-  .s10-crono svg{position:relative;width:100%;height:100%;display:block}
-  .s10-coroa{position:absolute;left:50%;top:-9%;width:16%;height:12%;transform:translateX(-50%);border-radius:1cqw 1cqw .4cqw .4cqw;background:linear-gradient(90deg,#5b5f68,#e9ebee 50%,#5b5f68)}
-  .s10-coroa::after{content:'';position:absolute;left:50%;bottom:-40%;width:40%;height:50%;transform:translateX(-50%);background:linear-gradient(90deg,#5b5f68,#c9cdd2 50%,#5b5f68)}
-  .s10-botao{position:absolute;right:6%;top:2%;width:10%;height:8%;transform:rotate(42deg);border-radius:.6cqw;background:linear-gradient(90deg,#5b5f68,#e9ebee 50%,#5b5f68)}
-  .s10-arco{stroke-dasharray:0 100}
-  .s10-ponteiro{transform-origin:100px 100px}
-
   /* ---------- texto ---------- */
+  .s10-nw{white-space:nowrap}
   .s10-texto h2{font-size:clamp(38px,4.6vw,58px);line-height:.95;margin-bottom:0}
   .s10-lista{list-style:none;display:grid;gap:10px;margin-top:24px}
   .s10-lista li{display:flex;align-items:center;gap:10px;color:var(--ink);font-weight:600}
@@ -147,14 +157,12 @@ const numeros = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const pecas = Array.from(arte.querySelectorAll<HTMLElement>('.pc'));
     const arco = arte.querySelector<SVGCircleElement>('.s10-arco')!;
-    const ponteiro = arte.querySelector<SVGLineElement>('.s10-ponteiro')!;
-    const num = arte.querySelector<SVGTextElement>('.s10-num')!;
+    const num = arte.querySelector<HTMLElement>('.s10-num')!;
     const DUR = 10000;
 
     function desenhar(ms: number) {
       const f = Math.min(ms / DUR, 1);
       arco.style.strokeDasharray = `${f * 100} 100`;
-      ponteiro.style.transform = `rotate(${f * 360}deg)`;
       num.textContent = String(Math.max(0, 10 - Math.floor(ms / 1000)));
       // cada peça do site aparece num momento dos 10 segundos
       pecas.forEach((p, i) => p.classList.toggle('on', f >= (i + 1) / (pecas.length + 2)));
@@ -162,7 +170,7 @@ const numeros = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11];
 
     if (reduce) {
       desenhar(DUR);
-      num.textContent = '10'; arco.style.strokeDasharray = '17 100'; ponteiro.style.transform = 'rotate(61deg)';
+      num.textContent = '10'; arco.style.strokeDasharray = '100 100';
     } else {
       arte.classList.add('montando');
       let inicio = 0, raf = 0, visivel = false;
