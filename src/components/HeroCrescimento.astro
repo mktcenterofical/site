@@ -94,7 +94,7 @@ const saltos: Record<string, [string, string, string][]> = {
 
 <style>
   .hc{position:relative;overflow:hidden;background:var(--carbon);color:#fff;padding:56px 0 72px;isolation:isolate}
-  @media(min-width:1024px){.hc{min-height:calc(100vh - 114px);display:flex;align-items:center}}
+  @media(min-width:1024px){.hc{padding-top:56px}}
   .hc-glow{position:absolute;inset:-20%;z-index:-1;background:radial-gradient(600px 420px at 75% 45%,rgba(255,105,0,.22),transparent 65%),radial-gradient(500px 360px at 10% 90%,rgba(255,138,36,.1),transparent 70%)}
   .hc-grid{position:absolute;inset:0;z-index:-1;background-size:56px 56px;background-image:linear-gradient(to right,rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.05) 1px,transparent 1px);mask-image:radial-gradient(ellipse at 60% 50%,#000 0%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse at 60% 50%,#000 0%,transparent 70%)}
   .hc-lines{position:absolute;inset:0;z-index:-1;pointer-events:none}
@@ -179,7 +179,7 @@ const saltos: Record<string, [string, string, string][]> = {
 
   /* ----- hero por dispositivo ----- */
   @media(max-width:767px){
-    .hc{padding:28px 0 32px;text-align:center}
+    .hc{padding:28px 0 20px;text-align:center}
     .hc-txt{display:flex;flex-direction:column;align-items:center}
     .hc-h1{font-size:46px;align-items:center}
     .hc-lead{font-size:16px;line-height:26px;margin-top:16px}
@@ -190,7 +190,7 @@ const saltos: Record<string, [string, string, string][]> = {
     .sv-scene{transform:none}
   }
   @media(min-width:768px) and (max-width:1023px){
-    .hc{padding:56px 0 64px;text-align:center}
+    .hc{padding:56px 0 20px;text-align:center}
     .hc-txt{display:flex;flex-direction:column;align-items:center}
     .hc-h1{font-size:68px;align-items:center}
     .hc-lead{margin-inline:auto}
@@ -204,7 +204,7 @@ const saltos: Record<string, [string, string, string][]> = {
     .sv-scene{width:min(100%,700px)}
   }
   /* seta "Role" no pé do hero */
-  .rolar{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);z-index:5;display:none;flex-direction:column;align-items:center;gap:10px;color:#aeb4bd;text-decoration:none;transition:opacity .4s,color .2s}
+  .rolar{position:relative;z-index:5;width:max-content;margin:28px auto 0;display:none;flex-direction:column;align-items:center;gap:10px;color:#aeb4bd;text-decoration:none;transition:opacity .4s,color .2s}
   .rolar span{font-size:12px;font-weight:700;letter-spacing:.32em;text-transform:uppercase;padding-left:.32em}
   .rolar i{position:relative;display:grid;place-items:center;width:34px;height:52px;border-radius:999px;border:1.5px solid rgba(255,255,255,.22);color:var(--orange-hot);overflow:hidden;transition:border-color .2s,background .2s}
   .rolar i svg{animation:rolar-desce 1.8s cubic-bezier(.6,0,.3,1) infinite}
@@ -212,7 +212,7 @@ const saltos: Record<string, [string, string, string][]> = {
   .rolar:hover i{border-color:var(--orange);background:rgba(255,105,0,.12)}
   .rolar.some{opacity:0;pointer-events:none}
   @keyframes rolar-desce{0%{transform:translateY(-22px);opacity:0}35%{opacity:1}70%{transform:translateY(6px);opacity:1}100%{transform:translateY(20px);opacity:0}}
-  @media(min-width:768px){.rolar{display:flex}.hc{padding-bottom:120px}}
+  @media(min-width:768px){.rolar{display:flex}.hc{padding-bottom:20px}}
   @media (prefers-reduced-motion: reduce){.rolar i svg{animation:none}}
   @media (prefers-reduced-motion: reduce){.hc-lines{display:none}.dv-on{display:none}}
 </style>
