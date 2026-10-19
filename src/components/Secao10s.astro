@@ -86,7 +86,7 @@ const numeros = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((n, i) => {
           <g fill="#f3f4f5" font-family="DM Sans, sans-serif" font-weight="700" font-size="13" text-anchor="middle">
             {numeros.map(([n, x, y]) => <text x={x} y={y}>{n}</text>)}
           </g>
-          <text class="s10-num" x="100" y="121" text-anchor="middle" fill="#ff6900" font-family="Barlow Condensed, sans-serif" font-weight="800" font-size="60">10</text>
+          <text class="s10-num" x="100" y="121" text-anchor="middle" fill="#ff6900" font-family="Barlow Condensed, sans-serif" font-weight="800" font-size="60">0</text>
           <text x="100" y="140" text-anchor="middle" fill="#e9ebee" font-family="DM Sans, sans-serif" font-weight="700" font-size="10" letter-spacing="2">SEGUNDOS</text>
           <circle cx="100" cy="100" r="88" fill="url(#s10-vidro)" />
         </svg>
@@ -200,28 +200,29 @@ const numeros = [12, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((n, i) => {
     function desenhar(ms: number) {
       const f = Math.min(ms / DUR, 1);
       arco.style.strokeDasharray = `${f * 100} 100`;
-      num.textContent = String(Math.max(0, 10 - Math.floor(ms / 1000)));
+      num.textContent = String(Math.min(10, Math.floor(ms / 1000)));
       // cada peça do site aparece num momento dos 10 segundos
       pecas.forEach((p, i) => p.classList.toggle('on', f >= (i + 1) / (pecas.length + 2)));
     }
 
     if (reduce) {
       desenhar(DUR);
-      num.textContent = '10'; arco.style.strokeDasharray = '17 100';
+      num.textContent = '10'; arco.style.strokeDasharray = '100 100';
     } else {
       arte.classList.add('montando');
-      let inicio = 0, raf = 0, visivel = false;
+      let inicio = 0, raf = 0, visivel = false, feito = false;
       const quadro = (t: number) => {
         if (!inicio) inicio = t;
         let ms = t - inicio;
-        if (ms > DUR + 1800) { inicio = t; ms = 0; } // segura o site pronto por um instante e recomeça
         desenhar(Math.min(ms, DUR));
+        // para no 10 com o site pronto no monitor e no celular
+        if (ms >= DUR) { feito = true; raf = 0; return; }
         raf = visivel ? requestAnimationFrame(quadro) : 0;
       };
       // só anima quando a seção está na tela
       new IntersectionObserver(([e]) => {
         visivel = e.isIntersecting;
-        if (visivel && !raf) { inicio = 0; raf = requestAnimationFrame(quadro); }
+        if (visivel && !raf && !feito) { inicio = 0; raf = requestAnimationFrame(quadro); }
       }, { threshold: .25 }).observe(arte);
     }
   }
