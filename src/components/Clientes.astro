@@ -27,7 +27,7 @@ const clientes: Cliente[] = [
       <ul class="cl-trilho" aria-hidden={copia === 1 ? 'true' : undefined}>
         {clientes.map((c) => (
           <li>
-            <a class="cl-card" href={c.url} target="_blank" rel="noopener" tabindex={copia === 1 ? -1 : undefined} title={`${c.nome} · site criado pela MKT Center`}>
+            <a class={c.logo === 'kimax' ? 'cl-card cl-cor' : 'cl-card'} href={c.url} target="_blank" rel="noopener" tabindex={copia === 1 ? -1 : undefined} title={`${c.nome} · site criado pela MKT Center`}>
               <img src={`/clientes/${c.logo}.webp`} alt={copia === 0 ? c.nome : ''} width={c.w} height={c.h} loading="lazy" decoding="async" />
             </a>
           </li>
@@ -51,21 +51,21 @@ const clientes: Cliente[] = [
 
   /* carrossel limitado à largura do site (1140px) */
   .cl-faixa{display:flex;overflow:hidden;padding:8px 0 16px;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
-  .cl-trilho{flex:none;display:flex;align-items:center;gap:16px;padding-right:16px;list-style:none;margin:0;animation:cl-rolar 48s linear infinite}
+  .cl-trilho{flex:none;display:flex;align-items:center;gap:56px;padding-right:56px;list-style:none;margin:0;animation:cl-rolar 48s linear infinite}
   .cl-faixa:hover .cl-trilho{animation-play-state:paused}
   @keyframes cl-rolar{to{transform:translateX(-100%)}}
   .cl li{flex:none}
-  .cl-card{position:relative;display:grid;place-items:center;width:200px;height:92px;padding:16px 22px;border-radius:var(--radius-lg);background:#fff;border:1px solid var(--line);box-shadow:0 2px 6px rgba(22,26,32,.05);transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s,border-color .3s}
-  .cl-card img{display:block;width:100%;height:100%;min-height:0;object-fit:contain;filter:grayscale(1) contrast(1.05);opacity:.6;transition:filter .3s,opacity .3s}
-  .cl-card:hover,.cl-card:focus-visible{transform:translateY(-4px);border-color:var(--orange);box-shadow:0 8px 14px -8px rgba(255,105,0,.5)}
-  .cl-card:hover img,.cl-card:focus-visible img{filter:none;opacity:1}
+  .cl-card{display:grid;place-items:center;width:170px;height:56px;padding:0 6px}
+  .cl-card img{display:block;width:100%;height:100%;min-height:0;object-fit:contain;filter:grayscale(1) brightness(0) invert(1);opacity:.38;transition:opacity .3s,filter .3s}
+  .cl-cor img{filter:grayscale(1) contrast(1.2);opacity:.5}
+  .cl-card:hover img,.cl-card:focus-visible img{opacity:.9}
 
   @media(max-width:767px){
     .cl{padding:36px 0 40px}
     .cl-cab{flex-direction:column;align-items:center;text-align:center;gap:16px;margin-bottom:18px}
     .cl-tit{font-size:30px}
-    .cl-trilho{gap:12px;padding-right:12px;animation-duration:36s}
-    .cl-card{width:150px;height:72px;padding:12px 16px}
+    .cl-trilho{gap:36px;padding-right:36px;animation-duration:36s}
+    .cl-card{width:130px;height:44px}
   }
   @media (prefers-reduced-motion: reduce){
     .cl-faixa{mask-image:none;-webkit-mask-image:none;justify-content:center}
