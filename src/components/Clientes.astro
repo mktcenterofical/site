@@ -15,13 +15,7 @@ const clientes: Cliente[] = [
   { nome: 'Nano Dev', url: 'https://www.nanodev.com.br/', logo: 'nanodev', w: 320, h: 82 },
 ];
 ---
-<section class="cl" id="clientes" aria-labelledby="cl-tit">
-  <div class="wrap cl-cab">
-    <div class="cl-txt">
-      <h2 id="cl-tit" class="cl-tit">Marcas que já estão <span>no digital com a MKT</span></h2>
-    </div>
-  </div>
-
+<section class="cl" id="clientes" aria-label="Marcas que já estão no digital com a MKT">
   <div class="wrap"><div class="cl-faixa">
     {[0, 1].map((copia) => (
       <ul class="cl-trilho" aria-hidden={copia === 1 ? 'true' : undefined}>
@@ -38,34 +32,24 @@ const clientes: Cliente[] = [
 </section>
 
 <style>
-  .cl{background:var(--surface);padding:48px 0 52px;border-bottom:1px solid var(--line);scroll-margin-top:72px}
-  .cl-cab{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:24px}
-  .cl-ey{display:inline-flex;align-items:center;gap:8px;color:var(--orange-text);font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
-  .cl-ey::before{content:'';width:22px;height:2px;background:var(--orange);transform:skewX(-35deg)}
-  .cl-tit{font-size:clamp(28px,3.2vw,38px);line-height:.95;margin:0;color:var(--ink)}
-  .cl-tit span{color:var(--orange-text)}
-  .cl-ver{flex:none;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 20px;border-radius:999px;border:1px solid var(--line-strong);color:var(--ink);font-weight:700;font-size:14px;text-decoration:none;transition:border-color .2s,background .2s}
-  .cl-ver:hover{border-color:var(--orange);background:#fff}
-  .cl-ver span{color:var(--orange-text);transition:transform .2s}
-  .cl-ver:hover span{transform:translateX(3px)}
+  .cl{background:var(--surface);border-bottom:1px solid var(--line);scroll-margin-top:72px}
 
   /* carrossel limitado à largura do site (1140px) */
   .cl-faixa{display:flex;overflow:hidden;padding:8px 0 16px;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
-  .cl-trilho{flex:none;display:flex;align-items:center;gap:56px;padding-right:56px;list-style:none;margin:0;animation:cl-rolar 48s linear infinite}
+  .cl-trilho{flex:none;display:flex;align-items:center;gap:56px;padding-right:56px;list-style:none;margin:0;animation:cl-rolar 110s linear infinite}
   .cl-faixa:hover .cl-trilho{animation-play-state:paused}
   @keyframes cl-rolar{to{transform:translateX(-100%)}}
   .cl li{flex:none}
-  .cl-card{display:grid;place-items:center;width:170px;height:56px;padding:0 6px}
+  .cl-card{display:grid;place-items:center;width:190px;height:72px;padding:8px 14px;border-radius:14px;transition:background .3s}
   .cl-card img{display:block;width:100%;height:100%;min-height:0;object-fit:contain;filter:grayscale(1) brightness(0) invert(1);opacity:.38;transition:opacity .3s,filter .3s}
   .cl-cor img{filter:grayscale(1) contrast(1.2);opacity:.5}
-  .cl-card:hover img,.cl-card:focus-visible img{opacity:.9}
+  /* ao passar o mouse ou tocar: logo original, com fundo claro para logos escuras aparecerem */
+  .cl-card:hover,.cl-card:focus-visible,.cl-card:active{background:#f3f4f5}
+  .cl-card:hover img,.cl-card:focus-visible img,.cl-card:active img{filter:none;opacity:1}
 
   @media(max-width:767px){
-    .cl{padding:36px 0 40px}
-    .cl-cab{flex-direction:column;align-items:center;text-align:center;gap:16px;margin-bottom:18px}
-    .cl-tit{font-size:30px}
-    .cl-trilho{gap:36px;padding-right:36px;animation-duration:36s}
-    .cl-card{width:130px;height:44px}
+    .cl-trilho{gap:36px;padding-right:36px;animation-duration:80s}
+    .cl-card{width:140px;height:56px}
   }
   @media (prefers-reduced-motion: reduce){
     .cl-faixa{mask-image:none;-webkit-mask-image:none;justify-content:center}
