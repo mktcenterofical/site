@@ -2,7 +2,6 @@
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import HeroCrescimento from '../components/HeroCrescimento.astro';
-import EvolucaoVisual from '../components/EvolucaoVisual.astro';
 import { waLink } from '../config';
 import { config } from '../config';
 const schema = [{ '@context': 'https://schema.org', '@type': 'AboutPage', name: 'Quem somos · MKT Center', about: { '@type': 'ProfessionalService', name: config.nome, foundingDate: '2013' } }];
@@ -26,9 +25,8 @@ const etapas = ['Entendemos o seu negócio e o seu cliente', 'Mostramos a propos
     bt2={['Ver portfólio', '/portfolio/']}
     numeros={[[2013, '', 'ano de fundação'], [10, '+', 'anos no digital'], ['IA', '', 'no dia a dia']]}
     rolarPara="#valores"
-  >
-    <EvolucaoVisual slot="visual" />
-  </HeroCrescimento>
+    epocas
+  />
 
   <section class="alt servicos-topo" id="valores">
     <div class="wrap">

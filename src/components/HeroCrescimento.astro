@@ -9,12 +9,15 @@ import Loja from './Loja.astro';
 import TelaErp from './TelaErp.astro';
 import TelaSite from './TelaSite.astro';
 import TelaApp from './TelaApp.astro';
+import TelaEra from './TelaEra.astro';
 // textos configuráveis: a home usa os padrões; a página Sobre passa os dela
 interface Props {
   rotulo?: string; linhas?: string[][]; destaque?: string; texto?: string;
   bt1?: [string, string]; bt2?: [string, string];
   numeros?: [number | string, string, string][]; // [valor, sufixo, legenda]
   rolarPara?: string;
+  // modo "épocas" (página Sobre): botões com anos e cada aparelho mostra uma época
+  epocas?: boolean;
 }
 const {
   rotulo = 'Agência de marketing digital em São Paulo',
@@ -25,6 +28,7 @@ const {
   bt2 = ['Ver serviços', '#servicos'],
   numeros = [[180, '+', 'projetos entregues'], [98, '%', 'clientes satisfeitos'], [2, 'h', 'para responder']],
   rolarPara = '#servicos',
+  epocas = false,
 } = Astro.props;
 const dispositivos = [
   { id: 'desk', nome: 'Desktop', icone: '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>' },
@@ -39,8 +43,18 @@ const saltos: Record<string, [string, string, string][]> = {
   tab: [['modelo', 'Casaco Inverno', 'R$ 199,90'], ['fitness2', 'Calça Jogger', 'R$ 89,90']],
   cel: [['burger', 'Burger da Casa', 'R$ 32,90'], ['pizza', 'Pizza Calabresa', 'R$ 54,90']],
 };
+// épocas: tablet = 2013 lojas, celular = 2016 redes, notebook = 2018 sites, desktop = 2026 apps
+const ordemEpocas = ['tab', 'cel', 'lap', 'desk'];
+const rotEpocas: Record<string, [string, string]> = { tab: ['2013', 'Lojas'], cel: ['2016', 'Redes'], lap: ['2018', 'Sites'], desk: ['2026', 'Apps e IA'] };
+const saltosEpocas: Record<string, [string, string, string][]> = {
+  tab: [['pao', '1ª loja virtual', '2013'], ['bolo', 'Pedido online', 'R$ 29,90']],
+  cel: [['croissant', 'Post publicado', '♥ 1.284 curtidas'], ['pessoa1', 'Novo seguidor', '@cliente']],
+  lap: [['padaria', 'Site institucional', 'no ar'], ['pao', 'Novo contato', 'via formulário']],
+  desk: [['pessoa2', 'Assistente IA', 'relatório pronto'], ['pessoa1', 'App publicado', '2026']],
+};
+const modos = epocas ? ordemEpocas.map((id) => dispositivos.find((d) => d.id === id)!) : dispositivos;
 ---
-<section class="hc" id="hero" data-saltos={JSON.stringify(saltos)}>
+<section class="hc" id="hero" data-saltos={JSON.stringify(epocas ? saltosEpocas : saltos)} data-ordem={JSON.stringify(modos.map((d) => d.id))}>
 
   <div class="wrap hc-in">
     <div class="hc-txt">
@@ -65,18 +79,18 @@ const saltos: Record<string, [string, string, string][]> = {
         <div class="sv-aura"></div>
 
         <div class="dv dv-desk" data-d="desk">
-          <div class="dv-frame"><div class="dv-scr"><TelaErp /><i class="dv-on"></i></div></div>
+          <div class="dv-frame"><div class="dv-scr">{epocas ? <TelaEra era="2026" /> : <TelaErp />}<i class="dv-on"></i></div></div>
           <div class="dv-neck"></div><div class="dv-foot"></div>
         </div>
         <div class="dv dv-lap" data-d="lap">
-          <div class="dv-frame"><div class="dv-scr"><TelaSite /><i class="dv-on"></i></div></div>
+          <div class="dv-frame"><div class="dv-scr">{epocas ? <TelaEra era="2018" /> : <TelaSite />}<i class="dv-on"></i></div></div>
           <div class="dv-deck"></div>
         </div>
         <div class="dv dv-tab" data-d="tab">
-          <div class="dv-frame"><div class="dv-scr"><Loja tipo="tab" /><i class="dv-on"></i></div></div>
+          <div class="dv-frame"><div class="dv-scr">{epocas ? <TelaEra era="2013" /> : <Loja tipo="tab" />}<i class="dv-on"></i></div></div>
         </div>
         <div class="dv dv-cel" data-d="cel">
-          <div class="dv-frame"><div class="dv-scr"><TelaApp /><i class="dv-on"></i><span class="dv-tap"></span></div></div>
+          <div class="dv-frame"><div class="dv-scr">{epocas ? <TelaEra era="2016" /> : <TelaApp />}<i class="dv-on"></i><span class="dv-tap"></span></div></div>
         </div>
 
         <!-- produtos que saltam da tela do aparelho em destaque -->
@@ -88,14 +102,14 @@ const saltos: Record<string, [string, string, string][]> = {
       </div>
 
       <div class="sv-modes" role="tablist" aria-label="Destacar aparelho">
-        {dispositivos.map((d, i) => (
+        {modos.map((d, i) => (
           <button type="button" role="tab" data-m={d.id} class={i === 0 ? 'on' : ''} aria-label={d.nome}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={d.icone} />
-            <span>{d.nome}</span>
+            <span>{epocas ? <><b class="ep-ano">{rotEpocas[d.id][0]}</b> {rotEpocas[d.id][1]}</> : d.nome}</span>
           </button>
         ))}
       </div>
-      <p class="sv-note">Sistema, site, loja e app: tudo integrado, em qualquer tela</p>
+      <p class="sv-note">{epocas ? 'De 2013 a 2026: cada época, um novo jeito de vender no digital' : 'Sistema, site, loja e app: tudo integrado, em qualquer tela'}</p>
     </div>
     )}
   </div>
@@ -189,6 +203,8 @@ const saltos: Record<string, [string, string, string][]> = {
   :global(.lj-toast){position:absolute;left:50%;top:1.2em;transform:translate(-50%,-220%);display:flex;align-items:center;gap:.6em;white-space:nowrap;background:#17181c;color:#fff;font-weight:700;font-size:.9em;padding:.6em 1.1em .6em .6em;border-radius:99px;box-shadow:0 .8em 2em rgba(0,0,0,.35);z-index:5}
   :global(.lj-toast span){display:grid;place-items:center;width:1.6em;height:1.6em;border-radius:50%;background:#0b7544;font-size:.85em}
   :global(.app .lj-toast),:global(.lj--tab .lj-toast){top:2.4em;font-size:.8em}
+  .sv-modes button span{white-space:nowrap}
+  .ep-ano{font-family:var(--ff-tit);font-weight:800;font-size:15px;margin-right:2px}
   .sv-note{margin-top:10px;font-size:13px;color:#aeb4bd}
 
   /* ----- hero por dispositivo ----- */
@@ -242,7 +258,7 @@ const saltos: Record<string, [string, string, string][]> = {
   const pops = Array.from(root.querySelectorAll<HTMLElement>('.pop'));
   const toasts = root.querySelectorAll<HTMLElement>('.lj-toast');
   const saltos: Record<string, [string, string, string][]> = JSON.parse(root.dataset.saltos!);
-  const ordem = ['desk', 'lap', 'tab', 'cel'];
+  const ordem: string[] = JSON.parse(root.dataset.ordem!);
   gsap.set(toasts, { xPercent: -50, yPercent: -220 });
 
   // a seta some quando a pessoa começa a rolar
