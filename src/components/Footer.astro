@@ -28,6 +28,11 @@ const wa = '<path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm
           <svg viewBox="0 0 32 32" width="18" height="18" fill="currentColor" aria-hidden="true" set:html={wa} />
           Falar no WhatsApp <span aria-hidden="true">↗</span>
         </a>
+        <div class="rd-redes">
+          {redes.map(([n, u, d]) => (
+            <a href={u} target="_blank" rel="noopener" aria-label={n} title={n}><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={d} /></a>
+          ))}
+        </div>
       </div>
       <nav class="rd-col" aria-label="Páginas">
         <h2>Navegação</h2>
@@ -46,11 +51,6 @@ const wa = '<path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm
       </div>
     </div>
 
-    <div class="rd-redes">
-      {redes.map(([n, u, d]) => (
-        <a href={u} target="_blank" rel="noopener" aria-label={n} title={n}><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" set:html={d} /></a>
-      ))}
-    </div>
 
     <div class="rd-base">
       <span>© {ano} {config.nome} · CNPJ {config.cnpj}</span>
@@ -79,11 +79,11 @@ const wa = '<path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm
   .rd-col a:hover{color:#fff}
   .rd-col a:hover::after{transform:scaleX(1)}
 
-  .rd-redes{display:flex;justify-content:center;gap:12px;margin:44px 0 28px}
-  .rd-redes a{display:grid;place-items:center;width:46px;height:46px;border-radius:50%;border:1px solid rgba(255,255,255,.12);color:#c3c8cf;transition:color .2s,border-color .2s,background .2s,transform .2s}
+  .rd-redes{display:flex;gap:10px;margin-top:16px}
+  .rd-redes a{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.12);color:#c3c8cf;transition:color .2s,border-color .2s,background .2s,transform .2s}
   .rd-redes a:hover{color:#fff;border-color:#ff6900;background:rgba(255,105,0,.12);transform:translateY(-2px)}
 
-  .rd-base{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;padding-top:20px;border-top:1px solid rgba(255,255,255,.07);color:#8a9099;font-size:13px}
+  .rd-base{margin-top:44px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;padding-top:20px;border-top:1px solid rgba(255,255,255,.07);color:#8a9099;font-size:13px}
   .rd-base a{color:#8a9099;text-decoration:none;transition:color .2s}
   .rd-base a:hover{color:#fff}
   .rd-topo-bt{margin-left:auto}
@@ -93,6 +93,7 @@ const wa = '<path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm
     .rd-topo{grid-template-columns:1fr 1fr;gap:32px 16px}
     .rd-marca{grid-column:1 / -1;display:flex;flex-direction:column;align-items:center}
     .rd-marca p{margin-inline:auto}
+    .rd-redes{justify-content:center}
     .rd-col{align-items:center}
     .rd-col:last-child{grid-column:1 / -1}
     .rd-base{justify-content:center;flex-direction:column}
