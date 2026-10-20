@@ -1,0 +1,397 @@
+---
+import Icon from './Icon.astro';
+
+type Janela = { foto?: string; avatar?: string; tit: string; txt?: string; grafico?: boolean; ok?: boolean };
+type Epoca = {
+  ano: string; nome: string;
+  janelas: [Janela, Janela, Janela];
+  fotos: [string, string, string];
+  icones: string[];
+  aviso: [string, string];
+  pop: { foto?: string; icone?: string };
+};
+
+const epocas: Epoca[] = [
+  {
+    ano: '2013', nome: 'Lojas virtuais',
+    janelas: [
+      { foto: 'jaqueta', tit: 'Jaqueta', ok: true },
+      { foto: 'camiseta', tit: 'Camiseta', ok: true },
+      { foto: 'moletom', tit: 'Moletom', ok: true },
+    ],
+    fotos: ['relogio', 'fitness2', 'modelo'],
+    icones: ['cart', 'store', 'check', 'star', 'trending', 'message'],
+    aviso: ['check', 'Pedido confirmado'],
+    pop: { foto: 'bone' },
+  },
+  {
+    ano: '2016', nome: 'Redes sociais',
+    janelas: [
+      { foto: 'modelo', tit: 'Novo post', txt: 'estudio.norte' },
+      { avatar: 'pessoa2', tit: 'marina', txt: 'Amei essa coleção!' },
+      { foto: 'fitness2', tit: 'Reels', txt: 'Postado agora' },
+    ],
+    fotos: ['pessoa1', 'camiseta', 'jaqueta'],
+    icones: ['heart', 'message', 'smile', 'star', 'trending', 'heart'],
+    aviso: ['heart', 'Novo seguidor'],
+    pop: { icone: 'heart' },
+  },
+  {
+    ano: '2018', nome: 'Sites institucionais',
+    janelas: [
+      { tit: 'Página inicial', txt: 'Projetos que saem do papel' },
+      { tit: 'Quem somos', txt: 'Nossa história' },
+      { tit: 'Contato', txt: 'Fale pelo WhatsApp', ok: true },
+    ],
+    fotos: ['salao', 'fitness1', 'cafe'],
+    icones: ['globe', 'home', 'mail', 'check', 'grid', 'trending'],
+    aviso: ['globe', 'Site no ar'],
+    pop: { icone: 'globe' },
+  },
+  {
+    ano: '2020', nome: 'Lives',
+    janelas: [
+      { foto: 'live-evento', tit: 'Congresso ao vivo', txt: 'Palestra de abertura' },
+      { avatar: 'pessoa2', tit: 'lia', txt: 'Assistindo de casa. Amém!' },
+      { foto: 'live-show', tit: 'Show ao vivo', txt: 'Transmissão em HD', ok: true },
+    ],
+    fotos: ['live-biblia', 'live-publico', 'pessoa1'],
+    icones: ['video', 'message', 'heart', 'calendar', 'star', 'smile'],
+    aviso: ['video', 'Missa ao vivo agora'],
+    pop: { foto: 'live-missa' },
+  },
+  {
+    ano: '2026', nome: 'Apps, sistemas e IA',
+    janelas: [
+      { tit: 'Assistente IA', txt: 'Respondeu o cliente', ok: true },
+      { tit: 'Relatório', txt: 'Pronto agora', grafico: true },
+      { tit: 'Pedido no app', txt: 'Enviado sozinho' },
+    ],
+    fotos: ['relogio', 'jaqueta', 'camiseta'],
+    icones: ['sparkles', 'rocket', 'smartphone', 'grid', 'wrench', 'message'],
+    aviso: ['sparkles', 'IA respondeu o cliente'],
+    pop: { icone: 'sparkles' },
+  },
+];
+
+const posJan = [[-178, -128, 90], [172, -150, 130], [168, 118, 70]];
+const posFoto = [[-205, 60, 60], [214, 10, 110], [-150, 196, 120]];
+const posIco = [[-222, -24, 40], [120, -232, 60], [226, -64, 150], [-62, -246, 70], [222, 196, 40], [-232, 140, 30]];
+const pos = (p: number[], d: number) => `--x:${p[0]}px;--y:${p[1]}px;--z:${p[2]}px;--d:${d}s`;
+---
+<div class="cv" data-cv>
+  <div class="cv-ano" aria-live="polite"><b>{epocas[0].ano}</b><span>{epocas[0].nome}</span></div>
+
+  <div class="cv-cena" aria-hidden="true">
+    <div class="cv-brilho"></div>
+
+    <div class="cv-boia">
+      <div class="cv-giro">
+        <div class="cv-cel">
+          <div class="cv-tela">
+            <div class="cv-st"><b>9:41</b><i></i><span></span></div>
+
+            <div class="cv-v on" data-v="0">
+              <div class="cv-top"><span>Olá, Ana</span><Icon name="cart" size={14} /></div>
+              <strong class="cv-tit">Vitrine</strong>
+              <div class="cv-busca"></div>
+              <div class="cv-chips"><span class="on">Novidades</span><span>Moda</span><span>Acessórios</span></div>
+              <div class="cv-grade">
+                {[['jaqueta', 'Jaqueta'], ['camiseta', 'Camiseta'], ['moletom', 'Moletom'], ['relogio', 'Relógio']].map(([f, n]) => (
+                  <div class="cv-item"><img src={`/mock/${f}.webp`} alt="" width="120" height="120" loading="lazy" decoding="async" /><b>{n}</b><i></i></div>
+                ))}
+              </div>
+            </div>
+
+            <div class="cv-v cv-ig" data-v="1">
+              <div class="cv-top"><b>estudio.norte</b><Icon name="heart" size={14} /></div>
+              <div class="cv-stories">{['pessoa1', 'pessoa2', 'modelo', 'camiseta', 'jaqueta'].map((f) => <img src={`/mock/${f}.webp`} alt="" width="40" height="40" loading="lazy" decoding="async" />)}</div>
+              <div class="cv-post"><img src="/mock/modelo.webp" alt="" width="320" height="360" loading="lazy" decoding="async" /></div>
+              <div class="cv-acoes"><Icon name="heart" size={15} /><Icon name="message" size={15} /></div>
+              <b class="cv-curt">1.284 curtidas</b>
+              <p class="cv-leg"><b>estudio.norte</b> Nova coleção já no site.</p>
+            </div>
+
+            <div class="cv-v cv-site" data-v="2">
+              <div class="cv-top"><b>Vértice</b><Icon name="grid" size={14} /></div>
+              <div class="cv-hero"><img src="/mock/salao.webp" alt="" width="480" height="220" loading="lazy" decoding="async" /></div>
+              <strong class="cv-tit">Projetos que saem do papel</strong>
+              <i class="cv-l"></i><i class="cv-l c"></i>
+              <div class="cv-comprar">Fale com a gente</div>
+              <div class="cv-cards"><span></span><span></span><span></span></div>
+            </div>
+
+            <div class="cv-v cv-live" data-v="3">
+              <img class="cv-live-bg" src="/mock/live-missa.webp" alt="" width="480" height="640" loading="lazy" decoding="async" />
+              <div class="cv-live-top"><span class="cv-vivo">AO VIVO</span><span class="cv-olhos">342 assistindo</span></div>
+              <div class="cv-live-tit"><b>Missa de domingo</b><span>Paróquia São José</span></div>
+              <div class="cv-coments">
+                <p><b>marina</b> Bom dia a todos!</p>
+                <p><b>pedro</b> Assistindo de Campinas</p>
+                <p><b>lia</b> Amém!</p>
+              </div>
+              <div class="cv-comprar">Participar da transmissão</div>
+            </div>
+
+            <div class="cv-v cv-ia" data-v="4">
+              <div class="cv-top"><b>Gestão Pro</b><Icon name="sparkles" size={14} /></div>
+              <strong class="cv-tit">Assistente IA</strong>
+              <p class="cv-msg cv-cli">Meu pedido já saiu?</p>
+              <p class="cv-msg cv-bot">Saiu hoje cedo. Chega amanhã.</p>
+              <div class="cv-barras">{[38, 54, 46, 70, 62, 86].map((h) => <i style={`height:${h}%`}></i>)}</div>
+              <div class="cv-cards"><span></span><span></span><span></span></div>
+            </div>
+
+            <nav class="cv-nav"><Icon name="home" size={15} /><Icon name="grid" size={15} /><Icon name="cart" size={15} /><Icon name="smile" size={15} /></nav>
+          </div>
+        </div>
+        <div class="cv-costas"><span class="cv-cam"><i></i><i></i></span><b>MKT</b></div>
+      </div>
+    </div>
+
+    {epocas.map((e, g) => (
+      <div class:list={['cv-g', { on: g === 0 }]} data-g={g}>
+        {e.janelas.map((j, n) => (
+          <div class="cv-f" style={pos(posJan[n], 0.05 + n * 0.08)}>
+            <div class="cv-b cv-jan">
+              {j.foto && <img src={`/mock/${j.foto}.webp`} alt="" width="120" height="96" loading="lazy" decoding="async" />}
+              {j.avatar && <img class="cv-av" src={`/mock/${j.avatar}.webp`} alt="" width="28" height="28" loading="lazy" decoding="async" />}
+              <b>{j.tit}</b>
+              {j.txt && <p>{j.txt}</p>}
+              {j.grafico ? <span class="cv-mini-bar">{[40, 65, 50, 85].map((h) => <i style={`height:${h}%`}></i>)}</span> : <><i></i><i class="c"></i></>}
+              {j.ok && <span class="cv-ok"><Icon name="check" size={10} /></span>}
+            </div>
+          </div>
+        ))}
+        {e.fotos.map((f, n) => (
+          <div class="cv-f" style={pos(posFoto[n], 0.3 + n * 0.07)}>
+            <div class="cv-b cv-mini"><img src={`/mock/${f}.webp`} alt="" width="56" height="56" loading="lazy" decoding="async" /></div>
+          </div>
+        ))}
+        {e.icones.map((i, n) => (
+          <div class="cv-f" style={pos(posIco[n], 0.2 + n * 0.06)}>
+            <div class="cv-b cv-ico"><Icon name={i} size={18} /></div>
+          </div>
+        ))}
+        <div class="cv-f" style={pos([-96, 246, 150], 0.55)}>
+          <div class="cv-b cv-aviso"><span><Icon name={e.aviso[0]} size={12} /></span>{e.aviso[1]}</div>
+        </div>
+        <div class="cv-f" style={pos([70, -196, 170], 0.15)}>
+          <div class="cv-b cv-pop">
+            {e.pop.foto ? <img src={`/mock/${e.pop.foto}.webp`} alt="" width="120" height="120" loading="lazy" decoding="async" /> : <Icon name={e.pop.icone!} size={34} />}
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div class="cv-anos" role="group" aria-label="Épocas">
+    {epocas.map((e, i) => (
+      <button type="button" class:list={{ on: i === 0 }} data-ir={i} data-nome={e.nome}>{e.ano}</button>
+    ))}
+  </div>
+</div>
+
+<style>
+  .cv{position:absolute;inset:0;display:grid;place-items:center;perspective:1300px;overflow:hidden}
+  .cv-ano{position:absolute;top:0;left:0;z-index:5;display:flex;align-items:baseline;gap:10px;pointer-events:none}
+  .cv-ano b{font:700 34px/1 'Barlow Condensed',sans-serif;color:var(--orange-text)}
+  .cv-ano span{font-size:13px;color:var(--ink-muted)}
+  .cv-anos{position:absolute;bottom:0;left:50%;transform:translateX(-50%);z-index:5;display:flex;gap:4px;padding:4px;border-radius:999px;background:rgba(17,19,23,.7);border:1px solid var(--line);backdrop-filter:blur(8px)}
+  .cv-anos button{border:0;background:none;color:var(--ink-muted);font:600 12px/1 'DM Sans',sans-serif;padding:8px 12px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
+  .cv-anos button:hover{color:#fff}
+  .cv-anos button.on{background:var(--orange);color:var(--on-orange)}
+
+  .cv-cena{position:relative;width:0;height:0;transform-style:preserve-3d;
+    transform:scale(var(--k,1)) rotateX(calc(8deg + var(--py,0deg))) rotateY(calc(-16deg + var(--px,0deg)));
+    transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+  .cv-brilho{position:absolute;left:-260px;top:-260px;width:520px;height:520px;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,105,0,.22),rgba(255,105,0,0) 62%);transform:translateZ(-120px);pointer-events:none}
+
+  .cv-boia{position:absolute;left:-125px;top:-255px;width:250px;height:510px;transform-style:preserve-3d;animation:cv-boia 7s ease-in-out infinite}
+  .cv-giro{position:absolute;inset:0;transform-style:preserve-3d}
+  .cv-giro.gira{animation:cv-gira 1.2s cubic-bezier(.65,0,.35,1)}
+  .cv-cel,.cv-costas{position:absolute;inset:0;border-radius:40px;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+  .cv-cel{padding:9px;background:linear-gradient(145deg,#2b2f36,#121418 55%,#1d2026);
+    box-shadow:inset 0 0 0 1.5px #3a3f47,0 40px 80px rgba(0,0,0,.6),0 0 0 1px #000}
+  .cv-costas{transform:rotateY(180deg);background:linear-gradient(150deg,#30343b,#16181c 60%,#22252b);box-shadow:inset 0 0 0 1.5px #3a3f47;display:grid;place-items:center}
+  .cv-costas b{font:700 22px/1 'Barlow Condensed',sans-serif;letter-spacing:.2em;color:#3d4249}
+  .cv-cam{position:absolute;top:18px;left:18px;width:76px;height:76px;border-radius:22px;background:#0f1114;box-shadow:inset 0 0 0 1px #2d3138;display:grid;grid-template-columns:1fr 1fr;place-items:center;padding:8px}
+  .cv-cam i{width:26px;height:26px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#3a4250,#07080a 60%);box-shadow:0 0 0 3px #1c1f24}
+
+  .cv-tela{position:relative;height:100%;border-radius:32px;overflow:hidden;background:#f5f3ef;color:#16181c;font-size:10px}
+  .cv-st{display:flex;align-items:center;justify-content:space-between;height:28px;padding:0 18px;font-size:10px;position:relative;z-index:2}
+  .cv-st i{width:72px;height:18px;border-radius:10px;background:#0b0c0e}
+  .cv-st span{width:20px;height:8px;border-radius:2px;border:1.5px solid currentColor}
+  .cv-v{position:absolute;inset:28px 0 46px;padding:6px 14px;opacity:0;visibility:hidden}
+  .cv-v.on{opacity:1;visibility:visible}
+  .cv-top{display:flex;justify-content:space-between;align-items:center;color:#6b7078}
+  .cv-top b{color:#16181c;font-size:11px}
+  .cv-tit{display:block;font:700 19px/1.05 'Barlow Condensed',sans-serif;text-transform:uppercase;margin:8px 0 6px;letter-spacing:.02em}
+  .cv-busca{height:22px;border-radius:11px;background:#e6e3dd}
+  .cv-chips{display:flex;gap:5px;margin:8px 0}
+  .cv-chips span{padding:3px 8px;border-radius:9px;background:#e6e3dd;font-size:8.5px}
+  .cv-chips .on{background:#16181c;color:#fff}
+  .cv-grade{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .cv-item{background:#fff;border-radius:12px;padding:5px;box-shadow:0 4px 10px rgba(0,0,0,.06)}
+  .cv-item img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;border-radius:8px;display:block}
+  .cv-item b{display:block;font-size:9px;margin:5px 2px 3px}
+  .cv-item i{display:block;height:4px;width:55%;border-radius:2px;background:#ddd9d2;margin:0 2px 2px}
+  .cv-comprar{height:32px;border-radius:16px;background:#ff6900;color:#141006;font-weight:700;display:grid;place-items:center;font-size:10.5px;margin-top:10px}
+
+  .cv-stories{display:flex;gap:7px;margin:8px 0}
+  .cv-stories img{width:34px;height:34px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px #f5f3ef,0 0 0 3.5px #ff6900}
+  .cv-post{margin:0 -14px;aspect-ratio:1;overflow:hidden}
+  .cv-post img{width:100%;height:100%;object-fit:cover;display:block}
+  .cv-acoes{display:flex;gap:10px;margin:8px 0 4px}
+  .cv-curt{font-size:9.5px}
+  .cv-leg{margin:3px 0 0;font-size:9px;line-height:1.35;color:#3b3f45}
+
+  .cv-hero{margin-top:8px;border-radius:12px;overflow:hidden;aspect-ratio:16/9}
+  .cv-hero img{width:100%;height:100%;object-fit:cover;display:block}
+  .cv-l{display:block;height:5px;width:85%;border-radius:3px;background:#ddd9d2;margin:5px 0}
+  .cv-l.c{width:60%}
+  .cv-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}
+  .cv-cards span{height:48px;border-radius:9px;background:#fff;box-shadow:0 4px 10px rgba(0,0,0,.06)}
+
+  .cv-live{padding:0;color:#fff}
+  .cv-live-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+  .cv-live::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),transparent 30%,transparent 50%,rgba(0,0,0,.75))}
+  .cv-live-top{position:relative;z-index:1;display:flex;gap:6px;padding:8px 12px}
+  .cv-vivo{background:#e5262a;padding:3px 7px;border-radius:5px;font-weight:700;font-size:8.5px}
+  .cv-olhos{display:flex;align-items:center;gap:3px;background:rgba(0,0,0,.45);padding:3px 7px;border-radius:5px;font-size:8.5px}
+  .cv-vivo::before{content:'';display:inline-block;width:5px;height:5px;margin-right:4px;border-radius:50%;background:#fff;vertical-align:1px;animation:cv-pisca 1.2s ease-in-out infinite}
+  .cv-live-tit{position:absolute;z-index:1;left:12px;right:12px;bottom:128px;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+  .cv-live-tit b{display:block;font:700 18px/1.05 'Barlow Condensed',sans-serif;text-transform:uppercase}
+  .cv-live-tit span{font-size:9px;opacity:.85}
+  .cv-coments{position:absolute;z-index:1;left:12px;right:12px;bottom:52px}
+  .cv-coments p{margin:4px 0 0;font-size:9.5px;line-height:1.3}
+  .cv-live .cv-comprar{position:absolute;z-index:1;left:12px;right:12px;bottom:8px}
+
+  .cv-msg{max-width:78%;margin:6px 0 0;padding:7px 9px;border-radius:12px;font-size:9.5px;line-height:1.3}
+  .cv-cli{background:#e6e3dd;border-bottom-left-radius:3px}
+  .cv-bot{margin-left:auto;background:#16181c;color:#fff;border-bottom-right-radius:3px}
+  .cv-barras{display:flex;align-items:flex-end;gap:6px;height:74px;margin-top:12px;padding:8px;border-radius:12px;background:#fff}
+  .cv-barras i{flex:1;border-radius:3px;background:#16181c}
+  .cv-barras i:last-child{background:#ff6900}
+  .cv-nav{position:absolute;left:0;right:0;bottom:0;height:46px;display:flex;justify-content:space-around;align-items:center;background:#fff;color:#7b8089;border-top:1px solid #ebe8e2}
+
+  .cv-g{position:absolute;left:0;top:0;transform-style:preserve-3d}
+  .cv-f{position:absolute;left:0;top:0;opacity:0;pointer-events:none;
+    transform:translate3d(calc(var(--x) * .12),calc(var(--y) * .12),0) scale(.3);
+    transition:transform .45s cubic-bezier(.5,0,.75,0),opacity .3s}
+  .cv-g.on .cv-f{opacity:1;transform:translate3d(var(--x),var(--y),var(--z)) scale(1);
+    transition:transform .8s cubic-bezier(.2,.8,.2,1.15) var(--d),opacity .4s var(--d)}
+  .cv-b{transform:translate(-50%,-50%);animation:cv-flutua 6s ease-in-out infinite;animation-delay:calc(var(--d) * -7)}
+  .cv-jan{position:relative;width:118px;padding:6px;border-radius:14px;background:rgba(255,255,255,.95);color:#16181c;box-shadow:0 24px 40px -14px rgba(0,0,0,.65)}
+  .cv-jan img{width:100%;height:auto;aspect-ratio:5/4;object-fit:cover;border-radius:9px;display:block}
+  .cv-jan img.cv-av{width:28px;height:28px;aspect-ratio:1;border-radius:50%;float:left;margin:0 7px 0 0}
+  .cv-jan b{display:block;font-size:10px;margin:6px 2px 2px}
+  .cv-jan p{margin:0 2px 5px;font-size:9px;line-height:1.3;color:#5d626a}
+  .cv-jan>i{display:block;clear:both;height:4px;width:70%;border-radius:2px;background:#ddd9d2;margin:0 2px 3px}
+  .cv-jan>i.c{width:40%}
+  .cv-mini-bar{clear:both;display:flex;align-items:flex-end;gap:4px;height:34px;margin:2px}
+  .cv-mini-bar i{flex:1;border-radius:2px;background:#16181c}
+  .cv-mini-bar i:last-child{background:#ff6900}
+  .cv-ok{position:absolute;top:-7px;right:-7px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:#ff6900;color:#141006}
+  .cv-mini{width:54px;height:54px;padding:4px;border-radius:12px;background:rgba(255,255,255,.9);box-shadow:0 16px 28px -12px rgba(0,0,0,.6)}
+  .cv-mini img{width:100%;height:100%;object-fit:cover;border-radius:8px;display:block}
+  .cv-ico{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;color:#ff8a24;
+    background:rgba(30,33,39,.72);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(8px);box-shadow:0 14px 26px -12px rgba(0,0,0,.7)}
+  .cv-aviso{display:flex;align-items:center;gap:7px;white-space:nowrap;padding:8px 12px 8px 8px;border-radius:12px;
+    background:rgba(255,255,255,.95);color:#16181c;font-size:10.5px;font-weight:600;box-shadow:0 20px 34px -14px rgba(0,0,0,.65)}
+  .cv-aviso span{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:#ff6900;color:#141006}
+  .cv-pop{width:92px;height:92px;border-radius:50%;overflow:hidden;background:#fff;color:#ff6900;display:grid;place-items:center;
+    box-shadow:0 26px 40px -14px rgba(0,0,0,.7),0 0 0 4px rgba(255,255,255,.12)}
+  .cv-pop img{width:100%;height:100%;object-fit:cover;display:block}
+
+  @keyframes cv-flutua{
+    0%,100%{transform:translate(-50%,-50%)}
+    50%{transform:translate(-50%,-50%) translate3d(4px,-10px,14px)}
+  }
+  @keyframes cv-pisca{50%{opacity:.25}}
+  @keyframes cv-boia{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+  @keyframes cv-gira{from{transform:rotateY(0)}to{transform:rotateY(360deg)}}
+
+  .cv.pausa .cv-cena *{animation-play-state:paused!important}
+  @media (max-width:767px){
+    .cv-ano b{font-size:26px}
+    .cv-anos button{padding:7px 9px;font-size:11px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .cv *{animation:none!important;transition:none!important}
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-cv]').forEach((cv) => {
+    const cena = cv.querySelector<HTMLElement>('.cv-cena')!;
+    const giro = cv.querySelector<HTMLElement>('.cv-giro')!;
+    const telas = cv.querySelectorAll<HTMLElement>('.cv-v');
+    const grupos = cv.querySelectorAll<HTMLElement>('.cv-g');
+    const botoes = cv.querySelectorAll<HTMLButtonElement>('[data-ir]');
+    const ano = cv.querySelector<HTMLElement>('.cv-ano')!;
+    const calmo = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const ajusta = () => {
+      const k = Math.min(cv.clientWidth / 600, (cv.clientHeight - 90) / 600, 1.1);
+      cena.style.setProperty('--k', String(Math.max(0.45, k)));
+    };
+    ajusta();
+    new ResizeObserver(ajusta).observe(cv);
+
+    let atual = 0;
+    let timer = 0;
+    let troca = 0;
+    const mostra = (n: number) => {
+      telas.forEach((t, i) => t.classList.toggle('on', i === n));
+      botoes.forEach((b, i) => b.classList.toggle('on', i === n));
+      ano.querySelector('b')!.textContent = botoes[n].textContent;
+      ano.querySelector('span')!.textContent = botoes[n].dataset.nome ?? '';
+    };
+    const vai = (n: number) => {
+      if (n === atual) return;
+      clearTimeout(troca);
+      grupos[atual].classList.remove('on');
+      atual = n;
+      if (calmo) {
+        mostra(n);
+        grupos[n].classList.add('on');
+        return;
+      }
+      giro.classList.remove('gira');
+      void giro.offsetWidth;
+      giro.classList.add('gira');
+      troca = window.setTimeout(() => {
+        mostra(n);
+        grupos[n].classList.add('on');
+      }, 600);
+    };
+    const proxima = () => vai((atual + 1) % grupos.length);
+    const liga = () => {
+      clearInterval(timer);
+      if (!calmo) timer = window.setInterval(proxima, 5200);
+    };
+
+    botoes.forEach((b, i) => b.addEventListener('click', () => { vai(i); liga(); }));
+
+    new IntersectionObserver(([e]) => {
+      cv.classList.toggle('pausa', !e.isIntersecting);
+      if (e.isIntersecting) liga();
+      else clearInterval(timer);
+    }).observe(cv);
+
+    if (calmo) return;
+    const area = cv.parentElement ?? cv;
+    area.addEventListener('pointermove', (e) => {
+      if (e.pointerType === 'touch') return;
+      const r = area.getBoundingClientRect();
+      cena.style.setProperty('--px', `${((e.clientX - r.left) / r.width - 0.5) * 16}deg`);
+      cena.style.setProperty('--py', `${-((e.clientY - r.top) / r.height - 0.5) * 10}deg`);
+    });
+    area.addEventListener('pointerleave', () => {
+      cena.style.setProperty('--px', '0deg');
+      cena.style.setProperty('--py', '0deg');
+    });
+  });
+</script>
