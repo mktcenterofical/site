@@ -1,0 +1,124 @@
+---
+// Página "Sites" (criação de sites). Mesmo padrão visual da home: hero com os aparelhos, logos dos
+// clientes, tipos de site com os preços reais, o que vem incluso, processo, depoimentos e FAQ.
+import Base from '../layouts/Base.astro';
+import HeroCrescimento from '../components/HeroCrescimento.astro';
+import Clientes from '../components/Clientes.astro';
+import Depoimentos from '../components/Depoimentos.astro';
+import Icon from '../components/Icon.astro';
+import { config, waLink } from '../config';
+
+const msg = (p: string) => `Olá! Quero um orçamento de ${p}.`;
+const tipos = [
+  { nome: 'Landing Page', preco: 'R$ 300', desc: 'Uma página direta para divulgar um produto, serviço ou campanha e levar o visitante ao WhatsApp.', itens: ['Página única', 'Botão de WhatsApp e formulário', 'Pensada para celular'] },
+  { nome: 'Site Institucional', preco: 'R$ 600', desc: 'Presença completa para pequenas empresas e profissionais: quem você é, o que faz e como falar com você.', itens: ['Até 4 páginas', 'WhatsApp, formulário e mapa', 'Pronto para o Google'], destaque: true },
+  { nome: 'Site Profissional', preco: 'R$ 1.000', desc: 'Estrutura maior para posicionar a sua marca e gerar contatos todos os dias.', itens: ['Mais páginas e seções', 'SEO e Analytics', 'Integrações'] },
+];
+const incluso: [string, string, string][] = [
+  ['smartphone', 'Feito para o celular', 'Abre rápido e funciona bem em qualquer tela.'],
+  ['message', 'WhatsApp em um toque', 'Botões que levam o visitante direto para a conversa.'],
+  ['trending', 'Pronto para o Google', 'Títulos, descrições e estrutura de SEO desde o início.'],
+  ['star', 'Design com a sua marca', 'Cores, logo e fotos do seu negócio, sem modelo pronto.'],
+  ['globe', 'Domínio e HTTPS', 'Ajudamos com o endereço e o cadeado de segurança.'],
+  ['check', 'Medição de resultados', 'Analytics para você saber quantos contatos chegam.'],
+];
+const etapas = ['Conversa sobre o seu negócio', 'Proposta e layout para aprovação', 'Desenvolvimento e textos', 'Site no ar e acompanhamento'];
+const faq: [string, string][] = [
+  ['Quanto custa um site?', 'Landing page a partir de R$ 300, site institucional (até 4 páginas) a partir de R$ 600 e site profissional a partir de R$ 1.000. O valor final vai na proposta.'],
+  ['Quanto tempo leva para ficar pronto?', 'Depende do tamanho do projeto. O prazo exato vai na proposta, antes de começar.'],
+  ['Eu consigo atualizar o site depois?', 'Sim. Entregamos com orientação e também oferecemos manutenção.'],
+  ['O site aparece no Google?', 'Sim. Todo site sai com a estrutura de SEO pronta para ser indexado.'],
+];
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'Service', name: 'Criação de sites', serviceType: 'Criação de sites', provider: { '@type': 'ProfessionalService', name: config.nome }, areaServed: 'BR',
+    offers: tipos.map((t) => ({ '@type': 'Offer', name: t.nome, priceCurrency: 'BRL', price: Number(t.preco.replace(/\D/g, '')) })) },
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
+];
+---
+<Base title="Criação de Sites em São Paulo a partir de R$ 300 | MKT Center"
+  description="Criação de sites rápidos, bonitos no celular e prontos para o Google. Landing page a partir de R$ 300 e site institucional a partir de R$ 600."
+  schema={schema}>
+  <HeroCrescimento
+    rotulo="Criação de sites"
+    linhas={[['Sites', 'que'], ['trabalham', 'por']]}
+    destaque="você 24h."
+    texto="Criamos sites leves, bonitos no celular e prontos para o Google, que mostram o que você faz e levam o visitante direto para o seu WhatsApp."
+    bt1={['Quero meu site', waLink(msg('um site'))]}
+    bt2={['Ver preços', '#tipos']}
+    numeros={[[300, '', 'R$ landing page'], [600, '', 'R$ site institucional'], [10, '+', 'anos criando sites']]}
+    rolarPara="#tipos"
+  />
+
+  <section id="tipos" class="servicos-topo">
+    <div class="wrap">
+      <span class="eyebrow">Escolha o seu</span>
+      <h2>Tipos de site</h2>
+      <div class="st-grid">
+        {tipos.map((t) => (
+          <article class={`st-card${t.destaque ? ' on' : ''}`}>
+            {t.destaque && <span class="st-selo">Mais escolhido</span>}
+            <h3>{t.nome}</h3>
+            <p class="st-preco"><small>A partir de</small>{t.preco}</p>
+            <p class="st-desc">{t.desc}</p>
+            <ul>{t.itens.map((i) => <li>{i}</li>)}</ul>
+            <a class="btn btn-primary st-bt" href={waLink(msg(t.nome))} target="_blank" rel="noopener">Quero este</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <Clientes />
+
+  <section>
+    <div class="wrap">
+      <span class="eyebrow">Em todo site</span>
+      <h2>O que vem incluso</h2>
+      <div class="grid grid-servicos sv-grid st-inc">
+        {incluso.map(([i, t, d]) => (
+          <div class="card"><span class="icone"><Icon name={i} /></span><h3>{t}</h3><p>{d}</p></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <span class="eyebrow">Passo a passo</span>
+      <h2>Como funciona</h2>
+      <ol class="etapas">{etapas.map((e) => <li>{e}</li>)}</ol>
+    </div>
+  </section>
+
+  <Depoimentos />
+
+  <section>
+    <div class="wrap prose">
+      <h2>Perguntas frequentes</h2>
+      {faq.map(([q, a]) => <details><summary>{q}</summary><p>{a}</p></details>)}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .st-grid{display:grid;gap:16px;grid-template-columns:1fr}
+  @media(min-width:768px){.st-grid{grid-template-columns:repeat(3,1fr)}}
+  .st-card{position:relative;display:flex;flex-direction:column;padding:26px 24px 24px;border-radius:var(--radius-lg);text-align:left;
+    background:linear-gradient(160deg,rgba(28,29,33,.85),rgba(12,13,15,.9));border:1px solid rgba(255,255,255,.08);box-shadow:0 20px 40px -24px rgba(0,0,0,.9);overflow:hidden;transition:transform .3s,border-color .3s}
+  .st-card::before{content:'';position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,#ff6900,#ffb35c)}
+  .st-card:hover{transform:translateY(-4px);border-color:rgba(255,105,0,.45)}
+  .st-card.on{border-color:rgba(255,105,0,.6);box-shadow:0 0 40px -12px rgba(255,105,0,.6)}
+  .st-selo{align-self:flex-start;margin-bottom:10px;padding:4px 10px;border-radius:99px;background:linear-gradient(90deg,#ff6900,#ffb35c);color:#141006;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+  .st-card h3{font-size:24px}
+  .st-preco{margin-top:10px;font-family:var(--ff-tit);font-weight:800;font-size:40px;line-height:1;background:linear-gradient(90deg,#ff8a24,#ffc993);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .st-preco small{display:block;font-family:var(--ff-txt);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#aeb4bd;-webkit-text-fill-color:#aeb4bd;margin-bottom:4px}
+  .st-desc{margin-top:12px;color:#aeb4bd;font-size:15px;line-height:23px}
+  .st-card ul{list-style:none;margin:16px 0 22px;padding:0;display:grid;gap:8px}
+  .st-card li{position:relative;padding-left:16px;font-size:14px;color:#e4e6ea}
+  .st-card li::before{content:'';position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:#ff6900}
+  .st-bt{margin-top:auto;width:100%}
+  /* "O que vem incluso": 6 cards em 3 colunas, sem o bento dos serviços */
+  .grid.st-inc{grid-template-columns:repeat(3,1fr);grid-template-areas:none}
+  .grid.st-inc>*{grid-area:auto !important;display:block !important}
+  @media(max-width:767px){.grid.st-inc{grid-template-columns:1fr 1fr}.st-card{text-align:center}.st-card li{text-align:left}.st-selo{align-self:center}}
+</style>
