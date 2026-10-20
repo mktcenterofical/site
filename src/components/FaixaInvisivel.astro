@@ -1,0 +1,134 @@
+---
+// Faixa laranja escura em largura total (abaixo da seção 2): "Invisível não vende."
+// Centro: mapa em perspectiva com um pin brilhante, ondas de radar e uma lupa que varre a cidade.
+// Em volta: os 4 pilares (Google, redes, sites, anúncios). Embaixo: frase final e CTA.
+import { waLink } from '../config';
+import Icon from './Icon.astro';
+const pilares: [string, string, string][] = [
+  ['globe', 'Google', 'Sua empresa no topo das buscas'],
+  ['message', 'Redes sociais', 'Conexão real com o seu público'],
+  ['smartphone', 'Sites que convertem', 'Mais visitas, mais clientes'],
+  ['trending', 'Anúncios online', 'Resultados que crescem'],
+];
+---
+<section class="iv" id="invisivel" aria-labelledby="iv-tit">
+  <div class="iv-ruido" aria-hidden="true"></div>
+  <div class="wrap iv-in">
+    <h2 id="iv-tit" class="iv-tit"><span>Invisível</span><span class="iv-tit2">não vende.</span></h2>
+    <i class="iv-traco" aria-hidden="true"></i>
+    <p class="iv-sub">Faça sua empresa <b>ser encontrada.</b></p>
+
+    <div class="iv-palco">
+      <ul class="iv-pilares">
+        {pilares.map(([i, t, d]) => (
+          <li><span class="iv-ic"><Icon name={i} size={22} /></span><div><b>{t}</b><small>{d}</small></div></li>
+        ))}
+      </ul>
+
+      <div class="iv-arte" aria-hidden="true">
+        <div class="iv-mapa">
+          <svg viewBox="0 0 400 400" preserveAspectRatio="none">
+            <g stroke="rgba(255,236,214,.22)" stroke-width="1.4" fill="none">
+              {[40, 90, 140, 190, 240, 290, 340].map((v) => <><line x1={v} y1="0" x2={v} y2="400" /><line x1="0" y1={v} x2="400" y2={v} /></>)}
+            </g>
+            <g fill="rgba(70,20,0,.55)">
+              <rect x="45" y="45" width="40" height="40" rx="4" /><rect x="145" y="95" width="40" height="40" rx="4" /><rect x="245" y="45" width="40" height="90" rx="4" />
+              <rect x="295" y="195" width="90" height="40" rx="4" /><rect x="45" y="245" width="90" height="40" rx="4" /><rect x="195" y="295" width="40" height="90" rx="4" />
+              <rect x="95" y="145" width="40" height="40" rx="4" /><rect x="295" y="295" width="40" height="40" rx="4" />
+            </g>
+            <path class="iv-rota" d="M20 380 L20 290 L140 290 L140 190 L200 190" fill="none" stroke="#fff1de" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+          <span class="iv-onda"></span><span class="iv-onda o2"></span><span class="iv-onda o3"></span>
+        </div>
+
+        <div class="iv-pin">
+          <svg viewBox="0 0 100 130"><defs>
+            <linearGradient id="iv-pin-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff4e6" /><stop offset=".35" stop-color="#ffb35c" /><stop offset="1" stop-color="#ff6900" /></linearGradient>
+          </defs>
+            <path d="M50 4C25 4 6 23 6 47c0 31 44 77 44 77s44-46 44-77C94 23 75 4 50 4z" fill="url(#iv-pin-g)" stroke="#fff6ea" stroke-width="2" />
+            <circle cx="50" cy="46" r="16" fill="#8a3500" />
+          </svg>
+        </div>
+
+        <div class="iv-lupa"><span></span></div>
+
+        <div class="iv-tag t1"><span class="ok">★★★★★</span>4,9 no Google</div>
+        <div class="iv-tag t2"><Icon name="message" size={14} />Novo contato</div>
+        <div class="iv-tag t3"><Icon name="trending" size={14} />+212% visitas</div>
+      </div>
+    </div>
+
+    <div class="iv-fim">
+      <p><span>Mais visibilidade.</span> <span>Mais oportunidades.</span> <span class="iv-forte">Mais vendas.</span></p>
+      <a class="iv-cta" href={waLink('Olá! Quero que minha empresa seja encontrada na internet.')} target="_blank" rel="noopener">Quero ser encontrado <span aria-hidden="true">↗</span></a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .iv{position:relative;overflow:hidden;isolation:isolate;padding:72px 0 76px;color:#fff;text-align:center;
+    background:radial-gradient(900px 520px at 50% 58%,#d65a05 0%,rgba(214,90,5,0) 70%),linear-gradient(160deg,#a84300 0%,#8a3500 55%,#5e2400 100%)}
+  .iv-ruido{position:absolute;inset:0;z-index:-1;opacity:.5;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse at 50% 40%,#000,transparent 75%);-webkit-mask-image:radial-gradient(ellipse at 50% 40%,#000,transparent 75%)}
+  .iv-in{display:flex;flex-direction:column;align-items:center}
+
+  .iv-tit{display:flex;flex-direction:column;align-items:center;margin:0;font-size:clamp(56px,9vw,128px);line-height:.86;letter-spacing:-.02em;color:#fff;text-shadow:0 .08em .3em rgba(60,20,0,.45)}
+  .iv-tit2{color:#141006;text-shadow:none;background:linear-gradient(180deg,#fff1de,#ffd3a3);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 .05em .2em rgba(60,20,0,.4))}
+  .iv-traco{display:block;width:64px;height:3px;margin:22px auto 16px;border-radius:3px;background:#fff1de}
+  .iv-sub{font-size:clamp(18px,2vw,24px);color:rgba(255,241,222,.9)}
+  .iv-sub b{color:#fff}
+
+  .iv-palco{position:relative;width:100%;display:grid;align-items:center;gap:28px;margin-top:40px}
+  @media(min-width:1024px){.iv-palco{grid-template-columns:1fr 1.15fr 1fr}}
+
+  .iv-pilares{list-style:none;margin:0;padding:0;display:contents}
+  .iv-pilares li{display:flex;align-items:center;gap:14px;text-align:left;padding:16px 18px;border-radius:var(--radius-lg);background:rgba(40,12,0,.28);border:1px solid rgba(255,220,190,.22);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+  .iv-ic{flex:none;display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:#fff1de;color:#a84300}
+  .iv-pilares b{display:block;font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:20px;line-height:1.05;letter-spacing:.02em}
+  .iv-pilares small{display:block;color:rgba(255,241,222,.82);font-size:14px;margin-top:2px}
+  @media(min-width:1024px){
+    .iv-pilares li:nth-child(1){grid-column:1;grid-row:1;align-self:end}
+    .iv-pilares li:nth-child(2){grid-column:1;grid-row:2;align-self:start}
+    .iv-pilares li:nth-child(3){grid-column:3;grid-row:1;align-self:end}
+    .iv-pilares li:nth-child(4){grid-column:3;grid-row:2;align-self:start}
+    .iv-arte{grid-column:2;grid-row:1 / span 2}
+  }
+  @media(min-width:640px) and (max-width:1023px){.iv-palco{grid-template-columns:1fr 1fr}.iv-arte{grid-column:1 / -1;order:-1}}
+
+  /* ---------- ilustração ---------- */
+  .iv-arte{position:relative;width:min(100%,500px);aspect-ratio:1;margin:0 auto;container-type:inline-size;perspective:900px}
+  .iv-mapa{position:absolute;left:4%;right:4%;top:30%;bottom:2%;border-radius:4cqw;background:linear-gradient(160deg,#b84a00,#6e2a00);box-shadow:0 0 0 1px rgba(255,220,190,.3),0 6cqw 10cqw -3cqw rgba(40,10,0,.9),inset 0 0 8cqw rgba(30,8,0,.6);transform:rotateX(58deg);transform-origin:50% 100%;overflow:hidden}
+  .iv-mapa svg{position:absolute;inset:0;width:100%;height:100%}
+  .iv-rota{stroke-dasharray:4 0;filter:drop-shadow(0 0 6px #fff1de)}
+  .iv-onda{position:absolute;left:50%;top:47%;width:20cqw;height:20cqw;margin:-10cqw 0 0 -10cqw;border-radius:50%;border:.6cqw solid #fff1de;opacity:0;animation:iv-onda 3s ease-out infinite}
+  .iv-onda.o2{animation-delay:1s}.iv-onda.o3{animation-delay:2s}
+  @keyframes iv-onda{0%{transform:scale(.3);opacity:.9}100%{transform:scale(3.2);opacity:0}}
+
+  .iv-pin{position:absolute;left:50%;top:14%;width:30cqw;transform:translateX(-50%);filter:drop-shadow(0 0 3cqw rgba(255,180,100,.9)) drop-shadow(0 3cqw 3cqw rgba(60,15,0,.7));animation:iv-pula 2.4s ease-in-out infinite}
+  .iv-pin svg{display:block;width:100%}
+  @keyframes iv-pula{50%{transform:translateX(-50%) translateY(-3cqw)}}
+
+  .iv-lupa{position:absolute;left:22%;top:24%;width:46cqw;height:46cqw;border-radius:50%;border:2.6cqw solid #1a0e06;box-shadow:inset 0 0 0 .6cqw rgba(255,241,222,.5),inset 0 0 6cqw rgba(255,241,222,.25),0 2cqw 4cqw rgba(40,10,0,.6);background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.25),rgba(255,255,255,0) 45%);animation:iv-varre 7s ease-in-out infinite}
+  .iv-lupa span{position:absolute;right:-14cqw;bottom:-14cqw;width:20cqw;height:5.5cqw;border-radius:3cqw;background:linear-gradient(180deg,#2b1a10,#0d0705);transform:rotate(45deg);transform-origin:left center}
+  @keyframes iv-varre{0%,100%{transform:translate(0,0)}35%{transform:translate(18cqw,6cqw)}70%{transform:translate(6cqw,-6cqw)}}
+
+  .iv-tag{position:absolute;display:flex;align-items:center;gap:1.6cqw;padding:2cqw 3.2cqw;border-radius:99px;background:#fff6ec;color:#3a1600;font-weight:800;font-size:3.2cqw;white-space:nowrap;box-shadow:0 2cqw 5cqw rgba(40,10,0,.5);animation:iv-flutua 4s ease-in-out infinite}
+  .iv-tag :global(svg){width:3.6cqw;height:3.6cqw;color:#c45000}
+  .iv-tag .ok{color:#ff8a00;letter-spacing:.1em}
+  .iv-tag.t1{left:0;top:4%}
+  .iv-tag.t2{right:0;top:20%;animation-delay:-1.3s}
+  .iv-tag.t3{right:4%;bottom:6%;animation-delay:-2.6s}
+  @keyframes iv-flutua{50%{transform:translateY(-1.6cqw)}}
+
+  .iv-fim{display:flex;flex-direction:column;align-items:center;gap:24px;margin-top:44px}
+  .iv-fim p{font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:clamp(24px,3vw,36px);line-height:1;color:rgba(255,241,222,.85)}
+  .iv-forte{color:#fff}
+  .iv-cta{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 30px;border-radius:999px;background:#141006;color:#fff;font-weight:800;font-size:16px;text-decoration:none;box-shadow:0 14px 30px -12px rgba(30,8,0,.9);transition:transform .2s,background .2s}
+  .iv-cta:hover{transform:translateY(-2px);background:#000}
+  .iv-cta span{color:#ffb35c}
+
+  @media(max-width:767px){
+    .iv{padding:52px 0 56px}
+    .iv-fim p span{display:block}
+  }
+  @media (prefers-reduced-motion: reduce){.iv-onda,.iv-pin,.iv-lupa,.iv-tag{animation:none}}
+</style>
