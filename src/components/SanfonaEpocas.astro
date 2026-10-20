@@ -1,23 +1,41 @@
 ---
-// Sanfona (accordion) de imagens com as 5 épocas da MKT, para o lado direito do hero da página Sobre.
-// O painel aberto mostra a tela animada daquela época (TelaEra); os fechados mostram foto + título na vertical.
-// Abre ao passar o mouse/tocar e avança sozinho a cada 4s.
+// Sanfona das 5 épocas da MKT, no lado direito do hero da página Sobre.
+// O painel aberto mostra o aparelho da época; os fechados mostram foto e título na vertical.
+// A troca no hover só acontece quando o ponteiro se move de verdade para outro card,
+// para o painel que abre não empurrar o cursor e ficar tremendo.
 import TelaEra from './TelaEra.astro';
 const itens = [
-  { era: '2013', titulo: 'Lojas virtuais', foto: 'pao', forma: 'tab' },
-  { era: '2016', titulo: 'Redes sociais', foto: 'croissant', forma: 'cel' },
-  { era: '2018', titulo: 'Sites institucionais', foto: 'padaria', forma: 'lap' },
-  { era: '2020', titulo: 'Lives', foto: 'cafe', forma: 'cel' },
-  { era: '2026', titulo: 'Apps, sistemas e IA', foto: 'bolo', forma: 'lap' },
+  { era: '2013', titulo: 'Lojas virtuais', foto: 'jaqueta', forma: 'mon' },
+  { era: '2016', titulo: 'Redes sociais', foto: 'modelo', forma: 'cel' },
+  { era: '2018', titulo: 'Sites institucionais', foto: 'pessoa2', forma: 'note' },
+  { era: '2020', titulo: 'Lives', foto: 'pessoa1', forma: 'cel' },
+  { era: '2026', titulo: 'Apps, sistemas e IA', foto: 'relogio', forma: 'mon' },
 ] as const;
 ---
 <div class="sf" id="sanfona">
   <div class="sf-trilho">
     {itens.map((it, i) => (
-      <button type="button" class={`sf-item${i === itens.length - 1 ? ' on' : ''}`} data-i={i} aria-label={`${it.era} · ${it.titulo}`}>
+      <button type="button" class:list={['sf-item', { on: i === 0 }]} data-i={i} aria-label={`${it.era} · ${it.titulo}`}>
         <img class="sf-foto" src={`/mock/${it.foto}.webp`} alt="" width="320" height="220" decoding="async" />
         <span class="sf-veu"></span>
-        <span class={`sf-tela f-${it.forma}`} aria-hidden="true"><TelaEra era={it.era} /></span>
+        <span class={`sf-aparelho a-${it.forma}`}>
+          {it.forma === 'mon' && (
+            <>
+              <span class="ap-aro"><span class="sf-tela"><TelaEra era={it.era} /></span></span>
+              <span class="ap-braco"></span>
+              <span class="ap-pe"></span>
+            </>
+          )}
+          {it.forma === 'note' && (
+            <>
+              <span class="ap-tampa"><span class="sf-tela"><TelaEra era={it.era} /></span></span>
+              <span class="ap-deck"></span>
+            </>
+          )}
+          {it.forma === 'cel' && (
+            <span class="ap-cel"><span class="sf-tela"><TelaEra era={it.era} /></span></span>
+          )}
+        </span>
         <span class="sf-rot"><b>{it.era}</b> {it.titulo}</span>
       </button>
     ))}
@@ -29,23 +47,44 @@ const itens = [
   .sf{width:100%;display:flex;flex-direction:column;align-items:center}
   .sf-trilho{display:flex;gap:12px;width:min(100%,600px);height:clamp(380px,48vw,500px)}
   .sf-item{position:relative;flex:0 0 56px;border:0;padding:0;border-radius:22px;overflow:hidden;cursor:pointer;background:#111317;
-    box-shadow:0 0 0 1px rgba(255,255,255,.08),0 20px 40px -20px rgba(0,0,0,.9);transition:flex .7s cubic-bezier(.7,0,.2,1),box-shadow .5s}
-  .sf-item.on{flex:1 1 auto;box-shadow:0 0 0 1px rgba(255,138,36,.6),0 0 40px -10px rgba(255,105,0,.7),0 20px 40px -20px rgba(0,0,0,.9)}
+    box-shadow:0 0 0 1px rgba(255,255,255,.08),0 20px 40px -20px rgba(0,0,0,.9);transition:flex-grow .45s cubic-bezier(.22,.8,.28,1),box-shadow .35s}
+  .sf-item.on{flex-grow:1;box-shadow:0 0 0 1px rgba(255,138,36,.6),0 0 40px -10px rgba(255,105,0,.7),0 20px 40px -20px rgba(0,0,0,.9)}
   .sf-foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.8)}
-  .sf-veu{position:absolute;inset:0;background:linear-gradient(180deg,rgba(9,10,12,.35),rgba(9,10,12,.75));transition:background .5s}
-  .sf-item.on .sf-veu{background:radial-gradient(120% 80% at 50% 40%,rgba(255,105,0,.25),rgba(9,10,12,.92) 70%)}
+  .sf-veu{position:absolute;inset:0;background:linear-gradient(180deg,rgba(9,10,12,.35),rgba(9,10,12,.75));transition:background .35s}
+  .sf-item.on .sf-veu{background:radial-gradient(120% 80% at 50% 40%,rgba(255,105,0,.22),rgba(9,10,12,.94) 70%)}
 
-  /* tela animada da época, centralizada no painel aberto */
-  .sf-tela{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) scale(.9);opacity:0;container-type:inline-size;overflow:hidden;
-    border:6px solid #0c0d10;box-shadow:0 0 0 1px rgba(255,255,255,.12),0 20px 40px -10px rgba(0,0,0,.9);transition:opacity .4s,transform .6s}
-  .sf-item.on .sf-tela{opacity:1;transform:translate(-50%,-50%);transition-delay:.35s}
-  .f-tab{width:72%;aspect-ratio:3/4;border-radius:18px}
-  .f-cel{width:46%;aspect-ratio:9/19;border-radius:26px}
-  .f-lap{width:86%;aspect-ratio:16/10;border-radius:10px}
+  .sf-aparelho{position:absolute;left:50%;top:46%;z-index:2;transform:translate(-50%,-50%);opacity:0;pointer-events:none;transition:opacity .2s ease}
+  .sf-item.on .sf-aparelho{opacity:1}
+  .sf-tela{position:relative;display:block;overflow:hidden;container-type:inline-size;background:#0c0d10}
 
-  .sf-rot{position:absolute;left:50%;bottom:110px;transform:translateX(-50%) rotate(90deg);transform-origin:center;white-space:nowrap;color:#fff;font-family:var(--ff-txt);font-size:15px;font-weight:600;transition:all .35s}
+  /* monitor: aro, pescoço e base */
+  .a-mon{width:92%;display:flex;flex-direction:column;align-items:center}
+  .ap-aro{width:100%;padding:7px;border-radius:12px;background:linear-gradient(155deg,#4a4e56,#16181c 42%,#2c2f35);box-shadow:0 0 0 1px rgba(255,255,255,.14),0 16px 28px -14px #000}
+  .a-mon .sf-tela{width:100%;aspect-ratio:16/10;border-radius:4px;border:3px solid #050506}
+  .ap-braco{width:18%;height:26px;margin-top:-1px;background:linear-gradient(90deg,#141518,#6a6f78 48%,#141518);clip-path:polygon(24% 0,76% 0,100% 100%,0 100%)}
+  .ap-pe{width:46%;height:9px;margin-top:-1px;border-radius:0 0 10px 10px;background:linear-gradient(180deg,#8b9098,#1a1c20);box-shadow:0 10px 16px rgba(0,0,0,.55)}
+
+  /* notebook: tampa mais estreita e base com teclado, para ler como notebook */
+  .a-note{width:96%;display:flex;flex-direction:column;align-items:center}
+  .ap-tampa{width:78%;padding:7px 7px 10px;border-radius:10px 10px 2px 2px;background:linear-gradient(165deg,#3c4048,#121316 46%,#2a2d33);box-shadow:0 0 0 1px rgba(255,255,255,.14)}
+  .a-note .sf-tela{width:100%;aspect-ratio:16/10;border-radius:3px;border:2px solid #050506}
+  .ap-deck{position:relative;width:100%;height:54px;margin-top:-2px;border-radius:3px 3px 16px 16px;background:linear-gradient(180deg,#6a6e76 0%,#3a3e46 18%,#1c1e22 100%);box-shadow:0 16px 22px -12px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.2)}
+  .ap-deck::before{content:'';position:absolute;left:8%;right:8%;top:8px;height:18px;border-radius:2px;
+    background:repeating-linear-gradient(90deg,#2a2e36 0 6px,#12141a 6px 8px);
+    -webkit-mask-image:repeating-linear-gradient(#000 0 3px,transparent 3px 5px);mask-image:repeating-linear-gradient(#000 0 3px,transparent 3px 5px)}
+  .ap-deck::after{content:'';position:absolute;left:50%;bottom:8px;width:28%;height:12px;transform:translateX(-50%);border-radius:4px;background:#2a2d33;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+
+  /* celular */
+  .a-cel{width:46%}
+  .ap-cel{position:relative;padding:7px 7px 11px;border-radius:28px;background:linear-gradient(160deg,#3a3d44,#121316 42%,#2a2c31);box-shadow:0 0 0 1px rgba(255,255,255,.14),0 18px 30px -12px rgba(0,0,0,.9)}
+  .ap-cel::before,.ap-cel::after{content:'';position:absolute;width:3px;border-radius:2px;background:linear-gradient(#5c616a,#2a2d33)}
+  .ap-cel::before{left:-2px;top:22%;height:28px}
+  .ap-cel::after{right:-2px;top:20%;height:46px}
+  .a-cel .sf-tela{width:100%;aspect-ratio:9/18.4;border-radius:20px;border:2px solid #050506}
+
+  .sf-rot{position:absolute;left:50%;bottom:110px;z-index:3;transform:translateX(-50%) rotate(90deg);transform-origin:center;white-space:nowrap;color:#fff;font-family:var(--ff-txt);font-size:15px;font-weight:600;transition:transform .35s,bottom .35s}
   .sf-rot b{font-family:var(--ff-tit);font-weight:800;color:#ff8a24;font-size:17px;margin-right:4px}
-  .sf-item.on .sf-rot{bottom:22px;transform:translateX(-50%) rotate(0);font-size:17px}
+  .sf-item.on .sf-rot{bottom:18px;transform:translateX(-50%) rotate(0)}
   .sf-item.on .sf-rot b{font-size:20px}
   .sf-nota{margin-top:14px;font-size:13px;color:#aeb4bd;text-align:center}
 
@@ -53,18 +92,71 @@ const itens = [
     .sf-trilho{gap:6px;height:420px}
     .sf-item{flex-basis:36px;border-radius:16px}
     .sf-rot{font-size:13px;bottom:80px}
+    .a-mon{width:96%}
+    .ap-braco{height:16px}
+    .ap-pe{height:7px}
+    .ap-deck{height:36px}
+    .a-cel{width:52%}
   }
-  @media (prefers-reduced-motion: reduce){.sf-item,.sf-tela{transition:none}}
+  @media (prefers-reduced-motion: reduce){.sf-item,.sf-aparelho,.sf-rot{transition:none}}
 </style>
 
 <script>
   const raiz = document.getElementById('sanfona');
   if (raiz) {
+    const trilho = raiz.querySelector('.sf-trilho')!;
     const itens = Array.from(raiz.querySelectorAll<HTMLElement>('.sf-item'));
-    let k = itens.length - 1, timer: number | undefined;
-    const abrir = (i: number) => { k = i; itens.forEach((el, j) => el.classList.toggle('on', j === i)); };
-    const ciclo = () => { clearInterval(timer); if (!matchMedia('(prefers-reduced-motion: reduce)').matches) timer = window.setInterval(() => abrir((k + 1) % itens.length), 4000); };
-    itens.forEach((el, i) => { el.addEventListener('mouseenter', () => { abrir(i); ciclo(); }); el.addEventListener('click', () => { abrir(i); ciclo(); }); });
-    abrir(0); ciclo();
+    let k = 0;
+    let timer = 0;
+    let sobre = false;
+    let ax = 0;
+    let ay = 0;
+
+    const abrir = (i: number) => {
+      if (i === k || i < 0) return;
+      k = i;
+      itens.forEach((el, j) => el.classList.toggle('on', j === i));
+    };
+    const parar = () => { window.clearInterval(timer); timer = 0; };
+    const seguir = () => {
+      parar();
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        timer = window.setInterval(() => abrir((k + 1) % itens.length), 4500);
+      }
+    };
+    // faixa interna do card: a borda que se move na animação não conta como escolha
+    const sob = (x: number, y: number) => {
+      for (let i = 0; i < itens.length; i++) {
+        const r = itens[i].getBoundingClientRect();
+        const m = Math.min(12, r.width * 0.22);
+        if (x >= r.left + m && x <= r.right - m && y >= r.top + 8 && y <= r.bottom - 8) return i;
+      }
+      return -1;
+    };
+
+    trilho.addEventListener('pointerenter', (e) => {
+      if ((e as PointerEvent).pointerType === 'touch') return;
+      sobre = true;
+      parar();
+      ax = (e as PointerEvent).clientX;
+      ay = (e as PointerEvent).clientY;
+    });
+    trilho.addEventListener('pointerleave', (e) => {
+      if ((e as PointerEvent).pointerType === 'touch') return;
+      sobre = false;
+      seguir();
+    });
+    trilho.addEventListener('pointermove', (e) => {
+      const ev = e as PointerEvent;
+      if (!sobre || ev.pointerType === 'touch') return;
+      const dx = ev.clientX - ax;
+      const dy = ev.clientY - ay;
+      if (dx * dx + dy * dy < 100) return;
+      ax = ev.clientX;
+      ay = ev.clientY;
+      abrir(sob(ev.clientX, ev.clientY));
+    });
+    itens.forEach((el, i) => el.addEventListener('click', () => { abrir(i); if (sobre) parar(); else seguir(); }));
+    seguir();
   }
 </script>
