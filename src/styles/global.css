@@ -32,7 +32,7 @@ h3{font-size:22px;line-height:1.05}
 /* espaçamento padrão entre seções: o mesmo no site inteiro */
 :root{--sec:40px}
 section{padding:var(--sec) 0}
-.alt{background:var(--surface-raised) linear-gradient(to right,rgba(255,255,255,.025) 1px,transparent 1px) 0 0/56px 56px}
+.alt{background:transparent}
 .destaque{color:var(--orange-text)}
 .eyebrow{color:var(--orange-text);font-weight:700;font-size:12px;line-height:16px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;display:block}
 .lead{color:var(--ink-muted);font-size:18px;line-height:28px;max-width:65ch;margin-top:16px}
@@ -73,7 +73,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--focus-ring);outl
 .prose p,.prose li{color:var(--ink-muted);margin-bottom:.8em;max-width:65ch}
 .prose h2{font-size:28px;margin:1.6em 0 .4em}
 .prose ul{padding-left:20px}
-.hero{padding:72px 0 64px;background:radial-gradient(800px 400px at 85% 0%,rgba(255,105,0,.12),transparent 60%)}
+.hero{padding:72px 0 64px}
 .dois{display:grid;gap:32px}
 @media(min-width:900px){.dois{grid-template-columns:1fr 1fr;align-items:start}}
 
@@ -151,5 +151,28 @@ html,body{max-width:100%;overflow-x:clip}
 .sv-or{background:linear-gradient(180deg,#ff8a24,#ff6900);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .sv-grid .card{background:transparent;box-shadow:none;border-color:rgba(255,255,255,.1)}
 .sv-grid .card:hover{border-color:var(--orange);background:rgba(255,105,0,.05)}
-.sv-grid .icone{background:rgba(255,105,0,.12)}
 @media(max-width:767px){.sv-tit{justify-content:center;font-size:46px}}
+
+/* fundo do site inteiro no estilo do hero: brilhos laranja, grade e linhas de velocidade (fixo atrás de tudo) */
+body{background:var(--carbon)}
+.fundo-site{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden;
+  background:radial-gradient(700px 500px at 80% 30%,rgba(255,105,0,.18),transparent 65%),radial-gradient(600px 460px at 8% 85%,rgba(255,138,36,.1),transparent 70%)}
+.fundo-site::before{content:'';position:absolute;inset:0;background-size:56px 56px;background-image:linear-gradient(to right,rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.045) 1px,transparent 1px);mask-image:radial-gradient(ellipse at 60% 45%,#000 0%,transparent 75%);-webkit-mask-image:radial-gradient(ellipse at 60% 45%,#000 0%,transparent 75%)}
+.fundo-site i{position:absolute;height:2px;width:220px;background:linear-gradient(90deg,transparent,#ff6900,transparent);transform:skewX(-30deg);opacity:.45;animation:fs-linha 6s linear infinite}
+.fundo-site i:nth-child(1){top:18%}
+.fundo-site i:nth-child(2){top:46%;width:160px;animation-delay:-2s}
+.fundo-site i:nth-child(3){top:72%;animation-delay:-4s}
+.fundo-site i:nth-child(4){top:90%;width:120px;animation-delay:-1s}
+@keyframes fs-linha{from{left:-20%}to{left:110%}}
+@media (prefers-reduced-motion: reduce){.fundo-site i{display:none}}
+
+/* ícones dos serviços em vidro 3D */
+.sv-grid{perspective:900px}
+.sv-grid .icone{position:relative;width:56px;height:56px;border-radius:16px;color:#fff;
+  background:linear-gradient(150deg,rgba(255,255,255,.22),rgba(255,255,255,.05) 50%,rgba(255,138,36,.18));
+  border:1px solid rgba(255,255,255,.3);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5),inset 0 -1px 0 rgba(255,138,36,.6),5px 6px 0 -2px rgba(255,138,36,.35),0 0 22px -4px rgba(255,105,0,.65),0 10px 18px -8px rgba(0,0,0,.8);
+  transform:rotateY(-18deg) rotateX(10deg);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.sv-grid .icone::before{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(115deg,rgba(255,255,255,.35),rgba(255,255,255,0) 40%);pointer-events:none}
+.sv-grid .icone :is(svg){color:#ffb35c;filter:drop-shadow(0 0 6px rgba(255,138,36,.8))}
+.sv-grid .card:hover .icone{transform:rotateY(0) rotateX(0) translateY(-3px)}
