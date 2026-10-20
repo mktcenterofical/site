@@ -1,43 +1,23 @@
 ---
 // Faixa laranja escura em largura total: "Invisível não vende." em duas colunas.
-// Esquerda: título, subtítulo, frase final e CTA. Direita: pin 3D brilhante sobre um bairro iluminado num mapa escuro,
-// ligado por linhas de luz a cartões de vidro em perspectiva 3D (loja, telefone, horário, avaliações, site e mapa).
-import { waLink } from '../config';
+// Esquerda: título e subtítulo. Direita: composição de interface (estilo produto): mapa escuro em
+// perspectiva com o pin da empresa, busca local sendo digitada, perfil da empresa no Google e um
+// indicador de ligações. Dados fictícios — ver CLAUDE.md.
 
-// ---------- cena (viewBox 1000 x 900) ----------
-// mapa em perspectiva (projeção isométrica achatada), bairro iluminado no centro e prédios baixos em volta
-const S = 70, OX = 500, OY = 300;
-const P = (x: number, y: number, z = 0) => [OX + (x - y) * S * 0.92, OY + (x + y) * S * 0.42 - z * S] as const;
-const pts = (...p: (readonly [number, number])[]) => p.map(([a, b]) => `${a.toFixed(1)},${b.toFixed(1)}`).join(' ');
-const chao = pts(P(-1, -1), P(8, -1), P(8, 8), P(-1, 8));
-const ruas = [1, 2.5, 4.5, 6].flatMap((v) => [[P(v, -1), P(v, 8)], [P(-1, v), P(8, v)]]);
-const bairro = pts(P(2.6, 2.1), P(4.4, 2.3), P(4.9, 3.6), P(4.2, 4.9), P(3.0, 5.0), P(2.2, 3.8));
-type Bloco = { x: number; y: number; w: number; d: number; h: number; luz?: boolean };
-const blocos: Bloco[] = [
-  { x: -.6, y: 0.2, w: .8, d: .8, h: .9, luz: true }, { x: 0.4, y: -.6, w: .7, d: .7, h: .5 }, { x: 5.6, y: -.7, w: .8, d: .7, h: .6 },
-  { x: 6.6, y: 0.6, w: .8, d: .9, h: 1.1, luz: true }, { x: -.7, y: 5.3, w: .8, d: .8, h: .7 }, { x: 0.3, y: 6.5, w: .9, d: .7, h: 1.2, luz: true },
-  { x: 6.4, y: 5.6, w: .8, d: .8, h: .8, luz: true }, { x: 5.4, y: 6.8, w: .7, d: .7, h: .5 }, { x: 1.4, y: 1.2, w: .6, d: .6, h: .45 },
-  { x: 5.1, y: 1.4, w: .6, d: .6, h: .5 }, { x: 1.2, y: 5.0, w: .6, d: .6, h: .4 }, { x: 5.2, y: 4.6, w: .6, d: .7, h: .55 },
-].sort((a, b) => a.x + a.y - (b.x + b.y));
-const faces = (b: Bloco) => ({
-  topo: pts(P(b.x, b.y, b.h), P(b.x + b.w, b.y, b.h), P(b.x + b.w, b.y + b.d, b.h), P(b.x, b.y + b.d, b.h)),
-  frente: pts(P(b.x, b.y + b.d), P(b.x + b.w, b.y + b.d), P(b.x + b.w, b.y + b.d, b.h), P(b.x, b.y + b.d, b.h)),
-  lado: pts(P(b.x + b.w, b.y), P(b.x + b.w, b.y + b.d), P(b.x + b.w, b.y + b.d, b.h), P(b.x + b.w, b.y, b.h)),
-  janela: pts(P(b.x + .2, b.y + b.d), P(b.x + b.w - .2, b.y + b.d), P(b.x + b.w - .2, b.y + b.d, b.h * .55), P(b.x + .2, b.y + b.d, b.h * .55)),
-});
-const arvores = [[1.8, -.4], [4.2, -.6], [-.4, 2.6], [7.2, 3.2], [2.2, 7.2], [4.6, 7.4], [6.9, 2.0]].map(([x, y]) => P(x, y));
-const centro = P(3.55, 3.55);
-// cartões em volta (posição em % da cena) e o ponto do mapa de onde sai cada ligação
-const cartoes = [
-  { id: 'loja', l: 63, t: 3, w: 31 },
-  { id: 'tel', l: 5, t: 31, w: 16 },
-  { id: 'hora', l: 79, t: 38, w: 16 },
-  { id: 'aval', l: 0, t: 57, w: 31 },
-  { id: 'site', l: 27, t: 70, w: 36 },
-  { id: 'mapa', l: 75, t: 64, w: 19 },
+// rede de ruas do mapa (viewBox 600 x 420)
+const ruas = [
+  'M-20 70 C 120 60, 220 110, 320 95 S 520 60, 640 80',
+  'M-20 190 C 90 200, 180 170, 300 205 S 500 250, 640 220',
+  'M-20 320 C 140 300, 260 345, 380 320 S 560 300, 640 330',
+  'M90 -20 C 100 100, 70 220, 110 440',
+  'M250 -20 C 230 110, 280 260, 240 440',
+  'M420 -20 C 440 120, 400 250, 450 440',
+  'M540 -20 C 520 140, 570 280, 530 440',
 ];
-const ancora: Record<string, [number, number]> = { loja: [780, 200], tel: [210, 360], hora: [790, 440], aval: [260, 580], site: [450, 640], mapa: [790, 620] };
-const ligacoes = Object.values(ancora).map(([x, y]) => `M${centro[0]} ${centro[1]} L${(centro[0] + x) / 2} ${centro[1]} L${(centro[0] + x) / 2} ${y} L${x} ${y}`);
+const vielas = ['M-20 130 L 640 150', 'M-20 260 L 640 275', 'M170 -20 L 190 440', 'M340 -20 L 330 440', 'M-20 380 L 640 370'];
+const rota = 'M110 400 C 120 330, 210 330, 245 280 S 300 215, 300 205';
+const linha = [8, 14, 11, 19, 16, 24, 22, 31, 29, 38];
+const spark = linha.map((v, i) => `${i === 0 ? 'M' : 'L'}${((i * 120) / (linha.length - 1)).toFixed(1)} ${40 - v}`).join(' ');
 ---
 <section class="iv" id="invisivel" aria-labelledby="iv-tit">
   <div class="iv-grade" aria-hidden="true"></div>
@@ -45,172 +25,146 @@ const ligacoes = Object.values(ancora).map(([x, y]) => `M${centro[0]} ${centro[1
     <div class="iv-txt">
       <h2 id="iv-tit" class="iv-tit"><span>Invisível</span><span class="iv-tit2">não vende.</span></h2>
       <i class="iv-traco" aria-hidden="true"></i>
-      <p class="iv-sub">Apareça para quem <b>já está procurando</b> o que você vende.</p>
-      <div class="iv-fim">
-        <p>Mais visibilidade. Mais oportunidades. <b>Mais vendas.</b></p>
-        <a class="iv-cta" href={waLink('Olá! Quero que minha empresa seja encontrada na internet.')} target="_blank" rel="noopener">Quero ser encontrado <span aria-hidden="true">↗</span></a>
-      </div>
+      <p class="iv-sub">Apareça para quem <b>já está procurando</b> o que você vende: no Google, no mapa e no momento da decisão.</p>
     </div>
 
     <div class="iv-arte" aria-hidden="true">
-      <svg class="iv-cena" viewBox="0 0 1000 900">
-        <defs>
-          <linearGradient id="iv-chao" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2b2723" /><stop offset="1" stop-color="#121010" /></linearGradient>
-          <radialGradient id="iv-bairro" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="#ffb35c" /><stop offset=".6" stop-color="#ff7a1a" /><stop offset="1" stop-color="#c24a00" /></radialGradient>
-          <linearGradient id="iv-topo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5a5650" /><stop offset="1" stop-color="#34312d" /></linearGradient>
-          <linearGradient id="iv-frente" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2e2b28" /><stop offset="1" stop-color="#161412" /></linearGradient>
-          <linearGradient id="iv-lado" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1e1c1a" /><stop offset="1" stop-color="#0b0a09" /></linearGradient>
-          <filter id="iv-glow" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="7" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
-          <filter id="iv-blur"><feGaussianBlur stdDeviation="22" /></filter>
-        </defs>
-        <polygon points={chao} fill="url(#iv-chao)" />
-        <g stroke="#3d3833" stroke-width="12" stroke-linecap="round">{ruas.map(([a, b]) => <line x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} />)}</g>
-        <g stroke="#ff8a24" stroke-opacity=".22" stroke-width="1.5">{ruas.map(([a, b]) => <line x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} />)}</g>
-
-        <!-- bairro iluminado -->
-        <polygon points={bairro} fill="#ff6900" opacity=".6" filter="url(#iv-blur)" class="iv-pulsa" />
-        <polygon points={bairro} fill="url(#iv-bairro)" opacity=".92" stroke="#ffd3a3" stroke-width="3" />
-
-        <!-- ligações de luz -->
-        {ligacoes.map((d) => (
-          <g>
-            <path d={d} fill="none" stroke="#ff6900" stroke-width="10" stroke-opacity=".45" filter="url(#iv-glow)" />
-            <path d={d} fill="none" stroke="#ffb35c" stroke-width="3" />
-            <path class="iv-fluxo" d={d} fill="none" stroke="#fff4e6" stroke-width="4" stroke-linecap="round" pathLength="100" />
-          </g>
-        ))}
-        {Object.values(ancora).map(([x, y]) => <circle cx={x} cy={y} r="7" fill="#fff1de" filter="url(#iv-glow)" />)}
-
-        <!-- árvores e prédios -->
-        {arvores.map(([x, y]) => <g transform={`translate(${x} ${y})`}><ellipse cx="0" cy="4" rx="16" ry="7" fill="#000" opacity=".4" /><circle cx="0" cy="-18" r="18" fill="#2d3a2a" /><circle cx="-6" cy="-24" r="10" fill="#3d4d38" /></g>)}
-        {blocos.map((b) => { const f = faces(b); return (
-          <g>
-            <polygon points={f.lado} fill="url(#iv-lado)" />
-            <polygon points={f.frente} fill="url(#iv-frente)" />
-            {b.luz && <polygon points={f.janela} fill="#ff9a3c" opacity=".85" filter="url(#iv-glow)" />}
-            <polygon points={f.topo} fill="url(#iv-topo)" />
-          </g>
-        ); })}
-
-        <!-- anéis na base do pin -->
-        <ellipse cx={centro[0]} cy={centro[1]} rx="62" ry="26" fill="none" stroke="#fff1de" stroke-width="4" filter="url(#iv-glow)" />
-        <ellipse class="iv-onda" cx={centro[0]} cy={centro[1]} rx="62" ry="26" fill="none" stroke="#ffb35c" stroke-width="3" />
-        <ellipse class="iv-onda o2" cx={centro[0]} cy={centro[1]} rx="62" ry="26" fill="none" stroke="#ffb35c" stroke-width="3" />
-      </svg>
-
-      <!-- pin 3D -->
-      <div class="iv-pin">
-        <svg viewBox="0 0 200 270">
+      <div class="iv-mapa">
+        <svg viewBox="0 0 600 420" preserveAspectRatio="xMidYMid slice">
           <defs>
-            <radialGradient id="iv-pin-c" cx=".35" cy=".28" r=".85"><stop offset="0" stop-color="#fff3e2" /><stop offset=".22" stop-color="#ffb35c" /><stop offset=".6" stop-color="#ff7a1a" /><stop offset="1" stop-color="#b53f00" /></radialGradient>
-            <radialGradient id="iv-pin-f" cx=".5" cy=".4" r=".6"><stop offset="0" stop-color="#5a1e00" /><stop offset="1" stop-color="#2a0e00" /></radialGradient>
+            <radialGradient id="iv-vinheta" cx=".5" cy=".5" r=".75"><stop offset=".55" stop-color="#000" stop-opacity="0" /><stop offset="1" stop-color="#000" stop-opacity=".55" /></radialGradient>
+            <radialGradient id="iv-calor" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff7a1a" stop-opacity=".55" /><stop offset="1" stop-color="#ff7a1a" stop-opacity="0" /></radialGradient>
           </defs>
-          <path d="M100 262 C 78 222 14 168 14 98 A 86 86 0 1 1 186 98 C 186 168 122 222 100 262 Z" fill="url(#iv-pin-c)" />
-          <path d="M100 262 C 78 222 14 168 14 98 A 86 86 0 0 1 100 12" fill="none" stroke="#fff6ea" stroke-opacity=".55" stroke-width="3" />
-          <circle cx="100" cy="98" r="40" fill="url(#iv-pin-f)" />
-          <circle cx="100" cy="98" r="40" fill="none" stroke="#ffd3a3" stroke-width="4" />
-          <ellipse cx="66" cy="58" rx="22" ry="12" fill="#fff" opacity=".45" transform="rotate(-35 66 58)" />
+          <rect width="600" height="420" fill="#16181c" />
+          <path d="M370 420 C 380 360, 470 330, 600 340 L 600 420 Z" fill="#1b2a33" />
+          <rect x="430" y="110" width="80" height="60" rx="10" fill="#1c2620" />
+          <rect x="30" y="215" width="50" height="70" rx="8" fill="#1c2620" />
+          <g fill="none" stroke="#2a2d33" stroke-width="1.4">{vielas.map((d) => <path d={d} />)}</g>
+          <g fill="none" stroke="#3a3e46" stroke-width="5" stroke-linecap="round">{ruas.map((d) => <path d={d} />)}</g>
+          <g fill="none" stroke="#4a4f58" stroke-width="1.2">{ruas.map((d) => <path d={d} />)}</g>
+          <circle cx="300" cy="205" r="120" fill="url(#iv-calor)" />
+          <path d={rota} fill="none" stroke="#ff8a24" stroke-width="5" stroke-linecap="round" />
+          <path class="iv-rota" d={rota} fill="none" stroke="#fff1de" stroke-width="5" stroke-linecap="round" pathLength="100" />
+          <circle cx="110" cy="400" r="7" fill="#fff" stroke="#4285f4" stroke-width="4" />
+          <rect width="600" height="420" fill="url(#iv-vinheta)" />
         </svg>
       </div>
 
-      <!-- cartões 3D -->
-      {cartoes.map((c, i) => (
-        <div class={`iv-tile iv-${c.id}`} style={`left:${c.l}%;top:${c.t}%;width:${c.w}%;animation-delay:${-i * .7}s`}>
-          {c.id === 'loja' && (<>
-            <div class="iv-loja-ic"><svg viewBox="0 0 48 44"><path d="M4 4h40l3 12H1z" fill="#ff6900" /><path d="M1 16h46v4a6 6 0 0 1-11.5 2.4A6 6 0 0 1 24 22a6 6 0 0 1-11.5.4A6 6 0 0 1 1 20z" fill="#ff8a24" /><rect x="5" y="22" width="38" height="20" rx="2" fill="#f6efe6" stroke="#d8cfc3" /><rect x="10" y="27" width="11" height="15" rx="1.5" fill="#ff6900" /><rect x="25" y="27" width="13" height="9" rx="1.5" fill="#cfe1f2" /></svg></div>
-            <div class="iv-linhas"><i class="o"></i><i></i><i class="c"></i></div>
-          </>)}
-          {c.id === 'tel' && <svg class="iv-gl" viewBox="0 0 24 24"><path d="M5 3.5c.6-.6 1.6-.6 2.2 0l2.4 2.6c.6.6.6 1.5.1 2.1L8.4 9.6c1.2 2.5 3.4 4.8 6 6l1.4-1.3c.6-.5 1.5-.5 2.1.1l2.6 2.4c.6.6.6 1.6 0 2.2l-1.6 1.6c-1 1-2.6 1.3-3.9.7C9.4 18.9 5.1 14.6 2.7 9c-.6-1.3-.3-2.9.7-3.9z" fill="#ff8a24" /></svg>}
-          {c.id === 'hora' && <svg class="iv-gl" viewBox="0 0 48 48"><circle cx="24" cy="24" r="19" fill="#1b1a19" stroke="#ff8a24" stroke-width="4" /><g stroke="#fff1de" stroke-width="3" stroke-linecap="round"><line x1="24" y1="24" x2="24" y2="12" class="iv-ponteiro" /><line x1="24" y1="24" x2="32" y2="28" /></g><circle cx="24" cy="24" r="2.5" fill="#ff8a24" /></svg>}
-          {c.id === 'aval' && (<>
-            <div class="iv-estrelas">{[0, 1, 2, 3, 4].map((k) => <svg viewBox="0 0 24 24" style={`animation-delay:${k * .25}s`}><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.5 1.3 6.6L12 17.2l-5.9 3.3 1.3-6.6-4.9-4.5 6.6-.8z" fill="#ff8a24" stroke="#ffc993" stroke-width=".8" /></svg>)}</div>
-            <div class="iv-linhas"><i></i><i class="c"></i></div>
-          </>)}
-          {c.id === 'site' && (<>
-            <div class="iv-nav"><i></i><i></i><i></i></div>
-            <div class="iv-site-c"><div class="iv-foto"><img src="/mock/padaria.webp" alt="" width="640" height="400" loading="lazy" decoding="async" /></div><div class="iv-linhas"><i></i><i></i><i class="c"></i><span class="iv-bt"></span></div></div>
-          </>)}
-          {c.id === 'mapa' && <svg class="iv-gl" viewBox="0 0 48 48"><path d="M6 12l11-5 14 5 11-5v29l-11 5-14-5-11 5z" fill="#3a3632" stroke="#5b564f" stroke-width="1.5" /><path d="M17 7v29M31 12v29" stroke="#5b564f" stroke-width="1.5" /><path d="M24 30c-4-5-8-8-8-13a8 8 0 0 1 16 0c0 5-4 8-8 13z" fill="#ff7a1a" /><circle cx="24" cy="17" r="3" fill="#3a1500" /></svg>}
+      <span class="iv-onda"></span><span class="iv-onda o2"></span>
+      <div class="iv-pin">
+        <svg viewBox="0 0 64 84">
+          <defs><linearGradient id="iv-pin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb35c" /><stop offset="1" stop-color="#ff6900" /></linearGradient></defs>
+          <path d="M32 82 C 26 70 4 52 4 31 A 28 28 0 1 1 60 31 C 60 52 38 70 32 82 Z" fill="url(#iv-pin)" stroke="#fff" stroke-width="3" />
+          <circle cx="32" cy="31" r="11" fill="#fff" />
+        </svg>
+      </div>
+
+      <div class="iv-card iv-busca">
+        <svg class="iv-g" viewBox="0 0 24 24"><path fill="#4285F4" d="M21.6 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.3z" /><path fill="#34A853" d="M12 22c2.7 0 5-.9 6.6-2.4l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0 0 12 22z" /><path fill="#FBBC05" d="M6.4 14c-.2-.6-.3-1.3-.3-2s.1-1.4.3-2V7.4H3.1A10 10 0 0 0 2 12c0 1.6.4 3.1 1.1 4.6z" /><path fill="#EA4335" d="M12 5.9c1.5 0 2.8.5 3.8 1.5l2.9-2.9A10 10 0 0 0 3.1 7.4L6.4 10C7.2 7.7 9.4 5.9 12 5.9z" /></svg>
+        <span class="iv-q"><span class="iv-digita">padaria perto de mim</span><i class="iv-cursor"></i></span>
+        <svg class="iv-lupa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>
+      </div>
+
+      <div class="iv-card iv-metrica">
+        <small>Ligações pelo Google</small>
+        <div class="iv-met-l"><b>+64%</b><em>este mês</em></div>
+        <svg viewBox="0 0 120 44" class="iv-spark"><path d={`${spark} L120 44 L0 44 Z`} fill="rgba(61,220,151,.15)" /><path class="iv-spark-l" d={spark} fill="none" stroke="#3ddc97" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" pathLength="100" /></svg>
+      </div>
+
+      <div class="iv-card iv-perfil">
+        <div class="iv-foto"><img src="/mock/padaria.webp" alt="" width="640" height="400" loading="lazy" decoding="async" /><span>1º no mapa</span></div>
+        <div class="iv-info">
+          <b>Padaria Pão Dourado</b>
+          <div class="iv-nota"><strong>4,9</strong><span class="iv-est">★★★★★</span><em>(312)</em></div>
+          <small>Padaria · <i>Aberto agora</i> · Fecha às 20h</small>
+          <div class="iv-acoes">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z" /></svg>Ligar</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 19-9-9 19-2-8z" /></svg>Rotas</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10" /><path d="M2 12h20M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20" /></svg>Site</span>
+            <span class="iv-wa"><svg viewBox="0 0 32 32" fill="currentColor"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm5.9 15.7c-.3-.2-1.9-1-2.2-1-.3-.1-.5-.2-.7.1l-1 1.3c-.2.2-.4.2-.7.1a8.8 8.8 0 0 1-4.4-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.7 5 2.1.9 3 1 4 .8.7-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5l-.7-.4z" /></svg>WhatsApp</span>
+          </div>
         </div>
-      ))}
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .iv{position:relative;overflow:hidden;isolation:isolate;padding:72px 0;color:#fff;
-    background:radial-gradient(700px 520px at 78% 55%,rgba(255,140,40,.35),transparent 70%),linear-gradient(150deg,#a84300 0%,#8a3500 50%,#5a2200 100%)}
-  .iv-grade{position:absolute;inset:0;z-index:-1;opacity:.45;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse at 30% 40%,#000,transparent 75%);-webkit-mask-image:radial-gradient(ellipse at 30% 40%,#000,transparent 75%)}
-  .iv-in{display:grid;gap:40px;align-items:center}
-  @media(min-width:1024px){.iv-in{grid-template-columns:.95fr 1.1fr;gap:40px}}
+  .iv{position:relative;overflow:hidden;isolation:isolate;padding:80px 0;color:#fff;
+    background:radial-gradient(700px 520px at 78% 50%,rgba(255,140,40,.32),transparent 70%),linear-gradient(150deg,#a84300 0%,#8a3500 50%,#5a2200 100%)}
+  .iv-grade{position:absolute;inset:0;z-index:-1;opacity:.4;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse at 30% 50%,#000,transparent 70%);-webkit-mask-image:radial-gradient(ellipse at 30% 50%,#000,transparent 70%)}
+  .iv-in{display:grid;gap:48px;align-items:center}
+  @media(min-width:1024px){.iv-in{grid-template-columns:.85fr 1.15fr;gap:48px}}
 
-  /* coluna de texto */
-  .iv-tit{display:flex;flex-direction:column;margin:0;font-size:clamp(56px,7vw,104px);line-height:.86;letter-spacing:-.02em;color:#fff}
+  .iv-tit{display:flex;flex-direction:column;margin:0;font-size:clamp(56px,7vw,108px);line-height:.86;letter-spacing:-.02em;color:#fff}
   .iv-tit2{background:linear-gradient(180deg,#fff1de,#ffc993);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-  .iv-traco{display:block;width:64px;height:3px;margin:22px 0 16px;border-radius:3px;background:#fff1de}
-  .iv-sub{font-size:20px;line-height:1.4;color:rgba(255,241,222,.88);max-width:30ch}
+  .iv-traco{display:block;width:64px;height:3px;margin:24px 0 18px;border-radius:3px;background:#fff1de}
+  .iv-sub{font-size:20px;line-height:1.45;color:rgba(255,241,222,.86);max-width:32ch}
   .iv-sub b{color:#fff}
-  .iv-fim{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;gap:18px 24px;padding:18px 20px;border-radius:var(--radius-lg);background:rgba(20,8,0,.3);border:1px solid rgba(255,220,190,.25)}
-  .iv-fim p{flex:1;min-width:220px;font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:22px;line-height:1.05;color:rgba(255,241,222,.85)}
-  .iv-fim p b{color:#fff}
-  .iv-cta{display:inline-flex;align-items:center;gap:10px;min-height:50px;padding:0 26px;border-radius:999px;background:#141006;color:#fff;font-weight:800;font-size:15px;text-decoration:none;box-shadow:0 14px 30px -12px rgba(30,8,0,.9);transition:transform .2s,background .2s}
-  .iv-cta:hover{transform:translateY(-2px);background:#000}
-  .iv-cta span{color:#ffb35c}
 
-  /* cena 3D (estilo referência: pin brilhante, bairro iluminado e cartões 3D) */
-  .iv-arte{position:relative;width:100%;max-width:640px;margin:0 auto;aspect-ratio:1000/900;container-type:inline-size}
-  .iv-cena{position:absolute;inset:0;width:100%;height:100%;overflow:visible;filter:drop-shadow(0 4cqw 5cqw rgba(30,8,0,.6))}
-  .iv-fluxo{stroke-dasharray:6 94;animation:iv-flui 2.4s linear infinite}
-  .iv-cena g:nth-of-type(2n) .iv-fluxo{animation-delay:-1.2s}
+  /* ---------- composição de interface ---------- */
+  .iv-arte{position:relative;width:100%;max-width:620px;margin:0 auto;aspect-ratio:1/.86;container-type:inline-size;perspective:1600px;text-align:left}
+  .iv-mapa{position:absolute;left:8%;right:4%;top:12%;bottom:14%;border-radius:3cqw;overflow:hidden;background:#16181c;
+    box-shadow:0 0 0 1px rgba(255,255,255,.08),0 4cqw 8cqw -2cqw rgba(20,6,0,.85);transform:rotateY(-10deg) rotateX(8deg)}
+  .iv-mapa svg{position:absolute;inset:0;width:100%;height:100%}
+  .iv-rota{stroke-dasharray:14 86;animation:iv-flui 2.6s linear infinite}
   @keyframes iv-flui{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
-  .iv-pulsa{animation:iv-pulsa 3s ease-in-out infinite}
-  @keyframes iv-pulsa{50%{opacity:.95}}
-  .iv-onda{transform-box:fill-box;transform-origin:center;animation:iv-onda 2.8s ease-out infinite}
-  .iv-onda.o2{animation-delay:-1.4s}
-  @keyframes iv-onda{0%{transform:scale(1);opacity:.9}100%{transform:scale(2.6);opacity:0}}
-
-  .iv-pin{position:absolute;left:39%;top:23%;width:22%;filter:drop-shadow(0 0 3cqw rgba(255,150,60,.85)) drop-shadow(0 2.5cqw 2cqw rgba(60,15,0,.7));animation:iv-pula 2.6s ease-in-out infinite}
+  .iv-pin{position:absolute;z-index:2;left:51%;top:47%;width:9cqw;transform:translate(-50%,-100%);filter:drop-shadow(0 1.2cqw 1.4cqw rgba(0,0,0,.6)) drop-shadow(0 0 2cqw rgba(255,138,36,.7));animation:iv-pula 2.6s ease-in-out infinite}
   .iv-pin svg{display:block;width:100%}
-  @keyframes iv-pula{50%{transform:translateY(-2.4cqw)}}
+  @keyframes iv-pula{50%{transform:translate(-50%,-100%) translateY(-1cqw)}}
+  .iv-onda{position:absolute;z-index:1;left:51%;top:47%;width:14cqw;height:5cqw;margin:-2.5cqw 0 0 -7cqw;border-radius:50%;border:2px solid #ffb35c;opacity:0;animation:iv-onda 2.6s ease-out infinite}
+  .iv-onda.o2{animation-delay:-1.3s}
+  @keyframes iv-onda{0%{transform:scale(.4);opacity:.9}100%{transform:scale(2.2);opacity:0}}
 
-  /* cartões de vidro em perspectiva 3D */
-  .iv-tile{--ry:-16deg;position:absolute;display:flex;flex-direction:column;gap:1.4cqw;padding:2cqw;border-radius:2.6cqw;color:#fff;
-    background:linear-gradient(150deg,rgba(255,255,255,.2),rgba(255,255,255,.05) 50%,rgba(255,138,36,.12));
-    border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(12px) saturate(150%);-webkit-backdrop-filter:blur(12px) saturate(150%);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.5),inset 0 -1px 0 rgba(255,138,36,.6),1cqw 1.2cqw 0 -.3cqw rgba(255,180,110,.22),0 0 4cqw -1cqw rgba(255,105,0,.7),0 3cqw 4cqw -1.5cqw rgba(30,8,0,.8);
-    transform:perspective(700px) rotateY(var(--ry)) rotateX(10deg);animation:iv-boia 4.5s ease-in-out infinite}
-  .iv-tile::before{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.35),rgba(255,255,255,0) 38%)}
-  .iv-tel,.iv-aval{--ry:16deg}
-  .iv-site{--ry:0deg}
-  @keyframes iv-boia{50%{transform:perspective(700px) rotateY(var(--ry)) rotateX(10deg) translateY(-1.1cqw)}}
-  .iv-tel,.iv-hora,.iv-mapa{aspect-ratio:1;align-items:center;justify-content:center}
-  .iv-gl{width:68%;height:68%}
-  .iv-ponteiro{transform-origin:24px 24px;animation:iv-gira 6s linear infinite}
-  @keyframes iv-gira{to{transform:rotate(360deg)}}
-  .iv-loja{flex-direction:row;align-items:center;gap:2cqw}
-  .iv-loja-ic{flex:none;width:40%}
-  .iv-loja-ic svg{display:block;width:100%}
-  .iv-linhas{flex:1;display:flex;flex-direction:column;gap:1.1cqw}
-  .iv-linhas i{display:block;height:1.2cqw;border-radius:9px;background:rgba(255,255,255,.4)}
-  .iv-linhas i.o{background:#ff7a1a;width:80%}
-  .iv-linhas i.c{width:60%}
-  .iv-estrelas{display:flex;gap:.8cqw}
-  .iv-estrelas svg{width:4.4cqw;height:4.4cqw;filter:drop-shadow(0 0 1cqw rgba(255,138,36,.7));animation:iv-estrela 3s ease-in-out infinite}
-  @keyframes iv-estrela{0%,100%{transform:scale(1)}10%{transform:scale(1.25)}20%{transform:scale(1)}}
-  .iv-nav{display:flex;gap:.7cqw}
-  .iv-nav i{width:1.3cqw;height:1.3cqw;border-radius:50%;background:#ff6900}
-  .iv-nav i:nth-child(2){background:#ffb35c}.iv-nav i:nth-child(3){background:#d8cfc3}
-  .iv-site-c{display:grid;grid-template-columns:1fr 1fr;gap:1.6cqw}
-  .iv-foto{aspect-ratio:4/3;border-radius:1cqw;overflow:hidden}
+  .iv-card{position:absolute;border-radius:2cqw;background:rgba(18,19,22,.82);border:1px solid rgba(255,255,255,.12);
+    backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 3cqw 6cqw -2cqw rgba(10,3,0,.85);color:#fff}
+
+  .iv-busca{left:0;top:2%;width:62%;display:flex;align-items:center;gap:1.8cqw;padding:1.8cqw 2.4cqw;border-radius:99px;background:rgba(250,248,245,.96);color:#1b1d22;animation:iv-entra 1s cubic-bezier(.2,.8,.2,1) both}
+  .iv-g{width:3.4cqw;height:3.4cqw;flex:none}
+  .iv-q{flex:1;display:flex;align-items:center;font-size:2.5cqw;font-weight:600;white-space:nowrap;overflow:hidden}
+  .iv-digita{display:inline-block;overflow:hidden;animation:iv-digita 7s steps(20) infinite}
+  @keyframes iv-digita{0%,6%{max-width:0}40%,88%{max-width:100%}100%{max-width:0}}
+  .iv-cursor{width:2px;height:3cqw;margin-left:2px;background:#ff6900;animation:iv-pisca 1s steps(1) infinite}
+  @keyframes iv-pisca{50%{opacity:0}}
+  .iv-lupa{width:3.2cqw;height:3.2cqw;color:#5f6368;flex:none}
+
+  .iv-metrica{right:0;top:3%;width:30%;padding:1.8cqw 2cqw;animation:iv-entra 1s .15s cubic-bezier(.2,.8,.2,1) both}
+  .iv-metrica small{display:block;font-size:1.7cqw;color:#aeb4bd}
+  .iv-met-l{display:flex;align-items:baseline;gap:1cqw;margin:.4cqw 0 .8cqw}
+  .iv-met-l b{font-family:var(--ff-tit);font-weight:800;font-size:5cqw;line-height:1;color:#3ddc97}
+  .iv-met-l em{font-style:normal;font-size:1.6cqw;color:#aeb4bd}
+  .iv-spark{display:block;width:100%;height:auto}
+  .iv-spark-l{stroke-dasharray:100;animation:iv-desenha 2.4s ease-out both}
+  @keyframes iv-desenha{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+
+  .iv-perfil{right:0;bottom:0;width:66%;display:grid;grid-template-columns:36% 1fr;gap:2cqw;padding:1.6cqw;animation:iv-entra 1s .3s cubic-bezier(.2,.8,.2,1) both}
+  .iv-foto{position:relative;border-radius:1.4cqw;overflow:hidden;min-height:0}
   .iv-foto img{display:block;width:100%;height:100%;object-fit:cover}
-  .iv-bt{display:block;margin-top:auto;width:55%;height:2.6cqw;border-radius:.8cqw;background:#ff6900}
+  .iv-foto span{position:absolute;left:1cqw;top:1cqw;padding:.4cqw 1.2cqw;border-radius:99px;background:#ff6900;color:#141006;font-size:1.5cqw;font-weight:800}
+  .iv-info{display:flex;flex-direction:column;gap:.8cqw;padding:.6cqw 0;min-width:0}
+  .iv-info>b{font-size:2.6cqw;line-height:1.15}
+  .iv-nota{display:flex;align-items:center;gap:.8cqw;font-size:1.9cqw}
+  .iv-nota strong{font-weight:700}
+  .iv-est{color:#fbbc04;letter-spacing:.06em}
+  .iv-nota em{font-style:normal;color:#aeb4bd}
+  .iv-info small{font-size:1.65cqw;color:#aeb4bd}
+  .iv-info small i{font-style:normal;color:#3ddc97;font-weight:600}
+  .iv-acoes{display:grid;grid-template-columns:repeat(4,1fr);gap:.8cqw;margin-top:.6cqw}
+  .iv-acoes span{display:flex;flex-direction:column;align-items:center;gap:.5cqw;padding:1cqw .4cqw;border-radius:1.2cqw;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);font-size:1.4cqw;color:#e4e6ea}
+  .iv-acoes svg{width:2.6cqw;height:2.6cqw;color:#8ab4f8}
+  .iv-acoes .iv-wa{background:rgba(37,211,102,.14);border-color:rgba(37,211,102,.35)}
+  .iv-acoes .iv-wa svg{color:#25d366}
+  @keyframes iv-entra{from{opacity:0;transform:translateY(2cqw)}to{opacity:1;transform:none}}
 
   @media(max-width:767px){
     .iv{padding:52px 0}
     .iv-txt{display:flex;flex-direction:column;align-items:center;text-align:center}
     .iv-tit{align-items:center;font-size:56px}
     .iv-traco{margin-inline:auto}
-      .iv-fim{flex-direction:column;text-align:center}
+    .iv-sub{font-size:17px}
   }
-  @media (prefers-reduced-motion: reduce){.iv-fluxo,.iv-pulsa,.iv-onda,.iv-pin,.iv-tile,.iv-ponteiro,.iv-estrelas svg{animation:none}}
+  @media (prefers-reduced-motion: reduce){
+    .iv-rota,.iv-pin,.iv-onda,.iv-cursor,.iv-busca,.iv-metrica,.iv-perfil,.iv-spark-l,.iv-digita{animation:none}
+  }
 </style>
