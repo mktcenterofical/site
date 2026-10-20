@@ -126,5 +126,6 @@ const schema = [
   /* "O que vem incluso": 6 cards em 3 colunas, sem o bento dos serviços */
   .grid.st-inc{grid-template-columns:repeat(3,1fr);grid-template-areas:none}
   .grid.st-inc>*{grid-area:auto !important;display:block !important}
+  .grid.st-inc .icone{margin:0 0 16px !important}
   @media(max-width:767px){.grid.st-inc{grid-template-columns:1fr 1fr}.st-card{text-align:center}.st-card li{text-align:left}.st-selo{align-self:center}}
 </style>
