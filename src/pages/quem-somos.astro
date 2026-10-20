@@ -1,7 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
-import SobreHero from '../components/SobreHero.astro';
+import HeroCrescimento from '../components/HeroCrescimento.astro';
+import { waLink } from '../config';
 import { config } from '../config';
 const schema = [{ '@context': 'https://schema.org', '@type': 'AboutPage', name: 'Quem somos · MKT Center', about: { '@type': 'ProfessionalService', name: config.nome, foundingDate: '2013' } }];
 const valores: [string, string, string][] = [
@@ -15,9 +16,18 @@ const etapas = ['Entendemos o seu negócio e o seu cliente', 'Mostramos a propos
 <Base title="Quem Somos: Agência Digital desde 2013 | MKT Center"
   description="Desde 2013 criando lojas virtuais, sites, redes sociais, vídeos e hoje aplicativos e sistemas com IA. Conheça a história da MKT Center."
   schema={schema}>
-  <SobreHero />
+  <HeroCrescimento
+    rotulo="Quem somos · MKT Center"
+    linhas={[['Evoluindo']]}
+    destaque="desde 2013."
+    texto="Nascemos em 2013 criando lojas virtuais, quando o e-commerce no Brasil ainda engatinhava. Evoluímos para sites institucionais, redes sociais, vídeos e web design, e hoje usamos inteligência artificial para criar de sites a aplicativos e sistemas complexos."
+    bt1={['Quero conversar', waLink('Olá! Conheci a história da MKT Center e quero conversar sobre um projeto.')]}
+    bt2={['Ver portfólio', '/portfolio/']}
+    numeros={[[2013, '', 'ano de fundação'], [10, '+', 'anos no digital'], ['IA', '', 'no dia a dia']]}
+    rolarPara="#valores"
+  />
 
-  <section class="alt">
+  <section class="alt servicos-topo" id="valores">
     <div class="wrap">
       <span class="eyebrow">No que acreditamos</span>
       <h2>Nossos valores</h2>
