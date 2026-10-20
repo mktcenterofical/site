@@ -1,0 +1,26 @@
+---
+import Base from '../layouts/Base.astro';
+import { config } from '../config';
+---
+<Base title="Termos de Uso | MKT Center"
+  description="Termos de uso do site da MKT Center: regras de uso, orçamentos, propriedade intelectual e contato."
+  crumbs={[['Termos de uso', '/termos/']]}>
+  <section style="padding-top:8px">
+    <div class="wrap prose">
+      <h1>Termos de uso</h1>
+      <p><span class="pendente">Rascunho — revisar com advogado antes de publicar oficialmente.</span></p>
+      <h2>Sobre este site</h2>
+      <p>Este site apresenta os serviços da {config.nome}: criação de sites, lojas virtuais, aplicativos, vídeos, redes sociais, tráfego pago e marketing político.</p>
+      <h2>Orçamentos e preços</h2>
+      <p>Os valores mostrados são preços iniciais ("a partir de"). O valor final de cada projeto é definido em proposta enviada antes do início do trabalho.</p>
+      <h2>Uso do conteúdo</h2>
+      <p>Textos, imagens, logos e layouts deste site pertencem à {config.nome} ou aos seus clientes e não podem ser copiados sem autorização.</p>
+      <h2>Links externos</h2>
+      <p>Os links para sites de clientes e redes sociais levam a páginas de terceiros, que têm regras próprias.</p>
+      <h2>Privacidade</h2>
+      <p>O uso dos seus dados segue a nossa <a href="/politica-de-privacidade/">política de privacidade</a>.</p>
+      <h2>Contato</h2>
+      <p>Dúvidas sobre estes termos: {config.email}. {config.nome}, CNPJ {config.cnpj}.</p>
+    </div>
+  </section>
+</Base>
