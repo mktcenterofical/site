@@ -16,8 +16,14 @@ const planos: Plano[] = [
 <section class="pr" id="precos">
   <div class="wrap">
     <span class="eyebrow">Investimento</span>
-    <h2>Nossos preços</h2>
-    <div class="pr-grid">
+    <div class="pr-cab">
+      <h2>Nossos preços</h2>
+      <div class="pr-setas">
+        <button type="button" class="pr-seta" data-dir="-1" aria-label="Planos anteriores"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+        <button type="button" class="pr-seta" data-dir="1" aria-label="Próximos planos"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+      </div>
+    </div>
+    <div class="pr-grid" tabindex="0" aria-label="Planos (role para o lado)">
       {planos.map((p) => (
         <article class="pr-card">
           <div class="pr-top"><h3>{p.nome}</h3>{p.selo && <span class="pr-selo">{p.selo}</span>}</div>
@@ -40,10 +46,20 @@ const planos: Plano[] = [
 </section>
 
 <style>
-  .pr-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:16px}
-  .pr-card{flex:1 1 100%}
-  @media(min-width:640px){.pr-card{flex:0 1 calc(50% - 8px)}}
-  @media(min-width:1024px){.pr-card{flex:0 1 calc(25% - 12px)}}
+  .pr-cab{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:24px}
+  .pr-cab h2{margin:0}
+  .pr-setas{display:flex;gap:8px}
+  .pr-seta{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;transition:border-color .2s,background .2s,opacity .2s}
+  .pr-seta:hover{border-color:#ff6900;background:rgba(255,105,0,.15)}
+  .pr-seta:disabled{opacity:.3;cursor:default;border-color:rgba(255,255,255,.18);background:transparent}
+  /* carrossel numa linha: rola para o lado (com o dedo, o mouse ou as setas) */
+  .pr-grid{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:4px 2px 18px;scrollbar-width:thin;scrollbar-color:#ff6900 rgba(255,255,255,.06);outline:none}
+  .pr-grid::-webkit-scrollbar{height:6px}
+  .pr-grid::-webkit-scrollbar-thumb{background:#ff6900;border-radius:9px}
+  .pr-grid::-webkit-scrollbar-track{background:rgba(255,255,255,.06);border-radius:9px}
+  .pr-card{flex:0 0 calc((100% - 48px) / 4);scroll-snap-align:start}
+  @media(max-width:1023px){.pr-card{flex-basis:calc((100% - 16px) / 2)}}
+  @media(max-width:639px){.pr-card{flex-basis:84%}.pr-cab{justify-content:center}.pr-setas{display:none}}
   .pr-card{position:relative;display:flex;flex-direction:column;padding:24px 22px 22px;border-radius:var(--radius-lg);overflow:hidden;text-align:left;
     background:linear-gradient(160deg,rgba(28,29,33,.85),rgba(12,13,15,.9));border:1px solid rgba(255,255,255,.08);box-shadow:0 20px 40px -24px rgba(0,0,0,.9);transition:border-color .3s,transform .3s}
   .pr-card::before{content:'';position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,#ff6900,#ffb35c)}
@@ -65,3 +81,19 @@ const planos: Plano[] = [
   .pr-ghost:hover{border-color:#fff}
   @media(max-width:767px){.pr-card{text-align:left}.pr-fim .btn{width:100%}}
 </style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('#precos').forEach((sec) => {
+    const trilho = sec.querySelector<HTMLElement>('.pr-grid')!;
+    const setas = sec.querySelectorAll<HTMLButtonElement>('.pr-seta');
+    const passo = () => (trilho.querySelector<HTMLElement>('.pr-card')?.offsetWidth || 280) + 16;
+    setas.forEach((b) => b.addEventListener('click', () => trilho.scrollBy({ left: Number(b.dataset.dir) * passo(), behavior: 'smooth' })));
+    const atualizar = () => {
+      setas[0].disabled = trilho.scrollLeft < 4;
+      setas[1].disabled = trilho.scrollLeft + trilho.clientWidth >= trilho.scrollWidth - 4;
+    };
+    trilho.addEventListener('scroll', atualizar, { passive: true });
+    addEventListener('resize', atualizar);
+    atualizar();
+  });
+</script>
