@@ -1,0 +1,70 @@
+---
+// Depoimentos em carrossel minimalista: texto, estrelas discretas, nome e empresa. Setas e arraste.
+// ATENÇÃO: depoimentos FICTÍCIOS (demo) — trocar por depoimentos reais e autorizados antes do lançamento.
+const depoimentos: [string, string, string][] = [
+  ['Depois do site novo, os pedidos pelo WhatsApp dobraram em dois meses.', 'Carla Mendes', 'Padaria Pão Dourado'],
+  ['A loja virtual ficou simples de usar. Hoje vendo para o estado inteiro.', 'Rafael Souza', 'RS Moda Fitness'],
+  ['Equipe atenciosa, entregou no prazo e explicou tudo sem complicação.', 'Dra. Juliana Prado', 'Clínica Sorriso Vivo'],
+  ['Começamos a aparecer no Google em poucas semanas. O telefone não para.', 'Marcos Lima', 'Auto Peças Central'],
+  ['O sistema de agendamento organizou a rotina do salão inteiro.', 'Fernanda Alves', 'Studio Bella'],
+  ['As campanhas trouxeram clientes da região que nem sabiam que existíamos.', 'Paulo Nogueira', 'Pousada Recanto'],
+  ['Posts e vídeos com a nossa cara. O Instagram ganhou vida.', 'Aline Castro', 'Doce Arte Confeitaria'],
+  ['Atendimento rápido pelo WhatsApp e resultado que dá para medir.', 'Ricardo Teixeira', 'RT Engenharia'],
+];
+---
+<section class="dp" id="depoimentos">
+  <div class="wrap">
+    <div class="dp-cab">
+      <div><span class="eyebrow">Clientes</span><h2>Depoimentos</h2></div>
+      <div class="dp-setas">
+        <button type="button" class="dp-seta" data-dir="-1" aria-label="Depoimentos anteriores"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6" /></svg></button>
+        <button type="button" class="dp-seta" data-dir="1" aria-label="Próximos depoimentos"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6" /></svg></button>
+      </div>
+    </div>
+    <div class="dp-trilho" tabindex="0" aria-label="Depoimentos (role para o lado)">
+      {depoimentos.map(([t, n, e]) => (
+        <figure class="dp-item">
+          <span class="dp-est" aria-label="5 estrelas">★★★★★</span>
+          <blockquote>{t}</blockquote>
+          <figcaption><b>{n}</b><span>{e}</span></figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .dp-cab{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:24px}
+  .dp-cab h2{margin:0}
+  .dp-setas{display:flex;gap:8px}
+  .dp-seta{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:transparent;color:#c3c8cf;cursor:pointer;transition:border-color .2s,color .2s,opacity .2s}
+  .dp-seta:hover{border-color:#ff6900;color:#fff}
+  .dp-seta:disabled{opacity:.3;cursor:default;border-color:rgba(255,255,255,.14)}
+  .dp-trilho{display:flex;gap:0;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;outline:none;border-block:1px solid rgba(255,255,255,.07)}
+  .dp-trilho::-webkit-scrollbar{display:none}
+  .dp-item{flex:0 0 calc(100% / 3);scroll-snap-align:start;margin:0;padding:26px 28px;display:flex;flex-direction:column;gap:14px;border-left:1px solid rgba(255,255,255,.07);text-align:left}
+  .dp-item:first-child{border-left:0;padding-left:0}
+  .dp-est{color:#ff8a24;font-size:12px;letter-spacing:.2em}
+  .dp-item blockquote{margin:0;font-size:17px;line-height:1.5;color:#e4e6ea}
+  .dp-item figcaption{margin-top:auto;display:flex;flex-direction:column;font-size:13px}
+  .dp-item figcaption b{color:#fff;font-weight:700}
+  .dp-item figcaption span{color:#8a9099}
+  @media(max-width:1023px){.dp-item{flex-basis:50%}}
+  @media(max-width:639px){.dp-item{flex-basis:88%;padding:22px 18px}.dp-item:first-child{padding-left:0}.dp-cab{justify-content:center;text-align:center}.dp-setas{display:none}}
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('#depoimentos').forEach((sec) => {
+    const trilho = sec.querySelector<HTMLElement>('.dp-trilho')!;
+    const setas = sec.querySelectorAll<HTMLButtonElement>('.dp-seta');
+    const passo = () => sec.querySelector<HTMLElement>('.dp-item')?.offsetWidth || 300;
+    setas.forEach((b) => b.addEventListener('click', () => trilho.scrollBy({ left: Number(b.dataset.dir) * passo(), behavior: 'smooth' })));
+    const atualizar = () => {
+      setas[0].disabled = trilho.scrollLeft < 4;
+      setas[1].disabled = trilho.scrollLeft + trilho.clientWidth >= trilho.scrollWidth - 4;
+    };
+    trilho.addEventListener('scroll', atualizar, { passive: true });
+    addEventListener('resize', atualizar);
+    atualizar();
+  });
+</script>

@@ -6,6 +6,7 @@ import SecaoConexao from '../components/SecaoConexao.astro';
 import FaixaInvisivel from '../components/FaixaInvisivel.astro';
 import PorQue from '../components/PorQue.astro';
 import Precos from '../components/Precos.astro';
+import Depoimentos from '../components/Depoimentos.astro';
 import Secao10s from '../components/Secao10s.astro';
 import Icon from '../components/Icon.astro';
 import FaixaCTA from '../components/FaixaCTA.astro';
@@ -45,25 +46,7 @@ const schema = [
   <PorQue />
   <Precos />
 
-  <section class="alt">
-    <div class="wrap">
-      <span class="eyebrow">Clientes</span>
-      <h2>Depoimentos</h2>
-      <div class="grid">
-        {[
-          ['Depois do site novo, os pedidos pelo WhatsApp dobraram em dois meses.', 'Carla Mendes', 'Padaria Pão Dourado'],
-          ['A loja virtual ficou simples de usar. Hoje vendo para o estado inteiro.', 'Rafael Souza', 'RS Moda Fitness'],
-          ['Equipe atenciosa, entregou no prazo e explicou tudo sem complicação.', 'Dra. Juliana Prado', 'Clínica Sorriso Vivo'],
-        ].map(([t, n, e]) => (
-          <figure class="card">
-            <div style="color:var(--orange);display:flex;gap:2px" role="img" aria-label="5 estrelas">{[1,2,3,4,5].map(() => <Icon name="star" size={18} />)}</div>
-            <blockquote style="margin-top:10px">“{t}”</blockquote>
-            <figcaption style="margin-top:14px;color:var(--prata)"><strong style="color:var(--papel)">{n}</strong> · {e}</figcaption>
-          </figure>
-        ))}
-      </div>
-    </div>
-  </section>
+  <Depoimentos />
 
   <FaixaCTA />
 </Base>
