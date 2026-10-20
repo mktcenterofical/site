@@ -1,0 +1,121 @@
+---
+// Seção "Por que a MKT Center": 6 cards em 2 linhas de 3, no estilo editorial escuro com objeto 3D
+// brilhante (em SVG), ondas de luz laranja, número, título, descrição e link.
+const itens = [
+  { n: '01', t: 'Estratégia', d: 'Clareza para decidir o que realmente importa no seu digital.', l: 'Como trabalhamos', h: '/quem-somos/', arte: 'alvo' },
+  { n: '02', t: 'Celular primeiro', d: 'Tudo pensado para a tela onde está o seu cliente.', l: 'Ver projetos', h: '/portfolio/', arte: 'celular' },
+  { n: '03', t: 'Contato direto', d: 'Cada página leva o visitante para o seu WhatsApp.', l: 'Falar agora', h: '/contato/', arte: 'chat' },
+  { n: '04', t: 'Google', d: 'Sites rápidos e prontos para aparecer nas buscas.', l: 'Tráfego e SEO', h: '/trafego-e-seo/', arte: 'lupa' },
+  { n: '05', t: 'Resultado medido', d: 'Você sabe de onde vem cada contato e cada venda.', l: 'Ver resultados', h: '/portfolio/', arte: 'grafico' },
+  { n: '06', t: 'Posicionamento', d: 'Uma agência para todo o digital, sem jargão.', l: 'Conheça a MKT', h: '/quem-somos/', arte: 'cavalo' },
+];
+---
+<section class="pq" id="por-que">
+  <div class="wrap">
+    <div class="pq-cab">
+      <span class="pq-ey">[ Por que a MKT Center ]</span>
+      <h2 class="pq-tit">Direção que leva o seu negócio ao <em>resultado.</em></h2>
+    </div>
+    <div class="pq-grid">
+      {itens.map((it, i) => (
+        <article class="pq-card" style={`--d:${i * .08}s`}>
+          <div class="pq-arte" aria-hidden="true">
+            <svg class="pq-onda" viewBox="0 0 400 200" preserveAspectRatio="none">
+              <path d="M-10 150 C 80 110, 140 170, 220 130 S 360 90, 410 120" />
+              <path d="M-10 165 C 90 135, 160 185, 240 150 S 370 115, 410 140" />
+              <path d="M-10 120 C 70 140, 170 95, 260 120 S 360 150, 410 100" />
+            </svg>
+            <svg class="pq-obj" viewBox="0 0 200 200">
+              <defs>
+                <radialGradient id={`m${i}`} cx=".35" cy=".3" r=".9"><stop offset="0" stop-color="#5a5e66" /><stop offset=".5" stop-color="#1e2024" /><stop offset="1" stop-color="#050506" /></radialGradient>
+                <radialGradient id={`b${i}`} cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ff6900" stop-opacity=".55" /><stop offset="1" stop-color="#ff6900" stop-opacity="0" /></radialGradient>
+                <filter id={`g${i}`} x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="3" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
+              </defs>
+              <ellipse cx="100" cy="178" rx="62" ry="10" fill={`url(#b${i})`} />
+              {it.arte === 'alvo' && <g>
+                <circle cx="100" cy="100" r="66" fill={`url(#m${i})`} stroke="#3a3d44" />
+                <circle cx="100" cy="100" r="48" fill="#0b0c0e" stroke="#4a4e57" stroke-width="3" />
+                <circle cx="100" cy="100" r="30" fill={`url(#m${i})`} stroke="#4a4e57" stroke-width="3" />
+                <circle cx="100" cy="100" r="13" fill="#ff6900" filter={`url(#g${i})`} />
+                <line x1="100" y1="100" x2="168" y2="40" stroke="#c9cdd2" stroke-width="4" stroke-linecap="round" />
+                <path d="M168 40 l-4 -14 l14 4 z M160 48 l14 -4 l-4 14 z" fill="#ff6900" filter={`url(#g${i})`} />
+              </g>}
+              {it.arte === 'celular' && <g transform="rotate(-12 100 100)">
+                <rect x="62" y="22" width="76" height="150" rx="16" fill={`url(#m${i})`} stroke="#5a5e66" stroke-width="2" />
+                <rect x="68" y="30" width="64" height="134" rx="11" fill="#0b0c0e" />
+                <rect x="88" y="34" width="24" height="6" rx="3" fill="#050506" />
+                <rect x="76" y="52" width="48" height="30" rx="5" fill="#ff6900" opacity=".85" filter={`url(#g${i})`} />
+                <rect x="76" y="90" width="40" height="5" rx="2.5" fill="#4a4e57" /><rect x="76" y="100" width="28" height="5" rx="2.5" fill="#33363d" />
+                <rect x="76" y="140" width="48" height="12" rx="6" fill="#ff8a24" filter={`url(#g${i})`} />
+              </g>}
+              {it.arte === 'chat' && <g>
+                <path d="M40 60 a22 22 0 0 1 22 -22 h76 a22 22 0 0 1 22 22 v40 a22 22 0 0 1 -22 22 h-50 l-28 24 v-24 a22 22 0 0 1 -20 -22 z" fill={`url(#m${i})`} stroke="#5a5e66" stroke-width="2" />
+                <circle cx="76" cy="80" r="8" fill="#ff6900" filter={`url(#g${i})`} /><circle cx="100" cy="80" r="8" fill="#ff8a24" filter={`url(#g${i})`} /><circle cx="124" cy="80" r="8" fill="#ffb35c" filter={`url(#g${i})`} />
+              </g>}
+              {it.arte === 'lupa' && <g>
+                <line x1="128" y1="128" x2="166" y2="166" stroke="#2a2c31" stroke-width="18" stroke-linecap="round" />
+                <line x1="128" y1="128" x2="166" y2="166" stroke="#5a5e66" stroke-width="5" stroke-linecap="round" />
+                <circle cx="92" cy="92" r="50" fill={`url(#m${i})`} stroke="#5a5e66" stroke-width="3" />
+                <circle cx="92" cy="92" r="38" fill="#0b0c0e" />
+                <path d="M92 116 c-6-10-18-16-18-30 a18 18 0 0 1 36 0 c0 14-12 20-18 30z" fill="#ff6900" filter={`url(#g${i})`} /><circle cx="92" cy="86" r="6" fill="#0b0c0e" />
+              </g>}
+              {it.arte === 'grafico' && <g>
+                <rect x="40" y="110" width="26" height="56" rx="4" fill={`url(#m${i})`} stroke="#4a4e57" />
+                <rect x="76" y="86" width="26" height="80" rx="4" fill={`url(#m${i})`} stroke="#4a4e57" />
+                <rect x="112" y="62" width="26" height="104" rx="4" fill={`url(#m${i})`} stroke="#4a4e57" />
+                <rect x="148" y="34" width="26" height="132" rx="4" fill="#ff6900" filter={`url(#g${i})`} />
+                <polyline points="44,100 88,74 124,54 168,22" fill="none" stroke="#ffb35c" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" filter={`url(#g${i})`} />
+              </g>}
+              {it.arte === 'cavalo' && <g>
+                <path d="M62 170 h76 l-6 -16 h-64 z" fill={`url(#m${i})`} stroke="#4a4e57" />
+                <path d="M74 154 c-2 -26 10 -40 18 -54 c-14 4 -26 0 -30 -10 c10 -2 18 -14 22 -30 c6 -22 26 -34 48 -28 c4 -8 12 -12 16 -10 c-2 6 -2 10 2 16 c14 22 14 56 -2 84 c-4 10 -4 20 -2 32 z" fill={`url(#m${i})`} stroke="#5a5e66" stroke-width="2" />
+                <circle cx="118" cy="56" r="4" fill="#ff6900" filter={`url(#g${i})`} />
+                <path d="M136 50 c10 22 8 52 -6 78" fill="none" stroke="#ff6900" stroke-width="3" stroke-linecap="round" filter={`url(#g${i})`} />
+              </g>}
+            </svg>
+          </div>
+          <div class="pq-txt">
+            <span class="pq-n">{it.n}</span>
+            <h3>{it.t}</h3>
+            <p>{it.d}</p>
+            <a href={it.h}>{it.l} <span aria-hidden="true">↗</span></a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .pq-cab{text-align:center;margin-bottom:36px}
+  .pq-ey{display:block;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#aeb4bd;margin-bottom:12px}
+  .pq-tit{font-family:var(--ff-txt);text-transform:none;font-weight:500;font-size:clamp(26px,3vw,38px);line-height:1.15;letter-spacing:-.01em;margin:0;color:#fff}
+  .pq-tit em{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:400;color:#ffb35c}
+
+  .pq-grid{display:grid;gap:16px;grid-template-columns:1fr}
+  @media(min-width:640px){.pq-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:1024px){.pq-grid{grid-template-columns:repeat(3,1fr)}}
+
+  .pq-card{position:relative;display:flex;flex-direction:column;border-radius:var(--radius-lg);overflow:hidden;text-align:left;
+    background:radial-gradient(120% 80% at 50% 30%,#17181c,#0a0b0d 70%);border:1px solid rgba(255,255,255,.07);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 20px 40px -24px rgba(0,0,0,.9);transition:border-color .3s,transform .3s}
+  .pq-card:hover{border-color:rgba(255,105,0,.45);transform:translateY(-4px)}
+  .pq-arte{position:relative;aspect-ratio:16/10}
+  .pq-onda{position:absolute;inset:0;width:100%;height:100%}
+  .pq-onda path{fill:none;stroke:#ff4d00;stroke-width:1.6;stroke-linecap:round;filter:drop-shadow(0 0 4px #ff6900);opacity:.7;stroke-dasharray:420;animation:pq-onda 6s ease-in-out infinite alternate}
+  .pq-onda path:nth-child(2){opacity:.4;animation-delay:-2s}
+  .pq-onda path:nth-child(3){opacity:.25;animation-delay:-4s}
+  @keyframes pq-onda{from{stroke-dashoffset:60}to{stroke-dashoffset:-60}}
+  .pq-obj{position:absolute;left:50%;top:50%;width:62%;height:auto;transform:translate(-50%,-50%);filter:drop-shadow(0 14px 18px rgba(0,0,0,.8));transition:transform .5s cubic-bezier(.2,.8,.2,1);animation:pq-boia 5s ease-in-out infinite;animation-delay:var(--d)}
+  .pq-card:hover .pq-obj{transform:translate(-50%,-50%) scale(1.06) rotate(-3deg)}
+  @keyframes pq-boia{50%{translate:0 -6px}}
+
+  .pq-txt{padding:4px 24px 24px}
+  .pq-n{display:block;font-size:13px;font-weight:700;color:#ff6900;letter-spacing:.06em;margin-bottom:6px}
+  .pq-txt h3{font-family:var(--ff-txt);text-transform:none;font-weight:500;font-size:24px;line-height:1.1;letter-spacing:-.01em;color:#fff}
+  .pq-txt p{margin-top:8px;color:#aeb4bd;font-size:14px;line-height:22px}
+  .pq-txt a{display:inline-flex;align-items:center;gap:6px;margin-top:16px;padding-bottom:3px;border-bottom:1px solid rgba(255,255,255,.35);color:#fff;font-size:13px;font-weight:600;text-decoration:none;transition:border-color .2s,color .2s}
+  .pq-txt a:hover{color:#ffb35c;border-color:#ff6900}
+  @media(max-width:767px){.pq-txt{text-align:center}}
+  @media (prefers-reduced-motion: reduce){.pq-onda path,.pq-obj{animation:none}}
+</style>
