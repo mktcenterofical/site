@@ -12,13 +12,11 @@ const itens = [
 ---
 <section class="pq" id="por-que">
   <div class="wrap">
-    <div class="pq-cab">
-      <span class="pq-ey">[ Por que a MKT Center ]</span>
-      <h2 class="pq-tit">Direção que leva o seu negócio ao <em>resultado.</em></h2>
-    </div>
+    <span class="eyebrow">Por que a MKT Center</span>
+    <h2>Feito para dar resultado</h2>
     <div class="pq-grid">
       {itens.map((it, i) => (
-        <article class="pq-card" style={`--d:${i * .08}s`}>
+        <article class="pq-card card" style={`--d:${i * .08}s`}>
           <div class="pq-arte" aria-hidden="true">
             <svg class="pq-onda" viewBox="0 0 400 200" preserveAspectRatio="none">
               <path d="M-10 150 C 80 110, 140 170, 220 130 S 360 90, 410 120" />
@@ -87,34 +85,30 @@ const itens = [
 </section>
 
 <style>
-  .pq-cab{text-align:center;margin-bottom:36px}
-  .pq-ey{display:block;font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:#aeb4bd;margin-bottom:12px}
-  .pq-tit{font-family:var(--ff-txt);text-transform:none;font-weight:500;font-size:clamp(26px,3vw,38px);line-height:1.15;letter-spacing:-.01em;margin:0;color:#fff}
-  .pq-tit em{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:400;color:#ffb35c}
 
   .pq-grid{display:grid;gap:16px;grid-template-columns:1fr}
-  @media(min-width:640px){.pq-grid{grid-template-columns:repeat(2,1fr)}}
-  @media(min-width:1024px){.pq-grid{grid-template-columns:repeat(3,1fr)}}
+  @media(min-width:640px){.pq-grid{grid-template-columns:repeat(3,1fr)}}
+  @media(min-width:1024px){.pq-grid{grid-template-columns:repeat(6,1fr);gap:12px}}
 
-  .pq-card{position:relative;display:flex;flex-direction:column;border-radius:var(--radius-lg);overflow:hidden;text-align:left;
+  .pq-card{position:relative;display:flex;flex-direction:column;padding:0;border-radius:var(--radius-lg);overflow:hidden;text-align:left;
     background:radial-gradient(120% 80% at 50% 30%,#17181c,#0a0b0d 70%);border:1px solid rgba(255,255,255,.07);
     box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 20px 40px -24px rgba(0,0,0,.9);transition:border-color .3s,transform .3s}
   .pq-card:hover{border-color:rgba(255,105,0,.45);transform:translateY(-4px)}
-  .pq-arte{position:relative;aspect-ratio:16/10}
+  .pq-arte{position:relative;aspect-ratio:1/.8}
   .pq-onda{position:absolute;inset:0;width:100%;height:100%}
   .pq-onda path{fill:none;stroke:#ff4d00;stroke-width:1.6;stroke-linecap:round;filter:drop-shadow(0 0 4px #ff6900);opacity:.7;stroke-dasharray:420;animation:pq-onda 6s ease-in-out infinite alternate}
   .pq-onda path:nth-child(2){opacity:.4;animation-delay:-2s}
   .pq-onda path:nth-child(3){opacity:.25;animation-delay:-4s}
   @keyframes pq-onda{from{stroke-dashoffset:60}to{stroke-dashoffset:-60}}
-  .pq-obj{position:absolute;left:50%;top:50%;width:62%;height:auto;transform:translate(-50%,-50%);filter:drop-shadow(0 14px 18px rgba(0,0,0,.8));transition:transform .5s cubic-bezier(.2,.8,.2,1);animation:pq-boia 5s ease-in-out infinite;animation-delay:var(--d)}
+  .pq-obj{position:absolute;left:50%;top:50%;width:72%;height:auto;transform:translate(-50%,-50%);filter:drop-shadow(0 14px 18px rgba(0,0,0,.8));transition:transform .5s cubic-bezier(.2,.8,.2,1);animation:pq-boia 5s ease-in-out infinite;animation-delay:var(--d)}
   .pq-card:hover .pq-obj{transform:translate(-50%,-50%) scale(1.06) rotate(-3deg)}
   @keyframes pq-boia{50%{translate:0 -6px}}
 
-  .pq-txt{padding:4px 24px 24px}
-  .pq-n{display:block;font-size:13px;font-weight:700;color:#ff6900;letter-spacing:.06em;margin-bottom:6px}
-  .pq-txt h3{font-family:var(--ff-txt);text-transform:none;font-weight:500;font-size:24px;line-height:1.1;letter-spacing:-.01em;color:#fff}
-  .pq-txt p{margin-top:8px;color:#aeb4bd;font-size:14px;line-height:22px}
-  .pq-txt a{display:inline-flex;align-items:center;gap:6px;margin-top:16px;padding-bottom:3px;border-bottom:1px solid rgba(255,255,255,.35);color:#fff;font-size:13px;font-weight:600;text-decoration:none;transition:border-color .2s,color .2s}
+  .pq-txt{padding:0 16px 18px}
+  .pq-n{display:block;font-size:12px;font-weight:700;color:#ff6900;letter-spacing:.06em;margin-bottom:4px}
+  .pq-txt h3{font-size:20px;line-height:1.05;color:#fff}
+  .pq-txt p{margin-top:6px;color:#aeb4bd;font-size:13px;line-height:19px}
+  .pq-txt a{display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding-bottom:3px;border-bottom:1px solid rgba(255,255,255,.35);color:#fff;font-size:13px;font-weight:600;text-decoration:none;transition:border-color .2s,color .2s}
   .pq-txt a:hover{color:#ffb35c;border-color:#ff6900}
   @media(max-width:767px){.pq-txt{text-align:center}}
   @media (prefers-reduced-motion: reduce){.pq-onda path,.pq-obj{animation:none}}
