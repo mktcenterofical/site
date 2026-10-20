@@ -1,6 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-import FaixaCTA from '../components/FaixaCTA.astro';
 import { servicos, type Servico } from '../data/servicos';
 import { config, waLink } from '../config';
 
@@ -80,5 +79,4 @@ if (s.faq.length) schema.push({
     </section>
   )}
 
-  <FaixaCTA msg={msg} />
 </Base>

@@ -1,6 +1,5 @@
 ---
 import Base from '../layouts/Base.astro';
-import FaixaCTA from '../components/FaixaCTA.astro';
 import Icon from '../components/Icon.astro';
 import { config } from '../config';
 const schema = [{ '@context': 'https://schema.org', '@type': 'AboutPage', name: 'Quem somos · MKT Center', about: { '@type': 'ProfessionalService', name: config.nome } }];
@@ -51,7 +50,6 @@ const etapas = ['Entendemos o seu negócio e o seu cliente', 'Mostramos a propos
     </div>
   </section>
 
-  <FaixaCTA titulo="Vamos fazer o seu negócio crescer?" />
 </Base>
 
 <style>

@@ -2,7 +2,6 @@
 // Página de Vídeos (edição e criação de vídeos). Mesmo modelo das páginas de serviço.
 // Preços: edição a partir de R$ 50 por vídeo (valor informado pelo cliente).
 import Base from '../layouts/Base.astro';
-import FaixaCTA from '../components/FaixaCTA.astro';
 import { config, waLink } from '../config';
 const msg = 'Olá! Vim pelo site e quero um orçamento de vídeos.';
 const itens = ['Edição de Reels, Stories e TikTok', 'Cortes, legendas e trilha', 'Vídeos para anúncios', 'Vídeos institucionais', 'Formato certo para cada rede', 'Entrega pronta para postar'];
@@ -64,5 +63,4 @@ const schema = [
     </div>
   </section>
 
-  <FaixaCTA msg={msg} />
 </Base>
