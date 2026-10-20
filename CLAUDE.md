@@ -35,6 +35,8 @@ Objetivo do site: gerar contatos pelo WhatsApp e pelo formulário.
 ## Regras técnicas
 - Layout próprio por dispositivo (bloco "LAYOUTS POR DISPOSITIVO" no fim de global.css): celular < 768 (menu off-canvas, conteúdo centralizado e empilhado, botões largos), tablet 768–1023 (2 colunas, hero centralizado), notebook 1024–1439 (3 colunas), desktop ≥ 1440 (tipografia maior, serviços em 5 colunas). O hero começa no aparelho de quem visita. /#menu abre o menu no celular
 - Todo o conteúdo (cabeçalho, seções, rodapé) usa a largura total de 1140px (.wrap)
+- Serviços da home em bento grid (todos os dispositivos): 2 cards em cima à esquerda, 2 empilhados à direita, Marketing Político comprido embaixo (celular: 2+2+1)
+- Faixa CTA "Vamos tirar seu projeto do papel?": texto e botões numa linha do tablet em diante
 - Home por dispositivo: bloco "HOME — MODELO POR DISPOSITIVO" no fim de global.css (celular: serviços e Por que em 2 colunas, faixa Invisível reorganizada; tablet: seções empilhadas e centralizadas, serviços 3+2; notebook/desktop: 2 colunas lado a lado). Testar com puppeteer em 390/820/1280/1600
 - Espaçamento entre seções igual no site todo: section{padding:var(--sec) 0}, --sec 40px (32px no celular). Exceção: hero → seção 1 = 20px
 - Sem frameworks de JS no cliente; JS mínimo (exceção: Three.js ~130 KB gzip só nos objetos 3D da seção Por que, carregado sob demanda)

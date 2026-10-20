@@ -20,5 +20,6 @@ const { titulo = 'Vamos tirar seu projeto do papel?', msg } = Astro.props;
   .escuro{background:var(--carbon);color:#fff}
   .escuro:hover{transform:translateY(-1px)}
   .contorno{border-color:var(--on-orange);color:var(--on-orange)}
-  @media(min-width:900px){.in{grid-template-columns:1fr auto}}
+  @media(min-width:768px){.in{grid-template-columns:1fr auto}.acoes{flex-wrap:nowrap}.faixa .btn{white-space:nowrap}}
+  @media(min-width:768px) and (max-width:1023px){h2{font-size:22px}.faixa .btn{padding:8px 16px;font-size:13px}}
 </style>

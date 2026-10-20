@@ -222,3 +222,20 @@ body{background:var(--carbon)}
   .sv-grid>:nth-child(4){grid-column:2 / span 2}
   .sv-grid>:nth-child(5){grid-column:4 / span 2}
 }
+
+/* Serviços em bento grid (todos os dispositivos): 2 cards em cima, 2 empilhados à direita, 1 comprido embaixo */
+.grid.sv-grid{grid-template-columns:repeat(3,1fr);grid-template-rows:auto auto;grid-template-areas:"a b c" "e e d";gap:16px}
+.grid.sv-grid>*{grid-column:auto;min-height:0}
+.grid.sv-grid>:nth-child(1){grid-area:a}
+.grid.sv-grid>:nth-child(2){grid-area:b}
+.grid.sv-grid>:nth-child(3){grid-area:c}
+.grid.sv-grid>:nth-child(4){grid-area:d}
+.grid.sv-grid>:nth-child(5){grid-area:e;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto auto;column-gap:22px;align-content:center;align-items:center;text-align:left}
+.grid.sv-grid>:nth-child(5) .icone{grid-row:1 / span 3;align-self:center}
+.grid.sv-grid>:nth-child(5) .mais{white-space:nowrap}
+.grid.sv-grid>:nth-child(5) .icone{margin:0;flex:none}
+@media(max-width:767px){
+  .grid.sv-grid{grid-template-columns:1fr 1fr;grid-template-areas:"a b" "c d" "e e";gap:10px}
+  .grid.sv-grid>:nth-child(5){display:block;text-align:center}
+  .grid.sv-grid>:nth-child(5) .icone{margin:0 auto 10px}
+}
