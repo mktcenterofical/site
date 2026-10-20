@@ -1,15 +1,14 @@
 ---
-// Faixa laranja escura em largura total: "Invisível não vende." em duas colunas, faixa baixa.
-// Esquerda: título e subtítulo. Direita: no mesmo estilo da seção 2 — caixa 3D (em cima a busca do Google
-// com a sua empresa em 1º, embaixo o mapa com o pin) ligada por linhas de luz a cartões de vidro 3D.
-// Dados fictícios — ver CLAUDE.md.
-const cartoes = [
-  { id: 'busca', titulo: 'Google', sub: '1º na busca local', y: 110 },
-  { id: 'mapa', titulo: 'Google Maps', sub: '48 rotas esta semana', y: 300 },
-  { id: 'aval', titulo: 'Avaliações', sub: '4,9 · 312 clientes', y: 490 },
+// Faixa laranja escura em largura total, baixa: "Invisível não vende." em duas colunas.
+// Esquerda: título e subtítulo. Direita: composição sobre presença local (inspirada em referência do cliente,
+// sem copiar): perfil da empresa no Google, avaliações de clientes, cartão do site e um celular 3D com o
+// perfil e a distribuição das notas. Nomes, notas e números são fictícios — ver CLAUDE.md.
+const barras = [86, 9, 3, 1, 1];
+const google = '<path fill="#4285F4" d="M21.6 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.3z"/><path fill="#34A853" d="M12 22c2.7 0 5-.9 6.6-2.4l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0 0 12 22z"/><path fill="#FBBC05" d="M6.4 14c-.2-.6-.3-1.3-.3-2s.1-1.4.3-2V7.4H3.1A10 10 0 0 0 2 12c0 1.6.4 3.1 1.1 4.6z"/><path fill="#EA4335" d="M12 5.9c1.5 0 2.8.5 3.8 1.5l2.9-2.9A10 10 0 0 0 3.1 7.4L6.4 10C7.2 7.7 9.4 5.9 12 5.9z"/>';
+const avaliacoes: [string, string, string][] = [
+  ['pessoa2', 'Lucas M.', 'Atendimento excelente e entrega no prazo.'],
+  ['pessoa1', 'Juliana R.', 'Achei pelo Google e virei cliente fiel.'],
 ];
-const saidas = [190, 260, 330, 400, 470];
-const fios = cartoes.flatMap((c, i) => [saidas[i], saidas[i + 2]].map((y0, k) => `M565 ${y0} C 625 ${y0}, ${615 + k * 20} ${c.y + (k ? 16 : -16)}, 690 ${c.y + (k ? 16 : -16)}`));
 ---
 <section class="iv" id="invisivel" aria-labelledby="iv-tit">
   <div class="wrap iv-in">
@@ -20,55 +19,44 @@ const fios = cartoes.flatMap((c, i) => [saidas[i], saidas[i + 2]].map((y0, k) =>
     </div>
 
     <div class="iv-arte" aria-hidden="true">
-      <svg class="iv-fios" viewBox="0 0 1000 600" preserveAspectRatio="none">
-        <defs>
-          <linearGradient id="iv-g" x1="0" x2="1"><stop offset="0" stop-color="#ff6900" stop-opacity=".25" /><stop offset=".55" stop-color="#ffd3a3" /><stop offset="1" stop-color="#ffb35c" /></linearGradient>
-          <filter id="iv-brilho" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="5" /></filter>
-        </defs>
-        {fios.map((d) => (
-          <g>
-            <path d={d} fill="none" stroke="#ff6900" stroke-opacity=".6" stroke-width="9" filter="url(#iv-brilho)" />
-            <path d={d} fill="none" stroke="url(#iv-g)" stroke-width="2.6" />
-            <path class="iv-pulso" d={d} fill="none" stroke="#fff4e6" stroke-width="3.4" stroke-linecap="round" pathLength="100" />
-          </g>
-        ))}
-        {cartoes.map((c) => [-16, 16].map((o) => <polygon points={`688,${c.y + o - 8} 702,${c.y + o} 688,${c.y + o + 8}`} fill="#ffd3a3" />))}
-      </svg>
-
-      <!-- caixa 3D -->
-      <div class="iv-caixa">
-        <div class="iv-modulo iv-mod-busca">
-          <div class="iv-bar"><i></i><i></i><i></i><span>google.com</span></div>
-          <div class="iv-q"><span class="iv-g-ic">G</span><span class="iv-digita">padaria perto de mim</span></div>
-          <div class="iv-res iv-res-1"><b>1</b><div><strong>Padaria Pão Dourado</strong><small>★★★★★ 4,9 · Aberto agora</small></div><em>Ligar</em></div>
-          <div class="iv-res"><b>2</b><div><i></i><i class="c"></i></div></div>
-        </div>
-        <div class="iv-modulo iv-mod-mapa">
-          <svg viewBox="0 0 400 160" preserveAspectRatio="none">
-            <rect width="400" height="160" fill="#121316" />
-            <g fill="none" stroke="#2c2f35" stroke-width="7" stroke-linecap="round"><path d="M-10 40 C 100 30, 220 60, 410 45" /><path d="M-10 115 C 120 125, 260 100, 410 120" /><path d="M80 -10 C 90 60, 70 110, 95 170" /><path d="M300 -10 C 290 70, 320 110, 300 170" /></g>
-            <g fill="none" stroke="#42464e" stroke-width="1.2"><path d="M-10 40 C 100 30, 220 60, 410 45" /><path d="M-10 115 C 120 125, 260 100, 410 120" /><path d="M80 -10 C 90 60, 70 110, 95 170" /><path d="M300 -10 C 290 70, 320 110, 300 170" /></g>
-            <path class="iv-rota" d="M95 160 C 100 120, 170 110, 200 80" fill="none" stroke="#ff8a24" stroke-width="4" stroke-linecap="round" />
-            <circle cx="200" cy="80" r="46" fill="#ff6900" opacity=".18" />
-          </svg>
-          <div class="iv-pin"><svg viewBox="0 0 64 84"><path d="M32 82 C 26 70 4 52 4 31 A 28 28 0 1 1 60 31 C 60 52 38 70 32 82 Z" fill="#ff7a1a" stroke="#ffe2bf" stroke-width="3" /><circle cx="32" cy="31" r="11" fill="#3a1500" /></svg></div>
-        </div>
+      <!-- perfil no Google -->
+      <div class="iv-card iv-perfil">
+        <svg class="iv-g" viewBox="0 0 24 24" set:html={google} />
+        <b>Sua Empresa</b>
+        <div class="iv-nota"><strong>4,9</strong><span class="iv-est">{[0, 1, 2, 3, 4].map((k) => <i style={`animation-delay:${k * .12}s`}>★</i>)}</span><em>(312)</em></div>
+        <small>Empresa local · <i>Aberto agora</i></small>
       </div>
 
-      <!-- cartões de vidro -->
-      {cartoes.map((c) => (
-        <div class="iv-vidro" style={`top:${(c.y - 82) / 6}%`}>
-          <div class="iv-vidro-top">
-            <span class={`iv-ic iv-${c.id}`}>
-              {c.id === 'busca' && <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M21.6 12.2c0-.7-.1-1.4-.2-2H12v3.8h5.4a4.6 4.6 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.3z" /><path fill="#34A853" d="M12 22c2.7 0 5-.9 6.6-2.4l-3.2-2.5c-.9.6-2 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3.1v2.6A10 10 0 0 0 12 22z" /><path fill="#FBBC05" d="M6.4 14c-.2-.6-.3-1.3-.3-2s.1-1.4.3-2V7.4H3.1A10 10 0 0 0 2 12c0 1.6.4 3.1 1.1 4.6z" /><path fill="#EA4335" d="M12 5.9c1.5 0 2.8.5 3.8 1.5l2.9-2.9A10 10 0 0 0 3.1 7.4L6.4 10C7.2 7.7 9.4 5.9 12 5.9z" /></svg>}
-              {c.id === 'mapa' && <svg viewBox="0 0 24 24"><path d="M12 22s7-6.6 7-12a7 7 0 0 0-14 0c0 5.4 7 12 7 12z" fill="#ea4335" /><circle cx="12" cy="10" r="2.6" fill="#fff" /></svg>}
-              {c.id === 'aval' && <svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.8-4.9 4.5 1.3 6.6L12 17.2l-5.9 3.3 1.3-6.6-4.9-4.5 6.6-.8z" fill="#fbbc04" /></svg>}
-            </span>
-            <b>{c.titulo}<small>{c.sub}</small></b>
-          </div>
-          <i class="iv-l"></i><i class="iv-l l2"></i>
+      <!-- avaliações -->
+      {avaliacoes.map(([foto, nome, txt], k) => (
+        <div class={`iv-card iv-aval a${k + 1}`}>
+          <img src={`/mock/${foto}.webp`} alt="" width="96" height="96" loading="lazy" decoding="async" />
+          <div><b>{nome}</b><span class="iv-est-p">★★★★★</span><small>{txt}</small></div>
         </div>
       ))}
+
+      <!-- site -->
+      <div class="iv-card iv-site">
+        <div class="iv-url"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="5" y="11" width="14" height="10" rx="2" /><path d="M8 11V8a4 4 0 0 1 8 0v3" /></svg>suaempresa.com.br</div>
+        <b>Soluções que geram <span>resultado</span></b>
+        <small>Serviços, cases e contato em um clique.</small>
+        <em>Saiba mais</em>
+      </div>
+
+      <!-- celular 3D -->
+      <div class="iv-cel">
+        <div class="iv-cel-tela">
+          <span class="iv-ilha"></span>
+          <div class="iv-cel-top"><b>Sua Empresa</b><small><span>★★★★★</span> 4,9 (312)</small><small class="v">Empresa local · Aberto</small></div>
+          <div class="iv-foto"><img src="/mock/padaria.webp" alt="" width="640" height="400" loading="lazy" decoding="async" /></div>
+          <div class="iv-btns"><span>Ligar</span><span>Rota</span><span>Site</span></div>
+          <div class="iv-abas"><span>Visão geral</span><span class="on">Avaliações</span><span>Fotos</span></div>
+          <div class="iv-dist">
+            <div class="iv-dist-n"><b>4,9</b><span>★★★★★</span></div>
+            <div class="iv-dist-b">{barras.map((v, i) => <div><em>{5 - i}</em><i><u style={`--v:${v}%;animation-delay:${.3 + i * .12}s`}></u></i></div>)}</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -78,70 +66,75 @@ const fios = cartoes.flatMap((c, i) => [saidas[i], saidas[i + 2]].map((y0, k) =>
     background:radial-gradient(600px 380px at 75% 50%,rgba(255,140,40,.3),transparent 70%),linear-gradient(150deg,#a84300 0%,#8a3500 50%,#5a2200 100%)}
   .iv-in{display:grid;gap:32px;align-items:center}
   @media(min-width:1024px){.iv-in{grid-template-columns:.8fr 1.2fr;gap:40px}}
-
   .iv-tit{display:flex;flex-direction:column;margin:0;font-size:clamp(52px,6vw,92px);line-height:.86;letter-spacing:-.02em;color:#fff}
   .iv-tit2{background:linear-gradient(180deg,#fff1de,#ffc993);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
   .iv-traco{display:block;width:64px;height:3px;margin:20px 0 16px;border-radius:3px;background:#fff1de}
   .iv-sub{font-size:19px;line-height:1.45;color:rgba(255,241,222,.86);max-width:32ch}
   .iv-sub b{color:#fff}
 
-  /* ---------- ilustração no estilo da seção 2 ---------- */
-  .iv-arte{position:relative;width:100%;max-width:640px;margin:0 auto;aspect-ratio:1000/600;container-type:inline-size;perspective:1400px;text-align:left}
-  .iv-fios{position:absolute;inset:0;width:100%;height:100%;overflow:visible;z-index:1}
-  .iv-pulso{stroke-dasharray:7 93;animation:iv-flui 2.4s linear infinite}
-  .iv-fios g:nth-child(2n) .iv-pulso{animation-delay:-1.2s}
-  @keyframes iv-flui{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+  /* ---------- composição ---------- */
+  .iv-arte{position:relative;width:100%;max-width:640px;margin:0 auto;aspect-ratio:1000/620;container-type:inline-size;perspective:1400px;text-align:left}
+  .iv-card{position:absolute;border-radius:1.8cqw;background:linear-gradient(160deg,rgba(28,29,33,.94),rgba(14,15,17,.94));border:1px solid rgba(255,255,255,.1);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 2.4cqw 5cqw -1.5cqw rgba(30,8,0,.85);color:#fff;animation:iv-entra .9s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes iv-entra{from{opacity:0;transform:translateY(2cqw)}to{opacity:1;transform:none}}
+  .iv-est{color:#fbbc04;letter-spacing:.08em}
+  .iv-est i{font-style:normal;display:inline-block;animation:iv-estrela .5s ease-out both}
+  @keyframes iv-estrela{from{opacity:0;transform:scale(.3)}to{opacity:1;transform:none}}
 
-  .iv-caixa{position:absolute;left:3%;top:6%;width:53%;height:88%;z-index:2;transform:rotateY(14deg) rotateX(3deg);transform-origin:left center;display:flex;flex-direction:column;gap:1.4cqw}
-  .iv-modulo{position:relative;border-radius:1.8cqw;padding:1.4cqw;background:linear-gradient(160deg,#2b2d33,#141519 40%,#0b0c0e);border:1px solid rgba(255,255,255,.08);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.14),inset 0 0 0 .5cqw #0d0e11,0 0 0 1px rgba(255,180,110,.45),0 0 3cqw -1cqw rgba(255,105,0,.7),0 3cqw 4cqw -2cqw rgba(30,8,0,.9)}
-  .iv-modulo::before{content:'';position:absolute;top:1.2cqw;bottom:-1.2cqw;right:-2.4cqw;width:2.4cqw;border-radius:0 1.4cqw 1.4cqw 0;background:linear-gradient(90deg,#1a1b1f,#050506);transform:skewY(-30deg);transform-origin:left top;box-shadow:inset -1px 0 0 rgba(255,138,36,.4)}
-  .iv-modulo::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,#ff8a24 20%,#ffd3a3 50%,#ff8a24 80%,transparent);box-shadow:0 0 1.6cqw #ff6900}
+  .iv-perfil{left:0;top:0;width:40%;display:flex;flex-direction:column;align-items:center;gap:.8cqw;padding:2.2cqw 1.6cqw;text-align:center}
+  .iv-g{width:5cqw;height:5cqw}
+  .iv-perfil b{font-size:2.5cqw;font-weight:600}
+  .iv-nota{display:flex;align-items:center;gap:.8cqw;font-size:2.1cqw}
+  .iv-nota em{font-style:normal;color:#aeb4bd}
+  .iv-perfil small{font-size:1.6cqw;color:#aeb4bd}
+  .iv-perfil small i{font-style:normal;color:#3ddc97}
 
-  .iv-mod-busca{height:56%;display:flex;flex-direction:column;gap:1.2cqw}
-  .iv-bar{display:flex;align-items:center;gap:.7cqw}
-  .iv-bar i{width:1.3cqw;height:1.3cqw;border-radius:50%;background:#ff6900}
-  .iv-bar i:nth-child(2){background:#ff8a24}.iv-bar i:nth-child(3){background:#3a3d44}
-  .iv-bar span{margin-left:1.2cqw;flex:1;padding:.3cqw 1.4cqw;border-radius:99px;background:#1d1f24;color:#8a9099;font-size:1.3cqw}
-  .iv-q{flex:none;min-height:4.4cqw;line-height:1.2;display:flex;align-items:center;gap:1.2cqw;padding:1cqw 1.6cqw;border-radius:99px;background:#f3f1ee;color:#1b1d22;font-size:1.8cqw;font-weight:600;white-space:nowrap;overflow:hidden}
-  .iv-g-ic{flex:none;display:grid;place-items:center;width:2.6cqw;height:2.6cqw;border-radius:50%;background:#fff;color:#4285f4;font-weight:800;font-size:1.6cqw;box-shadow:0 0 0 1px #e1e3e7}
-  .iv-digita{display:inline-block;overflow:hidden;animation:iv-digita 7s steps(20) infinite}
-  @keyframes iv-digita{0%,6%{max-width:0}40%,88%{max-width:100%}100%{max-width:0}}
-  .iv-res{display:flex;align-items:center;gap:1.2cqw;padding:1cqw 1.2cqw;border-radius:1.2cqw;background:#101114;border:1px solid #23262c}
-  .iv-res b{flex:none;display:grid;place-items:center;width:2.8cqw;height:2.8cqw;border-radius:.8cqw;background:#23262c;color:#8a9099;font-size:1.5cqw}
-  .iv-res div{flex:1;display:flex;flex-direction:column;gap:.5cqw;min-width:0}
-  .iv-res i{display:block;height:.9cqw;width:80%;border-radius:9px;background:#33363d}
-  .iv-res i.c{width:50%}
-  .iv-res-1{border-color:rgba(255,138,36,.6);background:linear-gradient(90deg,rgba(255,105,0,.18),rgba(255,105,0,.04));box-shadow:0 0 2cqw -.5cqw rgba(255,105,0,.6)}
-  .iv-res-1 b{background:#ff6900;color:#141006}
-  .iv-res-1 strong{font-size:1.75cqw;white-space:nowrap}
-  .iv-res-1 small{font-size:1.3cqw;color:#ffc993;white-space:nowrap}
-  .iv-res-1 em{flex:none;font-style:normal;padding:.5cqw 1.2cqw;border-radius:99px;background:#ff6900;color:#141006;font-weight:800;font-size:1.3cqw}
+  .iv-aval{left:0;width:40%;display:flex;align-items:center;gap:1.4cqw;padding:1.3cqw 1.6cqw}
+  .iv-aval.a1{top:47%;animation-delay:.15s}
+  .iv-aval.a2{top:72%;animation-delay:.3s}
+  .iv-aval img{width:5.6cqw;height:5.6cqw;border-radius:50%;object-fit:cover;flex:none;box-shadow:0 0 0 .3cqw rgba(255,138,36,.5)}
+  .iv-aval div{display:flex;flex-direction:column;gap:.2cqw;min-width:0}
+  .iv-aval b{font-size:1.7cqw}
+  .iv-est-p{color:#fbbc04;font-size:1.5cqw;letter-spacing:.08em}
+  .iv-aval small{font-size:1.4cqw;color:#c3c8cf;line-height:1.3}
 
-  .iv-mod-mapa{flex:1;padding:1cqw;overflow:visible}
-  .iv-mod-mapa svg{display:block;width:100%;height:100%;border-radius:1.2cqw}
-  .iv-rota{stroke-dasharray:6 4;animation:iv-traco 1.2s linear infinite}
-  @keyframes iv-traco{to{stroke-dashoffset:-20}}
-  .iv-pin{position:absolute;left:50%;top:50%;width:4.6cqw;transform:translate(-50%,-100%);filter:drop-shadow(0 0 1.6cqw rgba(255,138,36,.9));animation:iv-pula 2.4s ease-in-out infinite}
-  .iv-pin svg{display:block;width:100%}
-  @keyframes iv-pula{50%{transform:translate(-50%,-100%) translateY(-.8cqw)}}
+  .iv-site{left:43%;top:44%;width:29%;display:flex;flex-direction:column;gap:1cqw;padding:1.6cqw;animation-delay:.2s}
+  .iv-url{display:flex;align-items:center;gap:.6cqw;padding:.5cqw 1cqw;border-radius:99px;background:#1d1f24;color:#8a9099;font-size:1.25cqw}
+  .iv-url svg{width:1.5cqw;height:1.5cqw}
+  .iv-site b{font-size:2.3cqw;line-height:1.15}
+  .iv-site b span{color:#ff8a24}
+  .iv-site small{font-size:1.35cqw;color:#aeb4bd}
+  .iv-site em{align-self:flex-start;font-style:normal;padding:.6cqw 1.4cqw;border-radius:99px;background:#ff6900;color:#141006;font-weight:800;font-size:1.3cqw}
 
-  /* cartões de vidro 3D */
-  .iv-vidro{position:absolute;right:0;width:30%;z-index:3;display:flex;flex-direction:column;gap:1cqw;padding:1.5cqw 1.6cqw;border-radius:1.8cqw;color:#fff;
-    background:linear-gradient(150deg,rgba(255,255,255,.18),rgba(255,255,255,.05) 45%,rgba(255,138,36,.1));
-    border:1px solid rgba(255,255,255,.28);backdrop-filter:blur(12px) saturate(140%);-webkit-backdrop-filter:blur(12px) saturate(140%);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 -1px 0 rgba(255,180,110,.5),.8cqw .8cqw 0 -.2cqw rgba(40,12,0,.7),.8cqw .8cqw 0 0 rgba(255,180,110,.4),0 0 4cqw -1cqw rgba(255,105,0,.6),0 3cqw 5cqw -2cqw rgba(30,8,0,.9);
-    transform:rotateY(-16deg);transform-origin:left center;animation:iv-flutua 5s ease-in-out infinite}
-  .iv-vidro::before{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.25),rgba(255,255,255,0) 35%)}
-  .iv-vidro:nth-of-type(2n){animation-delay:-2.5s}
-  @keyframes iv-flutua{50%{transform:rotateY(-16deg) translateY(-1cqw)}}
-  .iv-vidro-top{display:flex;align-items:center;gap:1.1cqw}
-  .iv-vidro-top b{display:flex;flex-direction:column;font-size:1.8cqw;line-height:1.15}
-  .iv-vidro-top small{font-size:1.3cqw;font-weight:500;color:#ffe2bf}
-  .iv-ic{display:grid;place-items:center;width:4cqw;height:4cqw;border-radius:1.1cqw;flex:none;background:#fff;box-shadow:0 0 2cqw rgba(255,105,0,.35)}
-  .iv-ic svg{width:2.5cqw;height:2.5cqw}
-  .iv-l{display:block;flex:none;height:.8cqw;width:88%;border-radius:9px;background:rgba(255,255,255,.25)}
-  .iv-l.l2{width:64%;height:1cqw;background:linear-gradient(90deg,#ff6900,#ffd3a3);box-shadow:0 0 1.2cqw rgba(255,105,0,.7)}
+  /* celular realista inclinado */
+  .iv-cel{position:absolute;right:1%;top:-2%;width:27%;aspect-ratio:9/18.6;padding:.7cqw;border-radius:4.4cqw;
+    background:linear-gradient(135deg,#d7d9dc,#7b7f86 30%,#c9ccd0 55%,#5d6168);
+    box-shadow:0 0 0 .25cqw #2b2d31 inset,2cqw 3cqw 5cqw -1cqw rgba(20,6,0,.85),0 0 5cqw -1cqw rgba(255,138,36,.6);
+    transform:rotateY(-20deg) rotateZ(5deg);animation:iv-cel 6s ease-in-out infinite}
+  @keyframes iv-cel{50%{transform:rotateY(-20deg) rotateZ(5deg) translateY(-1.2cqw)}}
+  .iv-cel-tela{position:relative;height:100%;border-radius:3.8cqw;border:.7cqw solid #050506;overflow:hidden;background:#141518;display:flex;flex-direction:column;gap:.7cqw;padding:3.2cqw 1.2cqw 1.2cqw;font-size:1.1cqw}
+  .iv-cel-tela::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(118deg,rgba(255,255,255,.14),rgba(255,255,255,0) 40%)}
+  .iv-ilha{position:absolute;left:50%;top:.8cqw;width:36%;height:1.9cqw;transform:translateX(-50%);border-radius:99px;background:#050506}
+  .iv-cel-top b{display:block;font-size:1.6cqw}
+  .iv-cel-top small{display:block;color:#aeb4bd}
+  .iv-cel-top small span{color:#fbbc04}
+  .iv-cel-top small.v{color:#3ddc97}
+  .iv-foto{height:17%;flex:none;border-radius:1cqw;overflow:hidden}
+  .iv-foto img{display:block;width:100%;height:100%;object-fit:cover}
+  .iv-btns{display:grid;grid-template-columns:repeat(3,1fr);gap:.6cqw}
+  .iv-btns span{text-align:center;padding:.35cqw 0;border-radius:99px;border:1px solid #2f3238;color:#8ab4f8;font-size:1.15cqw}
+  .iv-abas{display:flex;justify-content:space-between;border-bottom:1px solid #2a2d33;font-size:1.1cqw;color:#8a9099}
+  .iv-abas span{padding-bottom:.5cqw}
+  .iv-abas .on{color:#8ab4f8;box-shadow:inset 0 -2px #8ab4f8}
+  .iv-dist{display:grid;grid-template-columns:auto 1fr;gap:1cqw;align-items:center}
+  .iv-dist-n b{display:block;font-size:2.8cqw;line-height:1}
+  .iv-dist-n span{color:#fbbc04;font-size:1cqw}
+  .iv-dist-b{display:grid;gap:.35cqw}
+  .iv-dist-b div{display:flex;align-items:center;gap:.6cqw}
+  .iv-dist-b em{font-style:normal;font-size:1cqw;color:#8a9099;width:.8cqw}
+  .iv-dist-b i{flex:1;height:.6cqw;border-radius:9px;background:#2a2d33;overflow:hidden}
+  .iv-dist-b u{display:block;height:100%;width:var(--v);border-radius:inherit;background:#fbbc04;animation:iv-barra 1.2s cubic-bezier(.2,.8,.2,1) both}
+  @keyframes iv-barra{from{width:0}}
 
   @media(max-width:767px){
     .iv-txt{display:flex;flex-direction:column;align-items:center;text-align:center}
@@ -149,5 +142,5 @@ const fios = cartoes.flatMap((c, i) => [saidas[i], saidas[i + 2]].map((y0, k) =>
     .iv-traco{margin-inline:auto}
     .iv-sub{font-size:17px}
   }
-  @media (prefers-reduced-motion: reduce){.iv-pulso,.iv-vidro,.iv-pin,.iv-rota,.iv-digita{animation:none}}
+  @media (prefers-reduced-motion: reduce){.iv-card,.iv-est i,.iv-cel,.iv-dist-b u{animation:none}}
 </style>
