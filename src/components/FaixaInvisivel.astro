@@ -1,134 +1,228 @@
 ---
-// Faixa laranja escura em largura total (abaixo da seção 2): "Invisível não vende."
-// Centro: mapa em perspectiva com um pin brilhante, ondas de radar e uma lupa que varre a cidade.
-// Em volta: os 4 pilares (Google, redes, sites, anúncios). Embaixo: frase final e CTA.
+// Faixa laranja escura em largura total: "Invisível não vende." em duas colunas.
+// Esquerda: título, pilares, frase final e CTA. Direita: cidade isométrica 3D (SVG gerado aqui) onde uma
+// busca no Google percorre um caminho de luz até a sua loja, destacada com pin, anel e ícones de contato.
 import { waLink } from '../config';
 import Icon from './Icon.astro';
+
 const pilares: [string, string, string][] = [
   ['globe', 'Google', 'Sua empresa no topo das buscas'],
   ['message', 'Redes sociais', 'Conexão real com o seu público'],
   ['smartphone', 'Sites que convertem', 'Mais visitas, mais clientes'],
   ['trending', 'Anúncios online', 'Resultados que crescem'],
 ];
+
+// ---------- projeção isométrica ----------
+const S = 64, OX = 430, OY = 190;
+const P = (x: number, y: number, z = 0) => [OX + (x - y) * S * 0.866, OY + (x + y) * S * 0.5 - z * S] as const;
+const pts = (...p: (readonly [number, number])[]) => p.map(([a, b]) => `${a.toFixed(1)},${b.toFixed(1)}`).join(' ');
+type Bloco = { x: number; y: number; w: number; d: number; h: number; loja?: boolean; pessoa?: boolean };
+const blocos: Bloco[] = [
+  { x: 0.4, y: 0.4, w: 1, d: 1, h: 0.9, pessoa: true }, { x: 2.2, y: 0.2, w: 1.2, d: 0.9, h: 1.4 },
+  { x: 4.2, y: 0.3, w: 1, d: 1.1, h: 0.7, pessoa: true }, { x: 0.3, y: 2.2, w: 0.9, d: 1.2, h: 1.2 },
+  { x: 1.9, y: 2.0, w: 1, d: 1, h: 0.6, pessoa: true }, { x: 5.6, y: 1.8, w: 1, d: 1, h: 1.1 },
+  { x: 0.5, y: 4.1, w: 1.1, d: 1, h: 0.7, pessoa: true }, { x: 2.2, y: 4.9, w: 1, d: 1, h: 0.5 },
+  { x: 5.6, y: 5.0, w: 1, d: 0.9, h: 0.5, pessoa: true }, { x: 6.2, y: 0.2, w: 0.8, d: 0.9, h: 1.6 },
+  { x: 3.6, y: 2.9, w: 1.5, d: 1.4, h: 0.85, loja: true },
+].sort((a, b) => a.x + a.y + a.w + a.d - (b.x + b.y + b.w + b.d));
+
+const faces = (b: Bloco) => ({
+  topo: pts(P(b.x, b.y, b.h), P(b.x + b.w, b.y, b.h), P(b.x + b.w, b.y + b.d, b.h), P(b.x, b.y + b.d, b.h)),
+  frente: pts(P(b.x, b.y + b.d), P(b.x + b.w, b.y + b.d), P(b.x + b.w, b.y + b.d, b.h), P(b.x, b.y + b.d, b.h)),
+  lado: pts(P(b.x + b.w, b.y), P(b.x + b.w, b.y + b.d), P(b.x + b.w, b.y + b.d, b.h), P(b.x + b.w, b.y, b.h)),
+  topoC: P(b.x + b.w / 2, b.y + b.d / 2, b.h),
+});
+const loja = blocos.find((b) => b.loja)!;
+const L = faces(loja);
+// vitrine e toldo na face da frente da loja
+const vitrine = pts(P(loja.x + 0.15, loja.y + loja.d), P(loja.x + loja.w - 0.15, loja.y + loja.d), P(loja.x + loja.w - 0.15, loja.y + loja.d, 0.55), P(loja.x + 0.15, loja.y + loja.d, 0.55));
+const listras = Array.from({ length: 6 }, (_, i) => {
+  const a = loja.x + (loja.w / 6) * i, b = a + loja.w / 6;
+  return { cor: i % 2 ? '#2a1a12' : '#ff7a1a', p: pts(P(a, loja.y + loja.d, 0.68), P(b, loja.y + loja.d, 0.68), P(b, loja.y + loja.d + 0.28, 0.56), P(a, loja.y + loja.d + 0.28, 0.56)) };
+});
+const centroLoja = P(loja.x + loja.w / 2, loja.y + loja.d / 2);
+const pinLoja = P(loja.x + loja.w / 2, loja.y + loja.d / 2, loja.h);
+const chao = pts(P(-0.5, -0.5), P(7.5, -0.5), P(7.5, 6.5), P(-0.5, 6.5));
+const ruas = [1.7, 3.3, 5.1].flatMap((v) => [[P(v, -0.5), P(v, 6.5)], [P(-0.5, v), P(7.5, v)]]);
+// caminho de luz: da barra de busca até a porta da loja
+const porta = P(loja.x + loja.w / 2, loja.y + loja.d + 0.4);
+const caminho = `M150 104 C 160 200, 250 150, 270 230 S 330 330, 300 360 S ${porta[0] - 60} ${porta[1] - 10}, ${porta[0]} ${porta[1]}`;
+const icones = [
+  { id: 'tel', x: pinLoja[0] - 170, y: pinLoja[1] - 170 },
+  { id: 'doc', x: pinLoja[0] - 62, y: pinLoja[1] - 230 },
+  { id: 'pin', x: pinLoja[0] + 62, y: pinLoja[1] - 230 },
+  { id: 'wa', x: pinLoja[0] + 170, y: pinLoja[1] - 170 },
+];
 ---
 <section class="iv" id="invisivel" aria-labelledby="iv-tit">
-  <div class="iv-ruido" aria-hidden="true"></div>
+  <div class="iv-grade" aria-hidden="true"></div>
   <div class="wrap iv-in">
-    <h2 id="iv-tit" class="iv-tit"><span>Invisível</span><span class="iv-tit2">não vende.</span></h2>
-    <i class="iv-traco" aria-hidden="true"></i>
-    <p class="iv-sub">Faça sua empresa <b>ser encontrada.</b></p>
-
-    <div class="iv-palco">
+    <div class="iv-txt">
+      <h2 id="iv-tit" class="iv-tit"><span>Invisível</span><span class="iv-tit2">não vende.</span></h2>
+      <i class="iv-traco" aria-hidden="true"></i>
+      <p class="iv-sub">Apareça para quem <b>já está procurando</b> o que você vende.</p>
       <ul class="iv-pilares">
         {pilares.map(([i, t, d]) => (
-          <li><span class="iv-ic"><Icon name={i} size={22} /></span><div><b>{t}</b><small>{d}</small></div></li>
+          <li><span class="iv-ic"><Icon name={i} size={20} /></span><div><b>{t}</b><small>{d}</small></div></li>
         ))}
       </ul>
-
-      <div class="iv-arte" aria-hidden="true">
-        <div class="iv-mapa">
-          <svg viewBox="0 0 400 400" preserveAspectRatio="none">
-            <g stroke="rgba(255,236,214,.22)" stroke-width="1.4" fill="none">
-              {[40, 90, 140, 190, 240, 290, 340].map((v) => <><line x1={v} y1="0" x2={v} y2="400" /><line x1="0" y1={v} x2="400" y2={v} /></>)}
-            </g>
-            <g fill="rgba(70,20,0,.55)">
-              <rect x="45" y="45" width="40" height="40" rx="4" /><rect x="145" y="95" width="40" height="40" rx="4" /><rect x="245" y="45" width="40" height="90" rx="4" />
-              <rect x="295" y="195" width="90" height="40" rx="4" /><rect x="45" y="245" width="90" height="40" rx="4" /><rect x="195" y="295" width="40" height="90" rx="4" />
-              <rect x="95" y="145" width="40" height="40" rx="4" /><rect x="295" y="295" width="40" height="40" rx="4" />
-            </g>
-            <path class="iv-rota" d="M20 380 L20 290 L140 290 L140 190 L200 190" fill="none" stroke="#fff1de" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
-          </svg>
-          <span class="iv-onda"></span><span class="iv-onda o2"></span><span class="iv-onda o3"></span>
-        </div>
-
-        <div class="iv-pin">
-          <svg viewBox="0 0 100 130"><defs>
-            <linearGradient id="iv-pin-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff4e6" /><stop offset=".35" stop-color="#ffb35c" /><stop offset="1" stop-color="#ff6900" /></linearGradient>
-          </defs>
-            <path d="M50 4C25 4 6 23 6 47c0 31 44 77 44 77s44-46 44-77C94 23 75 4 50 4z" fill="url(#iv-pin-g)" stroke="#fff6ea" stroke-width="2" />
-            <circle cx="50" cy="46" r="16" fill="#8a3500" />
-          </svg>
-        </div>
-
-        <div class="iv-lupa"><span></span></div>
-
-        <div class="iv-tag t1"><span class="ok">★★★★★</span>4,9 no Google</div>
-        <div class="iv-tag t2"><Icon name="message" size={14} />Novo contato</div>
-        <div class="iv-tag t3"><Icon name="trending" size={14} />+212% visitas</div>
+      <div class="iv-fim">
+        <p>Mais visibilidade. Mais oportunidades. <b>Mais vendas.</b></p>
+        <a class="iv-cta" href={waLink('Olá! Quero que minha empresa seja encontrada na internet.')} target="_blank" rel="noopener">Quero ser encontrado <span aria-hidden="true">↗</span></a>
       </div>
     </div>
 
-    <div class="iv-fim">
-      <p><span>Mais visibilidade.</span> <span>Mais oportunidades.</span> <span class="iv-forte">Mais vendas.</span></p>
-      <a class="iv-cta" href={waLink('Olá! Quero que minha empresa seja encontrada na internet.')} target="_blank" rel="noopener">Quero ser encontrado <span aria-hidden="true">↗</span></a>
+    <div class="iv-arte" aria-hidden="true">
+      <svg viewBox="0 0 860 760">
+        <defs>
+          <linearGradient id="iv-topo" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4a4d55" /><stop offset="1" stop-color="#2a2c31" /></linearGradient>
+          <linearGradient id="iv-frente" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#26282d" /><stop offset="1" stop-color="#121316" /></linearGradient>
+          <linearGradient id="iv-lado" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1a1b1f" /><stop offset="1" stop-color="#0b0c0e" /></linearGradient>
+          <linearGradient id="iv-vitrine" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe2b8" /><stop offset=".5" stop-color="#ffb35c" /><stop offset="1" stop-color="#ff7a1a" /></linearGradient>
+          <linearGradient id="iv-pin-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff2e0" /><stop offset=".4" stop-color="#ffab4d" /><stop offset="1" stop-color="#ff6900" /></linearGradient>
+          <radialGradient id="iv-chao" cx=".55" cy=".55" r=".7"><stop offset="0" stop-color="#2a1a10" /><stop offset="1" stop-color="#0d0d0f" /></radialGradient>
+          <filter id="iv-glow" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="6" result="b" /><feMerge><feMergeNode in="b" /><feMergeNode in="SourceGraphic" /></feMerge></filter>
+          <filter id="iv-sombra" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#000" flood-opacity=".6" /></filter>
+        </defs>
+
+        <!-- chão e ruas -->
+        <polygon points={chao} fill="url(#iv-chao)" />
+        <g stroke="#3a2a20" stroke-width="10" stroke-linecap="round">
+          {ruas.map(([a, b]) => <line x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} />)}
+        </g>
+        <g stroke="#ff8a24" stroke-opacity=".18" stroke-width="1.2">
+          {ruas.map(([a, b]) => <line x1={a[0]} y1={a[1]} x2={b[0]} y2={b[1]} />)}
+        </g>
+
+        <!-- anel em volta da loja -->
+        <ellipse class="iv-anel" cx={centroLoja[0]} cy={centroLoja[1] + 18} rx="120" ry="62" fill="none" stroke="#ff8a24" stroke-width="5" filter="url(#iv-glow)" />
+        <ellipse class="iv-anel a2" cx={centroLoja[0]} cy={centroLoja[1] + 18} rx="120" ry="62" fill="none" stroke="#ffb35c" stroke-width="2" />
+
+        <!-- caminho de luz da busca até a loja -->
+        <path d={caminho} fill="none" stroke="#ff6900" stroke-width="12" stroke-opacity=".35" filter="url(#iv-glow)" />
+        <path d={caminho} fill="none" stroke="#ffb35c" stroke-width="4" stroke-linecap="round" />
+        <path class="iv-fluxo" d={caminho} fill="none" stroke="#fff4e6" stroke-width="5" stroke-linecap="round" pathLength="100" />
+
+        <!-- prédios -->
+        {blocos.map((b) => {
+          const f = faces(b);
+          return (
+            <g filter={b.loja ? undefined : 'url(#iv-sombra)'}>
+              <polygon points={f.lado} fill={b.loja ? '#3a2416' : 'url(#iv-lado)'} />
+              <polygon points={f.frente} fill={b.loja ? '#2b1a10' : 'url(#iv-frente)'} />
+              <polygon points={f.topo} fill={b.loja ? '#5a3a24' : 'url(#iv-topo)'} stroke="rgba(255,255,255,.06)" />
+              {!b.loja && <polygon points={f.frente} fill="url(#iv-frente)" opacity="0" />}
+            </g>
+          );
+        })}
+
+        <!-- vitrine e toldo da loja -->
+        <polygon points={vitrine} fill="url(#iv-vitrine)" filter="url(#iv-glow)" />
+        {listras.map((l) => <polygon points={l.p} fill={l.cor} />)}
+
+        <!-- pins de pessoas (buscas na região) -->
+        {blocos.filter((b) => b.pessoa).map((b, i) => {
+          const [x, y] = faces(b).topoC;
+          return (
+            <g class="iv-pessoa" style={`animation-delay:${-i * .7}s`} transform={`translate(${x} ${y - 6})`}>
+              <path d="M0 0 C -6 -10 -18 -16 -18 -30 A 18 18 0 1 1 18 -30 C 18 -16 6 -10 0 0 Z" fill="#2b2d33" stroke="#4a4d55" stroke-width="1.5" />
+              <circle cx="0" cy="-34" r="5" fill="#8d9198" /><path d="M-9 -20 a9 7 0 0 1 18 0 z" fill="#8d9198" />
+            </g>
+          );
+        })}
+
+        <!-- ícones de contato saindo da loja -->
+        <g stroke="#ffb35c" stroke-width="2" stroke-dasharray="3 6" stroke-linecap="round" class="iv-pontilhado">
+          {icones.map((c) => <line x1={c.x} y1={c.y + 28} x2={pinLoja[0]} y2={pinLoja[1] - 60} />)}
+        </g>
+        {icones.map((c, i) => (
+          <g class="iv-icone" style={`animation-delay:${-i * .5}s`} transform={`translate(${c.x} ${c.y})`}>
+            <circle r="30" fill="#141519" stroke="#ff8a24" stroke-width="2.5" filter="url(#iv-glow)" />
+            <g fill="none" stroke="#fff1de" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              {c.id === 'tel' && <path d="M-9 -10 c2-3 5-3 6 0 l2 5 c1 2 0 3-2 4 c2 4 4 6 8 8 c1-2 2-3 4-2 l5 2 c3 1 3 4 0 6 c-4 3-9 2-15-3 c-6-6-8-12-8-20z" />}
+              {c.id === 'doc' && <><rect x="-9" y="-12" width="18" height="24" rx="2" /><path d="M-5 -5 h10 M-5 0 h10 M-5 5 h6" /></>}
+              {c.id === 'pin' && <><path d="M0 13 C -4 7 -10 2 -10 -4 A 10 10 0 1 1 10 -4 C 10 2 4 7 0 13 Z" /><circle cx="0" cy="-4" r="3.5" /></>}
+              {c.id === 'wa' && <><path d="M-11 11 l2-6 a12 12 0 1 1 4 4 z" /><path d="M-4 -4 c0 5 4 9 9 9" /></>}
+            </g>
+          </g>
+        ))}
+
+        <!-- pin grande da loja -->
+        <g class="iv-pin" transform={`translate(${pinLoja[0]} ${pinLoja[1] - 4})`}>
+          <ellipse cx="0" cy="2" rx="18" ry="7" fill="#000" opacity=".4" />
+          <path d="M0 0 C -12 -18 -34 -32 -34 -60 A 34 34 0 1 1 34 -60 C 34 -32 12 -18 0 0 Z" fill="url(#iv-pin-g)" stroke="#fff4e6" stroke-width="2" filter="url(#iv-glow)" />
+          <circle cx="0" cy="-60" r="13" fill="#7a2e00" />
+        </g>
+
+        <!-- barra de busca 3D -->
+        <g class="iv-busca" filter="url(#iv-sombra)">
+          <rect x="24" y="40" width="360" height="70" rx="35" fill="#1b1c20" stroke="#5b5f68" stroke-width="2" />
+          <rect x="30" y="46" width="348" height="58" rx="29" fill="#f3f4f5" />
+          <rect x="30" y="46" width="70" height="58" rx="29" fill="#ff6900" />
+          <rect x="70" y="46" width="30" height="58" fill="#ff6900" />
+          <circle cx="60" cy="72" r="12" fill="none" stroke="#141006" stroke-width="4" />
+          <line x1="69" y1="81" x2="78" y2="90" stroke="#141006" stroke-width="4" stroke-linecap="round" />
+          <text class="iv-digita" x="118" y="82" font-family="DM Sans, sans-serif" font-weight="700" font-size="21" fill="#1b1d22">padaria perto de mim</text>
+        </g>
+      </svg>
     </div>
   </div>
 </section>
 
 <style>
-  .iv{position:relative;overflow:hidden;isolation:isolate;padding:72px 0 76px;color:#fff;text-align:center;
-    background:radial-gradient(900px 520px at 50% 58%,#d65a05 0%,rgba(214,90,5,0) 70%),linear-gradient(160deg,#a84300 0%,#8a3500 55%,#5e2400 100%)}
-  .iv-ruido{position:absolute;inset:0;z-index:-1;opacity:.5;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse at 50% 40%,#000,transparent 75%);-webkit-mask-image:radial-gradient(ellipse at 50% 40%,#000,transparent 75%)}
-  .iv-in{display:flex;flex-direction:column;align-items:center}
+  .iv{position:relative;overflow:hidden;isolation:isolate;padding:72px 0;color:#fff;
+    background:radial-gradient(700px 520px at 78% 55%,rgba(255,140,40,.35),transparent 70%),linear-gradient(150deg,#a84300 0%,#8a3500 50%,#5a2200 100%)}
+  .iv-grade{position:absolute;inset:0;z-index:-1;opacity:.45;background-image:linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(ellipse at 30% 40%,#000,transparent 75%);-webkit-mask-image:radial-gradient(ellipse at 30% 40%,#000,transparent 75%)}
+  .iv-in{display:grid;gap:40px;align-items:center}
+  @media(min-width:1024px){.iv-in{grid-template-columns:.95fr 1.1fr;gap:40px}}
 
-  .iv-tit{display:flex;flex-direction:column;align-items:center;margin:0;font-size:clamp(56px,9vw,128px);line-height:.86;letter-spacing:-.02em;color:#fff;text-shadow:0 .08em .3em rgba(60,20,0,.45)}
-  .iv-tit2{color:#141006;text-shadow:none;background:linear-gradient(180deg,#fff1de,#ffd3a3);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 .05em .2em rgba(60,20,0,.4))}
-  .iv-traco{display:block;width:64px;height:3px;margin:22px auto 16px;border-radius:3px;background:#fff1de}
-  .iv-sub{font-size:clamp(18px,2vw,24px);color:rgba(255,241,222,.9)}
+  /* coluna de texto */
+  .iv-tit{display:flex;flex-direction:column;margin:0;font-size:clamp(56px,7vw,104px);line-height:.86;letter-spacing:-.02em;color:#fff}
+  .iv-tit2{background:linear-gradient(180deg,#fff1de,#ffc993);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .iv-traco{display:block;width:64px;height:3px;margin:22px 0 16px;border-radius:3px;background:#fff1de}
+  .iv-sub{font-size:20px;line-height:1.4;color:rgba(255,241,222,.88);max-width:30ch}
   .iv-sub b{color:#fff}
-
-  .iv-palco{position:relative;width:100%;display:grid;align-items:center;gap:28px;margin-top:40px}
-  @media(min-width:1024px){.iv-palco{grid-template-columns:1fr 1.15fr 1fr}}
-
-  .iv-pilares{list-style:none;margin:0;padding:0;display:contents}
-  .iv-pilares li{display:flex;align-items:center;gap:14px;text-align:left;padding:16px 18px;border-radius:var(--radius-lg);background:rgba(40,12,0,.28);border:1px solid rgba(255,220,190,.22);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
-  .iv-ic{flex:none;display:grid;place-items:center;width:48px;height:48px;border-radius:14px;background:#fff1de;color:#a84300}
-  .iv-pilares b{display:block;font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:20px;line-height:1.05;letter-spacing:.02em}
-  .iv-pilares small{display:block;color:rgba(255,241,222,.82);font-size:14px;margin-top:2px}
-  @media(min-width:1024px){
-    .iv-pilares li:nth-child(1){grid-column:1;grid-row:1;align-self:end}
-    .iv-pilares li:nth-child(2){grid-column:1;grid-row:2;align-self:start}
-    .iv-pilares li:nth-child(3){grid-column:3;grid-row:1;align-self:end}
-    .iv-pilares li:nth-child(4){grid-column:3;grid-row:2;align-self:start}
-    .iv-arte{grid-column:2;grid-row:1 / span 2}
-  }
-  @media(min-width:640px) and (max-width:1023px){.iv-palco{grid-template-columns:1fr 1fr}.iv-arte{grid-column:1 / -1;order:-1}}
-
-  /* ---------- ilustração ---------- */
-  .iv-arte{position:relative;width:min(100%,500px);aspect-ratio:1;margin:0 auto;container-type:inline-size;perspective:900px}
-  .iv-mapa{position:absolute;left:4%;right:4%;top:30%;bottom:2%;border-radius:4cqw;background:linear-gradient(160deg,#b84a00,#6e2a00);box-shadow:0 0 0 1px rgba(255,220,190,.3),0 6cqw 10cqw -3cqw rgba(40,10,0,.9),inset 0 0 8cqw rgba(30,8,0,.6);transform:rotateX(58deg);transform-origin:50% 100%;overflow:hidden}
-  .iv-mapa svg{position:absolute;inset:0;width:100%;height:100%}
-  .iv-rota{stroke-dasharray:4 0;filter:drop-shadow(0 0 6px #fff1de)}
-  .iv-onda{position:absolute;left:50%;top:47%;width:20cqw;height:20cqw;margin:-10cqw 0 0 -10cqw;border-radius:50%;border:.6cqw solid #fff1de;opacity:0;animation:iv-onda 3s ease-out infinite}
-  .iv-onda.o2{animation-delay:1s}.iv-onda.o3{animation-delay:2s}
-  @keyframes iv-onda{0%{transform:scale(.3);opacity:.9}100%{transform:scale(3.2);opacity:0}}
-
-  .iv-pin{position:absolute;left:50%;top:14%;width:30cqw;transform:translateX(-50%);filter:drop-shadow(0 0 3cqw rgba(255,180,100,.9)) drop-shadow(0 3cqw 3cqw rgba(60,15,0,.7));animation:iv-pula 2.4s ease-in-out infinite}
-  .iv-pin svg{display:block;width:100%}
-  @keyframes iv-pula{50%{transform:translateX(-50%) translateY(-3cqw)}}
-
-  .iv-lupa{position:absolute;left:22%;top:24%;width:46cqw;height:46cqw;border-radius:50%;border:2.6cqw solid #1a0e06;box-shadow:inset 0 0 0 .6cqw rgba(255,241,222,.5),inset 0 0 6cqw rgba(255,241,222,.25),0 2cqw 4cqw rgba(40,10,0,.6);background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.25),rgba(255,255,255,0) 45%);animation:iv-varre 7s ease-in-out infinite}
-  .iv-lupa span{position:absolute;right:-14cqw;bottom:-14cqw;width:20cqw;height:5.5cqw;border-radius:3cqw;background:linear-gradient(180deg,#2b1a10,#0d0705);transform:rotate(45deg);transform-origin:left center}
-  @keyframes iv-varre{0%,100%{transform:translate(0,0)}35%{transform:translate(18cqw,6cqw)}70%{transform:translate(6cqw,-6cqw)}}
-
-  .iv-tag{position:absolute;display:flex;align-items:center;gap:1.6cqw;padding:2cqw 3.2cqw;border-radius:99px;background:#fff6ec;color:#3a1600;font-weight:800;font-size:3.2cqw;white-space:nowrap;box-shadow:0 2cqw 5cqw rgba(40,10,0,.5);animation:iv-flutua 4s ease-in-out infinite}
-  .iv-tag :global(svg){width:3.6cqw;height:3.6cqw;color:#c45000}
-  .iv-tag .ok{color:#ff8a00;letter-spacing:.1em}
-  .iv-tag.t1{left:0;top:4%}
-  .iv-tag.t2{right:0;top:20%;animation-delay:-1.3s}
-  .iv-tag.t3{right:4%;bottom:6%;animation-delay:-2.6s}
-  @keyframes iv-flutua{50%{transform:translateY(-1.6cqw)}}
-
-  .iv-fim{display:flex;flex-direction:column;align-items:center;gap:24px;margin-top:44px}
-  .iv-fim p{font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:clamp(24px,3vw,36px);line-height:1;color:rgba(255,241,222,.85)}
-  .iv-forte{color:#fff}
-  .iv-cta{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 30px;border-radius:999px;background:#141006;color:#fff;font-weight:800;font-size:16px;text-decoration:none;box-shadow:0 14px 30px -12px rgba(30,8,0,.9);transition:transform .2s,background .2s}
+  .iv-pilares{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:14px}
+  .iv-pilares li{display:flex;align-items:center;gap:14px;padding-bottom:14px;border-bottom:1px solid rgba(255,220,190,.18)}
+  .iv-pilares li:last-child{border-bottom:0;padding-bottom:0}
+  .iv-ic{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:rgba(20,8,0,.35);border:1px solid rgba(255,220,190,.35);color:#fff1de}
+  .iv-pilares b{display:block;font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:19px;line-height:1.05;letter-spacing:.03em}
+  .iv-pilares small{display:block;color:rgba(255,241,222,.78);font-size:14px}
+  .iv-fim{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;gap:18px 24px;padding:18px 20px;border-radius:var(--radius-lg);background:rgba(20,8,0,.3);border:1px solid rgba(255,220,190,.25)}
+  .iv-fim p{flex:1;min-width:220px;font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:22px;line-height:1.05;color:rgba(255,241,222,.85)}
+  .iv-fim p b{color:#fff}
+  .iv-cta{display:inline-flex;align-items:center;gap:10px;min-height:50px;padding:0 26px;border-radius:999px;background:#141006;color:#fff;font-weight:800;font-size:15px;text-decoration:none;box-shadow:0 14px 30px -12px rgba(30,8,0,.9);transition:transform .2s,background .2s}
   .iv-cta:hover{transform:translateY(-2px);background:#000}
   .iv-cta span{color:#ffb35c}
 
+  /* cena 3D */
+  .iv-arte{position:relative;width:100%;max-width:680px;margin:0 auto;filter:drop-shadow(0 30px 40px rgba(30,8,0,.55))}
+  .iv-arte svg{display:block;width:100%;height:auto;overflow:visible}
+  .iv-fluxo{stroke-dasharray:8 92;animation:iv-flui 2.2s linear infinite}
+  @keyframes iv-flui{from{stroke-dashoffset:100}to{stroke-dashoffset:0}}
+  .iv-anel{transform-box:fill-box;transform-origin:center;animation:iv-anel 2.6s ease-out infinite}
+  .iv-anel.a2{animation-delay:-1.3s}
+  @keyframes iv-anel{0%{transform:scale(.7);opacity:1}100%{transform:scale(1.35);opacity:0}}
+  .iv-pin{animation:iv-pula 2.4s ease-in-out infinite}
+  @keyframes iv-pula{50%{translate:0 -14px}}
+  .iv-icone{animation:iv-boia 3.6s ease-in-out infinite}
+  @keyframes iv-boia{50%{translate:0 -8px}}
+  .iv-pontilhado{animation:iv-traco 1.2s linear infinite}
+  @keyframes iv-traco{to{stroke-dashoffset:-18}}
+  .iv-pessoa{animation:iv-boia 4s ease-in-out infinite}
+  .iv-digita{clip-path:inset(0 100% 0 0);animation:iv-digita 6s steps(20) infinite}
+  @keyframes iv-digita{0%,8%{clip-path:inset(0 100% 0 0)}45%,90%{clip-path:inset(0 0 0 0)}100%{clip-path:inset(0 100% 0 0)}}
+
   @media(max-width:767px){
-    .iv{padding:52px 0 56px}
-    .iv-fim p span{display:block}
+    .iv{padding:52px 0}
+    .iv-txt{display:flex;flex-direction:column;align-items:center;text-align:center}
+    .iv-tit{align-items:center;font-size:56px}
+    .iv-traco{margin-inline:auto}
+    .iv-pilares li{text-align:left}
+    .iv-fim{flex-direction:column;text-align:center}
   }
-  @media (prefers-reduced-motion: reduce){.iv-onda,.iv-pin,.iv-lupa,.iv-tag{animation:none}}
+  @media (prefers-reduced-motion: reduce){
+    .iv-fluxo,.iv-anel,.iv-pin,.iv-icone,.iv-pontilhado,.iv-pessoa{animation:none}
+    .iv-digita{animation:none;clip-path:none}
+  }
 </style>

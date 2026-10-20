@@ -32,7 +32,7 @@ h3{font-size:22px;line-height:1.05}
 /* espaçamento padrão entre seções: o mesmo no site inteiro */
 :root{--sec:40px}
 section{padding:var(--sec) 0}
-.alt{background:var(--surface-raised) linear-gradient(to right,rgba(255,255,255,.025) 1px,transparent 1px) 0 0/56px 56px;border-block:1px solid var(--line)}
+.alt{background:var(--surface-raised) linear-gradient(to right,rgba(255,255,255,.025) 1px,transparent 1px) 0 0/56px 56px}
 .destaque{color:var(--orange-text)}
 .eyebrow{color:var(--orange-text);font-weight:700;font-size:12px;line-height:16px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:12px;display:block}
 .lead{color:var(--ink-muted);font-size:18px;line-height:28px;max-width:65ch;margin-top:16px}
