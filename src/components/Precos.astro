@@ -30,17 +30,12 @@ const planos: Plano[] = [
           <p class="pr-preco"><small>{p.de}</small>{p.preco}{p.per && <em>{p.per}</em>}</p>
           <p class="pr-desc">{p.desc}</p>
           <ul>{p.itens.map((i) => <li>{i}</li>)}</ul>
-          <a class="pr-bt" href={waLink(`Olá! Quero saber mais sobre: ${p.nome}.`)} target="_blank" rel="noopener">Falar sobre este plano
-            <svg viewBox="0 0 32 32" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm5.9 15.7c-.3-.2-1.9-1-2.2-1-.3-.1-.5-.2-.7.1l-1 1.3c-.2.2-.4.2-.7.1a8.8 8.8 0 0 1-4.4-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.7 5 2.1.9 3 1 4 .8.7-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5l-.7-.4z" /></svg>
-          </a>
+          <div class="pr-acoes">
+            <a class="btn btn-primary pr-b" href={waLink(`Olá! Quero falar sobre o meu projeto: ${p.nome}.`)} target="_blank" rel="noopener">Falar sobre meu projeto <svg viewBox="0 0 32 32" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm5.9 15.7c-.3-.2-1.9-1-2.2-1-.3-.1-.5-.2-.7.1l-1 1.3c-.2.2-.4.2-.7.1a8.8 8.8 0 0 1-4.4-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.7 5 2.1.9 3 1 4 .8.7-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5l-.7-.4z" /></svg></a>
+            <a class="btn pr-ghost pr-b" href="/contato/">Enviar briefing <span aria-hidden="true">→</span></a>
+          </div>
         </article>
       ))}
-    </div>
-    <div class="pr-fim">
-      <a class="btn btn-primary" href={waLink('Olá! Quero falar sobre o meu projeto.')} target="_blank" rel="noopener">Falar sobre meu projeto
-        <svg viewBox="0 0 32 32" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm5.9 15.7c-.3-.2-1.9-1-2.2-1-.3-.1-.5-.2-.7.1l-1 1.3c-.2.2-.4.2-.7.1a8.8 8.8 0 0 1-4.4-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.7 5 2.1.9 3 1 4 .8.7-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5l-.7-.4z" /></svg>
-      </a>
-      <a class="btn pr-ghost" href="/contato/">Enviar briefing <span aria-hidden="true">→</span></a>
     </div>
   </div>
 </section>
@@ -76,10 +71,11 @@ const planos: Plano[] = [
   .pr-card li::before{content:'';position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:#ff6900}
   .pr-bt{margin-top:auto;align-self:flex-start;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:0 20px;border-radius:99px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.04);color:#fff;font-weight:700;font-size:14px;text-decoration:none;transition:border-color .2s,background .2s}
   .pr-bt:hover{border-color:#ff6900;background:rgba(255,105,0,.12)}
-  .pr-fim{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin-top:32px}
+  .pr-acoes{margin-top:auto;display:grid;gap:8px}
+  .pr-b{width:100%;min-height:44px;padding:10px 16px;font-size:14px}
   .pr-ghost{border-color:#5b616b;color:#fff;background:transparent}
   .pr-ghost:hover{border-color:#fff}
-  @media(max-width:767px){.pr-card{text-align:left}.pr-fim .btn{width:100%}}
+  @media(max-width:767px){.pr-card{text-align:left}}
 </style>
 
 <script>
