@@ -1,8 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
+import SobreHero from '../components/SobreHero.astro';
 import { config } from '../config';
-const schema = [{ '@context': 'https://schema.org', '@type': 'AboutPage', name: 'Quem somos · MKT Center', about: { '@type': 'ProfessionalService', name: config.nome } }];
+const schema = [{ '@context': 'https://schema.org', '@type': 'AboutPage', name: 'Quem somos · MKT Center', about: { '@type': 'ProfessionalService', name: config.nome, foundingDate: '2013' } }];
 const valores: [string, string, string][] = [
   ['trending', 'Resultado medido', 'Cada projeto nasce com uma meta: mais contatos, mais vendas ou melhor posição no Google. E a gente mostra os números.'],
   ['message', 'Conversa direta', 'Você fala com quem faz o seu projeto, pelo WhatsApp, sem jargão técnico e sem enrolação.'],
@@ -11,24 +12,10 @@ const valores: [string, string, string][] = [
 ];
 const etapas = ['Entendemos o seu negócio e o seu cliente', 'Mostramos a proposta e o layout antes de começar', 'Criamos, testamos em todos os aparelhos e publicamos', 'Acompanhamos os resultados e ajustamos todo mês'];
 ---
-<Base title="Quem Somos: Agência de Marketing Digital | MKT Center"
-  description="Conheça a MKT Center: agência que une tecnologia e marketing para trazer clientes ao seu negócio. Veja como trabalhamos."
-  schema={schema} crumbs={[['Quem somos', '/quem-somos/']]}>
-  <section style="padding-top:8px">
-    <div class="wrap dois">
-      <div>
-        <span class="eyebrow">Quem somos</span>
-        <h1>Tecnologia e marketing que <span class="destaque">movem negócios</span></h1>
-        <p class="lead">A MKT Center é uma agência de marketing digital. Criamos sites, aplicativos, sistemas e lojas virtuais, e cuidamos do tráfego pago, do SEO e do marketing político.</p>
-        <p class="lead">Nosso trabalho é simples de explicar: fazer o cliente certo encontrar a sua empresa e chegar até você pelo WhatsApp.</p>
-        <div class="acoes"><a class="btn btn-primary" href="/contato/">Quero conversar</a><a class="btn btn-ghost" href="/portfolio/">Ver portfólio</a></div>
-      </div>
-      <div class="foto">
-        <img src="/mock/padaria.webp" alt="Projeto de site para padaria criado pela MKT Center" width="640" height="400" loading="lazy" />
-        <div class="selo"><b>Do primeiro contato</b><span>ao site no ar, com você em cada etapa</span></div>
-      </div>
-    </div>
-  </section>
+<Base title="Quem Somos: Agência Digital desde 2013 | MKT Center"
+  description="Desde 2013 criando lojas virtuais, sites, redes sociais, vídeos e hoje aplicativos e sistemas com IA. Conheça a história da MKT Center."
+  schema={schema}>
+  <SobreHero />
 
   <section class="alt">
     <div class="wrap">
