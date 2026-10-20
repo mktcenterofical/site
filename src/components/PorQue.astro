@@ -13,7 +13,7 @@ const itens = [
 <section class="pq" id="por-que">
   <div class="wrap">
     <span class="eyebrow">Por que a MKT Center</span>
-    <h2>Feito para dar resultado</h2>
+    <h2>Nosso trabalho gera resultado</h2>
     <div class="pq-grid">
       {itens.map((it, i) => (
         <article class="pq-card card" style={`--d:${i * .08}s`}>
@@ -57,13 +57,13 @@ const itens = [
   .pq-obj{position:absolute;inset:0;width:100%;height:100%;display:block}
   .pq-luz{position:absolute;left:20%;right:20%;bottom:6%;height:14%;border-radius:50%;background:radial-gradient(closest-side,rgba(255,105,0,.55),transparent);filter:blur(6px)}
 
-  .pq-txt{padding:0 16px 18px}
+  .pq-txt{flex:1;display:flex;flex-direction:column;align-items:flex-start;padding:0 16px 18px}
   .pq-n{display:block;font-size:12px;font-weight:700;color:#ff6900;letter-spacing:.06em;margin-bottom:4px}
   .pq-txt h3{font-size:20px;line-height:1.05;color:#fff}
   .pq-txt p{margin-top:6px;color:#aeb4bd;font-size:13px;line-height:19px}
-  .pq-txt a{display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding-bottom:3px;border-bottom:1px solid rgba(255,255,255,.35);color:#fff;font-size:13px;font-weight:600;text-decoration:none;transition:border-color .2s,color .2s}
+  .pq-txt a{display:inline-flex;align-items:center;gap:6px;margin-top:auto;padding-top:12px;padding-bottom:3px;border-bottom:1px solid rgba(255,255,255,.35);color:#fff;font-size:13px;font-weight:600;text-decoration:none;transition:border-color .2s,color .2s}
   .pq-txt a:hover{color:#ffb35c;border-color:#ff6900}
-  @media(max-width:767px){.pq-txt{text-align:center}}
+  @media(max-width:767px){.pq-txt{text-align:center;align-items:center}}
   @media (prefers-reduced-motion: reduce){.pq-onda path{animation:none}}
 </style>
 
