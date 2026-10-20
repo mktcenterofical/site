@@ -25,7 +25,7 @@ const incluso: [string, string, string][] = [
   ['check', 'Medição de resultados', 'Analytics para você saber quantos contatos chegam.'],
 ];
 const etapas = ['Conversa sobre o seu negócio', 'Proposta e layout para aprovação', 'Desenvolvimento e textos', 'Site no ar e acompanhamento'];
-const exemplos = ['RollerPort', 'Pugas News', 'Rádio Conexão Católica', 'Pousada São José de Anchieta', 'Kimax', 'Sanremax'].map((n) => projetos.find((p) => p.nome === n)!);
+const exemplos = projetos.filter((p) => /institucional/i.test(p.tipo)); // só sites institucionais
 const schema = [
   { '@context': 'https://schema.org', '@type': 'Service', name: 'Criação de sites', serviceType: 'Criação de sites', provider: { '@type': 'ProfessionalService', name: config.nome }, areaServed: 'BR',
     offers: tipos.map((t) => ({ '@type': 'Offer', name: t.nome, priceCurrency: 'BRL', price: Number(t.preco.replace(/\D/g, '')) })) }
@@ -96,18 +96,31 @@ const schema = [
 
   <section>
     <div class="wrap">
-      <span class="eyebrow">Portfólio</span>
-      <h2>Sites que criamos</h2>
-      <div class="st-pf">{exemplos.map((p) => <CardPortfolio {...p} />)}</div>
+      <div class="st-cab">
+        <div><span class="eyebrow">Portfólio</span><h2>Sites institucionais que criamos</h2></div>
+        <div class="st-setas"><button type="button" class="st-seta" data-dir="-1" aria-label="Sites anteriores"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button><button type="button" class="st-seta" data-dir="1" aria-label="Próximos sites"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button></div>
+      </div>
+      <div class="st-pf" id="st-pf" tabindex="0" aria-label="Sites institucionais (role para o lado)">{exemplos.map((p) => <CardPortfolio {...p} />)}</div>
       <p class="st-mais"><a class="btn btn-ghost" href="/portfolio/">Ver todos os projetos</a></p>
     </div>
   </section>
 </Base>
 
 <style>
-  .st-pf{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
-  @media(max-width:1023px){.st-pf{grid-template-columns:repeat(2,minmax(0,1fr))}}
-  @media(max-width:767px){.st-pf{grid-template-columns:minmax(0,280px);justify-content:center}}
+  .st-cab{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px}
+  .st-cab h2{margin:0}
+  .st-setas{display:flex;gap:8px}
+  .st-seta{display:grid;place-items:center;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.04);color:#fff;cursor:pointer;transition:border-color .2s,background .2s,opacity .2s}
+  .st-seta:hover{border-color:#ff6900;background:rgba(255,105,0,.15)}
+  .st-seta:disabled{opacity:.3;cursor:default;border-color:rgba(255,255,255,.18);background:transparent}
+  /* carrossel: 4 cards menores no computador, 2 no tablet, 1 e um pedaço no celular */
+  .st-pf{display:flex;gap:16px;overflow-x:auto;scroll-behavior:smooth;padding:4px 2px 18px;scrollbar-width:none;outline:none}
+  .st-pf::-webkit-scrollbar{display:none}
+  .st-pf.encaixe{scroll-snap-type:x mandatory}
+  .st-pf>:global(*){flex:0 0 calc((100% - 48px)/4);scroll-snap-align:start}
+  .st-pf :global(.pf p){-webkit-line-clamp:2}
+  @media(max-width:1023px){.st-pf>:global(*){flex-basis:calc((100% - 16px)/2)}}
+  @media(max-width:767px){.st-pf>:global(*){flex-basis:80%}.st-cab{justify-content:center;text-align:center}.st-setas{display:none}}
   .st-mais{margin-top:24px;text-align:center}
   .st-grid{display:grid;gap:16px;grid-template-columns:1fr}
   @media(min-width:768px){.st-grid{grid-template-columns:repeat(3,1fr)}}
@@ -131,3 +144,21 @@ const schema = [
   .grid.st-inc .icone{margin:0 0 16px !important}
   @media(max-width:767px){.grid.st-inc{grid-template-columns:1fr 1fr}.st-card{text-align:center}.st-card li{text-align:left}.st-selo{align-self:center}}
 </style>
+
+<script>
+  const trilho = document.getElementById('st-pf');
+  if (trilho) {
+    const setas = document.querySelectorAll<HTMLButtonElement>('.st-seta');
+    const passo = () => ((trilho.firstElementChild as HTMLElement)?.offsetWidth || 260) + 16;
+    const atualizar = () => {
+      setas[0].disabled = trilho.scrollLeft < 4;
+      setas[1].disabled = trilho.scrollLeft + trilho.clientWidth >= trilho.scrollWidth - 4;
+    };
+    const encaixe = () => trilho.classList.add('encaixe'); // scroll-snap só depois da 1ª interação (LCP)
+    setas.forEach((b) => b.addEventListener('click', () => { encaixe(); trilho.scrollBy({ left: Number(b.dataset.dir) * passo(), behavior: 'smooth' }); }));
+    ['pointerdown', 'touchstart', 'wheel', 'keydown'].forEach((ev) => trilho.addEventListener(ev, encaixe, { once: true, passive: true }));
+    trilho.addEventListener('scroll', atualizar, { passive: true });
+    addEventListener('resize', atualizar);
+    atualizar();
+  }
+</script>
