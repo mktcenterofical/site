@@ -12,9 +12,11 @@ const { titulo = 'Vamos tirar seu projeto do papel?', msg } = Astro.props;
   </div>
 </section>
 <style>
-  .faixa{background:var(--orange);color:var(--on-orange)}
+  .faixa{background:var(--orange);color:var(--on-orange);padding:0}
+  .faixa .in{min-height:70px;padding-block:10px}
+  .faixa .btn{min-height:42px;padding:8px 20px;font-size:14px}
   .in{display:grid;gap:24px;align-items:center}
-  h2{margin:0}
+  h2{margin:0;font-size:clamp(20px,2.4vw,30px);line-height:1}
   .escuro{background:var(--carbon);color:#fff}
   .escuro:hover{transform:translateY(-1px)}
   .contorno{border-color:var(--on-orange);color:var(--on-orange)}
