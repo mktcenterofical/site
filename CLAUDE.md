@@ -26,7 +26,7 @@ Objetivo do site: gerar contatos pelo WhatsApp e pelo formulário.
 - Seção 2 da home (após o carrossel de logos): src/components/SecaoConexao.astro — texto à esquerda no estilo do hero ("Seu negócio, / site e redes / conectados"); à direita ilustração em código: caixa 3D (site em cima, acervo do negócio embaixo: lista, documentos, fotos, gráfico) ligada por linhas de luz animadas a cartões de vidro 3D das redes (Instagram, WhatsApp, Google)
 - Faixa "Invisível não vende." (após a seção 2): src/components/FaixaInvisivel.astro — largura total, laranja escuro, faixa baixa (padding 40px), duas colunas: título + subtítulo; à direita composição de presença local (inspirada em referência, sem copiar): perfil no Google, 2 avaliações de clientes, cartão do site e celular 3D com o perfil e a distribuição das notas. Dados e nomes fictícios
 - Sem linhas/bordas entre seções
-- Seção "Por que a MKT Center": src/components/PorQue.astro — título no padrão do site (eyebrow + h2), 6 cards menores numa linha só (3 por linha no tablet, 1 no celular): objeto 3D em SVG (alvo, celular, chat, lupa, gráfico, cavalo de xadrez) com ondas de luz laranja, número, título, descrição e link
+- Seção "Por que a MKT Center": src/components/PorQue.astro — título no padrão do site (eyebrow + h2), 6 cards menores numa linha só (3 por linha no tablet, 1 no celular): objeto 3D real em WebGL (Three.js, src/scripts/objetos3d.ts, carregado só quando a seção chega perto da tela): alvo, celular, chat, lupa, gráfico, cavalo de xadrez em metal escuro com detalhes laranja acesos, girando e seguindo o mouse com ondas de luz laranja, número, título, descrição e link
 - Menu minimalista (src/components/Header.astro): logo, links em pílula Início · Sobre · Sites · Lojas · Redes · Portfólio · Política (o ativo ganha contorno arredondado) e botão laranja "Fale conosco ↗" (/contato/). Sem faixa de serviços. Fundo translúcido com desfoque. Celular (< 900px): menu off-canvas
 - Celular: tudo centralizado, margem lateral de 10px, sem nenhuma rolagem horizontal (html/body overflow-x:clip, sem carrosséis)
 
@@ -34,7 +34,7 @@ Objetivo do site: gerar contatos pelo WhatsApp e pelo formulário.
 - Layout próprio por dispositivo (bloco "LAYOUTS POR DISPOSITIVO" no fim de global.css): celular < 768 (menu off-canvas, conteúdo centralizado e empilhado, botões largos), tablet 768–1023 (2 colunas, hero centralizado), notebook 1024–1439 (3 colunas), desktop ≥ 1440 (tipografia maior, serviços em 5 colunas). O hero começa no aparelho de quem visita. /#menu abre o menu no celular
 - Todo o conteúdo (cabeçalho, seções, rodapé) usa a largura total de 1140px (.wrap)
 - Espaçamento entre seções igual no site todo: section{padding:var(--sec) 0}, --sec 40px (32px no celular). Exceção: hero → seção 1 = 20px
-- Sem frameworks de JS no cliente; JS mínimo
+- Sem frameworks de JS no cliente; JS mínimo (exceção: Three.js ~130 KB gzip só nos objetos 3D da seção Por que, carregado sob demanda)
 - Imagens em WebP/AVIF com width e height
 - Cada página: title único (até 60 caracteres), meta description
   (até 155), um único H1, canonical, Open Graph e Schema JSON-LD
