@@ -1,0 +1,68 @@
+---
+// Página de Vídeos (edição e criação de vídeos). Mesmo modelo das páginas de serviço.
+// Preços: edição a partir de R$ 50 por vídeo (valor informado pelo cliente).
+import Base from '../layouts/Base.astro';
+import FaixaCTA from '../components/FaixaCTA.astro';
+import { config, waLink } from '../config';
+const msg = 'Olá! Vim pelo site e quero um orçamento de vídeos.';
+const itens = ['Edição de Reels, Stories e TikTok', 'Cortes, legendas e trilha', 'Vídeos para anúncios', 'Vídeos institucionais', 'Formato certo para cada rede', 'Entrega pronta para postar'];
+const etapas = ['Você envia o material ou a ideia', 'Roteiro e estilo combinados', 'Edição e ajustes', 'Entrega pronta para postar'];
+const faq: [string, string][] = [
+  ['Vocês gravam ou só editam?', 'Fazemos as duas coisas: editamos o material que você já tem ou criamos o vídeo do zero com você.'],
+  ['Quanto custa a edição?', 'A edição de vídeos começa a partir de R$ 50 por vídeo. O valor final depende da duração e do tipo de edição.'],
+];
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'Service', name: 'Edição e criação de vídeos', description: 'Edição e criação de vídeos para Reels, Stories, TikTok e anúncios.', provider: { '@type': 'ProfessionalService', name: config.nome }, areaServed: 'BR', offers: { '@type': 'Offer', priceCurrency: 'BRL', price: 50 } },
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
+];
+---
+<Base title="Edição e Criação de Vídeos | MKT Center"
+  description="Edição e criação de vídeos para Reels, Stories, TikTok e anúncios. A partir de R$ 50 por vídeo. Peça seu orçamento pelo WhatsApp."
+  schema={schema} crumbs={[['Vídeos', '/videos/']]}>
+  <section class="hero" style="padding-top:8px">
+    <div class="wrap">
+      <span class="eyebrow">Vídeos</span>
+      <h1>Edição e criação de vídeos que prendem a atenção</h1>
+      <p class="lead">Vídeos curtos e bem editados para Reels, Stories, TikTok e anúncios. Do roteiro à entrega pronta para postar.</p>
+      <div class="acoes">
+        <a class="btn btn-primary" href={waLink(msg)} target="_blank" rel="noopener">Pedir orçamento no WhatsApp</a>
+        <a class="btn btn-ghost" href="/contato/">Preencher formulário</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="alt">
+    <div class="wrap">
+      <h2>O que está incluso</h2>
+      <ul class="lista">{itens.map((i) => <li>{i}</li>)}</ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2>Como funciona</h2>
+      <ol class="etapas">{etapas.map((e) => <li>{e}</li>)}</ol>
+    </div>
+  </section>
+
+  <section class="alt">
+    <div class="wrap">
+      <h2>Investimento</h2>
+      <div class="card" style="max-width:420px">
+        <h3>Edição de vídeos</h3>
+        <p style="font-family:var(--ff-tit);font-size:2.2rem;color:var(--papel);margin-top:4px">A partir de R$ 50<small style="font-size:1rem">/vídeo</small></p>
+        <p>Valor final conforme duração e tipo de edição. Criação completa sob consulta.</p>
+        <a class="btn btn-primary" style="margin-top:18px" href={waLink(msg)} target="_blank" rel="noopener">Quero orçamento</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap prose">
+      <h2>Perguntas frequentes</h2>
+      {faq.map(([q, a]) => <details><summary>{q}</summary><p>{a}</p></details>)}
+    </div>
+  </section>
+
+  <FaixaCTA msg={msg} />
+</Base>

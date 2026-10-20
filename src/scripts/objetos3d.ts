@@ -68,6 +68,21 @@ function chat(m: M) {
   return g;
 }
 
+function video(m: M) {
+  const g = new THREE.Group();
+  // claquete: corpo + barra superior com listras laranja, e botão play aceso
+  const corpo = new THREE.Mesh(new RoundedBoxGeometry(1.7, 1.15, 0.2, 6, 0.08), m.metal); corpo.position.y = -0.15; g.add(corpo);
+  const barra = new THREE.Group();
+  const base = new THREE.Mesh(new RoundedBoxGeometry(1.7, 0.28, 0.2, 4, 0.05), m.preto); barra.add(base);
+  for (let k = 0; k < 4; k++) { const l = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.3, 0.21), m.brilho); l.position.x = -0.6 + k * 0.4; l.rotation.z = -0.5; barra.add(l); }
+  barra.position.set(0, 0.62, 0); barra.rotation.z = 0.18; g.add(barra);
+  const tri = new THREE.Shape(); tri.moveTo(-0.18, -0.25); tri.lineTo(0.3, 0); tri.lineTo(-0.18, 0.25); tri.lineTo(-0.18, -0.25);
+  const play = new THREE.Mesh(new THREE.ExtrudeGeometry(tri, { depth: 0.08, bevelEnabled: true, bevelThickness: 0.03, bevelSize: 0.03, bevelSegments: 3 }), m.brilho);
+  play.position.set(0, -0.15, 0.12); g.add(play);
+  g.rotation.set(0.12, -0.45, 0);
+  return g;
+}
+
 function lupa(m: M) {
   const g = new THREE.Group();
   const aro = new THREE.Mesh(new THREE.TorusGeometry(0.62, 0.11, 32, 96), m.metal); g.add(aro);
@@ -117,7 +132,7 @@ function cavalo(m: M) {
   return g;
 }
 
-const criadores: Record<string, (m: M) => THREE.Group> = { alvo, celular: telas, chat, lupa, grafico, cavalo };
+const criadores: Record<string, (m: M) => THREE.Group> = { alvo, celular: telas, chat, video, lupa, grafico, cavalo };
 
 export function iniciarObjetos3D(raiz: ParentNode = document) {
   const canvases = Array.from(raiz.querySelectorAll<HTMLCanvasElement>('canvas[data-obj3d]'));
