@@ -15,15 +15,15 @@ const eras = [
 <section class="sb" id="historia" data-eras={JSON.stringify(eras.map((e) => [e.id, e.nome]))}>
   <div class="wrap sb-in">
     <div class="sb-txt">
-      <span class="eyebrow sb-ey">Quem somos</span>
-      <h1 class="sb-h1"><span>Evoluindo</span><span class="sb-or">desde 2013.</span></h1>
-      <p class="sb-lead">Há mais de 10 anos evoluímos junto com a tecnologia. A MKT Center nasceu em 2013 criando <b>lojas virtuais</b>, quando o e-commerce no Brasil ainda engatinhava, mas já mostrava uma força gigantesca.</p>
-      <p class="sb-lead">A cada nova fase, buscamos capacitação: vieram os <b>sites institucionais</b>, as <b>redes sociais</b>, a <b>edição de vídeos</b> e o <b>web design</b>. Hoje usamos <b>inteligência artificial</b> para criar de sites a aplicativos e sistemas complexos.</p>
-      <div class="acoes">
+      <span class="eyebrow sb-ey sb-r">Quem somos</span>
+      <h1 class="sb-h1"><span class="sb-line"><span class="sb-w">Evoluindo</span></span><span class="sb-line"><span class="sb-w sb-or">desde</span> <span class="sb-w sb-or">2013.</span></span></h1>
+      <p class="sb-lead sb-r">Há mais de 10 anos evoluímos junto com a tecnologia. A MKT Center nasceu em 2013 criando <b>lojas virtuais</b>, quando o e-commerce no Brasil ainda engatinhava, mas já mostrava uma força gigantesca.</p>
+      <p class="sb-lead sb-r">A cada nova fase, buscamos capacitação: vieram os <b>sites institucionais</b>, as <b>redes sociais</b>, a <b>edição de vídeos</b> e o <b>web design</b>. Hoje usamos <b>inteligência artificial</b> para criar de sites a aplicativos e sistemas complexos.</p>
+      <div class="acoes sb-r">
         <a class="btn btn-primary" href={waLink('Olá! Conheci a história da MKT Center e quero conversar sobre um projeto.')} target="_blank" rel="noopener">Quero conversar</a>
         <a class="btn sb-ghost" href="/portfolio/">Ver portfólio</a>
       </div>
-      <ul class="sb-stats">
+      <ul class="sb-stats sb-r">
         <li><b>2013</b><small>ano de fundação</small></li>
         <li><b>10+</b><small>anos no digital</small></li>
         <li><b>IA</b><small>no dia a dia</small></li>
@@ -88,6 +88,8 @@ const eras = [
   @media(min-width:1024px){.sb-in{grid-template-columns:1fr 1.15fr;gap:32px}}
   .sb-ey{font-size:12px;letter-spacing:.14em}
   .sb-h1{display:flex;flex-direction:column;font-size:clamp(46px,5.6vw,76px);line-height:.9;letter-spacing:-.02em;margin:0}
+  .sb-line{display:block;overflow:hidden;padding-bottom:.04em}
+  .sb-w{display:inline-block}
   .sb-or{background:linear-gradient(180deg,#ff8a24,#ff6900);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
   .sb-lead{color:#aeb4bd;font-size:18px;line-height:28px;max-width:52ch;margin-top:20px}
   .sb-lead b{color:#fff;font-weight:600}
@@ -231,6 +233,14 @@ const eras = [
 </style>
 
 <script>
+  import { gsap } from 'gsap';
+  // mesma entrada do hero da home: palavras sobem de dentro da linha, depois o resto aparece
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    gsap.timeline({ delay: .2 })
+      .from('.sb-w', { yPercent: 110, duration: 1.1, stagger: .08, ease: 'expo.out' })
+      .from('.sb-r', { y: 24, opacity: 0, duration: .9, stagger: .12, ease: 'power3.out' }, '-=.8')
+      .from('.ev', { y: 60, opacity: 0, duration: 1.4, ease: 'expo.out' }, .3);
+  }
   const sec = document.getElementById('historia');
   if (sec) {
     const ev = sec.querySelector<HTMLElement>('.ev')!;
