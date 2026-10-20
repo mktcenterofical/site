@@ -142,3 +142,6 @@ html,body{max-width:100%;overflow-x:clip}
   .grid-servicos .card{padding:28px 22px}
   .card{padding:28px}
 }
+
+/* primeira seção depois do hero: 20px de distância (o hero já tem 20px embaixo) */
+.servicos-topo{padding-top:0;scroll-margin-top:72px}
