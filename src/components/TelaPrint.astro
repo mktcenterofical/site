@@ -1,0 +1,6 @@
+---
+// Print de um site real dentro da tela de um aparelho do hero (modo "sites" do HeroCrescimento)
+interface Props { nome: string; tela: string; w: number; h: number }
+const { nome, tela, w, h } = Astro.props;
+---
+<img class="dv-site" src={tela} alt={`Site ${nome}`} width={w} height={h} decoding="async" />
