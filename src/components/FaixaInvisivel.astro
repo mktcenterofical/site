@@ -1,16 +1,8 @@
 ---
 // Faixa laranja escura em largura total: "Invisível não vende." em duas colunas.
-// Esquerda: título, pilares, frase final e CTA. Direita: pin 3D brilhante sobre um bairro iluminado num mapa escuro,
-// ligado por linhas de luz a cartões 3D (loja, telefone, horário, avaliações, site e mapa).
+// Esquerda: título, subtítulo, frase final e CTA. Direita: pin 3D brilhante sobre um bairro iluminado num mapa escuro,
+// ligado por linhas de luz a cartões de vidro em perspectiva 3D (loja, telefone, horário, avaliações, site e mapa).
 import { waLink } from '../config';
-import Icon from './Icon.astro';
-
-const pilares: [string, string, string][] = [
-  ['globe', 'Google', 'Sua empresa no topo das buscas'],
-  ['message', 'Redes sociais', 'Conexão real com o seu público'],
-  ['smartphone', 'Sites que convertem', 'Mais visitas, mais clientes'],
-  ['trending', 'Anúncios online', 'Resultados que crescem'],
-];
 
 // ---------- cena (viewBox 1000 x 900) ----------
 // mapa em perspectiva (projeção isométrica achatada), bairro iluminado no centro e prédios baixos em volta
@@ -54,11 +46,6 @@ const ligacoes = Object.values(ancora).map(([x, y]) => `M${centro[0]} ${centro[1
       <h2 id="iv-tit" class="iv-tit"><span>Invisível</span><span class="iv-tit2">não vende.</span></h2>
       <i class="iv-traco" aria-hidden="true"></i>
       <p class="iv-sub">Apareça para quem <b>já está procurando</b> o que você vende.</p>
-      <ul class="iv-pilares">
-        {pilares.map(([i, t, d]) => (
-          <li><span class="iv-ic"><Icon name={i} size={20} /></span><div><b>{t}</b><small>{d}</small></div></li>
-        ))}
-      </ul>
       <div class="iv-fim">
         <p>Mais visibilidade. Mais oportunidades. <b>Mais vendas.</b></p>
         <a class="iv-cta" href={waLink('Olá! Quero que minha empresa seja encontrada na internet.')} target="_blank" rel="noopener">Quero ser encontrado <span aria-hidden="true">↗</span></a>
@@ -163,12 +150,6 @@ const ligacoes = Object.values(ancora).map(([x, y]) => `M${centro[0]} ${centro[1
   .iv-traco{display:block;width:64px;height:3px;margin:22px 0 16px;border-radius:3px;background:#fff1de}
   .iv-sub{font-size:20px;line-height:1.4;color:rgba(255,241,222,.88);max-width:30ch}
   .iv-sub b{color:#fff}
-  .iv-pilares{list-style:none;margin:28px 0 0;padding:0;display:grid;gap:14px}
-  .iv-pilares li{display:flex;align-items:center;gap:14px;padding-bottom:14px;border-bottom:1px solid rgba(255,220,190,.18)}
-  .iv-pilares li:last-child{border-bottom:0;padding-bottom:0}
-  .iv-ic{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:12px;background:rgba(20,8,0,.35);border:1px solid rgba(255,220,190,.35);color:#fff1de}
-  .iv-pilares b{display:block;font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:19px;line-height:1.05;letter-spacing:.03em}
-  .iv-pilares small{display:block;color:rgba(255,241,222,.78);font-size:14px}
   .iv-fim{margin-top:28px;display:flex;flex-wrap:wrap;align-items:center;gap:18px 24px;padding:18px 20px;border-radius:var(--radius-lg);background:rgba(20,8,0,.3);border:1px solid rgba(255,220,190,.25)}
   .iv-fim p{flex:1;min-width:220px;font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:22px;line-height:1.05;color:rgba(255,241,222,.85)}
   .iv-fim p b{color:#fff}
@@ -192,25 +173,27 @@ const ligacoes = Object.values(ancora).map(([x, y]) => `M${centro[0]} ${centro[1
   .iv-pin svg{display:block;width:100%}
   @keyframes iv-pula{50%{transform:translateY(-2.4cqw)}}
 
-  /* cartões grossos com espessura, borda de luz e brilho */
-  .iv-tile{position:absolute;display:flex;flex-direction:column;gap:1.4cqw;padding:2cqw;border-radius:2.6cqw;
-    background:linear-gradient(160deg,#3c3a37,#1f1e1c 55%,#151413);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 1.2cqw 0 #0b0a09,0 1.2cqw 0 1px rgba(255,138,36,.55),0 0 0 1px rgba(255,138,36,.45),0 0 4cqw -.5cqw rgba(255,105,0,.65),0 3cqw 4cqw -1cqw rgba(0,0,0,.8);
-    animation:iv-boia 4.5s ease-in-out infinite}
-  @keyframes iv-boia{50%{transform:translateY(-1.1cqw)}}
+  /* cartões de vidro em perspectiva 3D */
+  .iv-tile{--ry:-16deg;position:absolute;display:flex;flex-direction:column;gap:1.4cqw;padding:2cqw;border-radius:2.6cqw;color:#fff;
+    background:linear-gradient(150deg,rgba(255,255,255,.2),rgba(255,255,255,.05) 50%,rgba(255,138,36,.12));
+    border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(12px) saturate(150%);-webkit-backdrop-filter:blur(12px) saturate(150%);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.5),inset 0 -1px 0 rgba(255,138,36,.6),1cqw 1.2cqw 0 -.3cqw rgba(255,180,110,.22),0 0 4cqw -1cqw rgba(255,105,0,.7),0 3cqw 4cqw -1.5cqw rgba(30,8,0,.8);
+    transform:perspective(700px) rotateY(var(--ry)) rotateX(10deg);animation:iv-boia 4.5s ease-in-out infinite}
+  .iv-tile::before{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.35),rgba(255,255,255,0) 38%)}
+  .iv-tel,.iv-aval{--ry:16deg}
+  .iv-site{--ry:0deg}
+  @keyframes iv-boia{50%{transform:perspective(700px) rotateY(var(--ry)) rotateX(10deg) translateY(-1.1cqw)}}
   .iv-tel,.iv-hora,.iv-mapa{aspect-ratio:1;align-items:center;justify-content:center}
   .iv-gl{width:68%;height:68%}
   .iv-ponteiro{transform-origin:24px 24px;animation:iv-gira 6s linear infinite}
   @keyframes iv-gira{to{transform:rotate(360deg)}}
-  .iv-loja,.iv-site{background:linear-gradient(160deg,#fbf8f3,#ece6dd);box-shadow:inset 0 1px 0 #fff,0 1.2cqw 0 #b7aea2,0 1.2cqw 0 1px rgba(255,138,36,.55),0 0 0 1px rgba(255,138,36,.5),0 0 4cqw -.5cqw rgba(255,105,0,.6),0 3cqw 4cqw -1cqw rgba(0,0,0,.8)}
   .iv-loja{flex-direction:row;align-items:center;gap:2cqw}
   .iv-loja-ic{flex:none;width:40%}
   .iv-loja-ic svg{display:block;width:100%}
   .iv-linhas{flex:1;display:flex;flex-direction:column;gap:1.1cqw}
-  .iv-linhas i{display:block;height:1.2cqw;border-radius:9px;background:#c9c2b8}
+  .iv-linhas i{display:block;height:1.2cqw;border-radius:9px;background:rgba(255,255,255,.4)}
   .iv-linhas i.o{background:#ff7a1a;width:80%}
   .iv-linhas i.c{width:60%}
-  .iv-tile:not(.iv-loja):not(.iv-site) .iv-linhas i{background:#55514c}
   .iv-estrelas{display:flex;gap:.8cqw}
   .iv-estrelas svg{width:4.4cqw;height:4.4cqw;filter:drop-shadow(0 0 1cqw rgba(255,138,36,.7));animation:iv-estrela 3s ease-in-out infinite}
   @keyframes iv-estrela{0%,100%{transform:scale(1)}10%{transform:scale(1.25)}20%{transform:scale(1)}}
@@ -227,8 +210,7 @@ const ligacoes = Object.values(ancora).map(([x, y]) => `M${centro[0]} ${centro[1
     .iv-txt{display:flex;flex-direction:column;align-items:center;text-align:center}
     .iv-tit{align-items:center;font-size:56px}
     .iv-traco{margin-inline:auto}
-    .iv-pilares li{text-align:left}
-    .iv-fim{flex-direction:column;text-align:center}
+      .iv-fim{flex-direction:column;text-align:center}
   }
   @media (prefers-reduced-motion: reduce){.iv-fluxo,.iv-pulsa,.iv-onda,.iv-pin,.iv-tile,.iv-ponteiro,.iv-estrelas svg{animation:none}}
 </style>
