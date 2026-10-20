@@ -145,3 +145,11 @@ html,body{max-width:100%;overflow-x:clip}
 
 /* primeira seção depois do hero: 20px de distância (o hero já tem 20px embaixo) */
 .servicos-topo{padding-top:0;scroll-margin-top:72px}
+
+/* seção Serviços da home: no estilo do hero, sem fundo nos cards */
+.sv-tit{display:flex;flex-wrap:wrap;gap:0 .25em;font-size:clamp(46px,5.6vw,76px);line-height:.9;letter-spacing:-.02em;color:#fff;margin-bottom:32px}
+.sv-or{background:linear-gradient(180deg,#ff8a24,#ff6900);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.sv-grid .card{background:transparent;box-shadow:none;border-color:rgba(255,255,255,.1)}
+.sv-grid .card:hover{border-color:var(--orange);background:rgba(255,105,0,.05)}
+.sv-grid .icone{background:rgba(255,105,0,.12)}
+@media(max-width:767px){.sv-tit{justify-content:center;font-size:46px}}
