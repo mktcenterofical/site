@@ -1,0 +1,70 @@
+---
+// Sanfona (accordion) de imagens com as 5 épocas da MKT, para o lado direito do hero da página Sobre.
+// O painel aberto mostra a tela animada daquela época (TelaEra); os fechados mostram foto + título na vertical.
+// Abre ao passar o mouse/tocar e avança sozinho a cada 4s.
+import TelaEra from './TelaEra.astro';
+const itens = [
+  { era: '2013', titulo: 'Lojas virtuais', foto: 'pao', forma: 'tab' },
+  { era: '2016', titulo: 'Redes sociais', foto: 'croissant', forma: 'cel' },
+  { era: '2018', titulo: 'Sites institucionais', foto: 'padaria', forma: 'lap' },
+  { era: '2020', titulo: 'Lives', foto: 'cafe', forma: 'cel' },
+  { era: '2026', titulo: 'Apps, sistemas e IA', foto: 'bolo', forma: 'lap' },
+] as const;
+---
+<div class="sf" id="sanfona">
+  <div class="sf-trilho">
+    {itens.map((it, i) => (
+      <button type="button" class={`sf-item${i === itens.length - 1 ? ' on' : ''}`} data-i={i} aria-label={`${it.era} · ${it.titulo}`}>
+        <img class="sf-foto" src={`/mock/${it.foto}.webp`} alt="" width="320" height="220" decoding="async" />
+        <span class="sf-veu"></span>
+        <span class={`sf-tela f-${it.forma}`} aria-hidden="true"><TelaEra era={it.era} /></span>
+        <span class="sf-rot"><b>{it.era}</b> {it.titulo}</span>
+      </button>
+    ))}
+  </div>
+  <p class="sf-nota">De 2013 a 2026: cada época, um novo jeito de vender no digital</p>
+</div>
+
+<style>
+  .sf{width:100%;display:flex;flex-direction:column;align-items:center}
+  .sf-trilho{display:flex;gap:12px;width:min(100%,600px);height:clamp(380px,48vw,500px)}
+  .sf-item{position:relative;flex:0 0 56px;border:0;padding:0;border-radius:22px;overflow:hidden;cursor:pointer;background:#111317;
+    box-shadow:0 0 0 1px rgba(255,255,255,.08),0 20px 40px -20px rgba(0,0,0,.9);transition:flex .7s cubic-bezier(.7,0,.2,1),box-shadow .5s}
+  .sf-item.on{flex:1 1 auto;box-shadow:0 0 0 1px rgba(255,138,36,.6),0 0 40px -10px rgba(255,105,0,.7),0 20px 40px -20px rgba(0,0,0,.9)}
+  .sf-foto{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:saturate(.8)}
+  .sf-veu{position:absolute;inset:0;background:linear-gradient(180deg,rgba(9,10,12,.35),rgba(9,10,12,.75));transition:background .5s}
+  .sf-item.on .sf-veu{background:radial-gradient(120% 80% at 50% 40%,rgba(255,105,0,.25),rgba(9,10,12,.92) 70%)}
+
+  /* tela animada da época, centralizada no painel aberto */
+  .sf-tela{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) scale(.9);opacity:0;container-type:inline-size;overflow:hidden;
+    border:6px solid #0c0d10;box-shadow:0 0 0 1px rgba(255,255,255,.12),0 20px 40px -10px rgba(0,0,0,.9);transition:opacity .4s,transform .6s}
+  .sf-item.on .sf-tela{opacity:1;transform:translate(-50%,-50%);transition-delay:.35s}
+  .f-tab{width:72%;aspect-ratio:3/4;border-radius:18px}
+  .f-cel{width:46%;aspect-ratio:9/19;border-radius:26px}
+  .f-lap{width:86%;aspect-ratio:16/10;border-radius:10px}
+
+  .sf-rot{position:absolute;left:50%;bottom:110px;transform:translateX(-50%) rotate(90deg);transform-origin:center;white-space:nowrap;color:#fff;font-family:var(--ff-txt);font-size:15px;font-weight:600;transition:all .35s}
+  .sf-rot b{font-family:var(--ff-tit);font-weight:800;color:#ff8a24;font-size:17px;margin-right:4px}
+  .sf-item.on .sf-rot{bottom:22px;transform:translateX(-50%) rotate(0);font-size:17px}
+  .sf-item.on .sf-rot b{font-size:20px}
+  .sf-nota{margin-top:14px;font-size:13px;color:#aeb4bd;text-align:center}
+
+  @media(max-width:767px){
+    .sf-trilho{gap:6px;height:420px}
+    .sf-item{flex-basis:36px;border-radius:16px}
+    .sf-rot{font-size:13px;bottom:80px}
+  }
+  @media (prefers-reduced-motion: reduce){.sf-item,.sf-tela{transition:none}}
+</style>
+
+<script>
+  const raiz = document.getElementById('sanfona');
+  if (raiz) {
+    const itens = Array.from(raiz.querySelectorAll<HTMLElement>('.sf-item'));
+    let k = itens.length - 1, timer: number | undefined;
+    const abrir = (i: number) => { k = i; itens.forEach((el, j) => el.classList.toggle('on', j === i)); };
+    const ciclo = () => { clearInterval(timer); if (!matchMedia('(prefers-reduced-motion: reduce)').matches) timer = window.setInterval(() => abrir((k + 1) % itens.length), 4000); };
+    itens.forEach((el, i) => { el.addEventListener('mouseenter', () => { abrir(i); ciclo(); }); el.addEventListener('click', () => { abrir(i); ciclo(); }); });
+    abrir(0); ciclo();
+  }
+</script>
