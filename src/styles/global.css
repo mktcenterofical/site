@@ -70,6 +70,9 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--focus-ring);outl
 .hp{position:absolute;left:-9999px}
 .breadcrumb{font-size:14px;color:var(--ink-muted);margin-bottom:20px}
 .breadcrumb a{text-decoration:none}
+main:has(.hc)>.wrap:first-child{padding-top:16px !important}
+main:has(.hc) .breadcrumb{margin-bottom:0}
+@media(min-width:768px){main:has(.breadcrumb) .hc{padding-top:24px;min-height:calc(100vh - 115px);min-height:calc(100svh - 115px)}}
 .prose p,.prose li{color:var(--ink-muted);margin-bottom:.8em;max-width:65ch}
 .prose h2{font-size:28px;margin:1.6em 0 .4em}
 .prose ul{padding-left:20px}
@@ -105,7 +108,7 @@ html,body{max-width:100%;overflow-x:clip}
   details{text-align:left}
   .dois{gap:24px}
   .prose,.prose p,.prose li{text-align:left}
-  .breadcrumb{display:none}
+  .breadcrumb{font-size:13px;text-align:center}
   form{text-align:left}
 }
 

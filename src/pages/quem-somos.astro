@@ -2,21 +2,30 @@
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import HeroCrescimento from '../components/HeroCrescimento.astro';
-import SanfonaEpocas from '../components/SanfonaEpocas.astro';
+import CelularVitrine from '../components/CelularVitrine.astro';
+import Clientes from '../components/Clientes.astro';
+import PorQue from '../components/PorQue.astro';
 import { waLink } from '../config';
 import { config } from '../config';
 const schema = [{ '@context': 'https://schema.org', '@type': 'AboutPage', name: 'Quem somos · MKT Center', about: { '@type': 'ProfessionalService', name: config.nome, foundingDate: '2013' } }];
 const valores: [string, string, string][] = [
-  ['trending', 'Resultado medido', 'Cada projeto nasce com uma meta: mais contatos, mais vendas ou melhor posição no Google. E a gente mostra os números.'],
-  ['message', 'Conversa direta', 'Você fala com quem faz o seu projeto, pelo WhatsApp, sem jargão técnico e sem enrolação.'],
-  ['smartphone', 'Celular em primeiro lugar', 'A maioria dos seus clientes chega pelo celular. Por isso tudo é pensado primeiro para a tela pequena.'],
-  ['landmark', 'Para todos', 'Atendemos comércio, empresas, profissionais liberais e políticos de todos os partidos, sempre dentro das regras.'],
+  ['check', 'Ética', 'Fazemos o certo, mesmo quando ninguém está olhando. Nada de promessa falsa ou atalho que prejudique o cliente.'],
+  ['star', 'Transparência', 'Falamos a verdade sobre prazos, custos e resultados. O cliente sempre sabe o que está acontecendo.'],
+  ['heart', 'Respeito', 'Tratamos cada pessoa com respeito, sem distinção. Valorizamos clientes, equipe e parceiros.'],
+  ['rocket', 'Compromisso', 'Palavra dada é palavra cumprida. Assumimos cada projeto como se fosse nosso.'],
+  ['message', 'Parceria', 'Crescemos junto com quem confia na gente. O sucesso do cliente é o nosso sucesso.'],
+  ['sparkles', 'Inovação', 'Buscamos sempre aprender e evoluir, usando a tecnologia a favor das pessoas.'],
 ];
-const etapas = ['Entendemos o seu negócio e o seu cliente', 'Mostramos a proposta e o layout antes de começar', 'Criamos, testamos em todos os aparelhos e publicamos', 'Acompanhamos os resultados e ajustamos todo mês'];
+const etapas: [string, string, string][] = [
+  ['message', 'Conversa', 'Entendemos o seu negócio, o seu cliente e o que você quer alcançar.'],
+  ['grid', 'Proposta', 'Mostramos a proposta e o layout antes de começar. Nada é feito no escuro.'],
+  ['wrench', 'Criação', 'Criamos, testamos em todos os aparelhos e publicamos com tudo funcionando.'],
+  ['trending', 'Acompanhamento', 'Acompanhamos os resultados e ajustamos todo mês para crescer sempre.'],
+];
 ---
 <Base title="Quem Somos: Agência Digital desde 2013 | MKT Center"
   description="Desde 2013 criando lojas virtuais, sites, redes sociais, vídeos e hoje aplicativos e sistemas com IA. Conheça a história da MKT Center."
-  schema={schema}>
+  schema={schema} crumbs={[['Quem somos', '/quem-somos/']]}>
   <HeroCrescimento
     rotulo="Quem somos · MKT Center"
     linhas={[['Evoluindo']]}
@@ -27,35 +36,86 @@ const etapas = ['Entendemos o seu negócio e o seu cliente', 'Mostramos a propos
     numeros={[[2013, '', 'ano de fundação'], [10, '+', 'anos no digital'], ['IA', '', 'no dia a dia']]}
     rolarPara="#valores"
   >
-    <SanfonaEpocas slot="visual" />
+    <div slot="visual" class="fabrica">
+      <CelularVitrine />
+    </div>
   </HeroCrescimento>
 
   <section class="alt servicos-topo" id="valores">
     <div class="wrap">
-      <span class="eyebrow">No que acreditamos</span>
-      <h2>Nossos valores</h2>
-      <div class="grid grid-4">
-        {valores.map(([i, t, d]) => (
-          <div class="card"><span class="icone"><Icon name={i} /></span><h3>{t}</h3><p>{d}</p></div>
-        ))}
+      <div class="vl">
+        <div class="vl-foto">
+          <img src="/equipe/edigar.webp" alt="Edigar Matos da Silva Junior, da MKT Center, com o cartão do perfil no Instagram" width="768" height="1024" loading="lazy" decoding="async" />
+        </div>
+        <div class="vl-txt">
+          <span class="eyebrow">No que acreditamos</span>
+          <h2>Nossos valores</h2>
+          <div class="vl-cards sv-grid">
+            {valores.map(([i, t, d]) => (
+              <div class="card vl-card"><span class="icone"><Icon name={i} /></span><h3>{t}</h3><p>{d}</p></div>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section>
+  <section class="ct">
     <div class="wrap">
       <span class="eyebrow">Como trabalhamos</span>
       <h2>Do briefing ao resultado</h2>
-      <ol class="etapas">{etapas.map((e) => <li>{e}</li>)}</ol>
+      <ol class="ct-passos sv-grid">
+        {etapas.map(([i, t, d], n) => (
+          <li class="card ct-card">
+            <div class="ct-cab"><span class="icone"><Icon name={i} /></span><em>Etapa {String(n + 1).padStart(2, '0')}</em></div>
+            <h3>{t}</h3><p>{d}</p>
+          </li>
+        ))}
+      </ol>
     </div>
   </section>
+
+  <Clientes />
+
+  <PorQue />
 
 </Base>
 
 <style>
-  .foto{position:relative;border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow-card)}
-  .foto img{width:100%;height:100%;object-fit:cover;aspect-ratio:16/11}
-  .selo{position:absolute;left:16px;right:16px;bottom:16px;background:var(--carbon);color:#fff;border-radius:var(--radius-md);padding:14px 18px}
-  .selo b{display:block;font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:22px;color:var(--orange-hot)}
-  .selo span{font-size:14px;color:#c3c8cf}
+  .fabrica{position:relative;width:100%;height:clamp(520px,78vh,780px)}
+  @media(max-width:767px){.fabrica{height:460px}}
+  @media(min-width:1024px){.fabrica{height:auto;min-height:420px;align-self:stretch}}
+  .vl{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:40px;align-items:center}
+  .vl-foto{border-radius:22px;overflow:hidden;box-shadow:0 30px 60px -20px rgba(0,0,0,.7),0 0 0 1px rgba(255,255,255,.08)}
+  .vl-foto{position:relative;aspect-ratio:3/4}
+  @media(min-width:1024px){.vl-foto{aspect-ratio:auto;min-height:520px}}
+  .vl-foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%}
+  .vl{align-items:stretch}
+  .vl-txt{display:flex;flex-direction:column}
+  .vl-txt :is(.eyebrow,h2){text-align:left}
+  .vl-txt h2{margin-bottom:22px}
+  .vl-cards{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:14px}
+  .vl-cards.sv-grid{grid-template-columns:1fr 1fr}
+  .vl-cards.sv-grid>*{grid-column:auto}
+  .vl-card.card{display:grid;grid-template-columns:auto 1fr;align-items:center;align-content:start;column-gap:14px;padding:18px 20px;text-align:left}
+  .vl-card .icone{margin:0;width:48px;height:48px}
+  .vl-card h3{margin:0}
+  .vl-card p{grid-column:1 / -1;margin-top:12px}
+  @media(max-width:1023px){.vl{grid-template-columns:1fr;gap:28px}.vl-foto{max-width:460px;width:100%;margin:0 auto}}
+  .ct :is(.eyebrow,h2){text-align:left}
+  .ct h2{margin-bottom:22px}
+  .ct-passos.sv-grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;counter-reset:none}
+  .ct-passos.sv-grid>*{grid-column:auto}
+  .ct-card.card{position:relative;padding:20px;text-align:left}
+  .ct-card:not(:last-child)::after{content:"";position:absolute;top:44px;right:-15px;width:16px;height:2px;background:linear-gradient(90deg,#ff6900,transparent);z-index:1}
+  .ct-cab{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+  .ct-card .icone{margin:0;width:48px;height:48px}
+  .ct-cab em{font:700 14px/1 'Barlow Condensed',sans-serif;font-style:normal;letter-spacing:.12em;text-transform:uppercase;color:#ff8a24}
+  .ct-card h3{margin:0 0 6px}
+  .ct-card p{margin:0}
+  @media(min-width:768px) and (max-width:1023px){.ct-passos.sv-grid{grid-template-columns:1fr 1fr}.ct-passos.sv-grid>:nth-child(n){grid-column:auto}.ct-card:nth-child(2)::after{display:none}}
+  @media(max-width:767px){.ct-passos.sv-grid{grid-template-columns:1fr}.ct-card::after{display:none}}
+  @media(max-width:767px){.vl-cards{grid-auto-rows:auto}.vl-cards.sv-grid{grid-template-columns:1fr}.vl-cards.sv-grid>:last-child{grid-column:auto}}
+  @media(max-width:767px){.vl-cards{grid-template-columns:1fr}}
+  @media(prefers-reduced-motion:reduce){.vl-perfil{animation:none}}
 </style>

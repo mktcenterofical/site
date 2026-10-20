@@ -10,6 +10,7 @@ import TelaErp from './TelaErp.astro';
 import TelaSite from './TelaSite.astro';
 import TelaApp from './TelaApp.astro';
 import TelaEra from './TelaEra.astro';
+import TelaPrint from './TelaPrint.astro';
 // textos configuráveis: a home usa os padrões; a página Sobre passa os dela
 interface Props {
   rotulo?: string; linhas?: string[][]; destaque?: string; texto?: string;
@@ -18,6 +19,8 @@ interface Props {
   rolarPara?: string;
   // modo "épocas" (página Sobre): botões com anos e cada aparelho mostra uma época
   epocas?: boolean;
+  // modo "sites" (página Portfólio): cada aparelho mostra o print de um site real, rolando devagar
+  sites?: Record<string, { nome: string; dominio: string; tela: string; w: number; h: number; logo: string }>;
 }
 const {
   rotulo = 'Agência de marketing digital em São Paulo',
@@ -29,6 +32,7 @@ const {
   numeros = [[180, '+', 'projetos entregues'], [98, '%', 'clientes satisfeitos'], [2, 'h', 'para responder']],
   rolarPara = '#servicos',
   epocas = false,
+  sites,
 } = Astro.props;
 const dispositivos = [
   { id: 'desk', nome: 'Desktop', icone: '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>' },
@@ -53,8 +57,9 @@ const saltosEpocas: Record<string, [string, string, string][]> = {
   desk: [['pessoa2', 'Assistente IA', 'relatório pronto'], ['pessoa1', 'App publicado', '2026']],
 };
 const modos = epocas ? ordemEpocas.map((id) => dispositivos.find((d) => d.id === id)!) : dispositivos;
+const saltosSites = sites && Object.fromEntries(Object.entries(sites).map(([id, s]) => [id, [[s.logo, s.nome, s.dominio], [s.tela, 'Responsivo', 'em todas as telas']]]));
 ---
-<section class="hc" id="hero" data-saltos={JSON.stringify(epocas ? saltosEpocas : saltos)} data-ordem={JSON.stringify(modos.map((d) => d.id))}>
+<section class={sites ? 'hc hc--sites' : 'hc'} id="hero" data-saltos={JSON.stringify(saltosSites ?? (epocas ? saltosEpocas : saltos))} data-ordem={JSON.stringify(modos.map((d) => d.id))}>
 
   <div class="wrap hc-in">
     <div class="hc-txt">
@@ -79,26 +84,31 @@ const modos = epocas ? ordemEpocas.map((id) => dispositivos.find((d) => d.id ===
         <div class="sv-aura"></div>
 
         <div class="dv dv-desk" data-d="desk">
-          <div class="dv-frame"><div class="dv-scr">{epocas ? <TelaEra era="2026" /> : <TelaErp />}<i class="dv-on"></i></div></div>
+          <div class="dv-frame"><div class="dv-scr">{sites?.desk ? <TelaPrint {...sites.desk} /> : epocas ? <TelaEra era="2026" /> : <TelaErp />}<i class="dv-on"></i></div></div>
           <div class="dv-neck"></div><div class="dv-foot"></div>
         </div>
         <div class="dv dv-lap" data-d="lap">
-          <div class="dv-frame"><div class="dv-scr">{epocas ? <TelaEra era="2018" /> : <TelaSite />}<i class="dv-on"></i></div></div>
+          <div class="dv-frame"><div class="dv-scr">{sites?.lap ? <TelaPrint {...sites.lap} /> : epocas ? <TelaEra era="2018" /> : <TelaSite />}<i class="dv-on"></i></div></div>
           <div class="dv-deck"></div>
         </div>
         <div class="dv dv-tab" data-d="tab">
-          <div class="dv-frame"><div class="dv-scr">{epocas ? <TelaEra era="2013" /> : <Loja tipo="tab" />}<i class="dv-on"></i></div></div>
+          <div class="dv-frame"><div class="dv-scr">{sites?.tab ? <TelaPrint {...sites.tab} /> : epocas ? <TelaEra era="2013" /> : <Loja tipo="tab" />}<i class="dv-on"></i></div></div>
         </div>
         <div class="dv dv-cel" data-d="cel">
-          <div class="dv-frame"><div class="dv-scr">{epocas ? <TelaEra era="2016" /> : <TelaApp />}<i class="dv-on"></i><span class="dv-tap"></span></div></div>
+          <div class="dv-frame"><div class="dv-scr">{sites?.cel ? <TelaPrint {...sites.cel} /> : epocas ? <TelaEra era="2016" /> : <TelaApp />}<i class="dv-on"></i><span class="dv-tap"></span></div></div>
         </div>
 
         <!-- produtos que saltam da tela do aparelho em destaque -->
         <div class="pop"><div class="pop-img"><img src="/mock/jaqueta.webp" alt="" width="320" height="320" /></div><div><b>Jaqueta Couro</b><small>R$ 349,90</small></div></div>
         <div class="pop"><div class="pop-img"><img src="/mock/bone.webp" alt="" width="320" height="320" /></div><div><b>Boné Trucker</b><small>R$ 79,90</small></div></div>
 
-        <div class="chip chip-a"><span class="chip-ok">✓</span><div><b>Pix aprovado</b><small>Pedido #1024 · R$ 189,90</small></div></div>
-        <div class="chip chip-b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg><div><b>+38% em vendas</b><small>depois do projeto novo</small></div></div>
+        {sites ? <>
+          <div class="chip chip-a"><span class="chip-ok">✓</span><div><b>Sites no ar</b><small>criados pela MKT Center</small></div></div>
+          <div class="chip chip-b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg><div><b>Em todas as telas</b><small>celular, tablet e computador</small></div></div>
+        </> : <>
+          <div class="chip chip-a"><span class="chip-ok">✓</span><div><b>Pix aprovado</b><small>Pedido #1024 · R$ 189,90</small></div></div>
+          <div class="chip chip-b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m22 7-8.5 8.5-5-5L2 17"/><path d="M16 7h6v6"/></svg><div><b>+38% em vendas</b><small>depois do projeto novo</small></div></div>
+        </>}
       </div>
 
       <div class="sv-modes" role="tablist" aria-label="Destacar aparelho">
@@ -109,7 +119,7 @@ const modos = epocas ? ordemEpocas.map((id) => dispositivos.find((d) => d.id ===
           </button>
         ))}
       </div>
-      <p class="sv-note">{epocas ? 'De 2013 a 2026: cada época, um novo jeito de vender no digital' : 'Sistema, site, loja e app: tudo integrado, em qualquer tela'}</p>
+      <p class="sv-note">{sites ? `Sites reais: ${Object.values(sites).map((s) => s.nome).join(', ')}` : epocas ? 'De 2013 a 2026: cada época, um novo jeito de vender no digital' : 'Sistema, site, loja e app: tudo integrado, em qualquer tela'}</p>
     </div>
     )}
   </div>
@@ -178,6 +188,21 @@ const modos = epocas ? ordemEpocas.map((id) => dispositivos.find((d) => d.id ===
   .dv-cel .dv-frame{padding:.6cqw;border-radius:2.6cqw}
   .dv-cel .dv-scr{aspect-ratio:9/19;border-radius:2cqw}
   .dv-tap{position:absolute;z-index:8;left:82%;top:59%;width:5cqw;height:5cqw;margin:-2.5cqw 0 0 -2.5cqw;border-radius:50%;border:.35cqw solid #ff6900;opacity:0;pointer-events:none}
+
+  /* modo sites: print do site real rolando dentro da tela (--alt = altura da tela em cqw da própria tela) */
+  :global(.dv-site){position:absolute;left:0;top:0;width:100%;height:auto;animation:dv-rola 16s ease-in-out infinite alternate}
+  .dv-desk :global(.dv-site),.dv-lap :global(.dv-site){--alt:62.5cqw}
+  .dv-tab :global(.dv-site){--alt:136.7cqw;animation-delay:-4s}
+  .dv-cel :global(.dv-site){--alt:211.1cqw;animation-delay:-8s}
+  .dv-lap :global(.dv-site){animation-delay:-12s}
+  @keyframes dv-rola{0%,12%{transform:translateY(0)}88%,100%{transform:translateY(calc(-100% + var(--alt)))}}
+  .hc--sites .pop{width:27cqw}
+  .hc--sites .pop>div:last-child{min-width:0}
+  .hc--sites .pop :is(b,small){white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .hc--sites .pop-img{background:#fff}
+  .hc--sites .pop-img img{object-fit:contain;padding:.5cqw}
+  .hc--sites .pop + .pop .pop-img img{object-fit:cover;object-position:top;padding:0}
+  @media (prefers-reduced-motion: reduce){:global(.dv-site){animation:none}}
 
   /* produtos que saltam */
   .pop{position:absolute;left:0;top:0;z-index:20;display:flex;align-items:center;gap:1cqw;width:21cqw;padding:.8cqw;border-radius:1.6cqw;background:rgba(255,255,255,.97);color:#17181c;box-shadow:0 3cqw 5cqw -1.5cqw rgba(0,0,0,.85),0 0 0 1px rgba(255,255,255,.8) inset;opacity:0;pointer-events:none;will-change:transform}
@@ -301,7 +326,7 @@ const modos = epocas ? ordemEpocas.map((id) => dispositivos.find((d) => d.id ===
     t.to(aparelhos, { z: (_i: number, el: HTMLElement) => (el === d ? 50 : 0), y: (_i: number, el: HTMLElement) => (el === d ? -c.w * .012 : 0), duration: .8, ease: 'power3.out' }, 0);
     pops.forEach((p, i) => {
       const [img, nome, preco] = saltos[id][i];
-      p.querySelector('img')!.src = `/mock/${img}.webp`;
+      p.querySelector('img')!.src = img.startsWith('/') ? img : `/mock/${img}.webp`;
       p.querySelector('b')!.textContent = nome;
       p.querySelector('small')!.textContent = preco;
       const lado = i === 0 ? -1 : 1;
@@ -313,7 +338,7 @@ const modos = epocas ? ordemEpocas.map((id) => dispositivos.find((d) => d.id ===
         .to(p, { y: dy - c.w * .012, duration: 1.4, ease: 'sine.inOut', yoyo: true, repeat: 1 }, 1.4)
         .to(p, { x: ox, y: oy, z: 0, scale: .25, opacity: 0, rotationY: 0, duration: .6, ease: 'power3.in' }, 4.3 + i * .08);
     });
-    if (id === 'cel') t.add(compra(), 1.2);
+    if (id === 'cel' && !root.classList.contains('hc--sites')) t.add(compra(), 1.2);
     return t;
   }
 

@@ -1,38 +1,133 @@
 ---
 import Base from '../layouts/Base.astro';
-import Icon from '../components/Icon.astro';
+import HeroCrescimento from '../components/HeroCrescimento.astro';
+import CardPortfolio from '../components/CardPortfolio.astro';
+import Precos from '../components/Precos.astro';
+import { waLink } from '../config';
 const schema = [{ '@context': 'https://schema.org', '@type': 'CollectionPage', name: 'Portfólio MKT Center' }];
+// sites reais criados pela MKT Center (prints em public/portfolio/)
+const projetos = [
+  {
+    nome: 'RollerPort', tipo: 'Site institucional', url: 'https://rollerport.com.br/', logo: '/clientes/rollerport.webp',
+    descricao: 'Site para fábrica de roletes, cavaletes e tambores para transportadores industriais, com catálogo de produtos e pedido de orçamento.',
+    lap: ['/portfolio/rollerport-lap.webp', 720, 1800] as [string, number, number],
+    cel: ['/portfolio/rollerport-cel.webp', 300, 2615] as [string, number, number],
+  },
+  {
+    nome: 'Pugas News', tipo: 'Portal de notícias', url: 'https://pugasnews.com.br/', logo: '/clientes/pugas-news.webp',
+    descricao: 'Portal de notícias de Itatiba/SP com política, religião, saúde, cidade e utilidades como tempo, mercado, combustível e trânsito.',
+    lap: ['/portfolio/pugas-lap.webp', 720, 1550] as [string, number, number],
+    cel: ['/portfolio/pugas-cel.webp', 300, 2615] as [string, number, number],
+  },
+  {
+    nome: 'Rádio Conexão Católica', tipo: 'Web rádio', url: 'https://radioconexaocatolica.com.br/', logo: '/clientes/radio-conexao-catolica.webp',
+    descricao: 'Web rádio católica 24 horas com player ao vivo, música, oração, liturgia e notícias da Igreja.',
+    lap: ['/portfolio/radio-lap.webp', 720, 1800] as [string, number, number],
+    cel: ['/portfolio/radio-cel.webp', 300, 2615] as [string, number, number],
+  },
+  {
+    nome: 'Pousada São José de Anchieta', tipo: 'Site de hospedagem', url: 'https://pousadasaojosedeanchieta.com.br/', logo: '/clientes/pousada-anchieta.webp',
+    descricao: 'Pousada em Cachoeira Paulista para grupos nos eventos da Canção Nova, com acomodações, galeria e reserva pelo WhatsApp.',
+    lap: ['/portfolio/pousada-lap.webp', 720, 1800] as [string, number, number],
+    cel: ['/portfolio/pousada-cel.webp', 300, 2615] as [string, number, number],
+  },
+  {
+    nome: 'Kimax', tipo: 'Loja virtual', url: 'https://www.kimax.com.br/', logo: '/clientes/kimax.webp',
+    descricao: 'Loja virtual de produtos de limpeza de Marília/SP, com vitrine por categoria, carrinho e pagamento por Pix, boleto e cartão.',
+    lap: ['/portfolio/kimax-lap.webp', 720, 1800] as [string, number, number],
+    cel: ['/portfolio/kimax-cel.webp', 300, 2615] as [string, number, number],
+  },
+  {
+    nome: 'Sanremax', tipo: 'Site institucional', url: 'https://sanremax.com.br/', logo: '/clientes/sanremax.webp',
+    descricao: 'Site para representação comercial de rótulos BOPP, sleeves e adesivos, com áreas de atuação e o projeto de reciclagem Ecoflora.',
+    lap: ['/portfolio/sanremax-lap.webp', 720, 1800] as [string, number, number],
+    cel: ['/portfolio/sanremax-cel.webp', 300, 2615] as [string, number, number],
+  },
+  {
+    nome: 'Eletro Epi', tipo: 'Site institucional', url: 'https://eletroepi.com.br/', logo: '/clientes/eletroepi.webp',
+    descricao: 'Site para revenda de materiais elétricos, com automação, SPDA e aterramento, catálogos e pedido de orçamento.',
+    lap: ['/portfolio/eletroepi-lap.webp', 720, 1800] as [string, number, number],
+    cel: ['/portfolio/eletroepi-cel.webp', 300, 2615] as [string, number, number],
+  },
+  {
+    nome: 'Nexcabos', tipo: 'Site institucional', url: 'https://nexcabos.com.br/', logo: '/clientes/nexcabos.webp',
+    descricao: 'Site para fábrica de cabos elétricos de Sorocaba/SP, com linha de produtos, catálogo, certificados e pedido de orçamento.',
+    lap: ['/portfolio/nexcabos-lap.webp', 720, 1800] as [string, number, number],
+    cel: ['/portfolio/nexcabos-cel.webp', 300, 2615] as [string, number, number],
+  },
+  {
+    nome: 'Igreja Ortodoxa Grega', tipo: 'Portal institucional', url: 'https://igrejaortodoxagregabrasil.com.br/', logo: '/clientes/igreja-ortodoxa.webp',
+    descricao: 'Portal da Igreja Ortodoxa Grega no Brasil com fé, tradição, Divina Liturgia, comunidades, calendário e formação em português.',
+    lap: ['/portfolio/igreja-lap.webp', 720, 1800] as [string, number, number],
+    cel: ['/portfolio/igreja-cel.webp', 300, 2615] as [string, number, number],
+  },
+  {
+    nome: 'NanoDev', tipo: 'Site de produto', url: 'https://www.nanodev.com.br/', logo: '/clientes/nanodev.webp',
+    descricao: 'Site do microterminal NanoDev, com telas do aplicativo, manual, download, planos e contato pelo WhatsApp.',
+    lap: ['/portfolio/nanodev-lap.webp', 720, 1800] as [string, number, number],
+    cel: ['/portfolio/nanodev-cel.webp', 300, 2615] as [string, number, number],
+  },
+  {
+    nome: 'Roberto Pires', tipo: 'Marketing político', url: 'https://robertopires.com.br/',
+    descricao: 'Site de candidatura a vereador na Zona Leste de SP, com biografia, propostas de cidades inteligentes e redes sociais.',
+    lap: ['/portfolio/robertopires-lap.webp', 720, 1800] as [string, number, number],
+    cel: ['/portfolio/robertopires-cel.webp', 300, 2615] as [string, number, number],
+  },
+  {
+    nome: 'Kimax Institucional', tipo: 'Site institucional', url: 'https://institucional.kimax.com.br/', logo: '/clientes/kimax.webp',
+    descricao: 'Site institucional da Kimax, fabricante de produtos de limpeza, com linha de produtos, fornecimento e contato.',
+    lap: ['/portfolio/kimaxinst-lap.webp', 720, 1800] as [string, number, number],
+    cel: ['/portfolio/kimaxinst-cel.webp', 300, 2615] as [string, number, number],
+  },
+  {
+    nome: 'Peça Peça', tipo: 'Loja virtual', url: 'https://www.pecapeca.com.br/',
+    descricao: 'Loja virtual de máquinas de costura, máquinas de corte, patchwork, agulhas e acessórios, com avaliações de clientes.',
+    lap: ['/portfolio/pecapeca-lap.webp', 720, 905] as [string, number, number],
+    cel: ['/portfolio/pecapeca-cel.webp', 300, 2028] as [string, number, number],
+  },
+  {
+    nome: 'Doce Mix Conveniência', tipo: 'Loja virtual', url: 'https://doce-encanto-nu.vercel.app/',
+    descricao: 'Loja de doces, balas, salgadinhos, sorvetes e bebidas: o cliente escolhe pelo celular e finaliza o pedido no WhatsApp.',
+    lap: ['/portfolio/doceencanto-lap.webp', 720, 1800] as [string, number, number],
+    cel: ['/portfolio/doceencanto-cel.webp', 300, 2615] as [string, number, number],
+  },
+];
 ---
 <Base title="Portfólio de Sites e Projetos | MKT Center"
   description="Veja sites, lojas virtuais, aplicativos e campanhas feitos pela MKT Center. Peça o seu orçamento pelo WhatsApp."
   schema={schema} crumbs={[['Portfólio', '/portfolio/']]}>
-  <section class="hero" style="padding-top:8px">
+  <HeroCrescimento
+    rotulo="Portfólio · MKT Center"
+    linhas={[['Projetos', 'que']]}
+    destaque="geram resultado."
+    texto="Sites, lojas virtuais, aplicativos, sistemas e campanhas criados para negócios reais. Cada projeto nasce de um desafio do cliente e termina com resultado na tela."
+    bt1={['Quero um projeto assim', waLink('Olá! Vi o portfólio da MKT Center e quero um projeto assim.')]}
+    bt2={['Ver projetos', '#projetos']}
+    numeros={[[10, '', 'sites de clientes no ar'], [6, '', 'serviços'], [2013, '', 'desde']]}
+    rolarPara="#projetos"
+    sites={{
+      desk: { nome: 'Kimax', dominio: 'kimax.com.br', tela: '/portfolio/kimax-desk.webp', w: 800, h: 1778, logo: '/clientes/kimax.webp' },
+      lap: { nome: 'Pousada Anchieta', dominio: 'Cachoeira Paulista', tela: '/portfolio/pousada-lap.webp', w: 720, h: 1800, logo: '/clientes/pousada-anchieta.webp' },
+      tab: { nome: 'Pugas News', dominio: 'pugasnews.com.br', tela: '/portfolio/pugas-tab.webp', w: 480, h: 2125, logo: '/clientes/pugas-news.webp' },
+      cel: { nome: 'NanoDev', dominio: 'nanodev.com.br', tela: '/portfolio/nanodev-cel.webp', w: 300, h: 2615, logo: '/clientes/nanodev.webp' },
+    }}
+  />
+  <section class="alt servicos-topo" id="projetos">
     <div class="wrap">
-      <span class="eyebrow">Nosso trabalho</span>
-      <h1>Portfólio de sites e projetos</h1>
-      <p class="lead">Cada projeto com o desafio do cliente e o resultado alcançado.</p>
-    </div>
-  </section>
-  <section class="alt">
-    <div class="wrap">
-      <div class="grid grid-port">
-        {[
-          ['Padaria Pão Dourado', 'Criação de Sites', 'store', '+112% pedidos pelo WhatsApp', 'Site com cardápio e pedido direto no WhatsApp.'],
-          ['RS Moda Fitness', 'Loja Virtual', 'cart', 'R$ 48 mil vendidos no 1º trimestre', 'Loja com Pix, frete automático e catálogo no Instagram.'],
-          ['Clínica Sorriso Vivo', 'Tráfego e SEO', 'smile', '1º lugar no Google na cidade', 'SEO local e campanhas de agendamento.'],
-          ['AgendaFácil', 'Aplicativos e Sistemas', 'calendar', '3.000 agendamentos por mês', 'App de agendamento para salões de beleza.'],
-          ['Auto Peças Central', 'Tráfego e SEO', 'wrench', 'Custo por contato 40% menor', 'Campanhas no Google e Meta para o WhatsApp.'],
-          ['Mandato Vereador Exemplo', 'Marketing Político', 'landmark', '25 mil seguidores em 1 ano', 'Redes sociais e site de prestação de contas.'],
-        ].map(([n, c, i, r, d]) => (
-          <div class="card">
-            <div style="aspect-ratio:16/10;background:linear-gradient(135deg,#2a1608,var(--surface-sunken));border-radius:10px;display:grid;place-items:center;color:var(--orange)"><Icon name={i} size={56} /></div>
-            <span class="eyebrow" style="margin:16px 0 4px">{c}</span>
-            <h3>{n}</h3>
-            <p style="color:var(--laranja-escuro);font-weight:700">{r}</p>
-            <p>{d}</p>
-          </div>
-        ))}
+      <span class="eyebrow pf-ey">Nossos projetos</span>
+      <h2 class="pf-h2">Sites que criamos</h2>
+      <div class="pf-grade">
+        {projetos.map((p) => <CardPortfolio {...p} />)}
       </div>
     </div>
   </section>
+  <Precos />
 </Base>
+
+<style>
+  .pf-ey,.pf-h2{text-align:left}
+  .pf-h2{margin-bottom:24px}
+  .pf-grade{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+  @media(max-width:1023px){.pf-grade{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:767px){.pf-grade{grid-template-columns:minmax(0,280px);justify-content:center}}
+</style>

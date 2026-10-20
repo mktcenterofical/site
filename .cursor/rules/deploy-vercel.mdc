@@ -1,0 +1,15 @@
+---
+description: Publica alterações do site na produção do Vercel, no mesmo endereço
+alwaysApply: true
+---
+
+# Publicar no Vercel
+
+Quando a tarefa alterar o site, publique em produção no projeto já existente, sem esperar um pedido extra.
+
+- Projeto: `mktcenter-site` (time `resusltados-padre`)
+- Endereço fixo: https://mktcenter-site.vercel.app/
+- Comando, na raiz do repositório: `npx vercel --prod --yes`
+- A pasta já está ligada a esse projeto. Não crie outro projeto e não troque o domínio.
+- Confirme que o deploy terminou em Production e que o alias continua `mktcenter-site.vercel.app`.
+- Não faça commit só para publicar. Não envie `.env.local` nem a pasta `.vercel`.
