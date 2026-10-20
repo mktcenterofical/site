@@ -48,7 +48,7 @@ const planos: Plano[] = [
   .pr-seta:hover{border-color:#ff6900;background:rgba(255,105,0,.15)}
   .pr-seta:disabled{opacity:.3;cursor:default;border-color:rgba(255,255,255,.18);background:transparent}
   /* carrossel numa linha: rola para o lado (com o dedo, o mouse ou as setas) */
-  .pr-grid{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:4px 2px 18px;scrollbar-width:thin;scrollbar-color:#ff6900 rgba(255,255,255,.06);outline:none}
+  .pr-grid{display:flex;gap:16px;overflow-x:auto;scroll-behavior:smooth;padding:4px 2px 18px;scrollbar-width:thin;scrollbar-color:#ff6900 rgba(255,255,255,.06);outline:none}
   .pr-grid::-webkit-scrollbar{height:6px}
   .pr-grid::-webkit-scrollbar-thumb{background:#ff6900;border-radius:9px}
   .pr-grid::-webkit-scrollbar-track{background:rgba(255,255,255,.06);border-radius:9px}
@@ -74,6 +74,8 @@ const planos: Plano[] = [
   .pr-ghost{border-color:#5b616b;color:#fff;background:transparent}
   .pr-ghost:hover{border-color:#fff}
   @media(max-width:767px){.pr-card{text-align:left}}
+  /* o encaixe só liga depois que a pessoa interage: no carregamento ele rolava sozinho e atrapalhava a métrica LCP do Google */
+  .pr-grid.encaixe{scroll-snap-type:x mandatory}
 </style>
 
 <script>
@@ -86,6 +88,9 @@ const planos: Plano[] = [
       setas[0].disabled = trilho.scrollLeft < 4;
       setas[1].disabled = trilho.scrollLeft + trilho.clientWidth >= trilho.scrollWidth - 4;
     };
+    const encaixe = () => trilho.classList.add('encaixe');
+    ['pointerdown', 'touchstart', 'wheel', 'keydown'].forEach((ev) => trilho.addEventListener(ev, encaixe, { once: true, passive: true }));
+    setas.forEach((b) => b.addEventListener('click', encaixe));
     trilho.addEventListener('scroll', atualizar, { passive: true });
     addEventListener('resize', atualizar);
     atualizar();

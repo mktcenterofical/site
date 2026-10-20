@@ -40,7 +40,7 @@ const depoimentos: [string, string, string][] = [
   .dp-seta{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:transparent;color:#c3c8cf;cursor:pointer;transition:border-color .2s,color .2s,opacity .2s}
   .dp-seta:hover{border-color:#ff6900;color:#fff}
   .dp-seta:disabled{opacity:.3;cursor:default;border-color:rgba(255,255,255,.14)}
-  .dp-trilho{display:flex;gap:0;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;outline:none;border-block:1px solid rgba(255,255,255,.07)}
+  .dp-trilho{display:flex;gap:0;overflow-x:auto;scroll-behavior:smooth;scrollbar-width:none;outline:none;border-block:1px solid rgba(255,255,255,.07)}
   .dp-trilho::-webkit-scrollbar{display:none}
   .dp-item{flex:0 0 calc(100% / 3);scroll-snap-align:start;margin:0;padding:26px 28px;display:flex;flex-direction:column;gap:14px;border-left:1px solid rgba(255,255,255,.07);text-align:left}
   .dp-item:first-child{border-left:0;padding-left:0}
@@ -51,6 +51,8 @@ const depoimentos: [string, string, string][] = [
   .dp-item figcaption span{color:#8a9099}
   @media(max-width:1023px){.dp-item{flex-basis:50%}}
   @media(max-width:639px){.dp-item{flex-basis:88%;padding:22px 18px}.dp-item:first-child{padding-left:0}.dp-cab{justify-content:center;text-align:center}.dp-setas{display:none}}
+  /* o encaixe só liga depois que a pessoa interage: no carregamento ele rolava sozinho e atrapalhava a métrica LCP do Google */
+  .dp-trilho.encaixe{scroll-snap-type:x mandatory}
 </style>
 
 <script>
@@ -63,6 +65,9 @@ const depoimentos: [string, string, string][] = [
       setas[0].disabled = trilho.scrollLeft < 4;
       setas[1].disabled = trilho.scrollLeft + trilho.clientWidth >= trilho.scrollWidth - 4;
     };
+    const encaixe = () => trilho.classList.add('encaixe');
+    ['pointerdown', 'touchstart', 'wheel', 'keydown'].forEach((ev) => trilho.addEventListener(ev, encaixe, { once: true, passive: true }));
+    setas.forEach((b) => b.addEventListener('click', encaixe));
     trilho.addEventListener('scroll', atualizar, { passive: true });
     addEventListener('resize', atualizar);
     atualizar();

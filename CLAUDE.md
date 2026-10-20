@@ -43,7 +43,9 @@ Objetivo do site: gerar contatos pelo WhatsApp e pelo formulário.
 - Imagens em WebP/AVIF com width e height
 - Cada página: title único (até 60 caracteres), meta description
   (até 155), um único H1, canonical, Open Graph e Schema JSON-LD
-- Lighthouse mobile: meta 90+ em todas as categorias
+- Lighthouse mobile: meta 90+ em todas as categorias (home em 20/10/2026: 90/100/100/100). Fontes Google carregam sem bloquear (media=print onload) e CSS embutido (inlineStylesheets: always)
+- Carrosséis: scroll-snap só liga após a primeira interação (classe .encaixe); ligado no carregamento ele rola sozinho e o Chrome deixa de medir o LCP
+- Hero: animação de entrada do texto só desliza, sem opacity 0 (texto sempre visível)
 - Número do WhatsApp e dados da empresa ficam em src/config.ts
 - Serviços ficam em src/data/servicos.ts (uma página por serviço)
 

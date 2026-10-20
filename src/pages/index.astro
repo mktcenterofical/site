@@ -12,13 +12,33 @@ import Icon from '../components/Icon.astro';
 import FaixaCTA from '../components/FaixaCTA.astro';
 import { servicos } from '../data/servicos';
 import { config, waLink } from '../config';
+const site = Astro.site!.href;
 const schema = [
-  { '@context': 'https://schema.org', '@type': 'ProfessionalService', name: config.nome, url: Astro.site!.href, areaServed: 'BR' },
-  { '@context': 'https://schema.org', '@type': 'WebSite', name: config.nome, url: Astro.site!.href, inLanguage: 'pt-BR' },
+  {
+    '@context': 'https://schema.org', '@type': 'ProfessionalService', '@id': site + '#empresa',
+    name: config.nome, url: site, logo: site + 'logo-escuro.webp', image: site + 'og.png',
+    description: 'Agência de marketing digital em São Paulo: criação de sites, lojas virtuais, aplicativos, tráfego pago, SEO, redes sociais e marketing político.',
+    telephone: '+' + config.whatsapp, email: config.email, priceRange: 'R$',
+    address: { '@type': 'PostalAddress', addressLocality: 'São Paulo', addressRegion: 'SP', addressCountry: 'BR' },
+    areaServed: [{ '@type': 'City', name: 'São Paulo' }, { '@type': 'Country', name: 'Brasil' }],
+    openingHours: 'Mo-Fr 09:00-18:00',
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog', name: 'Serviços de marketing digital',
+      itemListElement: [
+        ['Landing Page', 300], ['Site Institucional', 600], ['Site Profissional', 1000],
+        ['Gestão de Redes Sociais', 400], ['Edição de Vídeos', 50], ['Criação de Posts', 30],
+      ].map(([n, p]) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: n }, priceSpecification: { '@type': 'PriceSpecification', price: p, priceCurrency: 'BRL', minPrice: p } })),
+    },
+  },
+  { '@context': 'https://schema.org', '@type': 'WebSite', '@id': site + '#site', name: config.nome, url: site, inLanguage: 'pt-BR', publisher: { '@id': site + '#empresa' } },
+  {
+    '@context': 'https://schema.org', '@type': 'ItemList', name: 'Serviços da MKT Center',
+    itemListElement: servicos.map((sv, i) => ({ '@type': 'ListItem', position: i + 1, name: sv.nome, url: site + sv.slug + '/' })),
+  },
 ];
 ---
-<Base title="Agência de Marketing Digital | MKT Center"
-  description="Agência de marketing digital: criação de sites, apps, lojas virtuais, tráfego pago, SEO e marketing político. Fale no WhatsApp."
+<Base title="Agência de Marketing Digital em São Paulo | MKT Center"
+  description="Agência de marketing digital em SP: sites, lojas virtuais, apps, tráfego pago, SEO e redes sociais. Sites a partir de R$ 300. Peça seu orçamento!"
   schema={schema}>
   <HeroCrescimento />
   <section id="servicos" class="servicos-topo">

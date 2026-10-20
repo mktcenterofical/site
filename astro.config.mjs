@@ -3,5 +3,6 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://mktcenter-site.vercel.app',
   trailingSlash: 'always',
-  integrations: [sitemap()],
+  integrations: [sitemap({ filter: (p) => !p.includes('/teste-') })],
+  build: { inlineStylesheets: 'always' },
 });
