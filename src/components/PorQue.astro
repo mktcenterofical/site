@@ -40,7 +40,7 @@ const itens = [
 
 <style>
 
-  .pq-grid{display:grid;gap:16px;grid-template-columns:1fr}
+  .pq-grid{display:grid;gap:10px;grid-template-columns:1fr 1fr}
   @media(min-width:640px){.pq-grid{grid-template-columns:repeat(3,1fr)}}
   @media(min-width:1024px){.pq-grid{grid-template-columns:repeat(6,1fr);gap:12px}}
 
@@ -63,7 +63,7 @@ const itens = [
   .pq-txt p{margin-top:6px;color:#aeb4bd;font-size:13px;line-height:19px}
   .pq-txt a{display:inline-flex;align-items:center;gap:6px;margin-top:auto;padding-top:12px;padding-bottom:3px;border-bottom:1px solid rgba(255,255,255,.35);color:#fff;font-size:13px;font-weight:600;text-decoration:none;transition:border-color .2s,color .2s}
   .pq-txt a:hover{color:#ffb35c;border-color:#ff6900}
-  @media(max-width:767px){.pq-txt{text-align:center;align-items:center}}
+  @media(max-width:639px){.pq-txt{text-align:center;align-items:center;padding:0 10px 14px}.pq-txt h3{font-size:16px}.pq-txt p{font-size:12px;line-height:17px}.pq-arte{aspect-ratio:1/.75}}
   @media (prefers-reduced-motion: reduce){.pq-onda path{animation:none}}
 </style>
 

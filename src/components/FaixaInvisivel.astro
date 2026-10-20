@@ -137,6 +137,14 @@ const avaliacoes: [string, string, string][] = [
   @keyframes iv-barra{from{width:0}}
 
   @media(max-width:767px){
+    /* celular: composição reorganizada em coluna (cartões à esquerda, celular à direita), sem sobreposição */
+    .iv-arte{aspect-ratio:1/1.12;max-width:460px}
+    .iv-perfil{width:58%;top:0}
+    .iv-aval{width:58%}
+    .iv-aval.a1{top:31%}
+    .iv-aval.a2{top:50%}
+    .iv-site{left:0;top:70%;width:58%}
+    .iv-cel{width:38%;top:6%;right:0}
     .iv-txt{display:flex;flex-direction:column;align-items:center;text-align:center}
     .iv-tit{align-items:center;font-size:52px}
     .iv-traco{margin-inline:auto}

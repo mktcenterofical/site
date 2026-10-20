@@ -176,3 +176,49 @@ body{background:var(--carbon)}
 .sv-grid .icone::before{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(115deg,rgba(255,255,255,.35),rgba(255,255,255,0) 40%);pointer-events:none}
 .sv-grid .icone :is(svg){color:#ffb35c;filter:drop-shadow(0 0 6px rgba(255,138,36,.8))}
 .sv-grid .card:hover .icone{transform:rotateY(0) rotateX(0) translateY(-3px)}
+
+/* =====================================================================
+   HOME — MODELO POR DISPOSITIVO
+   ===================================================================== */
+/* itens de grade nunca ficam mais largos que a tela (evita conteúdo cortado à direita) */
+.hc-in>*,.s10-in>*,.cx-in>*,.iv-in>*,.dois>*,.grid>*{min-width:0}
+.hc-txt,.s10-texto,.cx-texto,.iv-txt{max-width:100%}
+
+/* ---------- CELULAR: blocos compactos, 2 colunas onde cabe, artes menores ---------- */
+@media(max-width:767px){
+  .sv-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .sv-grid .card{padding:16px 12px}
+  .sv-grid .card h3{font-size:17px}
+  .sv-grid .card p{font-size:12.5px;line-height:18px}
+  .sv-grid .icone{width:46px;height:46px;margin-bottom:10px}
+  .sv-grid>:last-child:nth-child(odd){grid-column:1 / -1}
+  .s10-arte{width:100%;max-width:420px}
+  .cx-arte{max-width:440px}
+  .iv-arte{max-width:440px}
+}
+/* ---------- TABLET: duas colunas equilibradas ---------- */
+@media(min-width:768px) and (max-width:1023px){
+  .sv-grid{grid-template-columns:repeat(3,1fr)}
+  .s10-in,.cx-in,.iv-in{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .s10-texto,.cx-texto,.iv-txt{display:flex;flex-direction:column;align-items:center}
+  .s10-h,.cx-h,.iv-tit{align-items:center}
+  .s10-lead,.cx-lead,.iv-sub{margin-inline:auto}
+  .s10-texto .acoes,.cx-texto .acoes{justify-content:center}
+  .iv-traco{margin-inline:auto}
+}
+/* ---------- NOTEBOOK ---------- */
+@media(min-width:1024px) and (max-width:1439px){
+  .sv-grid .card{padding:22px 18px}
+}
+/* ---------- DESKTOP: mais respiro ---------- */
+@media(min-width:1440px){
+  .s10-in,.cx-in{gap:72px}
+  .s10-h,.cx-h{font-size:72px}
+}
+/* tablet: serviços em 3 + 2 (sem card sobrando sozinho) */
+@media(min-width:768px) and (max-width:1023px){
+  .sv-grid{grid-template-columns:repeat(6,1fr)}
+  .sv-grid>*{grid-column:span 2}
+  .sv-grid>:nth-child(4){grid-column:2 / span 2}
+  .sv-grid>:nth-child(5){grid-column:4 / span 2}
+}
