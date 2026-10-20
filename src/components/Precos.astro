@@ -48,10 +48,8 @@ const planos: Plano[] = [
   .pr-seta:hover{border-color:#ff6900;background:rgba(255,105,0,.15)}
   .pr-seta:disabled{opacity:.3;cursor:default;border-color:rgba(255,255,255,.18);background:transparent}
   /* carrossel numa linha: rola para o lado (com o dedo, o mouse ou as setas) */
-  .pr-grid{display:flex;gap:16px;overflow-x:auto;scroll-behavior:smooth;padding:4px 2px 18px;scrollbar-width:thin;scrollbar-color:#ff6900 rgba(255,255,255,.06);outline:none}
-  .pr-grid::-webkit-scrollbar{height:6px}
-  .pr-grid::-webkit-scrollbar-thumb{background:#ff6900;border-radius:9px}
-  .pr-grid::-webkit-scrollbar-track{background:rgba(255,255,255,.06);border-radius:9px}
+  .pr-grid{display:flex;gap:16px;overflow-x:auto;scroll-behavior:smooth;padding:4px 2px 18px;scrollbar-width:none;outline:none}
+  .pr-grid::-webkit-scrollbar{display:none}
   .pr-card{flex:0 0 calc((100% - 48px) / 4);scroll-snap-align:start}
   @media(max-width:1023px){.pr-card{flex-basis:calc((100% - 16px) / 2)}}
   @media(max-width:639px){.pr-card{flex-basis:84%}.pr-cab{justify-content:center}.pr-setas{display:none}}
