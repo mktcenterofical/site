@@ -1,11 +1,13 @@
 ---
 // Página "Sites" (criação de sites). Mesmo padrão visual da home: hero com os aparelhos, logos dos
-// clientes, tipos de site com os preços reais, o que vem incluso, processo, depoimentos e FAQ.
+// clientes, tipos de site com os preços reais, o que vem incluso, processo, depoimentos e 6 sites que criamos.
 import Base from '../layouts/Base.astro';
 import HeroCrescimento from '../components/HeroCrescimento.astro';
 import Clientes from '../components/Clientes.astro';
 import Depoimentos from '../components/Depoimentos.astro';
 import Icon from '../components/Icon.astro';
+import CardPortfolio from '../components/CardPortfolio.astro';
+import { projetos } from '../data/projetos';
 import { config, waLink } from '../config';
 
 const msg = (p: string) => `Olá! Quero um orçamento de ${p}.`;
@@ -23,16 +25,10 @@ const incluso: [string, string, string][] = [
   ['check', 'Medição de resultados', 'Analytics para você saber quantos contatos chegam.'],
 ];
 const etapas = ['Conversa sobre o seu negócio', 'Proposta e layout para aprovação', 'Desenvolvimento e textos', 'Site no ar e acompanhamento'];
-const faq: [string, string][] = [
-  ['Quanto custa um site?', 'Landing page a partir de R$ 300, site institucional (até 4 páginas) a partir de R$ 600 e site profissional a partir de R$ 1.000. O valor final vai na proposta.'],
-  ['Quanto tempo leva para ficar pronto?', 'Depende do tamanho do projeto. O prazo exato vai na proposta, antes de começar.'],
-  ['Eu consigo atualizar o site depois?', 'Sim. Entregamos com orientação e também oferecemos manutenção.'],
-  ['O site aparece no Google?', 'Sim. Todo site sai com a estrutura de SEO pronta para ser indexado.'],
-];
+const exemplos = ['RollerPort', 'Pugas News', 'Rádio Conexão Católica', 'Pousada São José de Anchieta', 'Kimax', 'Sanremax'].map((n) => projetos.find((p) => p.nome === n)!);
 const schema = [
   { '@context': 'https://schema.org', '@type': 'Service', name: 'Criação de sites', serviceType: 'Criação de sites', provider: { '@type': 'ProfessionalService', name: config.nome }, areaServed: 'BR',
-    offers: tipos.map((t) => ({ '@type': 'Offer', name: t.nome, priceCurrency: 'BRL', price: Number(t.preco.replace(/\D/g, '')) })) },
-  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
+    offers: tipos.map((t) => ({ '@type': 'Offer', name: t.nome, priceCurrency: 'BRL', price: Number(t.preco.replace(/\D/g, '')) })) }
 ];
 ---
 <Base title="Criação de Sites em São Paulo a partir de R$ 300 | MKT Center"
@@ -99,14 +95,20 @@ const schema = [
   <Depoimentos />
 
   <section>
-    <div class="wrap prose">
-      <h2>Perguntas frequentes</h2>
-      {faq.map(([q, a]) => <details><summary>{q}</summary><p>{a}</p></details>)}
+    <div class="wrap">
+      <span class="eyebrow">Portfólio</span>
+      <h2>Sites que criamos</h2>
+      <div class="st-pf">{exemplos.map((p) => <CardPortfolio {...p} />)}</div>
+      <p class="st-mais"><a class="btn btn-ghost" href="/portfolio/">Ver todos os projetos</a></p>
     </div>
   </section>
 </Base>
 
 <style>
+  .st-pf{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+  @media(max-width:1023px){.st-pf{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media(max-width:767px){.st-pf{grid-template-columns:minmax(0,280px);justify-content:center}}
+  .st-mais{margin-top:24px;text-align:center}
   .st-grid{display:grid;gap:16px;grid-template-columns:1fr}
   @media(min-width:768px){.st-grid{grid-template-columns:repeat(3,1fr)}}
   .st-card{position:relative;display:flex;flex-direction:column;padding:26px 24px 24px;border-radius:var(--radius-lg);text-align:left;
