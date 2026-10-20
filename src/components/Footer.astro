@@ -1,47 +1,91 @@
 ---
+// Rodapé minimalista: marca + colunas de links + contato, assinatura gigante "MKT CENTER" e linha final.
 import { config, waLink } from '../config';
-import { servicos } from '../data/servicos';
 const ano = new Date().getFullYear();
+const paginas: [string, string][] = [
+  ['/', 'Início'], ['/quem-somos/', 'Sobre'], ['/portfolio/', 'Portfólio'], ['/contato/', 'Contato'],
+];
+const servicos: [string, string][] = [
+  ['/criacao-de-sites/', 'Sites'], ['/loja-virtual/', 'Lojas virtuais'], ['/aplicativos-e-sistemas/', 'Apps e sistemas'],
+  ['/videos/', 'Vídeos'], ['/trafego-e-seo/', 'Tráfego e SEO'], ['/marketing-politico/', 'Marketing político'],
+];
+const wa = '<path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm0 23.7c-2 0-4-.6-5.7-1.6l-.4-.2-3.9 1 1-3.8-.3-.4A10.7 10.7 0 1 1 16 26.7zm5.9-8c-.3-.2-1.9-1-2.2-1-.3-.1-.5-.2-.7.1l-1 1.3c-.2.2-.4.2-.7.1a8.8 8.8 0 0 1-4.4-3.8c-.3-.6.3-.5.9-1.7.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.8s1.2 3.2 1.4 3.5c.2.2 2.4 3.6 5.7 5 2.1.9 3 1 4 .8.7-.1 1.9-.8 2.2-1.5.3-.8.3-1.4.2-1.5l-.7-.4z"/>';
 ---
-<footer class="rodape">
-  <div class="wrap cols">
-    <div>
-      <a href="/" class="logo"><img src="/logo-escuro.webp" alt="MKT Marketing Digital" width="233" height="36" loading="lazy" style="height:36px;width:auto" /></a>
-      <p>Sites, aplicativos, lojas virtuais, tráfego e marketing político.</p>
+<footer class="rd">
+  <div class="wrap">
+    <div class="rd-topo">
+      <div class="rd-marca">
+        <a href="/" aria-label="MKT Center, página inicial"><img src="/logo-escuro.webp" alt="MKT Marketing Digital" width="208" height="32" loading="lazy" /></a>
+        <p>Sites, lojas, apps, vídeos e campanhas que levam o cliente direto para o seu WhatsApp.</p>
+        <a class="rd-wa" href={waLink()} target="_blank" rel="noopener">
+          <svg viewBox="0 0 32 32" width="18" height="18" fill="currentColor" aria-hidden="true" set:html={wa} />
+          Falar no WhatsApp <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+      <nav class="rd-col" aria-label="Páginas">
+        <h2>Navegação</h2>
+        {paginas.map(([u, n]) => <a href={u}>{n}</a>)}
+      </nav>
+      <nav class="rd-col" aria-label="Serviços">
+        <h2>Serviços</h2>
+        {servicos.map(([u, n]) => <a href={u}>{n}</a>)}
+      </nav>
+      <div class="rd-col">
+        <h2>Contato</h2>
+        <a href={`mailto:${config.email}`}>{config.email}</a>
+        <a href={waLink()} target="_blank" rel="noopener">{config.telefone}</a>
+        <span>{config.horario}</span>
+        <span>{config.cidade}</span>
+      </div>
     </div>
-    <div>
-      <h3>Empresa</h3>
-      <a href="/quem-somos/">Quem somos</a>
-      <a href="/portfolio/">Portfólio</a>
-      <a href="/contato/">Contato</a>
+
+    <div class="rd-assin" aria-hidden="true"><span>MKT</span><span>CENTER</span></div>
+
+    <div class="rd-base">
+      <span>© {ano} {config.nome} · CNPJ {config.cnpj}</span>
+      <a href="/politica-de-privacidade/">Política de privacidade</a>
+      <a href="#" class="rd-topo-bt">Voltar ao topo <span aria-hidden="true">↑</span></a>
     </div>
-    <div>
-      <h3>Serviços</h3>
-      {servicos.map((s) => <a href={`/${s.slug}/`}>{s.nome}</a>)}
-    </div>
-    <div>
-      <h3>Contato</h3>
-      <a href={waLink()} target="_blank" rel="noopener">WhatsApp</a>
-      <span>Telefone: {config.telefone}</span>
-      <span>E-mail: {config.email}</span>
-      <span>{config.horario}</span>
-      <span>{config.cidade}</span>
-    </div>
-  </div>
-  <div class="wrap base">
-    <span>© {ano} {config.nome} · CNPJ {config.cnpj}</span>
-    <a href="/politica-de-privacidade/">Política de privacidade</a>
   </div>
 </footer>
+
 <style>
-  .rodape{background:rgba(9,10,12,.6);border-top:1px solid var(--linha);padding:48px 0 24px;margin-top:0}
-  .cols{display:grid;gap:32px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-  .cols > div{display:grid;gap:8px;align-content:start;color:var(--prata)}
-  .cols a{text-decoration:none}
-  .cols a:hover{color:var(--papel)}
-  h3{color:var(--papel);font-size:1.2rem;margin-bottom:4px}
-  .logo{font-family:var(--ff-tit);font-weight:800;font-size:1.6rem;color:var(--papel)}
-  .logo span{color:var(--laranja);margin-left:4px}
-  .base{display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;margin-top:40px;padding-top:20px;border-top:1px solid var(--linha);font-size:.85rem;color:var(--prata)}
-  @media(max-width:767px){.cols{grid-template-columns:1fr 1fr;gap:28px 16px}.cols>div:first-child,.cols>div:last-child{grid-column:1 / -1}.base{flex-direction:column}}
+  .rd{position:relative;margin-top:24px;padding:56px 0 24px;border-top:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(9,10,12,0),rgba(9,10,12,.85) 30%);overflow:hidden}
+  .rd::before{content:'';position:absolute;left:50%;top:-1px;width:min(60%,520px);height:1px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,#ff6900,transparent);box-shadow:0 0 18px #ff6900}
+  .rd-topo{display:grid;gap:40px 32px;grid-template-columns:1fr}
+  @media(min-width:768px){.rd-topo{grid-template-columns:1.6fr 1fr 1fr 1.2fr}}
+  .rd-marca img{height:28px;width:auto}
+  .rd-marca p{margin-top:16px;max-width:34ch;color:#aeb4bd;font-size:15px;line-height:1.55}
+  .rd-wa{display:inline-flex;align-items:center;gap:8px;margin-top:20px;padding:10px 18px;border-radius:999px;border:1px solid rgba(37,211,102,.4);background:rgba(37,211,102,.08);color:#fff;font-size:14px;font-weight:700;text-decoration:none;transition:background .2s,border-color .2s}
+  .rd-wa svg{color:#25d366}
+  .rd-wa:hover{background:rgba(37,211,102,.16);border-color:#25d366}
+  .rd-col{display:flex;flex-direction:column;gap:10px;min-width:0}
+  .rd-col h2{margin:0 0 6px;font-family:var(--ff-txt);text-transform:uppercase;font-size:12px;font-weight:700;letter-spacing:.16em;color:#ff8a24}
+  .rd-col a,.rd-col span{color:#c3c8cf;font-size:15px;text-decoration:none;overflow-wrap:anywhere;width:fit-content;max-width:100%;transition:color .2s}
+  .rd-col a{position:relative}
+  .rd-col a::after{content:'';position:absolute;left:0;right:0;bottom:-2px;height:1px;background:#ff6900;transform:scaleX(0);transform-origin:left;transition:transform .3s}
+  .rd-col a:hover{color:#fff}
+  .rd-col a:hover::after{transform:scaleX(1)}
+
+  /* assinatura gigante, esmaecendo para baixo */
+  .rd-assin{display:flex;justify-content:center;gap:.18em;margin:48px 0 0;font-family:var(--ff-tit);font-weight:800;text-transform:uppercase;font-size:clamp(56px,13.4vw,196px);line-height:.82;letter-spacing:-.02em;white-space:nowrap;user-select:none;
+    background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,0) 90%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .rd-assin span:first-child{background:linear-gradient(180deg,rgba(255,105,0,.6),rgba(255,105,0,0) 90%);-webkit-background-clip:text;background-clip:text}
+
+  .rd-base{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;padding-top:20px;border-top:1px solid rgba(255,255,255,.07);color:#8a9099;font-size:13px}
+  .rd-base a{color:#8a9099;text-decoration:none;transition:color .2s}
+  .rd-base a:hover{color:#fff}
+  .rd-topo-bt{margin-left:auto}
+
+  @media(max-width:767px){
+    .rd{padding-top:44px;text-align:center}
+    .rd-topo{grid-template-columns:1fr 1fr;gap:32px 16px}
+    .rd-marca{grid-column:1 / -1;display:flex;flex-direction:column;align-items:center}
+    .rd-marca p{margin-inline:auto}
+    .rd-col{align-items:center}
+    .rd-col:last-child{grid-column:1 / -1}
+    .rd-assin{font-size:17vw;margin:32px 0 6px}
+    .rd-base{justify-content:center;flex-direction:column}
+    .rd-topo-bt{margin-left:0}
+  }
 </style>
