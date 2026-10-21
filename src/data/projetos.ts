@@ -7,6 +7,12 @@ export const projetos = [
     cel: ['/portfolio/rollerport-cel.webp', 300, 2615] as [string, number, number],
   },
   {
+    nome: 'RollerPort Relatórios', tipo: 'Aplicativo web', url: 'https://rollerport.com.br/relatorios', logo: '/clientes/rollerport.webp',
+    descricao: 'Painel ao vivo da RollerPort com visitas do site, cliques no Google e seguidores das redes num lugar só, com gráficos e onde investir agora.',
+    lap: ['/portfolio/rollerport-app-lap.webp', 720, 582] as [string, number, number],
+    cel: ['/portfolio/rollerport-app-cel.webp', 300, 1800] as [string, number, number],
+  },
+  {
     nome: 'Pugas News', tipo: 'Portal de notícias', url: 'https://pugasnews.com.br/', logo: '/clientes/pugas-news.webp',
     descricao: 'Portal de notícias de Itatiba/SP com política, religião, saúde, cidade e utilidades como tempo, mercado, combustível e trânsito.',
     lap: ['/portfolio/pugas-lap.webp', 720, 1550] as [string, number, number],
