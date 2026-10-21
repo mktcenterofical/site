@@ -11,8 +11,9 @@ interface Props {
   description: string;
   schema?: object[];
   crumbs?: [string, string][]; // [nome, url]
+  noindex?: boolean; // páginas que não devem ir para o Google (404, rascunhos)
 }
-const { title, description, schema = [], crumbs = [] } = Astro.props;
+const { title, description, schema = [], crumbs = [], noindex = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
 const site = Astro.site!.href.replace(/\/$/, '');
 
@@ -55,7 +56,7 @@ if (crumbs.length) {
   <meta property="og:url" content={canonical} />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content={site + "/og.png"} />
-  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <meta name="robots" content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large"} />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <!-- fontes sem bloquear a renderização -->

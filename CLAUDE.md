@@ -52,8 +52,7 @@ Objetivo do site: gerar contatos pelo WhatsApp e pelo formulário.
 - Espaçamento entre seções igual no site todo: section{padding:var(--sec) 0}, --sec 40px (32px no celular). Exceção: hero → seção 1 = 20px
 - Sem frameworks de JS no cliente; JS mínimo (exceção: Three.js ~130 KB gzip só nos objetos 3D da seção Por que, carregado sob demanda)
 - Imagens em WebP/AVIF com width e height
-- Cada página: title único (até 60 caracteres), meta description
-  (até 155), um único H1, canonical, Open Graph e Schema JSON-LD
+- Cada página: title único no padrão "[Palavra-Chave] - [Complemento] | MKT Center", meta description única (até ~155), um único H1, canonical, Open Graph e Schema JSON-LD. Domínio oficial https://mktcenter.com.br (site em astro.config.mjs: canonical, sitemap, og:url); a cópia mktcenter-site.vercel.app recebe X-Robots-Tag noindex (vercel.json). 404 e /termos/ (rascunho) com noindex (prop noindex do Base) e fora do sitemap. Conferir com: npm run build && node scripts/auditoria-seo.mjs
 - Versões fixas para a Hostinger (Node 22.23.3): astro 7.3.8 e @astrojs/react 7.1.0 (7.4+ e react 7.1.1 exigem Node >= 22.23.4); npm audit sem vulnerabilidades. Chrome do puppeteer só baixa no GitHub Actions (.puppeteerrc.cjs)
 - Lighthouse mobile: meta 90+ em todas as categorias (home em 20/10/2026: 90/100/100/100). Fontes Google carregam sem bloquear (media=print onload) e CSS embutido (inlineStylesheets: always)
 - Carrosséis: scroll-snap só liga após a primeira interação (classe .encaixe); ligado no carregamento ele rola sozinho e o Chrome deixa de medir o LCP

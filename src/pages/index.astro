@@ -15,7 +15,7 @@ const site = Astro.site!.href;
 const schema = [
   {
     '@context': 'https://schema.org', '@type': 'ProfessionalService', '@id': site + '#empresa',
-    name: config.nome, url: site, logo: site + 'logo-escuro.webp', image: site + 'og.png',
+    name: config.nome, url: site, logo: site + 'icon-512.png', taxID: config.cnpj, image: site + 'og.png',
     description: 'Agência de marketing digital em São Paulo: criação de sites, lojas virtuais, aplicativos, tráfego pago, SEO, redes sociais e marketing político.',
     telephone: '+' + config.whatsapp, email: config.email, priceRange: 'R$',
     address: { '@type': 'PostalAddress', addressLocality: 'São Paulo', addressRegion: 'SP', addressCountry: 'BR' },
@@ -36,8 +36,8 @@ const schema = [
   },
 ];
 ---
-<Base title="MKT Center Marketing Digital | Agência em São Paulo"
-  description="Agência de marketing digital em SP: sites, lojas virtuais, apps, tráfego pago, SEO e redes sociais. Sites a partir de R$ 300. Peça seu orçamento!"
+<Base title="Agência de Marketing Digital - Estratégias para Empresas em SP | MKT Center"
+  description="A MKT Center ajuda empresas a crescer com criação de sites, lojas virtuais, gestão de redes sociais, tráfego pago e estratégias de SEO."
   schema={schema}>
   <HeroCrescimento />
   <section id="servicos" class="servicos-topo">

@@ -21,7 +21,7 @@ const clientes: Cliente[] = [
       <ul class="cl-trilho" aria-hidden={copia === 1 ? 'true' : undefined}>
         {clientes.map((c) => (
           <li>
-            <a class={c.logo === 'kimax' ? 'cl-card cl-cor' : 'cl-card'} href={c.url} target="_blank" rel="noopener" tabindex={copia === 1 ? -1 : undefined} title={`${c.nome} · site criado pela MKT Center`}>
+            <a class={c.logo === 'kimax' ? 'cl-card cl-cor' : 'cl-card'} href={c.url} target="_blank" rel="noopener" tabindex={copia === 1 ? -1 : undefined} aria-hidden={copia === 1 ? "true" : undefined} title={`${c.nome} · site criado pela MKT Center`}>
               <img src={`/clientes/${c.logo}.webp`} alt={copia === 0 ? c.nome : ''} width={c.w} height={c.h} loading="lazy" decoding="async" />
             </a>
           </li>

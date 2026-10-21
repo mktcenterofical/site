@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://mktcenter-site.vercel.app/sitemap-index.xml
+
+Sitemap: https://mktcenter.com.br/sitemap-index.xml
