@@ -1,0 +1,176 @@
+---
+// Lado direito do hero da página Vídeos: editor de vídeo profissional feito em código.
+// Prévia 9:16 tocando um Reel (cortes, zoom Ken Burns, cor e legendas palavra por palavra), painel de cor
+// e linha do tempo com trilhas de vídeo, texto e áudio. Tudo sincronizado só com CSS num ciclo de 12 s
+// (4 cortes de 3 s): cada peça usa o mesmo keyframe com atraso negativo para cair no seu trecho.
+const clipes = [
+  { foto: 'live-show', leg: ['Seu', 'show', 'ao', 'vivo'] },
+  { foto: 'fitness2', leg: ['Treino', 'que', 'engaja'] },
+  { foto: 'modelo', leg: ['Moda', 'que', 'vende'] },
+  { foto: 'live-evento', leg: ['Evento', 'inesquecível'] },
+];
+const ondas = Array.from({ length: 64 }, (_, i) => 22 + Math.round(Math.abs(Math.sin(i * 1.7) * Math.cos(i * 0.6)) * 70));
+---
+<div class="ev" aria-hidden="true">
+  <div class="ev-app">
+    <div class="ev-barra">
+      <span class="ev-luzes"><i></i><i></i><i></i></span>
+      <span class="ev-proj">reel_cliente_final.mp4</span>
+      <span class="ev-rec">4K · 60fps</span>
+    </div>
+
+    <div class="ev-meio">
+      <!-- prévia 9:16 -->
+      <div class="ev-prev">
+        {clipes.map((c, i) => (
+          <span class="ev-clip" style={`--i:${i}`}>
+            <img src={`/mock/${c.foto}.webp`} alt="" width="480" height="360" decoding="async" />
+          </span>
+        ))}
+        <span class="ev-flash"></span>
+        <span class="ev-ui"><b>@suamarca</b><em>Reels</em></span>
+        {clipes.map((c, i) => (
+          <span class="ev-leg" style={`--i:${i}`}>
+            {c.leg.map((p, j) => <span style={`--j:${j}`}>{p}</span>)}
+          </span>
+        ))}
+        <span class="ev-prog"><i></i></span>
+      </div>
+
+      <!-- painel de cor e ajustes -->
+      <div class="ev-insp">
+        <span class="ev-tit">Cor</span>
+        <div class="ev-rodas">
+          {['Sombras', 'Meios', 'Luzes'].map((r, k) => (
+            <span class="ev-roda" style={`--k:${k}`}><i></i><small>{r}</small></span>
+          ))}
+        </div>
+        {[['Exposição', 0], ['Contraste', 1], ['Saturação', 2], ['Nitidez', 3]].map(([n, k]) => (
+          <span class="ev-ctl" style={`--k:${k}`}><small>{n}</small><span class="ev-trilho"><i></i></span></span>
+        ))}
+        <span class="ev-tit">Efeitos</span>
+        <span class="ev-tags"><i>Zoom</i><i>Legenda</i><i>LUT</i><i>Corte</i></span>
+        <span class="ev-wave">
+          {Array.from({ length: 14 }, (_, k) => <i style={`--k:${k}`}></i>)}
+        </span>
+      </div>
+    </div>
+
+    <!-- linha do tempo -->
+    <div class="ev-tl">
+      <div class="ev-regua">{['00:00', '00:03', '00:06', '00:09', '00:12'].map((t) => <span>{t}</span>)}</div>
+      <div class="ev-trilha"><b>T1</b><div class="ev-pista">
+        {clipes.map((c, i) => <span class="ev-txt" style={`--i:${i}`}>{c.leg.join(' ')}</span>)}
+      </div></div>
+      <div class="ev-trilha"><b>V1</b><div class="ev-pista">
+        {clipes.map((c, i) => (
+          <span class="ev-thumb" style={`--i:${i}`}>
+            {[0, 1, 2].map(() => <img src={`/mock/${c.foto}.webp`} alt="" width="480" height="360" loading="lazy" decoding="async" />)}
+          </span>
+        ))}
+      </div></div>
+      <div class="ev-trilha"><b>A1</b><div class="ev-pista ev-audio">
+        {ondas.map((h) => <i style={`--h:${h}%`}></i>)}
+      </div></div>
+      <span class="ev-cabeca"><i></i></span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .ev{--t:12s;position:relative;width:100%;max-width:580px;margin:0 auto;perspective:1600px}
+  .ev::before{content:'';position:absolute;inset:8% 6%;border-radius:40%;background:radial-gradient(closest-side,rgba(255,105,0,.3),transparent);filter:blur(24px)}
+  .ev-app{position:relative;border-radius:16px;padding:10px;container-type:inline-size;
+    background:linear-gradient(160deg,#1d1f24,#0d0e11 60%);border:1px solid rgba(255,255,255,.12);
+    box-shadow:0 40px 80px -30px #000,0 0 0 1px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.08);
+    transform:rotateY(-10deg) rotateX(5deg);transform-origin:60% 50%}
+
+  .ev-barra{display:flex;align-items:center;gap:10px;margin-bottom:8px;font:600 11px var(--ff-txt);color:#aeb4bd}
+  .ev-luzes{display:flex;gap:5px}
+  .ev-luzes i{width:9px;height:9px;border-radius:50%;background:#3a3d44}
+  .ev-luzes i:first-child{background:#ff5f57}
+  .ev-proj{flex:1;text-align:center;color:#e4e6ea}
+  .ev-rec{display:flex;align-items:center;gap:6px;color:#ff8a24}
+  .ev-rec::before{content:'';width:7px;height:7px;border-radius:50%;background:#ff3b30;animation:ev-pisca 1s steps(2) infinite}
+
+  .ev-meio{display:grid;grid-template-columns:38% 1fr;gap:10px}
+
+  /* prévia vertical */
+  .ev-prev{position:relative;container-type:inline-size;aspect-ratio:9/16;border-radius:12px;overflow:hidden;background:#000;box-shadow:0 0 0 1px rgba(255,255,255,.1)}
+  .ev-clip{position:absolute;inset:0;opacity:0;animation:ev-vez var(--t) linear infinite;animation-delay:calc(var(--i) * 3s - var(--t))}
+  .ev-clip img{width:100%;height:100%;object-fit:cover;filter:saturate(1.25) contrast(1.08);animation:ev-zoom var(--t) linear infinite;animation-delay:inherit}
+  .ev-clip:nth-child(2) img{object-position:50% 0}
+  .ev-flash{position:absolute;inset:0;background:#fff;opacity:0;mix-blend-mode:overlay;animation:ev-flash 3s linear infinite}
+  .ev-prev::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),transparent 25%,transparent 55%,rgba(0,0,0,.7));pointer-events:none}
+  .ev-ui{position:absolute;left:8%;top:5%;z-index:2;display:flex;gap:6px;align-items:center;color:#fff;font:700 6cqw/1 var(--ff-txt)}
+  .ev-ui em{font-style:normal;padding:2px 5px;border-radius:4px;background:rgba(255,255,255,.18);font-size:.8em}
+  .ev-ui b{font-size:inherit}
+  .ev-leg{position:absolute;left:6%;right:6%;bottom:16%;z-index:2;display:flex;flex-wrap:wrap;justify-content:center;gap:0 .3em;opacity:0;
+    font:800 11cqw/1.1 var(--ff-tit);text-transform:uppercase;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.8);
+    animation:ev-vez var(--t) linear infinite;animation-delay:calc(var(--i) * 3s - var(--t))}
+  .ev-leg span{display:inline-block;animation:ev-palavra 3s ease-out infinite;animation-delay:calc(var(--j) * .35s)}
+  .ev-prog{position:absolute;left:8%;right:8%;bottom:5%;z-index:2;height:3px;border-radius:2px;background:rgba(255,255,255,.3);overflow:hidden}
+  .ev-prog i{display:block;height:100%;background:#ff6900;transform-origin:left;animation:ev-linha var(--t) linear infinite}
+
+  /* painel de cor */
+  .ev-insp{display:flex;flex-direction:column;gap:7px;padding:10px;border-radius:12px;background:#121317;box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);min-width:0}
+  .ev-tit{font:700 10px var(--ff-txt);letter-spacing:.12em;text-transform:uppercase;color:#ff8a24}
+  .ev-rodas{display:flex;justify-content:space-between;gap:6px}
+  .ev-roda{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+  .ev-roda::before{content:'';width:100%;max-width:58px;aspect-ratio:1;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,255,255,.9) 0 6%,transparent 7%),conic-gradient(from 0deg,#ff4d4d,#ffcc33,#5dff7a,#33d6ff,#6a5cff,#ff4dd8,#ff4d4d);
+    -webkit-mask:radial-gradient(circle,#000 62%,transparent 64%);mask:radial-gradient(circle,#000 62%,transparent 64%);opacity:.85}
+  .ev-roda{position:relative}
+  .ev-roda i{position:absolute;left:50%;top:0;width:min(58px,100%);aspect-ratio:1;transform:translateX(-50%)}
+  .ev-roda i::after{content:'';position:absolute;left:50%;top:50%;width:9px;height:9px;margin:-4.5px;border-radius:50%;background:#fff;box-shadow:0 0 0 2px #000,0 0 8px #fff;
+    animation:ev-ponto 6s ease-in-out infinite;animation-delay:calc(var(--k) * -2s)}
+  .ev-roda small,.ev-ctl small{font:500 10px var(--ff-txt);color:#aeb4bd}
+  .ev-ctl{display:grid;grid-template-columns:62px 1fr;align-items:center;gap:8px}
+  .ev-trilho{position:relative;height:4px;border-radius:2px;background:#2a2d33}
+  .ev-trilho i{position:absolute;left:0;top:0;height:100%;border-radius:2px;background:linear-gradient(90deg,#ff6900,#ffb35c);animation:ev-desliza 5s ease-in-out infinite alternate;animation-delay:calc(var(--k) * -1.3s)}
+  .ev-trilho i::after{content:'';position:absolute;right:-5px;top:50%;width:10px;height:10px;margin-top:-5px;border-radius:50%;background:#fff}
+  .ev-tags{display:flex;flex-wrap:wrap;gap:4px}
+  .ev-tags i{font:600 10px var(--ff-txt);font-style:normal;padding:3px 7px;border-radius:99px;background:#1f2126;color:#e4e6ea;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+  .ev-tags i:nth-child(2){background:rgba(255,105,0,.18);color:#ff8a24}
+  .ev-wave{margin-top:auto;display:flex;align-items:flex-end;gap:3px;height:34px}
+  .ev-wave i{flex:1;height:100%;border-radius:2px;background:linear-gradient(#5dff7a,#ffcc33 60%,#ff4d4d);transform-origin:bottom;animation:ev-vu .5s ease-in-out infinite alternate;animation-delay:calc(var(--k) * -.13s)}
+
+  /* linha do tempo */
+  .ev-tl{position:relative;margin-top:10px;padding:6px 8px 8px 8px;border-radius:12px;background:#121317;box-shadow:inset 0 0 0 1px rgba(255,255,255,.07)}
+  .ev-regua{display:flex;justify-content:space-between;margin-left:26px;font:500 9px var(--ff-txt);color:#6c727c}
+  .ev-trilha{display:grid;grid-template-columns:20px 1fr;gap:6px;align-items:center;margin-top:5px}
+  .ev-trilha b{font:700 9px var(--ff-txt);color:#6c727c}
+  .ev-pista{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:2px;height:28px}
+  .ev-txt{display:flex;align-items:center;padding:0 6px;border-radius:5px;background:linear-gradient(90deg,#7a3cff,#a26bff);color:#fff;font:600 9px var(--ff-txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;height:20px;align-self:center}
+  .ev-thumb{display:flex;border-radius:5px;overflow:hidden;box-shadow:inset 0 0 0 2px rgba(255,255,255,.12)}
+  .ev-thumb img{flex:1;min-width:0;height:100%;object-fit:cover}
+  .ev-thumb:nth-child(2){box-shadow:inset 0 0 0 2px #ff6900}
+  .ev-audio{display:flex;align-items:center;gap:2px;padding:0 4px;border-radius:5px;background:rgba(37,211,102,.12);box-shadow:inset 0 0 0 1px rgba(37,211,102,.35)}
+  .ev-audio i{flex:1;height:var(--h);border-radius:1px;background:#3ddc84}
+  .ev-cabeca{position:absolute;top:4px;bottom:6px;left:calc(34px + 8px);right:8px;pointer-events:none}
+  .ev-cabeca i{position:absolute;top:0;bottom:0;left:0;width:2px;background:#ff6900;box-shadow:0 0 10px #ff6900;animation:ev-anda var(--t) linear infinite}
+  .ev-cabeca i::before{content:'';position:absolute;left:-5px;top:-2px;width:12px;height:10px;background:#ff6900;clip-path:polygon(0 0,100% 0,100% 60%,50% 100%,0 60%)}
+
+  @keyframes ev-vez{0%,24.9%{opacity:1}25%,100%{opacity:0}}
+  @keyframes ev-zoom{0%{transform:scale(1.02)}25%,100%{transform:scale(1.18)}}
+  @keyframes ev-flash{0%{opacity:.7}6%,100%{opacity:0}}
+  @keyframes ev-palavra{0%{transform:scale(.4);opacity:0;color:#fff}8%{transform:scale(1.15);opacity:1;color:#ff8a24}18%,100%{transform:scale(1);opacity:1;color:#fff}}
+  @keyframes ev-linha{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  @keyframes ev-anda{from{left:0}to{left:100%}}
+  @keyframes ev-ponto{0%,100%{transform:translate(0,0)}33%{transform:translate(9px,-6px)}66%{transform:translate(-7px,8px)}}
+  @keyframes ev-desliza{from{width:30%}to{width:85%}}
+  @keyframes ev-vu{from{transform:scaleY(.2)}to{transform:scaleY(1)}}
+  @keyframes ev-pisca{to{opacity:.2}}
+
+  @media(max-width:767px){
+    .ev-app{transform:none;padding:8px}
+    .ev-meio{grid-template-columns:44% 1fr}
+    .ev-insp{gap:5px;padding:8px}
+    .ev-wave{display:none}
+    .ev-ctl{grid-template-columns:54px 1fr}
+  }
+  @media(prefers-reduced-motion:reduce){
+    .ev *,.ev *::before,.ev *::after{animation:none !important}
+    .ev-clip[style="--i:0"],.ev-leg[style="--i:0"]{opacity:1}
+  }
+</style>
