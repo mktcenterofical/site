@@ -51,7 +51,7 @@ Objetivo do site: gerar contatos pelo WhatsApp e pelo formulário.
 - Hero: animação de entrada do texto só desliza, sem opacity 0 (texto sempre visível)
 - Toda página (menos a home) mostra a navegação "Início › Página atual" no topo: prop crumbs do Base.astro, em todos os dispositivos
 - Número do WhatsApp e dados da empresa ficam em src/config.ts
-- Serviços ficam em src/data/servicos.ts (uma página por serviço via [servico].astro). Exceção: Sites (src/pages/criacao-de-sites.astro) e Lojas (src/pages/loja-virtual.astro, mesmo modelo, preços sob consulta, prints das lojas reais) têm página própria; Sites: (hero da home com textos de sites, tipos de site com preços reais, logos, incluso, processo, depoimentos e carrossel dos sites institucionais do portfólio: 4 cards menores no computador, 2 no tablet, 1 no celular, setas e arraste)
+- Serviços ficam em src/data/servicos.ts (uma página por serviço via [servico].astro). Exceção: Sites (src/pages/criacao-de-sites.astro) e Lojas (src/pages/loja-virtual.astro, mesmo modelo, preços sob consulta; à direita do hero VitrineLoja.astro: celular grafite com a loja e cartões de vidro de produtos flutuando em profundidades, seguindo o mouse) têm página própria; Sites: (hero da home com textos de sites, tipos de site com preços reais, logos, incluso, processo, depoimentos e carrossel dos sites institucionais do portfólio: 4 cards menores no computador, 2 no tablet, 1 no celular, setas e arraste)
 
 ## Textos
 - Português do Brasil, frases curtas, sem jargão

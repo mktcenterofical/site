@@ -1,10 +1,11 @@
 ---
-// Página "Lojas" (loja virtual). Mesmo padrão da página Sites: hero com prints reais das lojas,
+// Página "Lojas" (loja virtual). Mesmo padrão da página Sites: hero com a vitrine (VitrineLoja.astro),
 // tipos de loja, logos, incluso, processo, depoimentos e carrossel das lojas do portfólio.
 import Base from '../layouts/Base.astro';
 import HeroCrescimento from '../components/HeroCrescimento.astro';
 import Clientes from '../components/Clientes.astro';
 import Depoimentos from '../components/Depoimentos.astro';
+import VitrineLoja from '../components/VitrineLoja.astro';
 import Icon from '../components/Icon.astro';
 import CardPortfolio from '../components/CardPortfolio.astro';
 import { projetos } from '../data/projetos';
@@ -43,13 +44,9 @@ const schema = [
     bt2={['Ver lojas', '#lojas']}
     numeros={[[3, '', 'lojas de clientes no ar'], [2013, '', 'criando lojas desde']]}
     rolarPara="#tipos"
-    sites={{
-      desk: { nome: 'Kimax', dominio: 'kimax.com.br', tela: '/portfolio/kimax-desk.webp', w: 800, h: 1778, logo: '/clientes/kimax.webp' },
-      lap: { nome: 'Peça Peça', dominio: 'pecapeca.com.br', tela: '/portfolio/pecapeca-lap.webp', w: 720, h: 905, logo: '/portfolio/pecapeca-cel.webp' },
-      tab: { nome: 'Doce Mix', dominio: 'Doce Mix Conveniência', tela: '/portfolio/doceencanto-tab.webp', w: 480, h: 2125, logo: '/portfolio/doceencanto-cel.webp' },
-      cel: { nome: 'Kimax', dominio: 'kimax.com.br', tela: '/portfolio/kimax-cel.webp', w: 300, h: 2615, logo: '/clientes/kimax.webp' },
-    }}
-  />
+  >
+    <VitrineLoja slot="visual" />
+  </HeroCrescimento>
 
   <section id="tipos" class="servicos-topo">
     <div class="wrap">

@@ -1,0 +1,107 @@
+---
+// Lado direito do hero da página Lojas: celular grafite inclinado com a loja aberta e cartões de vidro
+// dos produtos flutuando em volta, em profundidades diferentes (inspirado em referência, sem copiar).
+// Produtos e preços fictícios (demo). Fotos em public/mock/.
+const produtos = [
+  { foto: 'jaqueta', nome: 'Jaqueta', cat: 'Moda', preco: '189,90', pos: 'p1' },
+  { foto: 'relogio', nome: 'Relógio', cat: 'Acessórios', preco: '249,00', pos: 'p2' },
+  { foto: 'bone', nome: 'Boné', cat: 'Acessórios', preco: '59,90', pos: 'p3' },
+  { foto: 'moletom', nome: 'Moletom', cat: 'Moda', preco: '139,90', pos: 'p4' },
+  { foto: 'camiseta', nome: 'Camiseta', cat: 'Básicos', preco: '49,90', pos: 'p5' },
+  { foto: 'fitness1', nome: 'Kit fitness', cat: 'Esporte', preco: '99,90', pos: 'p6' },
+];
+const estrelas = '★★★★★';
+---
+<div class="vl" id="vitrine" aria-hidden="true">
+  <div class="vl-cena">
+    <div class="vl-cel">
+      <div class="vl-tela">
+        <span class="vl-ilha"></span>
+        <div class="vl-topo"><b>Sua Loja</b><span class="vl-sacola">2</span></div>
+        <div class="vl-busca">Buscar produtos</div>
+        <div class="vl-chips"><i class="on">Todos</i><i>Moda</i><i>Acessórios</i></div>
+        <div class="vl-grade">
+          {produtos.slice(0, 4).map((p) => (
+            <span class="vl-mini"><img src={`/mock/${p.foto}.webp`} alt="" width="80" height="80" loading="lazy" decoding="async" /><small>R$ {p.preco}</small></span>
+          ))}
+        </div>
+        <div class="vl-pix">Pix aprovado · pedido enviado</div>
+      </div>
+    </div>
+    {produtos.map((p) => (
+      <div class={`vl-card ${p.pos}`}>
+        <span class="vl-foto"><img src={`/mock/${p.foto}.webp`} alt="" width="160" height="140" loading="lazy" decoding="async" /></span>
+        <span class="vl-cat">{p.cat}</span>
+        <b class="vl-nome">{p.nome}</b>
+        <span class="vl-rod"><span class="vl-est">{estrelas}</span><span class="vl-preco">R$ {p.preco}</span></span>
+        <span class="vl-mais">+</span>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .vl{position:relative;width:100%;max-width:560px;margin:0 auto;aspect-ratio:1/1;perspective:1400px}
+  .vl::before{content:'';position:absolute;inset:12% 10%;border-radius:50%;background:radial-gradient(closest-side,rgba(255,105,0,.28),transparent);filter:blur(20px)}
+  .vl::after{content:'';position:absolute;left:24%;right:24%;bottom:3%;height:7%;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.8),transparent);filter:blur(8px)}
+  .vl-cena{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateY(var(--ry,-14deg)) rotateX(var(--rx,6deg));transition:transform .6s cubic-bezier(.22,.8,.28,1)}
+
+  /* celular grafite com a loja aberta */
+  .vl-cel{position:absolute;left:31%;top:6%;width:38%;height:86%;padding:2.2%;border-radius:12%/6%;transform:translateZ(0);
+    background:linear-gradient(150deg,#4a4e57,#17191d 40%,#2b2e34 75%,#5a5f68);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18),0 40px 60px -30px #000}
+  .vl-tela{position:relative;height:100%;border-radius:10%/5%;overflow:hidden;background:#0f1013;padding:18% 7% 0;container-type:inline-size;display:flex;flex-direction:column;gap:4cqw}
+  .vl-ilha{position:absolute;left:50%;top:3%;width:32%;height:3.4%;transform:translateX(-50%);border-radius:99px;background:#000}
+  .vl-topo{display:flex;justify-content:space-between;align-items:center;color:#fff;font-family:var(--ff-tit);font-size:9cqw;text-transform:uppercase}
+  .vl-sacola{display:grid;place-items:center;width:9cqw;height:9cqw;border-radius:50%;background:#ff6900;color:#141006;font:800 5cqw var(--ff-txt)}
+  .vl-busca{padding:3.5cqw 5cqw;border-radius:99px;background:#1c1e23;color:#6c727c;font-size:5cqw}
+  .vl-chips{display:flex;gap:2.5cqw}
+  .vl-chips i{font-style:normal;padding:2cqw 4cqw;border-radius:99px;background:#1c1e23;color:#aeb4bd;font-size:4.4cqw}
+  .vl-chips i.on{background:#ff6900;color:#141006;font-weight:700}
+  .vl-grade{display:grid;grid-template-columns:1fr 1fr;gap:4cqw}
+  .vl-mini{display:flex;flex-direction:column;gap:1.5cqw;padding:2.5cqw;border-radius:5cqw;background:#18191d}
+  .vl-mini img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:3.5cqw}
+  .vl-mini small{color:#ff8a24;font:700 4.4cqw var(--ff-txt)}
+  .vl-pix{margin-top:auto;margin-bottom:9%;padding:4cqw;border-radius:5cqw;background:rgba(37,211,102,.14);border:1px solid rgba(37,211,102,.4);color:#7ff0a9;font:600 4.6cqw var(--ff-txt);text-align:center;animation:vl-pix 6s ease-in-out infinite}
+
+  /* cartões de vidro dos produtos */
+  .vl-card{position:absolute;width:23%;padding:1.6%;border-radius:14px;display:flex;flex-direction:column;gap:2px;container-type:inline-size;
+    background:linear-gradient(160deg,rgba(255,255,255,.16),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.22);
+    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 24px 40px -18px rgba(0,0,0,.9);animation:vl-flut 7s ease-in-out infinite}
+  .vl-foto{display:block;border-radius:10px;overflow:hidden;aspect-ratio:8/7;background:#1a1b1f}
+  .vl-foto img{width:100%;height:100%;object-fit:cover}
+  .vl-cat{margin-top:4px;font:600 7cqw var(--ff-txt);letter-spacing:.08em;text-transform:uppercase;color:#aeb4bd}
+  .vl-nome{color:#fff;font:700 10cqw var(--ff-txt);line-height:1.1}
+  .vl-rod{display:flex;justify-content:space-between;align-items:center;gap:4px}
+  .vl-est{color:#ffb35c;font-size:7cqw;letter-spacing:-.05em}
+  .vl-preco{color:#ff8a24;font:800 8.4cqw var(--ff-txt);white-space:nowrap}
+  .vl-mais{position:absolute;right:7%;top:7%;display:grid;place-items:center;width:15cqw;height:15cqw;border-radius:50%;background:rgba(9,10,12,.7);color:#fff;font:700 10cqw/1 var(--ff-txt)}
+
+  /* posições em volta do celular, cada uma numa profundidade */
+  .p1{left:9%;top:12%;--z:140px;width:26%}
+  .p2{left:58%;top:16%;--z:110px;animation-delay:-2s}
+  .p3{left:-1%;top:46%;--z:40px;width:19%;opacity:.85;animation-delay:-4s}
+  .p4{left:13%;top:55%;--z:170px;width:25%;animation-delay:-1s}
+  .p5{left:76%;top:38%;--z:30px;width:19%;opacity:.85;animation-delay:-3s}
+  .p6{left:57%;top:57%;--z:130px;animation-delay:-5s}
+  .vl-card{transform:translateZ(var(--z))}
+  @keyframes vl-flut{0%,100%{transform:translateZ(var(--z)) translateY(0)}50%{transform:translateZ(var(--z)) translateY(-10px)}}
+  @keyframes vl-pix{0%,40%{opacity:0;transform:translateY(8px)}50%,90%{opacity:1;transform:none}100%{opacity:0}}
+
+  @media(max-width:767px){.vl{max-width:400px}.vl-card{border-radius:10px}}
+  @media(prefers-reduced-motion:reduce){.vl-card,.vl-pix{animation:none}.vl-pix{opacity:1}}
+</style>
+
+<script>
+  // a cena acompanha o mouse de leve
+  const vl = document.getElementById('vitrine');
+  const cena = vl?.querySelector<HTMLElement>('.vl-cena');
+  if (vl && cena && matchMedia('(hover:hover)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    addEventListener('pointermove', (e) => {
+      const r = vl.getBoundingClientRect();
+      const x = (e.clientX - (r.left + r.width / 2)) / innerWidth;
+      const y = (e.clientY - (r.top + r.height / 2)) / innerHeight;
+      cena.style.setProperty('--ry', `${-14 + x * 16}deg`);
+      cena.style.setProperty('--rx', `${6 - y * 10}deg`);
+    }, { passive: true });
+  }
+</script>
