@@ -24,6 +24,8 @@ const tecnicas = [
   { id: 'trans', nome: 'Transições', desc: 'Passagens suaves ou impactantes entre uma cena e outra.', fotos: ['live-publico', 'live-show'] },
   { id: 'motion', nome: 'Textos e motion', desc: 'Títulos, preços e chamadas animadas com a identidade da sua marca.', fotos: ['salao'] },
 ];
+// câmeras da transmissão: [foto, nome]
+const cams = [['live-missa', 'Altar'], ['live-biblia', 'Leitura'], ['live-publico', 'Fiéis'], ['live-evento', 'Geral']];
 const incluso: [string, string, string][] = [
   ['smartphone', 'Formato para cada rede', 'Reels, Stories, TikTok, YouTube e anúncios.'],
   ['message', 'Legendas em português', 'Para quem assiste sem som, que é a maioria.'],
@@ -114,6 +116,48 @@ const schema = [
             <p>{t.desc}</p>
           </article>
         ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- transmissão ao vivo: mesa de corte multicâmera em código (4 câmeras trocando a cada 3 s, só CSS) -->
+  <section id="ao-vivo">
+    <div class="wrap tv-wrap">
+      <div class="tv-txt">
+        <span class="eyebrow">Transmissão ao vivo</span>
+        <h2>Missas, cultos e eventos ao vivo</h2>
+        <p class="vd-lead">Levamos a sua celebração para quem não pode estar presente. Transmissão com várias câmeras, som direto da mesa e letreiros, no YouTube, Facebook e Instagram ao mesmo tempo.</p>
+        <ul class="vd-lista">
+          <li>Missas, cultos, casamentos, formaturas e eventos</li>
+          <li>Várias câmeras com cortes ao vivo</li>
+          <li>Som limpo, direto da mesa de som</li>
+          <li>Letreiros com nomes, cânticos e versículos</li>
+          <li>Gravação completa para assistir depois</li>
+        </ul>
+        <a class="btn btn-primary tv-bt" href={waLink(msg('transmissão ao vivo'))} target="_blank" rel="noopener">Quero transmitir ao vivo</a>
+      </div>
+      <div class="tv" aria-hidden="true">
+        <div class="tv-prog">
+          {cams.map((c, i) => <img class="tv-cam" src={`/mock/${c[0]}.webp`} alt="" width="480" height="360" loading="lazy" decoding="async" style={`--i:${i}`} />)}
+          <span class="tv-vivo"><i></i>AO VIVO</span>
+          <span class="tv-tempo">01:12:45</span>
+          <span class="tv-gc"><b>Santa Missa</b><em>Transmissão ao vivo · Paróquia</em></span>
+          <span class="tv-chat">
+            <span>Amém!</span><span>Assistindo daqui de casa</span><span>Glória a Deus</span>
+          </span>
+        </div>
+        <div class="tv-multi">
+          {cams.map((c, i) => (
+            <span class="tv-mini" style={`--i:${i}`}>
+              <img src={`/mock/${c[0]}.webp`} alt="" width="480" height="360" loading="lazy" decoding="async" />
+              <small>CAM {i + 1} · {c[1]}</small>
+            </span>
+          ))}
+        </div>
+        <div class="tv-redes">
+          {['YouTube', 'Facebook', 'Instagram'].map((r) => <span><i></i>{r}</span>)}
+          <span class="tv-sinal">Sinal estável</span>
+        </div>
       </div>
     </div>
   </section>
@@ -224,6 +268,42 @@ const schema = [
   .vd-mo b{font:800 20cqw/1 var(--ff-tit);text-transform:uppercase;color:#fff;animation:vd-entra 3s cubic-bezier(.2,.9,.3,1.3) infinite}
   .vd-mo em{font-style:normal;padding:4px 12px;border-radius:99px;background:#ff6900;color:#141006;font:800 12cqw/1 var(--ff-tit);animation:vd-entra 3s cubic-bezier(.2,.9,.3,1.3) .25s infinite}
   @keyframes vd-entra{0%{transform:translateX(-120%) skewX(-12deg);opacity:0}15%,80%{transform:none;opacity:1}100%{transform:translateX(120%);opacity:0}}
+
+  /* transmissão ao vivo */
+  .tv-wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:40px;align-items:center}
+  .tv-txt{text-align:left}
+  .tv-bt{margin-top:22px}
+  .tv{--t:12s;padding:12px;border-radius:18px;background:linear-gradient(160deg,#1d1f24,#0d0e11 60%);border:1px solid rgba(255,255,255,.12);box-shadow:0 40px 80px -30px #000}
+  .tv-prog{position:relative;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000;container-type:inline-size}
+  .tv-cam{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;animation:tv-vez var(--t) steps(1) infinite;animation-delay:calc(var(--i) * 3s - var(--t))}
+  .tv-cam[style="--i:0"]{object-position:50% 60%}
+  .tv-prog::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.35),transparent 30%,transparent 60%,rgba(0,0,0,.65))}
+  .tv-vivo{position:absolute;left:3%;top:5%;z-index:1;display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:6px;background:#e5202e;color:#fff;font:800 2.4cqw/1 var(--ff-txt);letter-spacing:.08em}
+  .tv-vivo i{width:1.4cqw;height:1.4cqw;border-radius:50%;background:#fff;animation:tv-pisca 1s steps(2) infinite}
+  .tv-tempo{position:absolute;left:3%;top:15%;z-index:1;color:#fff;font:600 2cqw var(--ff-txt);opacity:.85}
+  .tv-gc{position:absolute;left:3%;bottom:7%;z-index:1;display:flex;flex-direction:column;padding:1.2cqw 2cqw;border-left:4px solid #ff6900;background:rgba(9,10,12,.75);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);animation:tv-gc var(--t) ease-out infinite}
+  .tv-gc b{color:#fff;font:800 3.6cqw/1.1 var(--ff-tit);text-transform:uppercase}
+  .tv-gc em{font-style:normal;color:#ffb35c;font:600 1.9cqw var(--ff-txt)}
+  .tv-chat{position:absolute;right:3%;bottom:7%;z-index:1;display:flex;flex-direction:column;align-items:flex-end;gap:1cqw}
+  .tv-chat span{padding:.8cqw 1.8cqw;border-radius:99px;background:rgba(255,255,255,.14);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:#fff;font:600 1.9cqw var(--ff-txt);opacity:0;animation:tv-msg 6s ease-out infinite}
+  .tv-chat span:nth-child(2){animation-delay:2s}
+  .tv-chat span:nth-child(3){animation-delay:4s}
+  .tv-multi{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+  .tv-mini{position:relative;aspect-ratio:16/10;border-radius:8px;overflow:hidden;box-shadow:inset 0 0 0 2px rgba(255,255,255,.1);animation:tv-tally var(--t) steps(1) infinite;animation-delay:calc(var(--i) * 3s - var(--t))}
+  .tv-mini img{width:100%;height:100%;object-fit:cover;filter:brightness(.8)}
+  .tv-mini small{position:absolute;left:0;right:0;bottom:0;padding:2px 6px;background:rgba(0,0,0,.65);color:#e4e6ea;font:600 9px var(--ff-txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tv-redes{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:10px}
+  .tv-redes span{display:flex;align-items:center;gap:6px;padding:5px 10px;border-radius:99px;background:#16171b;box-shadow:inset 0 0 0 1px rgba(255,255,255,.08);color:#e4e6ea;font:600 11px var(--ff-txt)}
+  .tv-redes i{width:7px;height:7px;border-radius:50%;background:#e5202e;animation:tv-pisca 1s steps(2) infinite}
+  .tv-redes .tv-sinal{margin-left:auto;color:#7ff0a9;background:rgba(37,211,102,.1);box-shadow:inset 0 0 0 1px rgba(37,211,102,.35)}
+  @keyframes tv-vez{0%{opacity:1}25%,100%{opacity:0}}
+  @keyframes tv-tally{0%{box-shadow:inset 0 0 0 3px #e5202e,0 0 14px rgba(229,32,46,.6)}25%,100%{box-shadow:inset 0 0 0 2px rgba(255,255,255,.1)}}
+  @keyframes tv-gc{0%,2%{transform:translateX(-110%)}8%,100%{transform:none}}
+  @keyframes tv-msg{0%{opacity:0;transform:translateY(10px)}10%,70%{opacity:1;transform:none}85%,100%{opacity:0;transform:translateY(-6px)}}
+  @keyframes tv-pisca{to{opacity:.2}}
+  @media(max-width:1023px){.tv-wrap{grid-template-columns:1fr;gap:24px}.tv-txt{text-align:center}}
+  @media(max-width:767px){.tv{padding:8px}.tv-multi{gap:5px}.tv-redes .tv-sinal{margin-left:0}}
+  @media(prefers-reduced-motion:reduce){.tv *{animation:none !important}.tv-cam[style="--i:0"],.tv-chat span{opacity:1}}
 
   @media(max-width:1023px){
     .vd-tec{grid-template-columns:repeat(3,1fr)}
