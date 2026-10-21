@@ -1,5 +1,6 @@
 # Atualiza todo dia os prints dos sites do portfólio (scripts/atualizar-prints.mjs).
-# Se algum site mudou, faz commit no main e a Vercel publica sozinha.
+# Separado em 3 jobs por segurança: o que abre os sites de fora não tem chaves nem permissão de escrita;
+# outro só salva as imagens no repositório; e só o último recebe a chave da Vercel para publicar.
 name: Atualizar prints do portfólio
 
 on:
@@ -8,7 +9,7 @@ on:
   workflow_dispatch: # botão "Run workflow" para rodar na hora
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: atualizar-prints
@@ -18,12 +19,12 @@ jobs:
   prints:
     runs-on: ubuntu-latest
     timeout-minutes: 40
-    env:
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      VERCEL_ORG_ID: team_m73FuTfu7mSo5MGZD5N9q4du
-      VERCEL_PROJECT_ID: prj_QwoiW6vSz39PWic08YyyjEbEGmoL
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
 
       - uses: actions/setup-node@v4
         with:
@@ -35,8 +36,37 @@ jobs:
       - name: Tirar os prints
         run: node scripts/atualizar-prints.mjs
 
+      - uses: actions/upload-artifact@v4
+        with:
+          name: prints
+          path: public/portfolio/*.webp
+          retention-days: 3
+
+  salvar:
+    needs: prints
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      mudou: ${{ steps.salvar.outputs.mudou }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: prints
+          path: novos
+
       - name: Salvar se mudou
+        id: salvar
         run: |
+          # só aceita .webp com nome de print já existente no portfólio
+          for f in novos/*.webp; do
+            n=$(basename "$f")
+            if [[ "$n" =~ ^[a-z0-9-]+\.webp$ ]] && [ -f "public/portfolio/$n" ] && [ "$(head -c 4 "$f")" = "RIFF" ]; then
+              cp "$f" "public/portfolio/$n"
+            fi
+          done
           if [ -n "$(git status --porcelain public/portfolio)" ]; then
             git config user.name "mktcenter-bot"
             git config user.email "mktcenter-bot@users.noreply.github.com"
@@ -47,9 +77,25 @@ jobs:
           else
             echo "Nenhum site mudou."
           fi
-        id: salvar
+
+  publicar:
+    needs: salvar
+    if: needs.salvar.outputs.mudou == 'sim'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          persist-credentials: false
 
       # publica na Vercel (precisa do segredo VERCEL_TOKEN em Settings > Secrets and variables > Actions)
       - name: Publicar na Vercel
-        if: steps.salvar.outputs.mudou == 'sim' && env.VERCEL_TOKEN != ''
-        run: npx vercel deploy --prod --yes --token "$VERCEL_TOKEN"
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: team_m73FuTfu7mSo5MGZD5N9q4du
+          VERCEL_PROJECT_ID: prj_QwoiW6vSz39PWic08YyyjEbEGmoL
+        run: |
+          if [ -z "$VERCEL_TOKEN" ]; then echo "Sem VERCEL_TOKEN: publique pela Vercel ligada ao GitHub."; exit 0; fi
+          npx --yes vercel@65.0.0 deploy --prod --yes
