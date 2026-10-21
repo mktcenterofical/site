@@ -486,4 +486,4 @@ html[data-theme="light"] .sv-modes{background:rgba(12,13,16,.82) !important;bord
 html[data-theme="light"] .sv-modes button:not(.on){color:rgba(255,255,255,.85) !important}
 html[data-theme="light"] .sv-note{color:#5b616b !important}
 /* Portfólio: fundo da prévia (notebook + celular) sempre preto, também no tema claro */
-html[data-theme="light"] .pf-cena{background:radial-gradient(60% 50% at 45% 55%,rgba(255,105,0,.24),transparent 70%),linear-gradient(180deg,#0d0e12,#131519) !important}
+html[data-theme="light"] .pf-cena{background:radial-gradient(65% 55% at 45% 58%,rgba(255,122,24,.28),transparent 70%),radial-gradient(120% 80% at 50% 0%,rgba(255,255,255,.1),transparent 60%),linear-gradient(180deg,#3d4048,#2b2d33) !important}
