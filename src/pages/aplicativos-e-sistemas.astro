@@ -11,6 +11,7 @@ import { config, waLink } from '../config';
 
 const msg = (p: string) => `Olá! Quero conversar sobre ${p}.`;
 const apps = projetos.filter((p) => /aplicativo|sistema/i.test(p.tipo));
+const sites = projetos.filter((p) => !apps.includes(p)); // carrossel de sites abaixo do passo a passo
 const tipos: [string, string, string][] = [
   ['grid', 'Sistemas de gestão', 'Orçamentos, pedidos, produção, estoque e equipe num painel só.'],
   ['trending', 'Painéis de resultados', 'Site, Google e redes sociais em gráficos ao vivo.'],
@@ -43,12 +44,12 @@ const schema = [
   </HeroCrescimento>
 
   <section id="apps" class="servicos-topo">
-    <div class="wrap">
+    <div class="wrap st-carrossel">
       <div class="st-cab">
         <div><span class="eyebrow">Portfólio</span><h2>Apps e sistemas que criamos</h2></div>
         <div class="st-setas"><button type="button" class="st-seta" data-dir="-1" aria-label="Apps anteriores"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button><button type="button" class="st-seta" data-dir="1" aria-label="Próximos apps"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button></div>
       </div>
-      <div class="st-pf" id="st-pf" tabindex="0" aria-label="Apps e sistemas (role para o lado)">{apps.map((p) => <CardPortfolio {...p} />)}</div>
+      <div class="st-pf" tabindex="0" aria-label="Apps e sistemas (role para o lado)">{apps.map((p) => <CardPortfolio {...p} />)}</div>
     </div>
   </section>
 
@@ -80,6 +81,16 @@ const schema = [
       <span class="eyebrow">Passo a passo</span>
       <h2>Como funciona</h2>
       <ol class="etapas">{etapas.map((e) => <li>{e}</li>)}</ol>
+    </div>
+  </section>
+
+  <section id="sites">
+    <div class="wrap st-carrossel">
+      <div class="st-cab">
+        <div><span class="eyebrow">Também criamos</span><h2>Sites que criamos</h2></div>
+        <div class="st-setas"><button type="button" class="st-seta" data-dir="-1" aria-label="Sites anteriores"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button><button type="button" class="st-seta" data-dir="1" aria-label="Próximos sites"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button></div>
+      </div>
+      <div class="st-pf" tabindex="0" aria-label="Sites (role para o lado)">{sites.map((p) => <CardPortfolio {...p} />)}</div>
     </div>
   </section>
 
@@ -119,9 +130,10 @@ const schema = [
 </style>
 
 <script>
-  const trilho = document.getElementById('st-pf');
-  if (trilho) {
-    const setas = document.querySelectorAll<HTMLButtonElement>('.st-seta');
+  // cada carrossel (apps e sites) com suas setas
+  document.querySelectorAll<HTMLElement>('.st-carrossel').forEach((bloco) => {
+    const trilho = bloco.querySelector<HTMLElement>('.st-pf')!;
+    const setas = bloco.querySelectorAll<HTMLButtonElement>('.st-seta');
     const passo = () => ((trilho.firstElementChild as HTMLElement)?.offsetWidth || 260) + 16;
     const atualizar = () => {
       setas[0].disabled = trilho.scrollLeft < 4;
@@ -133,5 +145,5 @@ const schema = [
     trilho.addEventListener('scroll', atualizar, { passive: true });
     addEventListener('resize', atualizar);
     atualizar();
-  }
+  });
 </script>
