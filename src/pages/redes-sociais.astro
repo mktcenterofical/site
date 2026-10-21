@@ -1,0 +1,319 @@
+---
+// Página "Redes" (gestão de redes sociais). Mesmo modelo das páginas Sites, Lojas e Vídeos:
+// hero com a central de redes em código (PainelRedes.astro), planos com preços reais (redes R$ 400/mês,
+// post R$ 30/card, vídeo R$ 50), antes e depois do perfil arrastável, 6 entregas com demonstração ao vivo,
+// incluso, processo e depoimentos.
+import Base from '../layouts/Base.astro';
+import HeroCrescimento from '../components/HeroCrescimento.astro';
+import PainelRedes from '../components/PainelRedes.astro';
+import Depoimentos from '../components/Depoimentos.astro';
+import Icon from '../components/Icon.astro';
+import { config, waLink } from '../config';
+
+const msg = (p: string) => `Olá! Quero um orçamento de ${p}.`;
+const tipos = [
+  { nome: 'Gestão de Redes Sociais', selo: 'Mensal', de: 'A partir de', preco: 'R$ 400', per: '/mês', desc: 'Sua marca presente e ativa todos os meses, sem você se preocupar.', itens: ['Planejamento de conteúdo', 'Publicações nas redes', 'Acompanhamento de resultados'], destaque: true },
+  { nome: 'Criação de Posts', de: 'A partir de', preco: 'R$ 30', per: '/card', desc: 'Cards com a identidade da sua marca, prontos para postar.', itens: ['Arte com a sua marca', 'Feed e Stories', 'Texto da publicação'] },
+  { nome: 'Edição de Vídeos', de: 'A partir de', preco: 'R$ 50', per: '/vídeo', desc: 'Reels e Stories editados para prender a atenção.', itens: ['Cortes e legendas', 'Formato de cada rede', 'Pronto para postar'] },
+  { nome: 'Anúncios nas redes', de: 'Valor', preco: 'Sob consulta', desc: 'Impulsionamento para levar sua marca a quem ainda não conhece você.', itens: ['Público certo da sua região', 'Chamada para o WhatsApp', 'Relatório de resultados'] },
+];
+// entregas com demonstração ao vivo (animações em CSS)
+const entregas = [
+  { id: 'post', nome: 'Posts para o feed', desc: 'Artes com a sua cara, que param o dedo de quem está rolando.' },
+  { id: 'car', nome: 'Carrosséis', desc: 'Conteúdo em sequência que ensina, convence e é salvo.' },
+  { id: 'sto', nome: 'Stories', desc: 'Enquetes, caixinhas e bastidores para conversar todo dia.' },
+  { id: 'reel', nome: 'Reels', desc: 'Vídeos curtos que levam a sua marca para muito mais gente.' },
+  { id: 'ads', nome: 'Anúncios', desc: 'Posts patrocinados com botão direto para o seu WhatsApp.' },
+  { id: 'rel', nome: 'Relatório mensal', desc: 'O que deu certo no mês, explicado sem complicação.' },
+];
+// antes e depois do perfil: 9 posts soltos x 9 posts planejados (fotos de public/mock/)
+const antes = ['burger', 'live-publico', 'salao', 'pizza', 'cafe', 'bone', 'acai', 'live-show', 'bolo'];
+const depois: [string, string][] = [
+  ['modelo', 'Nova coleção'], ['', 'Dica da semana'], ['fitness2', 'Bastidores'],
+  ['', 'Promoção -20%'], ['cafe', 'Nosso espaço'], ['', 'Clientes felizes'],
+  ['live-evento', 'Evento'], ['', 'Peça pelo WhatsApp'], ['jaqueta', 'Lançamento'],
+];
+const incluso: [string, string, string][] = [
+  ['calendar', 'Calendário de conteúdo', 'Você aprova o mês antes de publicar.'],
+  ['star', 'Identidade visual', 'Feed bonito e com a mesma cara em todos os posts.'],
+  ['message', 'Textos que vendem', 'Legendas curtas com chamada para o WhatsApp.'],
+  ['video', 'Reels e Stories', 'Vídeos e bastidores para aparecer mais.'],
+  ['trending', 'Relatório mensal', 'Alcance, seguidores e contatos do mês.'],
+  ['smile', 'Atendimento próximo', 'Fale direto com quem cuida da sua marca.'],
+];
+const etapas = ['Conversa sobre a sua marca', 'Planejamento do mês para aprovação', 'Criação e publicação', 'Relatório e ajustes'];
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'Service', name: 'Gestão de redes sociais', serviceType: 'Gestão de redes sociais', provider: { '@type': 'ProfessionalService', name: config.nome }, areaServed: 'BR',
+    offers: { '@type': 'Offer', priceCurrency: 'BRL', price: 400, description: 'Gestão de redes sociais a partir de R$ 400 por mês' } },
+];
+---
+<Base title="Gestão de Redes Sociais a partir de R$ 400/mês | MKT Center"
+  description="Gestão de Instagram e redes sociais com posts, Reels, Stories e anúncios. A partir de R$ 400 por mês. Peça seu orçamento pelo WhatsApp."
+  schema={schema} crumbs={[['Redes', '/redes-sociais/']]}>
+  <HeroCrescimento
+    rotulo="Redes sociais"
+    linhas={[['Sua marca', 'ativa'], ['todos os', 'dias,']]}
+    destaque="sem você parar."
+    texto="Planejamos, criamos e publicamos os posts, Reels e Stories da sua empresa, e transformamos seguidores em mensagens no seu WhatsApp."
+    bt1={['Quero cuidar das redes', waLink(msg('gestão de redes sociais'))]}
+    bt2={['Ver planos', '#tipos']}
+    numeros={[[400, '', 'R$ por mês'], [30, '', 'R$ por post']]}
+    rolarPara="#tipos"
+  >
+    <PainelRedes slot="visual" />
+  </HeroCrescimento>
+
+  <section id="tipos" class="servicos-topo">
+    <div class="wrap">
+      <span class="eyebrow">Escolha o seu</span>
+      <h2>Planos para as redes</h2>
+      <div class="st-grid">
+        {tipos.map((t) => (
+          <article class={`st-card${t.destaque ? ' on' : ''}`}>
+            {t.selo && <span class="st-selo">{t.selo}</span>}
+            <h3>{t.nome}</h3>
+            <p class="st-preco"><small>{t.de}</small>{t.preco}{t.per && <em>{t.per}</em>}</p>
+            <p class="st-desc">{t.desc}</p>
+            <ul>{t.itens.map((i) => <li>{i}</li>)}</ul>
+            <a class="btn btn-primary st-bt" href={waLink(msg(t.nome))} target="_blank" rel="noopener">Quero este</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- antes e depois do perfil: arraste a linha -->
+  <section>
+    <div class="wrap vd-ad-wrap">
+      <div class="vd-ad-txt">
+        <span class="eyebrow">Antes e depois</span>
+        <h2>Do perfil parado ao perfil que vende</h2>
+        <p class="vd-lead">Arraste a linha e compare: posts soltos, sem padrão, contra um feed planejado, com a cara da sua marca e chamadas para o WhatsApp.</p>
+        <ul class="vd-lista"><li>Cores e fontes da sua marca</li><li>Conteúdo variado e planejado</li><li>Chamada para ação em cada post</li></ul>
+      </div>
+      <div class="rd-ad" id="antes-depois" style="--x:50%">
+        <div class="rd-perfil rd-depois">
+          <div class="rd-topo"><i></i><span><b>suamarca</b><small>Sua empresa · Sua cidade</small><em>Peça pelo WhatsApp</em></span></div>
+          <div class="rd-grade">
+            {depois.map(([f, t], i) => (
+              <span class={f ? 'rd-p' : `rd-p rd-p--txt rd-t${i % 3}`}>
+                {f && <img src={`/mock/${f}.webp`} alt="" width="320" height="320" loading="lazy" decoding="async" />}
+                <b>{t}</b>
+              </span>
+            ))}
+          </div>
+        </div>
+        <div class="rd-perfil rd-antes">
+          <div class="rd-topo"><i></i><span><b>suamarca</b><small>sem descrição</small></span></div>
+          <div class="rd-grade">
+            {antes.map((f) => <span class="rd-p"><img src={`/mock/${f}.webp`} alt="" width="320" height="320" loading="lazy" decoding="async" /></span>)}
+          </div>
+        </div>
+        <span class="vd-ad-rot vd-ad-rot--a">Antes</span><span class="vd-ad-rot vd-ad-rot--d">Depois</span>
+        <span class="vd-ad-linha"><i>‹ ›</i></span>
+        <input type="range" min="0" max="100" value="50" aria-label="Comparar antes e depois do perfil" />
+      </div>
+    </div>
+  </section>
+
+  <section id="entregas">
+    <div class="wrap">
+      <span class="eyebrow">Ao vivo</span>
+      <h2>O que entregamos</h2>
+      <div class="vd-tec">
+        {entregas.map((t) => (
+          <article class="vd-card">
+            <div class={`vd-demo rd-${t.id}`} aria-hidden="true">
+              {t.id === 'post' && <><img src="/mock/modelo.webp" alt="" width="320" height="360" loading="lazy" decoding="async" /><span class="rd-faixa">Nova coleção</span><span class="rd-cora"></span></>}
+              {t.id === 'car' && <><span class="rd-slides"><span class="rd-s1">5 dicas</span><span class="rd-s2"><b>1</b>Fotos com luz natural</span><span class="rd-s3"><b>2</b>Preço sempre visível</span><span class="rd-s1">Salve este post</span></span><span class="rd-pontos"><i></i><i></i><i></i><i></i></span></>}
+              {t.id === 'sto' && <><img src="/mock/cafe.webp" alt="" width="480" height="240" loading="lazy" decoding="async" /><span class="rd-barras"><i></i><i></i><i></i></span><span class="rd-enq"><b>Qual você prefere?</b><span><i class="rd-a">Café</i><i class="rd-b">Cappuccino</i></span></span></>}
+              {t.id === 'reel' && <>{['live-show', 'fitness2', 'modelo'].map((f, i) => <img class="rd-cl" src={`/mock/${f}.webp`} alt="" width="320" height="360" loading="lazy" decoding="async" style={`--i:${i}`} />)}<span class="rd-play"></span><span class="rd-lat"><i></i><i></i><i></i></span></>}
+              {t.id === 'ads' && <><img src="/mock/burger.webp" alt="" width="160" height="160" loading="lazy" decoding="async" /><span class="rd-pat">Patrocinado</span><span class="rd-cta">Enviar mensagem no WhatsApp</span><span class="rd-dedo"></span></>}
+              {t.id === 'rel' && <><span class="rd-graf"><b>Resultado do mês</b>{[38, 52, 46, 70, 88].map((h, i) => <i style={`--h:${h}%;--i:${i}`}></i>)}<small>Alcance · Seguidores · Mensagens</small></span></>}
+            </div>
+            <h3>{t.nome}</h3>
+            <p>{t.desc}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <span class="eyebrow">Em toda gestão</span>
+      <h2>O que vem incluso</h2>
+      <div class="grid grid-servicos sv-grid st-inc">
+        {incluso.map(([i, t, d]) => (
+          <div class="card"><span class="icone"><Icon name={i} /></span><h3>{t}</h3><p>{d}</p></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <span class="eyebrow">Passo a passo</span>
+      <h2>Como funciona</h2>
+      <ol class="etapas">{etapas.map((e) => <li>{e}</li>)}</ol>
+    </div>
+  </section>
+
+  <Depoimentos />
+</Base>
+
+<style>
+  /* planos (mesmo visual das páginas Sites, Lojas e Vídeos) */
+  .st-grid{display:grid;gap:16px;grid-template-columns:1fr}
+  @media(min-width:768px){.st-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(min-width:1024px){.st-grid{grid-template-columns:repeat(4,1fr)}}
+  .st-card{position:relative;display:flex;flex-direction:column;padding:24px 20px 20px;border-radius:var(--radius-lg);text-align:left;
+    background:linear-gradient(160deg,rgba(28,29,33,.85),rgba(12,13,15,.9));border:1px solid rgba(255,255,255,.08);box-shadow:0 20px 40px -24px rgba(0,0,0,.9);overflow:hidden;transition:transform .3s,border-color .3s}
+  .st-card::before{content:'';position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,#ff6900,#ffb35c)}
+  .st-card:hover{transform:translateY(-4px);border-color:rgba(255,105,0,.45)}
+  .st-card.on{border-color:rgba(255,105,0,.6);box-shadow:0 0 40px -12px rgba(255,105,0,.6)}
+  .st-selo{align-self:flex-start;margin-bottom:10px;padding:4px 10px;border-radius:99px;background:linear-gradient(90deg,#ff6900,#ffb35c);color:#141006;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+  .st-card h3{font-size:22px}
+  .st-preco{margin-top:10px;font-family:var(--ff-tit);font-weight:800;font-size:36px;line-height:1;white-space:nowrap;background:linear-gradient(90deg,#ff8a24,#ffc993);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .st-preco small{display:block;font-family:var(--ff-txt);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#aeb4bd;-webkit-text-fill-color:#aeb4bd;margin-bottom:4px}
+  .st-preco em{font-style:normal;font-size:18px;margin-left:2px}
+  .st-desc{margin-top:12px;color:#aeb4bd;font-size:14px;line-height:22px}
+  .st-card ul{list-style:none;margin:14px 0 20px;padding:0;display:grid;gap:8px}
+  .st-card li{position:relative;padding-left:16px;font-size:14px;color:#e4e6ea}
+  .st-card li::before{content:'';position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:#ff6900}
+  .st-bt{margin-top:auto;width:100%}
+  .grid.st-inc{grid-template-columns:repeat(3,1fr);grid-template-areas:none}
+  .grid.st-inc>*{grid-area:auto !important;display:block !important}
+  .grid.st-inc .icone{margin:0 0 16px !important}
+
+  /* antes e depois (texto) */
+  .vd-ad-wrap{display:grid;grid-template-columns:1fr 1.15fr;gap:40px;align-items:center}
+  .vd-ad-txt{text-align:left}
+  .vd-lead{color:#aeb4bd;font-size:16px;line-height:1.6;margin-top:12px}
+  .vd-lista{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:8px}
+  .vd-lista li{position:relative;padding-left:18px;color:#e4e6ea}
+  .vd-lista li::before{content:'';position:absolute;left:0;top:8px;width:7px;height:7px;border-radius:50%;background:#ff6900}
+  .vd-ad-rot{position:absolute;top:3%;z-index:3;padding:4px 10px;border-radius:99px;font:700 11px var(--ff-txt);letter-spacing:.1em;text-transform:uppercase}
+  .vd-ad-rot--a{left:3%;background:rgba(0,0,0,.7);color:#e4e6ea}
+  .vd-ad-rot--d{right:3%;background:#ff6900;color:#141006}
+  .vd-ad-linha{position:absolute;top:0;bottom:0;left:var(--x);z-index:3;width:2px;margin-left:-1px;background:#fff;box-shadow:0 0 12px rgba(0,0,0,.6);pointer-events:none}
+  .vd-ad-linha i{position:absolute;left:50%;top:50%;display:grid;place-items:center;width:42px;height:42px;transform:translate(-50%,-50%);border-radius:50%;background:#ff6900;color:#141006;font:800 16px/1 var(--ff-txt);font-style:normal;box-shadow:0 6px 18px rgba(0,0,0,.5)}
+
+  /* antes e depois: dois perfis do Instagram sobrepostos */
+  .rd-ad{position:relative;max-width:520px;width:100%;margin:0 auto;border-radius:18px;overflow:hidden;background:#000;user-select:none;container-type:inline-size;
+    box-shadow:0 0 0 1px rgba(255,255,255,.1),0 30px 60px -30px #000}
+  .rd-perfil{padding:12cqw 3cqw 3cqw;background:#000}
+  .rd-antes{position:absolute;inset:0;clip-path:inset(0 calc(100% - var(--x)) 0 0)}
+  .rd-topo{display:flex;align-items:center;gap:4cqw;margin-bottom:3cqw}
+  .rd-topo i{flex:none;width:16cqw;height:16cqw;border-radius:50%;background:#333}
+  .rd-depois .rd-topo i{background:radial-gradient(circle,#090a0c 0 52%,transparent 54%),conic-gradient(#ff6900,#ffb35c,#e5202e,#ff6900)}
+  .rd-topo span{display:flex;flex-direction:column;gap:.6cqw;min-width:0}
+  .rd-topo b{color:#fff;font:700 4cqw var(--ff-txt)}
+  .rd-topo small{color:#aeb4bd;font:500 3cqw var(--ff-txt)}
+  .rd-topo em{align-self:flex-start;margin-top:1cqw;padding:1cqw 3cqw;border-radius:99px;background:#ff6900;color:#141006;font:700 2.8cqw var(--ff-txt);font-style:normal}
+  .rd-grade{display:grid;grid-template-columns:repeat(3,1fr);gap:1cqw}
+  .rd-p{position:relative;aspect-ratio:1;overflow:hidden;background:#111}
+  .rd-p img{width:100%;height:100%;object-fit:cover}
+  .rd-antes .rd-p img{filter:saturate(.7) brightness(.85)}
+  .rd-antes .rd-p:nth-child(odd) img{transform:rotate(2deg) scale(1.15)}
+  .rd-depois .rd-p img{filter:saturate(1.15) contrast(1.05)}
+  .rd-depois .rd-p::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(9,10,12,.85))}
+  .rd-p b{position:absolute;left:6%;right:6%;bottom:6%;z-index:1;color:#fff;font:800 4.2cqw/1 var(--ff-tit);text-transform:uppercase}
+  .rd-p--txt{display:grid;place-items:center;padding:8%}
+  .rd-p--txt b{position:static;text-align:center;font-size:5cqw}
+  .rd-t0{background:linear-gradient(135deg,#ff6900,#ff9a3c)}
+  .rd-t0 b{color:#141006}
+  .rd-t1{background:#16171b;box-shadow:inset 0 0 0 1px rgba(255,138,36,.5)}
+  .rd-t1 b{color:#ff8a24}
+  .rd-t2{background:#f4efe8}
+  .rd-t2 b{color:#141006}
+  .rd-ad input{position:absolute;inset:0;z-index:4;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+
+  /* entregas: prévias animadas 9:16 */
+  .vd-tec{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+  .vd-card{text-align:left}
+  .vd-card h3{font-size:18px;margin-top:12px}
+  .vd-card p{margin-top:4px;color:#aeb4bd;font-size:13px;line-height:1.5}
+  .vd-demo{position:relative;aspect-ratio:9/16;border-radius:14px;overflow:hidden;background:#000;container-type:inline-size;
+    box-shadow:0 0 0 1px rgba(255,255,255,.1),0 20px 40px -20px #000;transition:box-shadow .3s}
+  .vd-card:hover .vd-demo{box-shadow:0 0 0 1px rgba(255,138,36,.7),0 0 30px -8px rgba(255,105,0,.7)}
+  .vd-demo>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
+  .rd-faixa{position:absolute;left:0;right:0;bottom:12%;padding:3cqw;background:#ff6900;color:#141006;text-align:center;font:800 11cqw/1 var(--ff-tit);text-transform:uppercase;animation:rd-entra 3s cubic-bezier(.2,.9,.3,1.2) infinite}
+  .rd-cora{position:absolute;left:50%;top:40%;width:34cqw;height:34cqw;margin:-17cqw;background:#fff;opacity:0;animation:rd-cora 3s ease-out infinite;
+    -webkit-mask:var(--c) center/contain no-repeat;mask:var(--c) center/contain no-repeat;filter:drop-shadow(0 4px 10px rgba(0,0,0,.5));
+    --c:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 21s-7.5-4.6-9.5-9.2C1.2 8.6 3.4 5 7 5c2 0 3.4 1.1 5 3 1.6-1.9 3-3 5-3 3.6 0 5.8 3.6 4.5 6.8C19.5 16.4 12 21 12 21z'/%3E%3C/svg%3E")}
+  @keyframes rd-entra{0%{transform:translateX(-100%)}15%,85%{transform:none}100%{transform:translateX(100%)}}
+  @keyframes rd-cora{0%,35%{opacity:0;transform:scale(.3)}45%{opacity:1;transform:scale(1.15)}55%{transform:scale(1)}75%,100%{opacity:0}}
+
+  .rd-car{background:#16171b}
+  .rd-slides{position:absolute;inset:0;display:flex;width:400%;animation:rd-desliza 8s cubic-bezier(.7,0,.3,1) infinite}
+  .rd-slides>span{flex:1;display:flex;flex-direction:column;justify-content:center;gap:4cqw;padding:10cqw;color:#fff;font:800 13cqw/1 var(--ff-tit);text-transform:uppercase}
+  .rd-slides b{display:grid;place-items:center;width:18cqw;height:18cqw;border-radius:50%;background:#ff6900;color:#141006;font-size:11cqw}
+  .rd-s1{background:linear-gradient(160deg,#ff6900,#c24a00);color:#141006 !important}
+  .rd-s2{background:#16171b;font-size:10cqw !important}
+  .rd-s3{background:#f4efe8;color:#141006 !important;font-size:10cqw !important}
+  .rd-pontos{position:absolute;left:0;right:0;bottom:5%;display:flex;justify-content:center;gap:2cqw}
+  .rd-pontos i{width:3cqw;height:3cqw;border-radius:50%;background:rgba(255,255,255,.4);animation:rd-ponto 8s steps(1) infinite}
+  .rd-pontos i:nth-child(2){animation-delay:-6s}.rd-pontos i:nth-child(3){animation-delay:-4s}.rd-pontos i:nth-child(4){animation-delay:-2s}
+  @keyframes rd-desliza{0%,20%{transform:translateX(0)}25%,45%{transform:translateX(-25%)}50%,70%{transform:translateX(-50%)}75%,95%{transform:translateX(-75%)}100%{transform:translateX(0)}}
+  @keyframes rd-ponto{0%{background:#fff}25%,100%{background:rgba(255,255,255,.4)}}
+
+  .rd-barras{position:absolute;left:4%;right:4%;top:3%;display:flex;gap:2cqw}
+  .rd-barras i{flex:1;height:1.4cqw;border-radius:2px;background:rgba(255,255,255,.35);overflow:hidden}
+  .rd-barras i::after{content:'';display:block;height:100%;background:#fff;transform-origin:left;animation:rd-barra 6s linear infinite}
+  .rd-barras i:nth-child(2)::after{animation-delay:2s}.rd-barras i:nth-child(3)::after{animation-delay:4s}
+  @keyframes rd-barra{0%{transform:scaleX(0)}33%,100%{transform:scaleX(1)}}
+  .rd-enq{position:absolute;left:10%;right:10%;top:38%;padding:5cqw;border-radius:5cqw;background:#fff;box-shadow:0 10px 24px rgba(0,0,0,.5);text-align:center}
+  .rd-enq b{display:block;margin-bottom:4cqw;color:#141006;font:800 7.5cqw/1.1 var(--ff-tit);text-transform:uppercase}
+  .rd-enq span{display:grid;gap:3cqw}
+  .rd-enq i{position:relative;overflow:hidden;padding:3cqw;border-radius:99px;background:#eee;color:#141006;font:700 5.5cqw var(--ff-txt);font-style:normal}
+  .rd-enq i::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#ff6900,#ffb35c);transform-origin:left;transform:scaleX(0);animation:rd-voto 4s ease-out infinite;z-index:-0;opacity:.6}
+  .rd-enq .rd-b::before{animation-name:rd-voto2}
+  @keyframes rd-voto{0%,25%{transform:scaleX(0)}55%,100%{transform:scaleX(.68)}}
+  @keyframes rd-voto2{0%,25%{transform:scaleX(0)}55%,100%{transform:scaleX(.32)}}
+
+  .rd-cl{opacity:0;animation:rd-tres 2.4s steps(1) infinite;animation-delay:calc(var(--i) * .8s)}
+  @keyframes rd-tres{0%{opacity:1}33.33%,100%{opacity:0}}
+  .rd-play{position:absolute;left:5%;top:4%;width:9cqw;height:9cqw;background:#fff;-webkit-mask:var(--p) center/contain no-repeat;mask:var(--p) center/contain no-repeat;
+    --p:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='2' y='2' width='20' height='20' rx='5' fill='none' stroke='%23000' stroke-width='2'/%3E%3Cpath d='M10 8l6 4-6 4z'/%3E%3C/svg%3E")}
+  .rd-lat{position:absolute;right:5%;bottom:12%;display:flex;flex-direction:column;gap:5cqw}
+  .rd-lat i{width:9cqw;height:9cqw;border-radius:50%;background:rgba(255,255,255,.85)}
+  .rd-lat i:first-child{background:#e5202e;animation:rd-pulsa 1.2s ease-in-out infinite}
+  @keyframes rd-pulsa{50%{transform:scale(1.25)}}
+
+  .rd-ads{background:#fff}
+  .rd-ads>img{height:62%;bottom:auto;top:12%}
+  .rd-pat{position:absolute;left:5%;top:4%;color:#141006;font:700 5.5cqw var(--ff-txt)}
+  .rd-pat::before{content:'';display:inline-block;width:6cqw;height:6cqw;margin-right:2cqw;vertical-align:middle;border-radius:50%;background:linear-gradient(135deg,#ff6900,#ffb35c)}
+  .rd-cta{position:absolute;left:0;right:0;top:74%;padding:4cqw;background:#25d366;color:#fff;text-align:center;font:700 6cqw/1.2 var(--ff-txt);animation:rd-clique 3s ease-in-out infinite}
+  .rd-dedo{position:absolute;left:62%;top:86%;width:12cqw;height:12cqw;border-radius:50%;background:rgba(255,105,0,.5);box-shadow:0 0 0 2px #ff6900;animation:rd-toque 3s ease-in-out infinite}
+  @keyframes rd-clique{0%,45%,60%,100%{filter:none}50%{filter:brightness(.8)}}
+  @keyframes rd-toque{0%{transform:translate(30cqw,20cqw);opacity:0}30%{opacity:1}45%{transform:translate(-20cqw,-6cqw) scale(1)}50%{transform:translate(-20cqw,-6cqw) scale(.75)}60%{transform:translate(-20cqw,-6cqw) scale(1)}100%{transform:translate(-20cqw,-6cqw);opacity:0}}
+
+  .rd-graf{position:absolute;inset:0;display:grid;grid-template-columns:repeat(5,1fr);grid-template-rows:auto 1fr auto;align-items:end;gap:3cqw;padding:10cqw 8cqw 8cqw;background:linear-gradient(180deg,#16171b,#0d0e11)}
+  .rd-graf b{grid-column:1/-1;align-self:start;color:#fff;font:800 10cqw/1 var(--ff-tit);text-transform:uppercase}
+  .rd-graf i{height:var(--h);border-radius:2cqw 2cqw 0 0;background:linear-gradient(180deg,#ffb35c,#ff6900);transform-origin:bottom;animation:rd-cresce 4s cubic-bezier(.2,.9,.3,1) infinite;animation-delay:calc(var(--i) * .15s)}
+  .rd-graf small{grid-column:1/-1;color:#aeb4bd;font:600 4.6cqw var(--ff-txt)}
+  @keyframes rd-cresce{0%{transform:scaleY(0)}35%,90%{transform:scaleY(1)}100%{transform:scaleY(1);opacity:.6}}
+
+  @media(max-width:1023px){
+    .vd-tec{grid-template-columns:repeat(3,1fr)}
+    .vd-ad-wrap{grid-template-columns:1fr;gap:24px}
+    .vd-ad-txt{text-align:center}
+    .vd-lista{justify-items:center}
+  }
+  @media(max-width:767px){
+    .grid.st-inc{grid-template-columns:1fr 1fr}
+    .st-card{text-align:center}.st-card li{text-align:left}.st-selo{align-self:center}
+    .vd-tec{grid-template-columns:1fr 1fr;gap:12px}
+    .vd-card{text-align:center}
+  }
+  @media(prefers-reduced-motion:reduce){.vd-demo *,.vd-demo *::before,.vd-demo *::after{animation:none !important}.rd-cl[style="--i:0"]{opacity:1}}
+</style>
+
+<script>
+  const ad = document.getElementById('antes-depois');
+  const faixa = ad?.querySelector('input');
+  if (ad && faixa) faixa.addEventListener('input', () => ad.style.setProperty('--x', `${faixa.value}%`));
+</script>
