@@ -454,3 +454,4 @@ html[data-theme="light"] .hc li b,html[data-theme="light"] .hc li b *{color:#121
 html[data-theme="light"] .rolar span,html[data-theme="light"] .rolar i{border-color:rgba(18,18,20,.2) !important;color:#5b616b}
 html[data-theme="light"] .hc-glow{opacity:.7;-webkit-mask-image:radial-gradient(closest-side,#000 55%,transparent);mask-image:radial-gradient(closest-side,#000 55%,transparent)}
 html[data-theme="light"] .hc-grid{display:none}
+html[data-theme="light"] .cv-anos button:not(.on){color:rgba(255,255,255,.85) !important}
