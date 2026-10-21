@@ -439,7 +439,7 @@ html[data-theme="light"] .btn[class*="ghost"],html[data-theme="light"] :is(.btn-
 html[data-theme="light"] .btn[class*="ghost"]:hover{border-color:#ff6900 !important;color:#e35f00 !important}
 
 /* faixa Invisível e CTA: laranja intenso também no claro */
-html[data-theme="light"] .iv{background:linear-gradient(120deg,#ff6900,#ff8a24 60%,#ffb35c) !important}
+html[data-theme="light"] .iv{background:#ff6900 !important}
 html[data-theme="light"] .iv :is(.iv-tit,.iv-tit span,.iv-sub,.iv-sub b){color:#141006 !important;-webkit-text-fill-color:#141006 !important}
 
 /* títulos com brilho sutil no laranja */
