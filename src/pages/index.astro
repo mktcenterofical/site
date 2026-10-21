@@ -29,14 +29,14 @@ const schema = [
       ].map(([n, p]) => ({ '@type': 'Offer', itemOffered: { '@type': 'Service', name: n }, priceSpecification: { '@type': 'PriceSpecification', price: p, priceCurrency: 'BRL', minPrice: p } })),
     },
   },
-  { '@context': 'https://schema.org', '@type': 'WebSite', '@id': site + '#site', name: config.nome, url: site, inLanguage: 'pt-BR', publisher: { '@id': site + '#empresa' } },
+  { '@context': 'https://schema.org', '@type': 'WebSite', '@id': site + '#site', name: 'MKT Center Marketing Digital', alternateName: ['MKT Center', 'MKT Center Marketing'], url: site, inLanguage: 'pt-BR', publisher: { '@id': site + '#empresa' } },
   {
     '@context': 'https://schema.org', '@type': 'ItemList', name: 'Serviços da MKT Center',
     itemListElement: servicos.map((sv, i) => ({ '@type': 'ListItem', position: i + 1, name: sv.nome, url: site + sv.slug + '/' })),
   },
 ];
 ---
-<Base title="Agência de Marketing Digital em São Paulo | MKT Center"
+<Base title="MKT Center Marketing Digital | Agência em São Paulo"
   description="Agência de marketing digital em SP: sites, lojas virtuais, apps, tráfego pago, SEO e redes sociais. Sites a partir de R$ 300. Peça seu orçamento!"
   schema={schema}>
   <HeroCrescimento />
