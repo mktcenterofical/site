@@ -90,16 +90,32 @@ const wa = '<path d="M16 3a13 13 0 0 0-11.2 19.6L3 29l6.6-1.7A13 13 0 1 0 16 3zm
   .rd-base a:hover{color:#fff}
   .rd-topo-bt{margin-left:auto}
 
+  .rd-col a[href^="mailto"]{overflow-wrap:normal;white-space:nowrap}
+
+  /* tablet: marca numa faixa (texto à esquerda, WhatsApp e redes à direita) e as 3 colunas embaixo */
+  @media(min-width:768px) and (max-width:1023px){
+    .rd-topo{grid-template-columns:repeat(3,1fr);gap:36px 24px}
+    .rd-marca{grid-column:1 / -1;display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto;column-gap:32px;align-items:center;
+      padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,.07)}
+    .rd-marca>a:first-child{grid-column:1}
+    .rd-marca p{grid-column:1;margin-top:12px;max-width:44ch}
+    .rd-wa{grid-column:2;grid-row:1;margin:0;justify-self:end}
+    .rd-redes{grid-column:2;grid-row:2;margin-top:12px;justify-self:end}
+    .rd-base{padding-right:72px}
+  }
+
+  /* celular: marca centralizada, Navegação e Serviços lado a lado, Contato inteiro e linha final compacta */
   @media(max-width:767px){
-    .rd{text-align:center}
-    .rd-in{padding-top:44px}
-    .rd-topo{grid-template-columns:1fr 1fr;gap:32px 16px}
-    .rd-marca{grid-column:1 / -1;display:flex;flex-direction:column;align-items:center}
-    .rd-marca p{margin-inline:auto}
+    .rd-in{padding-top:40px}
+    .rd-topo{grid-template-columns:1fr 1fr;gap:28px 16px}
+    .rd-marca{grid-column:1 / -1;display:flex;flex-direction:column;align-items:center;text-align:center;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,.07)}
+    .rd-marca p{margin-inline:auto;font-size:14px}
     .rd-redes{justify-content:center}
-    .rd-col{align-items:center}
-    .rd-col:last-child{grid-column:1 / -1}
-    .rd-base{justify-content:center;flex-direction:column}
+    .rd-col{gap:9px;text-align:left;padding-left:8px}
+    .rd-col a,.rd-col span{font-size:14px}
+    .rd-col:last-child{grid-column:1 / -1;padding:20px 8px 0;border-top:1px solid rgba(255,255,255,.07)}
+    .rd-base{margin-top:32px;justify-content:center;gap:8px 18px;text-align:center;padding-bottom:64px}
+    .rd-base>span{flex-basis:100%}
     .rd-topo-bt{margin-left:0}
   }
 </style>
