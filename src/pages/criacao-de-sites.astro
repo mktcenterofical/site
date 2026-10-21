@@ -16,13 +16,13 @@ const tipos = [
   { nome: 'Site Institucional', preco: 'R$ 600', desc: 'Presença completa para pequenas empresas e profissionais: quem você é, o que faz e como falar com você.', itens: ['Até 4 páginas', 'WhatsApp, formulário e mapa', 'Pronto para o Google'], destaque: true },
   { nome: 'Site Profissional', preco: 'R$ 1.000', desc: 'Estrutura maior para posicionar a sua marca e gerar contatos todos os dias.', itens: ['Mais páginas e seções', 'SEO e Analytics', 'Integrações'] },
 ];
+// 5 cards no mesmo bento da home: 3 em cima, 1 comprido + 1 embaixo (o 5º é o comprido)
 const incluso: [string, string, string][] = [
   ['smartphone', 'Feito para o celular', 'Abre rápido e funciona bem em qualquer tela.'],
   ['message', 'WhatsApp em um toque', 'Botões que levam o visitante direto para a conversa.'],
   ['trending', 'Pronto para o Google', 'Títulos, descrições e estrutura de SEO desde o início.'],
-  ['star', 'Design com a sua marca', 'Cores, logo e fotos do seu negócio, sem modelo pronto.'],
   ['globe', 'Domínio e HTTPS', 'Ajudamos com o endereço e o cadeado de segurança.'],
-  ['check', 'Medição de resultados', 'Analytics para você saber quantos contatos chegam.'],
+  ['star', 'Design com a sua marca e resultados medidos', 'Cores, logo e fotos do seu negócio, sem modelo pronto, e Analytics para você saber quantos contatos chegam.'],
 ];
 const etapas = ['Conversa sobre o seu negócio', 'Proposta e layout para aprovação', 'Desenvolvimento e textos', 'Site no ar e acompanhamento'];
 const exemplos = projetos.filter((p) => /institucional/i.test(p.tipo)); // só sites institucionais
@@ -76,7 +76,7 @@ const schema = [
     <div class="wrap">
       <span class="eyebrow">Em todo site</span>
       <h2>O que vem incluso</h2>
-      <div class="grid grid-servicos sv-grid st-inc">
+      <div class="grid grid-servicos sv-grid">
         {incluso.map(([i, t, d]) => (
           <div class="card"><span class="icone"><Icon name={i} /></span><h3>{t}</h3><p>{d}</p></div>
         ))}
@@ -138,11 +138,7 @@ const schema = [
   .st-card li{position:relative;padding-left:16px;font-size:14px;color:#e4e6ea}
   .st-card li::before{content:'';position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:#ff6900}
   .st-bt{margin-top:auto;width:100%}
-  /* "O que vem incluso": 6 cards em 3 colunas, sem o bento dos serviços */
-  .grid.st-inc{grid-template-columns:repeat(3,1fr);grid-template-areas:none}
-  .grid.st-inc>*{grid-area:auto !important;display:block !important}
-  .grid.st-inc .icone{margin:0 0 16px !important}
-  @media(max-width:767px){.grid.st-inc{grid-template-columns:1fr 1fr}.st-card{text-align:center}.st-card li{text-align:left}.st-selo{align-self:center}}
+  @media(max-width:767px){.st-card{text-align:center}.st-card li{text-align:left}.st-selo{align-self:center}}
 </style>
 
 <script>
