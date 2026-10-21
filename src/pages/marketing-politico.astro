@@ -2,7 +2,7 @@
 // Página "Política" (marketing político). Mesmo modelo das páginas Sites, Lojas, Vídeos e Redes:
 // hero com os 4 aparelhos mostrando os sites reais de campanha do portfólio (Padre Kelmon e Roberto Pires),
 // fases (pré-campanha, campanha e mandato, valores sob consulta), o que fazemos, dentro da lei,
-// campanhas do portfólio, processo e perguntas frequentes. Atende todos os partidos.
+// campanhas do portfólio e processo. Atende todos os partidos.
 import Base from '../layouts/Base.astro';
 import HeroCrescimento from '../components/HeroCrescimento.astro';
 import CardPortfolio from '../components/CardPortfolio.astro';
@@ -26,15 +26,9 @@ const servicos: [string, string, string][] = [
 ];
 const lei = ['Impulsionamento só pelos canais e no período permitidos', 'Anúncios identificados com CNPJ da campanha', 'Dados de apoiadores tratados conforme a LGPD', 'Registro de gastos para a prestação de contas'];
 const etapas = ['Diagnóstico e posicionamento', 'Planejamento de conteúdo', 'Execução e anúncios', 'Acompanhamento e relatórios'];
-const faq: [string, string][] = [
-  ['Vocês atendem qualquer partido?', 'Sim. Atendemos pré-candidatos, candidatos e mandatos de todos os partidos.'],
-  ['O trabalho segue a legislação eleitoral?', 'Sim. Seguimos as resoluções do TSE em vigor em cada eleição.'],
-  ['Quanto custa?', 'Depende da fase, do cargo e do tamanho da campanha. O valor vai na proposta, depois de uma conversa.'],
-];
 const campanhas = projetos.filter((p) => /pol[ií]tic/i.test(p.tipo)); // campanhas e projetos políticos
 const schema = [
-  { '@context': 'https://schema.org', '@type': 'Service', name: 'Marketing político digital', serviceType: 'Marketing político', provider: { '@type': 'ProfessionalService', name: config.nome }, areaServed: 'BR' },
-  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
+  { '@context': 'https://schema.org', '@type': 'Service', name: 'Marketing político digital', serviceType: 'Marketing político', provider: { '@type': 'ProfessionalService', name: config.nome }, areaServed: 'BR' }
 ];
 ---
 <Base title="Marketing Político Digital para Campanhas | MKT Center"
@@ -115,12 +109,6 @@ const schema = [
     </div>
   </section>
 
-  <section>
-    <div class="wrap prose">
-      <h2>Perguntas frequentes</h2>
-      {faq.map(([q, a]) => <details><summary>{q}</summary><p>{a}</p></details>)}
-    </div>
-  </section>
 </Base>
 
 <style>

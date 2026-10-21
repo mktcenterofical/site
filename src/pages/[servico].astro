@@ -21,10 +21,6 @@ const schema: object[] = [{
   '@context': 'https://schema.org', '@type': 'Service', name: s.nome, description: s.description,
   provider: { '@type': 'ProfessionalService', name: config.nome }, areaServed: 'BR',
 }];
-if (s.faq.length) schema.push({
-  '@context': 'https://schema.org', '@type': 'FAQPage',
-  mainEntity: s.faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })),
-});
 ---
 <Base title={s.title} description={s.description} schema={schema} crumbs={[[s.nome, `/${s.slug}/`]]}>
   <section class="hero" style="padding-top:8px">
@@ -70,13 +66,5 @@ if (s.faq.length) schema.push({
     </div>
   </section>
 
-  {s.faq.length > 0 && (
-    <section>
-      <div class="wrap prose">
-        <h2>Perguntas frequentes</h2>
-        {s.faq.map(([q, a]) => <details><summary>{q}</summary><p>{a}</p></details>)}
-      </div>
-    </section>
-  )}
 
 </Base>
