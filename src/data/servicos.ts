@@ -48,8 +48,8 @@ export const servicos: Servico[] = [
   {
     slug: 'trafego-e-seo', nome: 'Tráfego e SEO', icone: 'trending',
     curto: 'Anúncios no Google e Meta e SEO para trazer clientes todo mês.',
-    title: 'Gestão de Tráfego Pago e SEO | MKT Center',
-    description: 'Gestão de tráfego pago no Google e Meta Ads e SEO para sua empresa ser encontrada. Fale com a MKT Center.',
+    title: 'Tráfego Pago e SEO em São Paulo | MKT Center',
+    description: 'Gestão de tráfego pago no Google Ads e Meta Ads e SEO em São Paulo para sua empresa aparecer e vender mais. Fale pelo WhatsApp.',
     h1: 'Gestão de tráfego pago e SEO',
     intro: 'Anúncios bem feitos trazem contatos agora. SEO traz contatos por muito tempo. Cuidamos dos dois e mostramos os resultados em relatório.',
     itens: ['Google Ads e Meta Ads', 'Campanhas para WhatsApp', 'SEO local e Perfil da Empresa', 'Páginas de captura', 'Pixel e Analytics configurados', 'Relatório mensal claro'],
