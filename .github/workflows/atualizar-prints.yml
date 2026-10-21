@@ -1,0 +1,55 @@
+# Atualiza todo dia os prints dos sites do portfólio (scripts/atualizar-prints.mjs).
+# Se algum site mudou, faz commit no main e a Vercel publica sozinha.
+name: Atualizar prints do portfólio
+
+on:
+  schedule:
+    - cron: '0 9 * * *' # todo dia às 6h (horário de Brasília)
+  workflow_dispatch: # botão "Run workflow" para rodar na hora
+
+permissions:
+  contents: write
+
+concurrency:
+  group: atualizar-prints
+  cancel-in-progress: false
+
+jobs:
+  prints:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: team_m73FuTfu7mSo5MGZD5N9q4du
+      VERCEL_PROJECT_ID: prj_QwoiW6vSz39PWic08YyyjEbEGmoL
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Tirar os prints
+        run: node scripts/atualizar-prints.mjs
+
+      - name: Salvar se mudou
+        run: |
+          if [ -n "$(git status --porcelain public/portfolio)" ]; then
+            git config user.name "mktcenter-bot"
+            git config user.email "mktcenter-bot@users.noreply.github.com"
+            git add public/portfolio
+            git commit -m "Prints do portfólio atualizados automaticamente"
+            git push
+            echo "mudou=sim" >> "$GITHUB_OUTPUT"
+          else
+            echo "Nenhum site mudou."
+          fi
+        id: salvar
+
+      # publica na Vercel (precisa do segredo VERCEL_TOKEN em Settings > Secrets and variables > Actions)
+      - name: Publicar na Vercel
+        if: steps.salvar.outputs.mudou == 'sim' && env.VERCEL_TOKEN != ''
+        run: npx vercel deploy --prod --yes --token "$VERCEL_TOKEN"
