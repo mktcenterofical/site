@@ -66,7 +66,12 @@ const schema = [
     rolarPara="#tipos"
   >
     <div slot="visual" class="rd-ig" id="rd-ig">
-      <div class="rd-ig-cab"><i></i><b>suamarca</b><small>Patrocinado</small><span class="rd-ig-n"><span>1</span>/{slides.length}</span></div>
+      <div class="rd-ig-cab">
+        <span class="rd-ig-av"><img src="/icon-192.png" alt="" width="192" height="192" /></span>
+        <span class="rd-ig-nome"><b>mktcenterdigital</b><small>São Paulo, SP</small></span>
+        <span class="rd-ig-seguir">Seguir</span>
+        <span class="rd-ig-mais" aria-hidden="true"><i></i><i></i><i></i></span>
+      </div>
       <div class="rd-ig-trilho">
         {slides.map(([src, w, h], i) => (
           <img src={src} alt={`Exemplo de perfil nas redes sociais ${i + 1}`} width={w} height={h} decoding="async" fetchpriority={i === 0 ? 'high' : undefined} loading={i === 0 ? undefined : 'lazy'} />
@@ -74,7 +79,20 @@ const schema = [
       </div>
       <button type="button" class="rd-ig-seta" data-dir="-1" aria-label="Imagem anterior">‹</button>
       <button type="button" class="rd-ig-seta" data-dir="1" aria-label="Próxima imagem">›</button>
-      <div class="rd-ig-rod"><span class="rd-ig-acoes"><i></i><i></i><i></i></span><span class="rd-ig-pontos">{slides.map((_, i) => <i class={i === 0 ? 'on' : ''}></i>)}</span></div>
+      <div class="rd-ig-rod" aria-hidden="true">
+        <span class="rd-ig-acoes">
+          <span class="rd-ig-like"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7.5-4.6-9.5-9.2C1.2 8.6 3.4 5 7 5c2 0 3.4 1.1 5 3 1.6-1.9 3-3 5-3 3.6 0 5.8 3.6 4.5 6.8C19.5 16.4 12 21 12 21z"/></svg></span>
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8.5 8.5 0 0 1-12.6 7.4L3 21l1.6-5.2A8.5 8.5 0 1 1 21 12z"/></svg>
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 3 9.5 14.5M22 3l-7 19-5.5-7.5L2 9z"/></svg>
+        </span>
+        <span class="rd-ig-pontos">{slides.map((_, i) => <i class={i === 0 ? 'on' : ''}></i>)}</span>
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="rd-ig-salvar"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg>
+      </div>
+      <div class="rd-ig-leg">
+        <p class="rd-ig-curt"><svg viewBox="0 0 24 24" width="14" height="14" fill="#ed4956"><path d="M12 21s-7.5-4.6-9.5-9.2C1.2 8.6 3.4 5 7 5c2 0 3.4 1.1 5 3 1.6-1.9 3-3 5-3 3.6 0 5.8 3.6 4.5 6.8C19.5 16.4 12 21 12 21z"/></svg> Curtido por clientes e <b>outras pessoas</b></p>
+        <p><b>mktcenterdigital</b> Perfis que vendem, todos os dias. <span>#redessociais #marketingdigital #instagram</span></p>
+        <small>há 5 minutos</small>
+      </div>
     </div>
   </HeroCrescimento>
 
@@ -178,29 +196,42 @@ const schema = [
 </Base>
 
 <style>
-  /* carrossel do hero no formato de um post do Instagram */
-  .rd-ig{position:relative;width:100%;max-width:420px;margin:0 auto;border-radius:22px;overflow:hidden;background:#000;
-    box-shadow:0 0 0 1px rgba(255,255,255,.12),0 0 60px -10px rgba(255,105,0,.45),0 40px 80px -30px #000}
-  .rd-ig-cab{display:flex;align-items:center;gap:10px;padding:12px 14px;color:#fff}
-  .rd-ig-cab i{width:32px;height:32px;border-radius:50%;background:radial-gradient(circle,#000 0 54%,transparent 56%),conic-gradient(#ff6900,#ffb35c,#e5202e,#ff6900)}
-  .rd-ig-cab b{font:700 14px var(--ff-txt)}
-  .rd-ig-cab small{color:#8a9099;font:500 12px var(--ff-txt)}
-  .rd-ig-n{margin-left:auto;padding:3px 9px;border-radius:99px;background:rgba(255,255,255,.12);font:600 12px var(--ff-txt)}
-  .rd-ig-trilho{display:flex;overflow-x:auto;aspect-ratio:4/5;background:#0d0e11;scrollbar-width:none;scroll-behavior:smooth}
+  /* carrossel do hero dentro de uma moldura real de post do Instagram (branca), alinhada à direita do site */
+  .rd-ig{position:relative;width:100%;max-width:470px;margin:0 0 0 auto;padding:0 0 14px;border-radius:10px;overflow:hidden;background:#fff;color:#262626;
+    box-shadow:0 30px 60px -24px rgba(0,0,0,.9),0 0 70px -20px rgba(255,105,0,.5)}
+  .rd-ig-cab{display:flex;align-items:center;gap:10px;padding:12px 14px}
+  .rd-ig-av{flex:none;width:38px;height:38px;padding:2px;border-radius:50%;background:conic-gradient(#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5,#feda75)}
+  .rd-ig-av img{display:block;width:100%;height:100%;border-radius:50%;border:2px solid #fff;background:#090a0c;object-fit:cover}
+  .rd-ig-nome{display:flex;flex-direction:column;min-width:0}
+  .rd-ig-nome b{font:700 14px var(--ff-txt);color:#262626}
+  .rd-ig-nome small{font:400 12px var(--ff-txt);color:#737373}
+  .rd-ig-seguir{margin-left:auto;padding:6px 16px;border-radius:8px;background:#0095f6;color:#fff;font:600 13px var(--ff-txt)}
+  .rd-ig-mais{display:flex;gap:3px;padding:0 2px}
+  .rd-ig-mais i{width:4px;height:4px;border-radius:50%;background:#262626}
+  .rd-ig-trilho{display:flex;overflow-x:auto;aspect-ratio:4/5;background:#efefef;scrollbar-width:none;scroll-behavior:smooth}
   .rd-ig-trilho::-webkit-scrollbar{display:none}
   .rd-ig-trilho.encaixe{scroll-snap-type:x mandatory}
-  .rd-ig-trilho img{flex:0 0 100%;width:100%;height:100%;object-fit:contain;scroll-snap-align:center}
-  .rd-ig-seta{position:absolute;top:50%;z-index:2;display:grid;place-items:center;width:34px;height:34px;margin-top:-17px;border:0;border-radius:50%;background:rgba(255,255,255,.85);color:#141006;font:700 22px/1 var(--ff-txt);cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.4);transition:opacity .2s}
+  .rd-ig-trilho img{flex:0 0 100%;width:100%;height:100%;object-fit:cover;object-position:50% 30%;scroll-snap-align:center}
+  .rd-ig-seta{position:absolute;top:calc(62px + (100% - 62px - 150px) / 2);z-index:2;display:grid;place-items:center;width:30px;height:30px;margin-top:-15px;border:0;border-radius:50%;background:rgba(255,255,255,.9);color:#262626;font:700 20px/1 var(--ff-txt);cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,.25);transition:opacity .2s}
   .rd-ig-seta[data-dir="-1"]{left:10px}
   .rd-ig-seta[data-dir="1"]{right:10px}
   .rd-ig-seta:disabled{opacity:0;pointer-events:none}
-  .rd-ig-rod{position:relative;display:flex;align-items:center;padding:12px 14px}
+  .rd-ig-rod{position:relative;display:flex;align-items:center;padding:10px 12px 6px;color:#262626}
   .rd-ig-acoes{display:flex;gap:14px}
-  .rd-ig-acoes i{width:22px;height:22px;border:2px solid #fff;border-radius:50%}
-  .rd-ig-acoes i:first-child{border-color:#e5202e;background:#e5202e}
-  .rd-ig-pontos{position:absolute;left:50%;display:flex;gap:5px;transform:translateX(-50%)}
-  .rd-ig-pontos i{width:6px;height:6px;border-radius:50%;background:#555;transition:background .2s,transform .2s}
-  .rd-ig-pontos i.on{background:#ff6900;transform:scale(1.25)}
+  .rd-ig-like{color:#ed4956;animation:rd-ig-like 4s ease-out infinite}
+  .rd-ig-like svg{fill:#ed4956}
+  @keyframes rd-ig-like{0%,70%,100%{transform:none}78%{transform:scale(1.25)}86%{transform:scale(.95)}}
+  .rd-ig-salvar{margin-left:auto}
+  .rd-ig-pontos{position:absolute;left:50%;display:flex;gap:4px;transform:translateX(-50%)}
+  .rd-ig-pontos i{width:6px;height:6px;border-radius:50%;background:#c7c7c7;transition:background .2s}
+  .rd-ig-pontos i.on{background:#0095f6}
+  .rd-ig-leg{padding:0 14px;text-align:left}
+  .rd-ig-leg p{margin:0 0 4px;font:400 14px/1.4 var(--ff-txt);color:#262626}
+  .rd-ig-leg b{font-weight:700}
+  .rd-ig-leg span{color:#00376b}
+  .rd-ig-curt{display:flex;align-items:center;gap:6px}
+  .rd-ig-leg small{font:400 11px var(--ff-txt);color:#737373;text-transform:uppercase;letter-spacing:.02em}
+  @media(max-width:1023px){.rd-ig{margin:0 auto}}
   /* planos (mesmo visual das páginas Sites, Lojas e Vídeos) */
   .st-grid{display:grid;gap:16px;grid-template-columns:1fr}
   @media(min-width:768px){.st-grid{grid-template-columns:repeat(2,1fr)}}
@@ -357,14 +388,12 @@ const schema = [
     const trilho = ig.querySelector<HTMLElement>('.rd-ig-trilho')!;
     const setas = ig.querySelectorAll<HTMLButtonElement>('.rd-ig-seta');
     const pontos = ig.querySelectorAll('.rd-ig-pontos i');
-    const n = ig.querySelector('.rd-ig-n span')!;
     const total = pontos.length;
     const atual = () => Math.round(trilho.scrollLeft / trilho.clientWidth);
     const ir = (i: number) => trilho.scrollTo({ left: ((i + total) % total) * trilho.clientWidth });
     const atualizar = () => {
       const i = atual();
       pontos.forEach((p, j) => p.classList.toggle('on', j === i));
-      n.textContent = String(i + 1);
       setas[0].disabled = i === 0;
       setas[1].disabled = i === total - 1;
     };
