@@ -455,3 +455,22 @@ html[data-theme="light"] .rolar span,html[data-theme="light"] .rolar i{border-co
 html[data-theme="light"] .hc-glow{opacity:.7;-webkit-mask-image:radial-gradient(closest-side,#000 55%,transparent);mask-image:radial-gradient(closest-side,#000 55%,transparent)}
 html[data-theme="light"] .hc-grid{display:none}
 html[data-theme="light"] .cv-anos button:not(.on){color:rgba(255,255,255,.85) !important}
+
+/* Tema claro: menu do topo, menu lateral e barra do celular em PRETO (#090a0c, preto da logo), com a logo original */
+html[data-theme="light"] .topo{background:rgba(9,10,12,.92) !important;border-bottom-color:rgba(255,255,255,.06) !important;box-shadow:0 10px 30px -18px rgba(0,0,0,.6) !important}
+html[data-theme="light"] .topo .menu a{color:#c3c8cf !important}
+html[data-theme="light"] .topo .menu a:hover,html[data-theme="light"] .topo .menu a[aria-current]{color:#fff !important;border-color:rgba(255,255,255,.3) !important}
+html[data-theme="light"] .topo :is(.tema,.burger),html[data-theme="light"] .gaveta .fechar{border-color:rgba(255,255,255,.18) !important;color:#fff !important}
+html[data-theme="light"] .topo .burger span{background:#fff !important}
+html[data-theme="light"] :is(.logo img,.g-topo img){content:url(/logo-escuro.webp)}
+html[data-theme="light"] .gaveta,html[data-theme="light"] .ba-folha{background:#090a0c !important;color:#fff !important}
+html[data-theme="light"] .gaveta .g-nav a,html[data-theme="light"] .ba-folha h2{color:#c3c8cf !important}
+html[data-theme="light"] .gaveta .g-nav a[aria-current]{color:#fff !important;border-color:rgba(255,255,255,.3) !important}
+html[data-theme="light"] :is(.g-ic,.ba-ic){background:#16171b !important}
+html[data-theme="light"] .ba-folha h2{color:#fff !important}
+html[data-theme="light"] .ba-grade a{background:#16181d !important;border-color:rgba(255,255,255,.07) !important;color:#e4e6ea !important}
+html[data-theme="light"] .ba-pega{background:rgba(255,255,255,.2) !important}
+html[data-theme="light"] .ba{background:rgba(12,13,16,.94) !important;border-top-color:rgba(255,255,255,.08) !important}
+html[data-theme="light"] .ba-it{color:#8a9099 !important}
+html[data-theme="light"] .ba-it.on{color:#ff8a24 !important}
+html[data-theme="light"] .ba-wa{box-shadow:0 0 0 5px #0c0d10,0 10px 24px rgba(37,211,102,.35) !important}
