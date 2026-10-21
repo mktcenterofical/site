@@ -279,7 +279,8 @@ body{background:var(--carbon)}
 }
 @media(max-width:767px){
   .hc-h1,.s10-h,.cx-h{display:block !important}
-  .hc-h1 .hc-ey{display:block !important;margin-bottom:10px}
+  .hc-h1 .hc-ey{display:block !important;margin-bottom:12px !important;line-height:16px !important;font-size:12px !important}
+  .hc-h1 .hc-line{line-height:1.02}
   .hc-h1 .hc-w{display:inline !important}
 }
 
@@ -299,3 +300,13 @@ body{background:var(--carbon)}
   .hc .sv{width:100%;max-width:calc(100vw - 30px);margin-left:auto;margin-right:auto;overflow:hidden;padding:14px 0}
   .hc .sv .sv-scene{transform:translateX(2%) scale(.9) !important;transform-origin:center center !important}
 }
+
+/* ===================== TEMA CLARO (padrão) / ESCURO =====================
+   O design original é escuro. O tema claro inverte as cores da página inteira (fundo branco, texto escuro,
+   laranja mantido pelo hue-rotate) e desinverte fotos, vídeos, 3D e as telas dos aparelhos, que ficam como são.
+   Botão .tema no cabeçalho; escolha salva em localStorage ("tema"). */
+html[data-theme="light"]{filter:invert(1) hue-rotate(180deg);background:#f6f4f1}
+html[data-theme="light"] :is(img,video,canvas,picture,iframe,.dv-scr,.pf-tela,.vl-tela,.pr-tela,.ev-prev,.tv-prog,.tv-mini,.vd-demo,.rd-ig-trilho,.ba-wa,.wa,.rd-wa svg,.btn-whatsapp){filter:invert(1) hue-rotate(180deg)}
+html[data-theme="light"] :is(.dv-scr,.pf-tela,.vl-tela,.pr-tela,.ev-prev,.tv-prog,.tv-mini,.vd-demo,.rd-ig-trilho) :is(img,video,canvas){filter:none}
+html[data-theme="light"] .pf-tela img{filter:none}
+html[data-theme="light"] .logo img,html[data-theme="light"] .g-topo img,html[data-theme="light"] .rd-marca img{filter:none}

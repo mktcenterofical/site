@@ -13,7 +13,7 @@ Objetivo do site: gerar contatos pelo WhatsApp e pelo formulário.
 - Laranja #ff6900 (destaques e botões, no máximo ~10% da tela)
 - Menu do topo com fundo preto #090a0c (preto da logo), links claros
 - Fundo do site inteiro igual ao do hero: camada fixa .fundo-site (Base.astro + global.css) com brilhos laranja, grade e linhas de velocidade; seções sem fundo próprio
-- Tema ESCURO no site todo (estilo do hero): fundo #090a0c, seções alternadas #111317 com grade sutil, texto #fff, texto secundário #aeb4bd, linhas #23262c
+- Tema CLARO por padrão, com botão claro/escuro no cabeçalho (.tema, salvo em localStorage "tema"; script inline no head evita piscar). O claro é o design escuro invertido (filter invert+hue-rotate no html, bloco "TEMA CLARO" no fim de global.css), com fotos, vídeos, 3D e telas dos aparelhos desinvertidos. Base do design escuro: fundo #090a0c, seções alternadas #111317 com grade sutil, texto #fff, texto secundário #aeb4bd, linhas #23262c
 - Laranja em texto usa #ff8a24 (orange-text) no fundo escuro
 - Botão laranja sempre com texto escuro #141006 (contraste)
 - Fontes: Barlow Condensed (títulos), DM Sans (texto)
