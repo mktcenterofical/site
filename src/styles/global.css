@@ -301,12 +301,73 @@ body{background:var(--carbon)}
   .hc .sv .sv-scene{transform:translateX(2%) scale(.9) !important;transform-origin:center center !important}
 }
 
-/* ===================== TEMA CLARO (padrão) / ESCURO =====================
-   O design original é escuro. O tema claro inverte as cores da página inteira (fundo branco, texto escuro,
-   laranja mantido pelo hue-rotate) e desinverte fotos, vídeos, 3D e as telas dos aparelhos, que ficam como são.
-   Botão .tema no cabeçalho; escolha salva em localStorage ("tema"). */
-html[data-theme="light"]{filter:invert(1) hue-rotate(180deg);background:#f6f4f1}
-html[data-theme="light"] :is(img,video,canvas,picture,iframe,.dv-scr,.pf-tela,.vl-tela,.pr-tela,.ev-prev,.tv-prog,.tv-mini,.vd-demo,.rd-ig-trilho,.ba-wa,.wa,.rd-wa svg,.btn-whatsapp){filter:invert(1) hue-rotate(180deg)}
-html[data-theme="light"] :is(.dv-scr,.pf-tela,.vl-tela,.pr-tela,.ev-prev,.tv-prog,.tv-mini,.vd-demo,.rd-ig-trilho) :is(img,video,canvas){filter:none}
-html[data-theme="light"] .pf-tela img{filter:none}
-html[data-theme="light"] .logo img,html[data-theme="light"] .g-topo img,html[data-theme="light"] .rd-marca img{filter:none}
+
+/* ===================== TEMA CLARO (padrão) =====================
+   Paleta branca, preta e laranja. Fundo branco, textos pretos, cards brancos com borda e sombra suave,
+   laranja nos destaques. As "artes" (aparelhos, telas, editores, ilustrações, 3D) mantêm o grafite escuro
+   como peças de produto sobre o fundo claro. O tema escuro é o design original (sem regra extra). */
+html[data-theme="light"]{
+  --surface:#ffffff; --surface-raised:#f6f5f3; --surface-sunken:#efedea;
+  --ink:#121214; --ink-muted:#5b616b; --line:#e7e5e1; --line-strong:#c9c6c0;
+  --orange-text:#e35f00; --laranja-escuro:#e35f00;
+  --shadow-card:0 14px 34px -18px rgba(20,16,10,.25);
+  color-scheme:light;
+}
+html[data-theme="light"] body{background:#fff radial-gradient(900px 600px at 85% -10%,rgba(255,105,0,.08),transparent 60%) fixed;color:var(--ink)}
+html[data-theme="light"] .fundo-site{opacity:.35;filter:invert(1) hue-rotate(180deg)}
+
+/* textos fora das artes: branco vira preto, cinza vira cinza-escuro */
+html[data-theme="light"] :is(main,footer,.topo,.gaveta,.ba-folha){color:var(--ink)}
+html[data-theme="light"] :is(h1,h2,h3,.hc-h1,.s10-h,.cx-h,.card h3,.pf h3,.pr-card h3,.pq-card h3,.st-card h3,.vd-card h3,.dp-item blockquote,.dp-item b,.etapas li,.pl-lista li,.st-card li,.pr-card li,.vd-lista li,.rd-col a,.g-nav a,.ba-grade a){color:var(--ink) !important}
+html[data-theme="light"] :is(.lead,.hc-lead,.s10-lead,.cx-lead,.st-desc,.vd-lead,.pl-lead,.ap-lead,.card p,.pf p,.pr-desc,.pq-txt p,.pq-card p,.dp-item figcaption span,.vd-card p,.rd-col span,.rd-marca p,.rd-base,.rd-base a,.sf-nota,.crumbs,.crumbs a,.hc-n span,.hc-num span,.hc-nums small){color:var(--ink-muted) !important}
+html[data-theme="light"] :is(.eyebrow,.destaque,.mais,.pf-tipo,.rd-col h2,.pq-n){color:var(--orange-text) !important}
+html[data-theme="light"] :is(.hc-or,.s10-or,.cx-or,[class*="preco"]){background:linear-gradient(90deg,#ff6900,#d95500) !important;-webkit-background-clip:text !important;background-clip:text !important;-webkit-text-fill-color:transparent !important}
+html[data-theme="light"] [class*="preco"] :is(small,em){-webkit-text-fill-color:var(--ink-muted) !important;color:var(--ink-muted) !important}
+html[data-theme="light"] [class*="preco"] em{-webkit-text-fill-color:#e35f00 !important}
+
+/* cabeçalho, menus e barra do celular */
+html[data-theme="light"] .topo{background:rgba(255,255,255,.9);border-bottom-color:var(--line)}
+html[data-theme="light"] .topo .menu a{color:#3a3e45}
+html[data-theme="light"] .topo .menu a:hover,html[data-theme="light"] .topo .menu a[aria-current]{color:#121214;border-color:rgba(0,0,0,.18)}
+html[data-theme="light"] :is(.tema,.burger,.fechar){border-color:rgba(0,0,0,.15);color:#121214}
+html[data-theme="light"] .burger span{background:#121214}
+html[data-theme="light"] :is(.logo img,.g-topo img,.rd-marca img){content:url(/logo-claro.webp)}
+html[data-theme="light"] :is(.gaveta,.ba-folha){background:#fff;color:var(--ink)}
+html[data-theme="light"] .g-nav a[aria-current]{border-color:rgba(0,0,0,.18)}
+html[data-theme="light"] :is(.g-ic,.ba-ic){background:#fff3ea}
+html[data-theme="light"] .ba{background:rgba(255,255,255,.95);border-top-color:var(--line)}
+html[data-theme="light"] .ba-it{color:#6b7078}
+html[data-theme="light"] .ba-it.on{color:#e35f00}
+html[data-theme="light"] .ba-wa{box-shadow:0 0 0 5px #fff,0 10px 24px rgba(37,211,102,.35)}
+html[data-theme="light"] .ba-grade a{background:#fff;border-color:var(--line)}
+html[data-theme="light"] .ba-pega{background:rgba(0,0,0,.15)}
+
+/* cards brancos com borda fina e sombra; hover com borda laranja */
+html[data-theme="light"] :is(.card,.st-card,.pf,.pr-card,.pq-card,.dp-item,.pl-lista li,.ap-preco,.etapas li){
+  background:#fff !important;border-color:var(--line) !important;box-shadow:0 14px 34px -20px rgba(20,16,10,.28) !important}
+html[data-theme="light"] :is(.card,.st-card,.pf,.pr-card,.pq-card,.dp-item):hover{border-color:rgba(255,105,0,.55) !important}
+html[data-theme="light"] :is(.st-card.on,.pr-card.on){border-color:rgba(255,105,0,.7) !important;box-shadow:0 0 0 1px rgba(255,105,0,.35),0 18px 40px -18px rgba(255,105,0,.45) !important}
+html[data-theme="light"] .sv-grid .icone{background:linear-gradient(160deg,#fff,#f3efe9) !important;box-shadow:0 10px 20px -10px rgba(255,105,0,.55),0 0 0 1px rgba(255,105,0,.25) !important}
+html[data-theme="light"] .sv-grid .icone svg{color:#e35f00 !important;filter:none !important}
+html[data-theme="light"] .pf-cena{background:radial-gradient(60% 50% at 45% 55%,rgba(255,105,0,.16),transparent 70%),linear-gradient(180deg,#f7f5f2,#efece7) !important}
+html[data-theme="light"] :is(.pf-cta,.st-seta,.pr-seta,.dp-seta){border-color:rgba(0,0,0,.15) !important;color:#121214 !important;background:#fff !important}
+html[data-theme="light"] .pf-link{color:#121214 !important}
+html[data-theme="light"] .pq-card{background:linear-gradient(180deg,#fff,#faf8f5) !important}
+
+/* botões */
+html[data-theme="light"] :is(.btn-ghost,.btn-outline){color:#121214 !important;border-color:rgba(0,0,0,.2) !important;background:#fff !important}
+html[data-theme="light"] :is(.btn-ghost,.btn-outline):hover{border-color:#ff6900 !important}
+html[data-theme="light"] .rd-wa{color:#121214;background:rgba(37,211,102,.1)}
+html[data-theme="light"] .rd-redes a{border-color:rgba(0,0,0,.14);color:#3a3e45}
+
+/* rodapé, logos, detalhes */
+html[data-theme="light"] .rd{background:linear-gradient(180deg,rgba(255,255,255,0),#f6f5f3 30%)}
+html[data-theme="light"] :is(.rd-base,.rd-col,.rd-marca){border-color:var(--line) !important}
+html[data-theme="light"] .cl img{filter:grayscale(1) brightness(.5)}
+html[data-theme="light"] .cl a:hover img{filter:none}
+html[data-theme="light"] .btn[class*="ghost"]{color:#121214 !important;border-color:rgba(0,0,0,.2) !important;background:#fff !important}
+html[data-theme="light"] .btn[class*="ghost"]:hover{border-color:#ff6900 !important}
+html[data-theme="light"] .btn[class*="ghost"] *{color:inherit !important}
+html[data-theme="light"] :is(.hc-n,.hc-lead b,.s10-lead a,.cx-lead a,.pq-txt a,.pq-txt a span,.lead b,.iv-sub b){color:#121214 !important}
+html[data-theme="light"] .cl img{filter:grayscale(1) brightness(0) !important;opacity:.55}
+html[data-theme="light"] .cl a:hover img{filter:none !important;opacity:1}
