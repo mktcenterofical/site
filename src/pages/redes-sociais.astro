@@ -1,6 +1,6 @@
 ---
 // Página "Redes" (gestão de redes sociais). Mesmo modelo das páginas Sites, Lojas e Vídeos:
-// hero com a foto do Edigar segurando o perfil da MKT Center (public/equipe/edigar.webp; PainelRedes.astro fica guardado), planos com preços reais (redes R$ 400/mês,
+// hero com a imagem de referência escolhida pelo cliente (public/mock/redes-perfil.webp, perfil de terceiro: confirmar direito de uso antes do lançamento; PainelRedes.astro fica guardado), planos com preços reais (redes R$ 400/mês,
 // post R$ 30/card, vídeo R$ 50), antes e depois do perfil arrastável, 6 entregas com demonstração ao vivo,
 // incluso, processo e depoimentos.
 import Base from '../layouts/Base.astro';
@@ -60,7 +60,7 @@ const schema = [
     rolarPara="#tipos"
   >
     <div slot="visual" class="rd-foto">
-      <img src="/equipe/edigar.webp" alt="Edigar, da MKT Center, segurando o perfil da MKT Center no Instagram" width="768" height="1024" fetchpriority="high" decoding="async" />
+      <img src="/mock/redes-perfil.webp" alt="Pessoa segurando um perfil do Instagram em vidro flutuando sobre a mão" width="736" height="981" fetchpriority="high" decoding="async" />
     </div>
   </HeroCrescimento>
 
