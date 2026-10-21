@@ -292,3 +292,8 @@ body{background:var(--carbon)}
 @media(max-width:767px){
   .iv>*,.cx>*{max-width:calc(100% - 30px);margin-left:auto !important;margin-right:auto !important;overflow:hidden}
 }
+/* Celular: cena dos aparelhos do hero (com os cartões flutuantes) encolhida para caber inteira dentro da margem de 15px */
+@media(max-width:767px){
+  .hc .sv{width:100%;max-width:calc(100vw - 30px);margin-left:auto;margin-right:auto;overflow:hidden;padding:14px 0}
+  .hc .sv .sv-scene{transform:translateX(2%) scale(.9) !important;transform-origin:center center !important}
+}
