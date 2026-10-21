@@ -13,6 +13,24 @@ export const projetos = [
     cel: ['/portfolio/rollerport-app-cel.webp', 300, 1800] as [string, number, number],
   },
   {
+    nome: 'Sistema RollerPort', tipo: 'Sistema de gestão', url: 'https://sistemarollerport.com/', logo: '/clientes/rollerport.webp',
+    descricao: 'Central de comando da fábrica: orçamentos, pedidos, produção, equipe online e metas de vendas por vendedor, com acesso por login.',
+    lap: ['/portfolio/sistemarollerport-lap.webp', 720, 450] as [string, number, number],
+    cel: ['/portfolio/sistemarollerport-cel.webp', 300, 649] as [string, number, number],
+  },
+  {
+    nome: 'PâncreasOnline', tipo: 'Aplicativo de saúde', url: 'https://pancreasonline.vercel.app/demo',
+    descricao: 'Diário de diabetes no celular: glicemia, insulina, refeições, médias, HbA1c estimada, relatórios e orientações do SUS.',
+    lap: ['/portfolio/pancreas-lap.webp', 720, 450] as [string, number, number],
+    cel: ['/portfolio/pancreas-cel.webp', 300, 957] as [string, number, number],
+  },
+  {
+    nome: 'Adriano Fernandes', tipo: 'Aplicativo político', url: 'https://adriano-fernandes.vercel.app/',
+    descricao: 'App do mandato com a população de Francisco Morato: denúncias, ônibus, emergência, tempo, notícias, projetos de lei e serviços.',
+    lap: ['/portfolio/adriano-lap.webp', 720, 1375] as [string, number, number],
+    cel: ['/portfolio/adriano-cel.webp', 300, 2432] as [string, number, number],
+  },
+  {
     nome: 'Pugas News', tipo: 'Portal de notícias', url: 'https://pugasnews.com.br/', logo: '/clientes/pugas-news.webp',
     descricao: 'Portal de notícias de Itatiba/SP com política, religião, saúde, cidade e utilidades como tempo, mercado, combustível e trânsito.',
     lap: ['/portfolio/pugas-lap.webp', 720, 1550] as [string, number, number],

@@ -4,7 +4,7 @@ import { servicos, type Servico } from '../data/servicos';
 import { config, waLink } from '../config';
 
 export function getStaticPaths() {
-  return servicos.filter((s) => !['criacao-de-sites', 'loja-virtual', 'marketing-politico'].includes(s.slug)).map((s) => ({ params: { servico: s.slug }, props: { s } })); // Sites, Lojas e Política têm página própria
+  return servicos.filter((s) => !['criacao-de-sites', 'loja-virtual', 'marketing-politico', 'aplicativos-e-sistemas'].includes(s.slug)).map((s) => ({ params: { servico: s.slug }, props: { s } })); // Sites, Lojas, Apps e Política têm página própria
 }
 const { s } = Astro.props as { s: Servico };
 // Preços fictícios para apresentação

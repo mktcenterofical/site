@@ -9,8 +9,8 @@ import sharp from 'sharp';
 sharp.cache(false);
 import { projetos } from '../src/data/projetos.ts';
 
-// projetos com recorte manual (não atualizar sozinho): painel com dados internos do cliente
-const IGNORAR = ['RollerPort Relatórios'];
+// projetos com print manual (não atualizar sozinho): painel com dados internos e sistema com login
+const IGNORAR = ['RollerPort Relatórios', 'Sistema RollerPort'];
 // formato de cada print: tela do navegador e tamanho final do arquivo
 const FORMATOS = {
   desk: { tela: [1440, 900, false], largura: 800, alturaMax: 1778 },
