@@ -64,6 +64,17 @@ if (crumbs.length) {
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
   <noscript><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet" /></noscript>
   {ld.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+  <!-- Google Analytics 4 (G-WHXPL9H3WL): carrega depois da página para não pesar no carregamento -->
+  <script is:inline>
+    window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}
+    gtag('js',new Date());gtag('config','G-WHXPL9H3WL');
+    addEventListener('load',function(){setTimeout(function(){var s=document.createElement('script');s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-WHXPL9H3WL';document.head.appendChild(s)},1500)});
+    // contatos: clique no WhatsApp, telefone e e-mail viram eventos (para marcar como conversão no GA4)
+    addEventListener('click',function(e){var a=e.target.closest&&e.target.closest('a[href]');if(!a)return;var h=a.href;
+      if(h.indexOf('wa.me/')>-1)gtag('event','clique_whatsapp',{pagina:location.pathname});
+      else if(h.indexOf('tel:')===0)gtag('event','clique_telefone',{pagina:location.pathname});
+      else if(h.indexOf('mailto:')===0)gtag('event','clique_email',{pagina:location.pathname});});
+  </script>
 </head>
 <body>
   <div class="fundo-site" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
