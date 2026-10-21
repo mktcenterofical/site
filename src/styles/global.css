@@ -262,3 +262,21 @@ body{background:var(--carbon)}
   .st-grid::-webkit-scrollbar{display:none}
   .st-grid>*{flex:0 0 84%;scroll-snap-align:start}
 }
+
+/* Celular: textos justificados (última linha centralizada) e títulos em no máximo 2 linhas.
+   Os títulos que no computador quebram linha a linha (hero, 10 segundos, conexão) viram texto corrido. */
+@media(max-width:767px){
+  main p,footer p{text-align:justify;text-align-last:center;hyphens:auto;-webkit-hyphens:auto}
+  .hc-h1 .hc-line{display:inline !important}
+  .hc-h1 .hc-line+.hc-line::before{content:' '}
+  .hc-h1{font-size:clamp(26px,8.6vw,36px) !important;line-height:1.02 !important}
+  .s10-h span,.cx-h span{display:inline !important}
+  .s10-h span+span::before,.cx-h span+span::before{content:' '}
+  .s10-h,.cx-h{font-size:clamp(24px,7.4vw,30px) !important;line-height:1.05 !important}
+  h2{font-size:clamp(22px,7vw,28px);line-height:1.08}
+}
+@media(max-width:767px){
+  .hc-h1,.s10-h,.cx-h{display:block !important}
+  .hc-h1 .hc-ey{display:block !important;margin-bottom:10px}
+  .hc-h1 .hc-w{display:inline !important}
+}
