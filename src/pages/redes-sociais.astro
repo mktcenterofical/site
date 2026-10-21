@@ -43,8 +43,7 @@ const incluso: [string, string, string][] = [
   ['star', 'Identidade visual', 'Feed bonito e com a mesma cara em todos os posts.'],
   ['message', 'Textos que vendem', 'Legendas curtas com chamada para o WhatsApp.'],
   ['video', 'Reels e Stories', 'Vídeos e bastidores para aparecer mais.'],
-  ['trending', 'Relatório mensal', 'Alcance, seguidores e contatos do mês.'],
-  ['smile', 'Atendimento próximo', 'Fale direto com quem cuida da sua marca.'],
+  ['trending', 'Relatório mensal e atendimento próximo', 'Alcance, seguidores e contatos do mês, explicados por quem cuida da sua marca.'],
 ];
 const etapas = ['Conversa sobre a sua marca', 'Planejamento do mês para aprovação', 'Criação e publicação', 'Relatório e ajustes'];
 const schema = [
@@ -176,7 +175,7 @@ const schema = [
     <div class="wrap">
       <span class="eyebrow">Em toda gestão</span>
       <h2>O que vem incluso</h2>
-      <div class="grid grid-servicos sv-grid st-inc">
+      <div class="grid grid-servicos sv-grid">
         {incluso.map(([i, t, d]) => (
           <div class="card"><span class="icone"><Icon name={i} /></span><h3>{t}</h3><p>{d}</p></div>
         ))}
@@ -251,9 +250,6 @@ const schema = [
   .st-card li{position:relative;padding-left:16px;font-size:14px;color:#e4e6ea}
   .st-card li::before{content:'';position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:#ff6900}
   .st-bt{margin-top:auto;width:100%}
-  .grid.st-inc{grid-template-columns:repeat(3,1fr);grid-template-areas:none}
-  .grid.st-inc>*{grid-area:auto !important;display:block !important}
-  .grid.st-inc .icone{margin:0 0 16px !important}
 
   /* antes e depois (texto) */
   .vd-ad-wrap{display:grid;grid-template-columns:1fr 1.15fr;gap:40px;align-items:center}
@@ -373,8 +369,7 @@ const schema = [
     .vd-lista{justify-items:center}
   }
   @media(max-width:767px){
-    .grid.st-inc{grid-template-columns:1fr 1fr}
-    .st-card{text-align:center}.st-card li{text-align:left}.st-selo{align-self:center}
+      .st-card{text-align:center}.st-card li{text-align:left}.st-selo{align-self:center}
     .vd-tec{grid-template-columns:1fr 1fr;gap:12px}
     .vd-card{text-align:center}
   }

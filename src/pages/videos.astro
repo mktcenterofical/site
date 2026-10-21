@@ -31,8 +31,7 @@ const incluso: [string, string, string][] = [
   ['message', 'Legendas em português', 'Para quem assiste sem som, que é a maioria.'],
   ['sparkles', 'Cor e áudio tratados', 'Imagem bonita e voz limpa, sem ruído.'],
   ['star', 'Com a sua marca', 'Logo, cores e fontes do seu negócio.'],
-  ['rocket', 'Gancho no início', 'Os primeiros segundos pensados para prender.'],
-  ['check', 'Pronto para postar', 'Arquivo final no tamanho certo.'],
+  ['rocket', 'Gancho no início e pronto para postar', 'Os primeiros segundos pensados para prender e o arquivo final no tamanho certo de cada rede.'],
 ];
 const etapas = ['Você envia o material ou a ideia', 'Roteiro e estilo combinados', 'Edição e ajustes', 'Entrega pronta para postar'];
 const schema = [
@@ -166,7 +165,7 @@ const schema = [
     <div class="wrap">
       <span class="eyebrow">Em todo vídeo</span>
       <h2>O que vem incluso</h2>
-      <div class="grid grid-servicos sv-grid st-inc">
+      <div class="grid grid-servicos sv-grid">
         {incluso.map(([i, t, d]) => (
           <div class="card"><span class="icone"><Icon name={i} /></span><h3>{t}</h3><p>{d}</p></div>
         ))}
@@ -204,9 +203,6 @@ const schema = [
   .st-card li{position:relative;padding-left:16px;font-size:14px;color:#e4e6ea}
   .st-card li::before{content:'';position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:#ff6900}
   .st-bt{margin-top:auto;width:100%}
-  .grid.st-inc{grid-template-columns:repeat(3,1fr);grid-template-areas:none}
-  .grid.st-inc>*{grid-area:auto !important;display:block !important}
-  .grid.st-inc .icone{margin:0 0 16px !important}
 
   /* antes e depois */
   .vd-ad-wrap{display:grid;grid-template-columns:1fr 1.15fr;gap:40px;align-items:center}
@@ -312,8 +308,7 @@ const schema = [
     .vd-lista{justify-items:center}
   }
   @media(max-width:767px){
-    .grid.st-inc{grid-template-columns:1fr 1fr}
-    .st-card{text-align:center}.st-card li{text-align:left}.st-selo{align-self:center}
+      .st-card{text-align:center}.st-card li{text-align:left}.st-selo{align-self:center}
     .vd-tec{grid-template-columns:1fr 1fr;gap:12px}
     .vd-card{text-align:center}
   }

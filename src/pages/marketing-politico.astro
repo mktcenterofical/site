@@ -21,8 +21,7 @@ const servicos: [string, string, string][] = [
   ['smartphone', 'Redes sociais', 'Instagram, Facebook, TikTok e YouTube com conteúdo todos os dias.'],
   ['video', 'Vídeos e transmissões', 'Vídeos curtos, entrevistas e transmissões ao vivo de eventos.'],
   ['star', 'Identidade de campanha', 'Marca, cores, número e materiais com a mesma cara.'],
-  ['message', 'WhatsApp', 'Canal direto com apoiadores e listas organizadas por região.'],
-  ['trending', 'Impulsionamento', 'Anúncios identificados, dentro das regras eleitorais.'],
+  ['message', 'WhatsApp e impulsionamento', 'Canal direto com apoiadores por região e anúncios identificados, dentro das regras eleitorais.'],
 ];
 const lei = ['Impulsionamento só pelos canais e no período permitidos', 'Anúncios identificados com CNPJ da campanha', 'Dados de apoiadores tratados conforme a LGPD', 'Registro de gastos para a prestação de contas'];
 const etapas = ['Diagnóstico e posicionamento', 'Planejamento de conteúdo', 'Execução e anúncios', 'Acompanhamento e relatórios'];
@@ -74,7 +73,7 @@ const schema = [
     <div class="wrap">
       <span class="eyebrow">Do site ao WhatsApp</span>
       <h2>O que fazemos</h2>
-      <div class="grid grid-servicos sv-grid st-inc">
+      <div class="grid grid-servicos sv-grid">
         {servicos.map(([i, t, d]) => (
           <div class="card"><span class="icone"><Icon name={i} /></span><h3>{t}</h3><p>{d}</p></div>
         ))}
@@ -129,9 +128,6 @@ const schema = [
   .st-card li{position:relative;padding-left:16px;font-size:14px;color:#e4e6ea}
   .st-card li::before{content:'';position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:#ff6900}
   .st-bt{margin-top:auto;width:100%}
-  .grid.st-inc{grid-template-columns:repeat(3,1fr);grid-template-areas:none}
-  .grid.st-inc>*{grid-area:auto !important;display:block !important}
-  .grid.st-inc .icone{margin:0 0 16px !important}
 
   /* dentro da lei */
   .pl-lei{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
@@ -151,8 +147,7 @@ const schema = [
     .pl-pf{grid-template-columns:repeat(2,minmax(0,1fr))}
   }
   @media(max-width:767px){
-    .grid.st-inc{grid-template-columns:1fr 1fr}
-    .st-card{text-align:center}.st-card li{text-align:left}.st-selo{align-self:center}
+      .st-card{text-align:center}.st-card li{text-align:left}.st-selo{align-self:center}
     .pl-pf{grid-template-columns:minmax(0,280px);justify-content:center}
     .pl-lista li{text-align:left}
   }

@@ -17,8 +17,7 @@ const tipos: [string, string, string][] = [
   ['trending', 'Painéis de resultados', 'Site, Google e redes sociais em gráficos ao vivo.'],
   ['heart', 'Apps de saúde', 'Diários, lembretes e relatórios para pacientes e equipes.'],
   ['landmark', 'Apps de mandato', 'Canal direto do político com a população da cidade.'],
-  ['smartphone', 'Instala no celular', 'Funciona no navegador e vira ícone na tela do celular.'],
-  ['wrench', 'Integrações', 'WhatsApp, planilhas, ERP, Google e redes conectados.'],
+  ['smartphone', 'Instala no celular e conecta tudo', 'Funciona no navegador, vira ícone na tela do celular e se integra a WhatsApp, planilhas, ERP, Google e redes.'],
 ];
 const etapas = ['Conversa e levantamento do que precisa', 'Protótipo das telas para aprovação', 'Desenvolvimento por etapas', 'Treinamento, entrega e suporte'];
 const schema = [
@@ -57,7 +56,7 @@ const schema = [
     <div class="wrap">
       <span class="eyebrow">Sob medida</span>
       <h2>O que podemos criar</h2>
-      <div class="grid grid-servicos sv-grid st-inc">
+      <div class="grid grid-servicos sv-grid">
         {tipos.map(([i, t, d]) => (
           <div class="card"><span class="icone"><Icon name={i} /></span><h3>{t}</h3><p>{d}</p></div>
         ))}
@@ -113,9 +112,6 @@ const schema = [
   .st-pf.encaixe{scroll-snap-type:x mandatory}
   .st-pf>:global(*){flex:0 0 calc((100% - 48px)/4);scroll-snap-align:start}
   .st-pf :global(.pf p){-webkit-line-clamp:2}
-  .grid.st-inc{grid-template-columns:repeat(3,1fr);grid-template-areas:none}
-  .grid.st-inc>*{grid-area:auto !important;display:block !important}
-  .grid.st-inc .icone{margin:0 0 16px !important}
   .ap-preco{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:32px;border-radius:var(--radius-lg);text-align:left;
     background:linear-gradient(160deg,rgba(28,29,33,.85),rgba(12,13,15,.9));border:1px solid rgba(255,105,0,.45);box-shadow:0 0 40px -14px rgba(255,105,0,.5)}
   .ap-preco h2{margin:0}
@@ -123,8 +119,7 @@ const schema = [
   @media(max-width:1023px){.st-pf>:global(*){flex-basis:calc((100% - 16px)/2)}}
   @media(max-width:767px){
     .st-pf>:global(*){flex-basis:80%}.st-cab{justify-content:center;text-align:center}.st-setas{display:none}
-    .grid.st-inc{grid-template-columns:1fr 1fr}
-    .ap-preco{flex-direction:column;text-align:center;padding:24px 16px}
+      .ap-preco{flex-direction:column;text-align:center;padding:24px 16px}
     .ap-preco .btn{width:100%}
   }
 </style>
