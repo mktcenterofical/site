@@ -242,3 +242,23 @@ body{background:var(--carbon)}
   .grid.sv-grid>:nth-child(5){display:block;text-align:center}
   .grid.sv-grid>:nth-child(5) .icone{margin:0 auto 10px}
 }
+
+/* ===================== CELULAR COM CARA DE APP (< 768px) =====================
+   Barra de abas fixa embaixo (BarraApp.astro) no lugar do botão flutuante e do botão de menu,
+   cabeçalho que some ao rolar para baixo, toque com resposta visual e cards de planos que se passam
+   com o dedo (um por vez, mostrando a ponta do próximo). */
+@media(max-width:767px){
+  body{padding-bottom:calc(74px + env(safe-area-inset-bottom))}
+  .wa{display:none !important}
+  .burger{display:none !important}
+  .topo{transition:transform .3s ease}
+  .topo.esconde{transform:translateY(-100%)}
+  a,button{-webkit-tap-highlight-color:transparent}
+  .btn{transition:transform .15s}
+  .btn:active{transform:scale(.97)}
+  .card:active,.st-card:active,.pf:active{transform:scale(.985)}
+  /* planos e tipos: carrossel de toque */
+  .st-grid{display:flex !important;gap:12px;overflow-x:auto;margin:0 -10px;padding:4px 10px 14px;scroll-snap-type:x mandatory;scroll-padding:0 10px;scrollbar-width:none;overscroll-behavior-x:contain}
+  .st-grid::-webkit-scrollbar{display:none}
+  .st-grid>*{flex:0 0 84%;scroll-snap-align:start}
+}
