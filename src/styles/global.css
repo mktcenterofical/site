@@ -371,3 +371,24 @@ html[data-theme="light"] .btn[class*="ghost"] *{color:inherit !important}
 html[data-theme="light"] :is(.hc-n,.hc-lead b,.s10-lead a,.cx-lead a,.pq-txt a,.pq-txt a span,.lead b,.iv-sub b){color:#121214 !important}
 html[data-theme="light"] .cl img{filter:grayscale(1) brightness(0) !important;opacity:.55}
 html[data-theme="light"] .cl a:hover img{filter:none !important;opacity:1}
+
+/* Tema claro: cards em preto (contraste com o fundo branco), textos brancos e cinza-claro dentro deles */
+html[data-theme="light"] :is(.card,.st-card,.pf,.pr-card,.pq-card,.dp-item,.pl-lista li,.ap-preco,.etapas li){
+  background:linear-gradient(160deg,#1a1b1f,#0c0d0f) !important;border-color:rgba(255,255,255,.08) !important;box-shadow:0 18px 40px -20px rgba(0,0,0,.55) !important}
+html[data-theme="light"] :is(.card,.st-card,.pf,.pr-card,.pq-card,.dp-item,.pl-lista li,.ap-preco,.etapas li) :is(h2,h3,h4,b,strong,li,blockquote,.pf-link,.pl-lista li){color:#fff !important}
+html[data-theme="light"] :is(.pl-lista li,.etapas li){color:#e4e6ea !important}
+html[data-theme="light"] :is(.card,.st-card,.pf,.pr-card,.pq-card,.dp-item,.ap-preco) :is(p,span,figcaption span,small,.st-desc,.pr-desc){color:#aeb4bd !important}
+html[data-theme="light"] :is(.card,.st-card,.pf,.pr-card,.pq-card,.ap-preco) :is(.mais,.pf-tipo,.pq-n,.eyebrow){color:#ff8a24 !important}
+html[data-theme="light"] :is(.st-card,.pr-card) li{color:#e4e6ea !important}
+html[data-theme="light"] .sv-grid .icone{background:linear-gradient(160deg,#4a4e56,#16181c 45%,#2c2f35) !important;box-shadow:0 10px 20px -10px rgba(255,105,0,.6) !important}
+html[data-theme="light"] .sv-grid .icone svg{color:#ffb35c !important}
+html[data-theme="light"] .pf-cena{background:radial-gradient(60% 50% at 45% 55%,rgba(255,105,0,.24),transparent 70%),linear-gradient(180deg,#0d0e12,#131519) !important}
+html[data-theme="light"] .pf-cta{background:transparent !important;color:#aeb4bd !important;border-color:rgba(255,255,255,.16) !important}
+html[data-theme="light"] .pq-card{background:linear-gradient(180deg,#17181c,#0c0d0f) !important}
+html[data-theme="light"] :is(.card,.st-card,.pr-card,.pf,.ap-preco) .btn[class*="ghost"]{background:transparent !important;color:#fff !important;border-color:rgba(255,255,255,.25) !important}
+html[data-theme="light"] :is(.st-card,.pr-card) [class*="preco"] small{-webkit-text-fill-color:#aeb4bd !important}
+html[data-theme="light"] .etapas li::before,html[data-theme="light"] .etapas li span{color:#ff8a24}
+html[data-theme="light"] :is(.st-selo,.pr-selo,.st-selo *,.pr-selo *){color:#141006 !important;-webkit-text-fill-color:#141006 !important}
+html[data-theme="light"] .dp-item{padding:22px 20px !important;border-radius:18px !important}
+html[data-theme="light"] .dp-trilho{gap:16px}
+html[data-theme="light"] .pq .pq-card .pq-txt a,html[data-theme="light"] .pq .pq-card .pq-txt a span{color:#fff !important}
