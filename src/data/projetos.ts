@@ -67,6 +67,12 @@ export const projetos = [
     cel: ['/portfolio/robertopires-cel.webp', 300, 2615] as [string, number, number],
   },
   {
+    nome: 'Padre Kelmon', tipo: 'Marketing político', url: 'https://padrekelmon.com.br/',
+    descricao: 'Site de campanha a deputado federal por São Paulo, com trajetória, pautas, notícias, vídeos, redes sociais e materiais de campanha.',
+    lap: ['/portfolio/padrekelmon-lap.webp', 720, 1800] as [string, number, number],
+    cel: ['/portfolio/padrekelmon-cel.webp', 300, 2615] as [string, number, number],
+  },
+  {
     nome: 'Kimax Institucional', tipo: 'Site institucional', url: 'https://institucional.kimax.com.br/', logo: '/clientes/kimax.webp',
     descricao: 'Site institucional da Kimax, fabricante de produtos de limpeza, com linha de produtos, fornecimento e contato.',
     lap: ['/portfolio/kimaxinst-lap.webp', 720, 1800] as [string, number, number],
