@@ -108,6 +108,13 @@ const links: [string, string, string][] = [
 </style>
 
 <script>
+  // menu fica transparente (vidro) ao rolar a página
+  const topoEl = document.querySelector<HTMLElement>('.topo');
+  if (topoEl) {
+    const marcar = () => topoEl.classList.toggle('rolou', scrollY > 10);
+    addEventListener('scroll', marcar, { passive: true });
+    marcar();
+  }
   // botão claro/escuro: guarda a escolha e troca o tema na hora
   document.querySelectorAll<HTMLButtonElement>('.tema').forEach((b) => b.addEventListener('click', () => {
     const claro = document.documentElement.dataset.theme !== 'light';

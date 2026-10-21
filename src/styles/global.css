@@ -474,3 +474,7 @@ html[data-theme="light"] .ba{background:rgba(12,13,16,.94) !important;border-top
 html[data-theme="light"] .ba-it{color:#8a9099 !important}
 html[data-theme="light"] .ba-it.on{color:#ff8a24 !important}
 html[data-theme="light"] .ba-wa{box-shadow:0 0 0 5px #0c0d10,0 10px 24px rgba(37,211,102,.35) !important}
+
+/* Menu do topo transparente (vidro) durante a rolagem, nos dois temas */
+.topo{transition:background .35s,box-shadow .35s,backdrop-filter .35s}
+.topo.rolou,html[data-theme="light"] .topo.rolou{background:rgba(9,10,12,.55) !important;-webkit-backdrop-filter:blur(16px) saturate(1.5) !important;backdrop-filter:blur(16px) saturate(1.5) !important}
