@@ -80,5 +80,15 @@ if (crumbs.length) {
   <Footer />
   <BotaoWhatsApp />
   <BarraApp />
+  <script>
+    // luz que segue o mouse nos cards (efeito do tema claro)
+    if (matchMedia('(hover:hover)').matches) addEventListener('pointermove', (e) => {
+      const c = (e.target as Element)?.closest?.('.card,.st-card,.pf,.pr-card,.pq-card,.dp-item,.ap-preco') as HTMLElement | null;
+      if (!c) return;
+      const r = c.getBoundingClientRect();
+      c.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      c.style.setProperty('--my', `${e.clientY - r.top}px`);
+    }, { passive: true });
+  </script>
 </body>
 </html>
