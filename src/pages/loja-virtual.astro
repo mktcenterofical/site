@@ -26,6 +26,11 @@ const incluso: [string, string, string][] = [
   ['message', 'WhatsApp e Instagram', 'Clientes chegam das redes e tiram dúvidas na hora.'],
   ['trending', 'Pronta para o Google', 'Produtos aparecendo nas buscas desde o início.'],
 ];
+// produtos reais da Kimax para a vitrine do hero (fotos em public/kimax/)
+const produtos = ([
+  ['querosene', 'Gel Querosene 1kg', 'Limpeza pesada'], ['lavaroupas', 'Lava Roupas Plus 2L', 'Roupas'], ['ecokim', 'Ecokim 1L', 'Roupas'],
+  ['desinfetante', 'Desinfetante Marine 2L', 'Casa'], ['cloro', 'Cloro Gel 2kg', 'Casa'], ['desengordurante', 'Desengordurante 500ml', 'Cozinha'],
+] as const).map(([f, nome, cat]) => ({ img: `/kimax/${f}.webp`, nome, cat, rod: 'kimax.com.br' }));
 const etapas = ['Conversa sobre os seus produtos', 'Layout da loja para aprovação', 'Cadastro, pagamento e frete', 'Loja no ar e primeiras vendas'];
 const exemplos = projetos.filter((p) => p.tipo === 'Loja virtual'); // lojas reais do portfólio
 const schema = [
@@ -45,7 +50,7 @@ const schema = [
     numeros={[[3, '', 'lojas de clientes no ar'], [2013, '', 'criando lojas desde']]}
     rolarPara="#tipos"
   >
-    <VitrineLoja slot="visual" />
+    <VitrineLoja slot="visual" tela={['/portfolio/kimax-cel.webp', 300, 2615]} aviso="Pix aprovado · pedido enviado" cards={produtos} />
   </HeroCrescimento>
 
   <section id="tipos" class="servicos-topo">

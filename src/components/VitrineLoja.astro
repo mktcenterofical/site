@@ -1,32 +1,27 @@
 ---
-// Lado direito do hero da página Lojas: celular grafite inclinado com a loja aberta e cartões de vidro
-// dos produtos flutuando em volta, em profundidades diferentes (inspirado em referência, sem copiar).
-// Loja real da Kimax: o celular mostra o print do site (public/portfolio/kimax-cel.webp) rolando e os
-// cartões trazem produtos reais da loja (fotos em public/kimax/, tiradas de kimax.com.br).
-const produtos = [
-  { foto: 'querosene', nome: 'Gel Querosene 1kg', cat: 'Limpeza pesada', pos: 'p1' },
-  { foto: 'lavaroupas', nome: 'Lava Roupas Plus 2L', cat: 'Roupas', pos: 'p2' },
-  { foto: 'ecokim', nome: 'Ecokim 1L', cat: 'Roupas', pos: 'p3' },
-  { foto: 'desinfetante', nome: 'Desinfetante Marine 2L', cat: 'Casa', pos: 'p4' },
-  { foto: 'cloro', nome: 'Cloro Gel 2kg', cat: 'Casa', pos: 'p5' },
-  { foto: 'desengordurante', nome: 'Desengordurante 500ml', cat: 'Cozinha', pos: 'p6' },
-];
+// Vitrine do lado direito do hero (Lojas e Sites): aparelho grafite inclinado com o print real de um site
+// rolando e cartões de vidro flutuando em volta, em profundidades diferentes (inspirado em referência, sem copiar).
+// Lojas: celular com a Kimax e produtos reais (public/kimax/). Sites: notebook com sites reais do portfólio.
+type Card = { img: string; nome: string; cat: string; rod: string; foto?: 'produto' | 'site' };
+interface Props { aparelho?: 'cel' | 'note'; tela: [string, number, number]; cards: Card[]; aviso: string }
+const { aparelho = 'cel', tela, cards, aviso } = Astro.props;
 ---
 <div class="vl" id="vitrine" aria-hidden="true">
-  <div class="vl-cena">
-    <div class="vl-cel">
+  <div class={`vl-cena vl-com-${aparelho}`}>
+    <div class={`vl-ap vl-${aparelho}`}>
       <div class="vl-tela">
-        <span class="vl-ilha"></span>
-        <img class="vl-print" src="/portfolio/kimax-cel.webp" alt="" width="300" height="2615" decoding="async" />
-        <div class="vl-pix">Pix aprovado · pedido enviado</div>
+        {aparelho === 'cel' && <span class="vl-ilha"></span>}
+        <img class="vl-print" src={tela[0]} alt="" width={tela[1]} height={tela[2]} decoding="async" />
+        <div class="vl-pix">{aviso}</div>
       </div>
+      {aparelho === 'note' && <span class="vl-base"></span>}
     </div>
-    {produtos.map((p) => (
-      <div class={`vl-card ${p.pos}`}>
-        <span class="vl-foto"><img src={`/kimax/${p.foto}.webp`} alt="" width="320" height="280" loading="lazy" decoding="async" /></span>
-        <span class="vl-cat">{p.cat}</span>
-        <b class="vl-nome">{p.nome}</b>
-        <span class="vl-rod"><span class="vl-preco">kimax.com.br</span></span>
+    {cards.map((c, i) => (
+      <div class={`vl-card p${i + 1}${c.foto === 'site' ? ' vl-card--site' : ''}`}>
+        <span class="vl-foto"><img src={c.img} alt="" width="320" height="280" loading="lazy" decoding="async" /></span>
+        <span class="vl-cat">{c.cat}</span>
+        <b class="vl-nome">{c.nome}</b>
+        <span class="vl-rod"><span class="vl-preco">{c.rod}</span></span>
         <span class="vl-mais">+</span>
       </div>
     ))}
@@ -39,12 +34,20 @@ const produtos = [
   .vl::after{content:'';position:absolute;left:24%;right:24%;bottom:3%;height:7%;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.8),transparent);filter:blur(8px)}
   .vl-cena{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateY(var(--ry,-14deg)) rotateX(var(--rx,6deg));transition:transform .6s cubic-bezier(.22,.8,.28,1)}
 
-  /* celular grafite com a loja aberta */
+  /* celular grafite */
   .vl-cel{position:absolute;left:31%;top:6%;width:38%;height:86%;padding:2.2%;border-radius:12%/6%;transform:translateZ(0);
     background:linear-gradient(150deg,#4a4e57,#17191d 40%,#2b2e34 75%,#5a5f68);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18),0 40px 60px -30px #000}
-  .vl-tela{position:relative;height:100%;border-radius:10%/5%;overflow:hidden;background:#0f1013;padding:18% 7% 0;container-type:inline-size;display:flex;flex-direction:column;gap:4cqw}
+  /* notebook: tampa 16:10 com a tela e base fina embaixo */
+  .vl-note{position:absolute;left:14%;top:26%;width:72%;transform:translateZ(0)}
+  .vl-note .vl-tela{height:auto;aspect-ratio:16/10;border-radius:10px 10px 0 0;border:7px solid #1b1d21;border-bottom-width:9px;
+    box-shadow:0 0 0 1px rgba(255,255,255,.18),0 40px 60px -30px #000}
+  .vl-base{display:block;position:relative;left:-7%;width:114%;height:16px;border-radius:2px 2px 14px 14px;
+    background:linear-gradient(180deg,#7a7f88,#3a3e45 30%,#1a1c20);box-shadow:0 18px 26px -10px rgba(0,0,0,.9)}
+  .vl-base::before{content:'';position:absolute;left:50%;top:0;width:16%;height:5px;transform:translateX(-50%);border-radius:0 0 6px 6px;background:#2a2d33}
+  .vl-note .vl-pix{left:auto;right:4%;width:44%;margin-bottom:4%;padding:1.6cqw;font-size:2cqw;border-radius:2cqw}
+  .vl-cel .vl-tela{height:100%;border-radius:10%/5%}
+  .vl-tela{position:relative;overflow:hidden;background:#0f1013;container-type:inline-size}
   .vl-ilha{position:absolute;left:50%;top:3%;width:32%;height:3.4%;transform:translateX(-50%);border-radius:99px;background:#000}
-  .vl-tela{padding:0}
   .vl-ilha{z-index:2}
   .vl-print{position:absolute;left:0;top:0;width:100%;height:auto;animation:vl-rola 22s ease-in-out infinite alternate}
   @keyframes vl-rola{0%,8%{transform:translateY(0)}92%,100%{transform:translateY(calc(-100% + var(--alt,560px)))}}
@@ -56,11 +59,12 @@ const produtos = [
     -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 24px 40px -18px rgba(0,0,0,.9);animation:vl-flut 7s ease-in-out infinite}
   .vl-foto{display:block;border-radius:10px;overflow:hidden;aspect-ratio:8/7;background:#fff}
   .vl-foto img{width:100%;height:100%;object-fit:contain}
+  .vl-card--site .vl-foto img{object-fit:cover;object-position:top}
   .vl-cat{margin-top:4px;font:600 7cqw var(--ff-txt);letter-spacing:.08em;text-transform:uppercase;color:#aeb4bd}
   .vl-nome{color:#fff;font:700 10cqw var(--ff-txt);line-height:1.1}
   .vl-rod{display:flex;justify-content:space-between;align-items:center;gap:4px}
-  .vl-est{color:#ffb35c;font-size:7cqw;letter-spacing:-.05em}
-  .vl-preco{color:#ff8a24;font:800 8.4cqw var(--ff-txt);white-space:nowrap}
+  .vl-rod{min-width:0}
+  .vl-preco{color:#ff8a24;font:800 8.4cqw var(--ff-txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .vl-mais{position:absolute;right:7%;top:7%;display:grid;place-items:center;width:15cqw;height:15cqw;border-radius:50%;background:rgba(9,10,12,.7);color:#fff;font:700 10cqw/1 var(--ff-txt)}
 
   /* posições em volta do celular, cada uma numa profundidade */
@@ -70,6 +74,13 @@ const produtos = [
   .p4{left:13%;top:55%;--z:170px;width:25%;animation-delay:-1s}
   .p5{left:76%;top:38%;--z:30px;width:19%;opacity:.85;animation-delay:-3s}
   .p6{left:57%;top:57%;--z:130px;animation-delay:-5s}
+  /* com o notebook os cartões ficam nos cantos, acima e abaixo da tela */
+  .vl-com-note .p1{left:2%;top:4%}
+  .vl-com-note .p2{left:66%;top:2%;width:24%}
+  .vl-com-note .p3{left:40%;top:6%;width:19%}
+  .vl-com-note .p4{left:4%;top:58%}
+  .vl-com-note .p5{left:80%;top:44%}
+  .vl-com-note .p6{left:62%;top:62%;width:25%}
   .vl-card{transform:translateZ(var(--z))}
   @keyframes vl-flut{0%,100%{transform:translateZ(var(--z)) translateY(0)}50%{transform:translateZ(var(--z)) translateY(-10px)}}
   @keyframes vl-pix{0%,40%{opacity:0;transform:translateY(8px)}50%,90%{opacity:1;transform:none}100%{opacity:0}}
