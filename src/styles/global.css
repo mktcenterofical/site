@@ -478,3 +478,10 @@ html[data-theme="light"] .ba-wa{box-shadow:0 0 0 5px #0c0d10,0 10px 24px rgba(37
 /* Menu do topo transparente (vidro) durante a rolagem, nos dois temas */
 .topo{transition:background .35s,box-shadow .35s,backdrop-filter .35s}
 .topo.rolou,html[data-theme="light"] .topo.rolou{background:rgba(9,10,12,.55) !important;-webkit-backdrop-filter:blur(16px) saturate(1.5) !important;backdrop-filter:blur(16px) saturate(1.5) !important}
+
+/* Tema claro: peças de vidro que têm texto branco ganham vidro ESCURO translúcido para dar leitura */
+html[data-theme="light"] .cx-vidro{background:linear-gradient(160deg,rgba(24,25,30,.86),rgba(12,13,16,.8)) !important;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-color:rgba(255,255,255,.14) !important;box-shadow:0 20px 40px -18px rgba(0,0,0,.55) !important}
+html[data-theme="light"] .cx-vidro :is(b,span,small,p,i){color:#fff}
+html[data-theme="light"] .sv-modes{background:rgba(12,13,16,.82) !important;border-color:rgba(255,255,255,.1) !important;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 12px 26px -14px rgba(0,0,0,.5)}
+html[data-theme="light"] .sv-modes button:not(.on){color:rgba(255,255,255,.85) !important}
+html[data-theme="light"] .sv-note{color:#5b616b !important}
