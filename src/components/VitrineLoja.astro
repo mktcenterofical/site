@@ -1,7 +1,7 @@
 ---
 // Vitrine do lado direito do hero (Lojas e Sites): aparelho grafite inclinado com o print real de um site
 // rolando e cartões de vidro flutuando em volta, em profundidades diferentes (inspirado em referência, sem copiar).
-// Lojas: celular com a Kimax e produtos reais (public/kimax/). Sites: notebook com sites reais do portfólio.
+// Lojas: celular com a Kimax e produtos reais (public/kimax/). Também aceita aparelho="note" (notebook).
 type Card = { img: string; nome: string; cat: string; rod: string; foto?: 'produto' | 'site' };
 interface Props { aparelho?: 'cel' | 'note'; tela: [string, number, number]; cards: Card[]; aviso: string }
 const { aparelho = 'cel', tela, cards, aviso } = Astro.props;
