@@ -1,11 +1,10 @@
 ---
 // Página "Redes" (gestão de redes sociais). Mesmo modelo das páginas Sites, Lojas e Vídeos:
-// hero com a central de redes em código (PainelRedes.astro), planos com preços reais (redes R$ 400/mês,
+// hero com a foto do Edigar segurando o perfil da MKT Center (public/equipe/edigar.webp; PainelRedes.astro fica guardado), planos com preços reais (redes R$ 400/mês,
 // post R$ 30/card, vídeo R$ 50), antes e depois do perfil arrastável, 6 entregas com demonstração ao vivo,
 // incluso, processo e depoimentos.
 import Base from '../layouts/Base.astro';
 import HeroCrescimento from '../components/HeroCrescimento.astro';
-import PainelRedes from '../components/PainelRedes.astro';
 import Depoimentos from '../components/Depoimentos.astro';
 import Icon from '../components/Icon.astro';
 import { config, waLink } from '../config';
@@ -60,7 +59,9 @@ const schema = [
     numeros={[[400, '', 'R$ por mês'], [30, '', 'R$ por post']]}
     rolarPara="#tipos"
   >
-    <PainelRedes slot="visual" />
+    <div slot="visual" class="rd-foto">
+      <img src="/equipe/edigar.webp" alt="Edigar, da MKT Center, segurando o perfil da MKT Center no Instagram" width="768" height="1024" fetchpriority="high" decoding="async" />
+    </div>
   </HeroCrescimento>
 
   <section id="tipos" class="servicos-topo">
@@ -163,6 +164,11 @@ const schema = [
 </Base>
 
 <style>
+  /* foto do hero: cartão do perfil flutuando, com brilho laranja atrás */
+  .rd-foto{position:relative;width:100%;max-width:440px;margin:0 auto}
+  .rd-foto::before{content:'';position:absolute;inset:6% -4%;border-radius:50%;background:radial-gradient(closest-side,rgba(255,105,0,.35),transparent);filter:blur(24px)}
+  .rd-foto img{position:relative;display:block;width:100%;height:auto;border-radius:24px;box-shadow:0 0 0 1px rgba(255,255,255,.1),0 40px 80px -30px #000;
+    -webkit-mask-image:linear-gradient(180deg,#000 82%,transparent);mask-image:linear-gradient(180deg,#000 82%,transparent)}
   /* planos (mesmo visual das páginas Sites, Lojas e Vídeos) */
   .st-grid{display:grid;gap:16px;grid-template-columns:1fr}
   @media(min-width:768px){.st-grid{grid-template-columns:repeat(2,1fr)}}
