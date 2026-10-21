@@ -79,6 +79,12 @@ export const projetos = [
     cel: ['/portfolio/padrekelmon-cel.webp', 300, 2615] as [string, number, number],
   },
   {
+    nome: 'Projeto Morato HbA1c < 7', tipo: 'Projeto político', url: 'https://projeto-morato-hba1c.vercel.app/',
+    descricao: 'Projeto de saúde pública de Francisco Morato sobre diabetes, com jornada para pacientes, famílias e professores, dados e prevenção.',
+    lap: ['/portfolio/morato-lap.webp', 720, 1800] as [string, number, number],
+    cel: ['/portfolio/morato-cel.webp', 300, 2615] as [string, number, number],
+  },
+  {
     nome: 'Kimax Institucional', tipo: 'Site institucional', url: 'https://institucional.kimax.com.br/', logo: '/clientes/kimax.webp',
     descricao: 'Site institucional da Kimax, fabricante de produtos de limpeza, com linha de produtos, fornecimento e contato.',
     lap: ['/portfolio/kimaxinst-lap.webp', 720, 1800] as [string, number, number],

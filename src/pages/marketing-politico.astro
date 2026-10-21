@@ -31,7 +31,7 @@ const faq: [string, string][] = [
   ['O trabalho segue a legislação eleitoral?', 'Sim. Seguimos as resoluções do TSE em vigor em cada eleição.'],
   ['Quanto custa?', 'Depende da fase, do cargo e do tamanho da campanha. O valor vai na proposta, depois de uma conversa.'],
 ];
-const campanhas = projetos.filter((p) => p.tipo === 'Marketing político');
+const campanhas = projetos.filter((p) => /pol[ií]tic/i.test(p.tipo)); // campanhas e projetos políticos
 const schema = [
   { '@context': 'https://schema.org', '@type': 'Service', name: 'Marketing político digital', serviceType: 'Marketing político', provider: { '@type': 'ProfessionalService', name: config.nome }, areaServed: 'BR' },
   { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
@@ -47,7 +47,7 @@ const schema = [
     texto="Site de campanha, redes sociais, vídeos e transmissões para pré-candidatos, candidatos e mandatos, sempre dentro das regras eleitorais."
     bt1={['Falar sobre minha campanha', waLink(msg('marketing político'))]}
     bt2={['Ver campanhas', '#campanhas']}
-    numeros={[[campanhas.length, '', 'campanhas no portfólio'], [3, '', 'fases: pré, campanha e mandato']]}
+    numeros={[[campanhas.length, '', 'projetos no portfólio'], [3, '', 'fases: pré, campanha e mandato']]}
     rolarPara="#fases"
     sites={{
       desk: { nome: 'Roberto Pires', dominio: 'robertopires.com.br', tela: '/portfolio/robertopires-desk.webp', w: 800, h: 1778, logo: '/portfolio/robertopires-cel.webp' },
