@@ -31,6 +31,8 @@ if (crumbs.length) {
 <html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="utf-8" />
+  <!-- www.mktcenter.com.br -> mktcenter.com.br (a Hostinger não oferece o 301 do www) -->
+  <script is:inline>if(location.hostname==="www.mktcenter.com.br")location.replace("https://mktcenter.com.br"+location.pathname+location.search+location.hash)</script>
   <script is:inline>try{var t=localStorage.getItem("tema");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <link rel="manifest" href="/site.webmanifest" />
