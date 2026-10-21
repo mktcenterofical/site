@@ -19,6 +19,18 @@ export const projetos = [
     cel: ['/portfolio/sistemarollerport-cel.webp', 300, 649] as [string, number, number],
   },
   {
+    nome: 'Yvan Ótica', tipo: 'Aplicativo de loja', url: 'https://yvan-otica-prototipo.vercel.app/',
+    descricao: 'Protótipo do app da Yvan Ótica e Relojoaria: catálogo, ofertas, acompanhamento do pedido no laboratório e plano para guardar dinheiro.',
+    lap: ['/portfolio/yvan-lap.webp', 720, 450] as [string, number, number],
+    cel: ['/portfolio/yvan-cel.webp', 300, 649] as [string, number, number],
+  },
+  {
+    nome: 'RollerPort Links', tipo: 'Aplicativo de links', url: 'https://links.rollerport.com.br/', logo: '/clientes/rollerport.webp',
+    descricao: 'Página de links da bio da RollerPort: site, WhatsApp, LinkedIn, Instagram, Facebook, TikTok e YouTube num endereço próprio.',
+    lap: ['/portfolio/links-lap.webp', 720, 450] as [string, number, number],
+    cel: ['/portfolio/links-cel.webp', 300, 527] as [string, number, number],
+  },
+  {
     nome: 'PâncreasOnline', tipo: 'Aplicativo de saúde', url: 'https://pancreasonline.vercel.app/demo',
     descricao: 'Diário de diabetes no celular: glicemia, insulina, refeições, médias, HbA1c estimada, relatórios e orientações do SUS.',
     lap: ['/portfolio/pancreas-lap.webp', 720, 450] as [string, number, number],
