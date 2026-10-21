@@ -1,0 +1,171 @@
+---
+// Página "Política" (marketing político). Mesmo modelo das páginas Sites, Lojas, Vídeos e Redes:
+// hero com os 4 aparelhos mostrando os sites reais de campanha do portfólio (Padre Kelmon e Roberto Pires),
+// fases (pré-campanha, campanha e mandato, valores sob consulta), o que fazemos, dentro da lei,
+// campanhas do portfólio, processo e perguntas frequentes. Atende todos os partidos.
+import Base from '../layouts/Base.astro';
+import HeroCrescimento from '../components/HeroCrescimento.astro';
+import CardPortfolio from '../components/CardPortfolio.astro';
+import Icon from '../components/Icon.astro';
+import { projetos } from '../data/projetos';
+import { config, waLink } from '../config';
+
+const msg = (p: string) => `Olá! Quero conversar sobre ${p}.`;
+const fases = [
+  { nome: 'Pré-campanha', desc: 'Construa o nome e a presença antes do período eleitoral, dentro do que a lei permite.', itens: ['Posicionamento e identidade', 'Redes sociais ativas', 'Site do pré-candidato'] },
+  { nome: 'Campanha', desc: 'Tudo o que o candidato precisa no digital durante a eleição, com equipe dedicada.', itens: ['Site oficial de campanha', 'Redes, vídeos e transmissões', 'Impulsionamento conforme o TSE'], destaque: true },
+  { nome: 'Mandato', desc: 'Comunicação contínua com a população e prestação de contas do trabalho.', itens: ['Gestão das redes do mandato', 'Site com ações e notícias', 'Relatórios de presença digital'] },
+];
+const servicos: [string, string, string][] = [
+  ['globe', 'Site de campanha', 'Trajetória, propostas, notícias, vídeos e materiais num endereço próprio.'],
+  ['smartphone', 'Redes sociais', 'Instagram, Facebook, TikTok e YouTube com conteúdo todos os dias.'],
+  ['video', 'Vídeos e transmissões', 'Vídeos curtos, entrevistas e transmissões ao vivo de eventos.'],
+  ['star', 'Identidade de campanha', 'Marca, cores, número e materiais com a mesma cara.'],
+  ['message', 'WhatsApp', 'Canal direto com apoiadores e listas organizadas por região.'],
+  ['trending', 'Impulsionamento', 'Anúncios identificados, dentro das regras eleitorais.'],
+];
+const lei = ['Impulsionamento só pelos canais e no período permitidos', 'Anúncios identificados com CNPJ da campanha', 'Dados de apoiadores tratados conforme a LGPD', 'Registro de gastos para a prestação de contas'];
+const etapas = ['Diagnóstico e posicionamento', 'Planejamento de conteúdo', 'Execução e anúncios', 'Acompanhamento e relatórios'];
+const faq: [string, string][] = [
+  ['Vocês atendem qualquer partido?', 'Sim. Atendemos pré-candidatos, candidatos e mandatos de todos os partidos.'],
+  ['O trabalho segue a legislação eleitoral?', 'Sim. Seguimos as resoluções do TSE em vigor em cada eleição.'],
+  ['Quanto custa?', 'Depende da fase, do cargo e do tamanho da campanha. O valor vai na proposta, depois de uma conversa.'],
+];
+const campanhas = projetos.filter((p) => p.tipo === 'Marketing político');
+const schema = [
+  { '@context': 'https://schema.org', '@type': 'Service', name: 'Marketing político digital', serviceType: 'Marketing político', provider: { '@type': 'ProfessionalService', name: config.nome }, areaServed: 'BR' },
+  { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
+];
+---
+<Base title="Marketing Político Digital para Campanhas | MKT Center"
+  description="Site de campanha, redes sociais, vídeos e impulsionamento para candidatos e mandatos de todos os partidos, dentro das regras do TSE."
+  schema={schema} crumbs={[['Política', '/marketing-politico/']]}>
+  <HeroCrescimento
+    rotulo="Marketing político · todos os partidos"
+    linhas={[['Sua campanha', 'no'], ['celular de', 'cada']]}
+    destaque="eleitor."
+    texto="Site de campanha, redes sociais, vídeos e transmissões para pré-candidatos, candidatos e mandatos, sempre dentro das regras eleitorais."
+    bt1={['Falar sobre minha campanha', waLink(msg('marketing político'))]}
+    bt2={['Ver campanhas', '#campanhas']}
+    numeros={[[campanhas.length, '', 'campanhas no portfólio'], [3, '', 'fases: pré, campanha e mandato']]}
+    rolarPara="#fases"
+    sites={{
+      desk: { nome: 'Roberto Pires', dominio: 'robertopires.com.br', tela: '/portfolio/robertopires-desk.webp', w: 800, h: 1778, logo: '/portfolio/robertopires-cel.webp' },
+      lap: { nome: 'Padre Kelmon', dominio: 'padrekelmon.com.br', tela: '/portfolio/padrekelmon-lap.webp', w: 720, h: 1800, logo: '/portfolio/padrekelmon-cel.webp' },
+      tab: { nome: 'Roberto Pires', dominio: 'robertopires.com.br', tela: '/portfolio/robertopires-tab.webp', w: 480, h: 2125, logo: '/portfolio/robertopires-cel.webp' },
+      cel: { nome: 'Padre Kelmon', dominio: 'padrekelmon.com.br', tela: '/portfolio/padrekelmon-cel.webp', w: 300, h: 2615, logo: '/portfolio/padrekelmon-cel.webp' },
+    }}
+  />
+
+  <section id="fases" class="servicos-topo">
+    <div class="wrap">
+      <span class="eyebrow">Para cada momento</span>
+      <h2>Fases do trabalho</h2>
+      <div class="st-grid">
+        {fases.map((t) => (
+          <article class={`st-card${t.destaque ? ' on' : ''}`}>
+            {t.destaque && <span class="st-selo">Período eleitoral</span>}
+            <h3>{t.nome}</h3>
+            <p class="st-preco"><small>Valor</small>Sob consulta</p>
+            <p class="st-desc">{t.desc}</p>
+            <ul>{t.itens.map((i) => <li>{i}</li>)}</ul>
+            <a class="btn btn-primary st-bt" href={waLink(msg(t.nome.toLowerCase()))} target="_blank" rel="noopener">Quero conversar</a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <span class="eyebrow">Do site ao WhatsApp</span>
+      <h2>O que fazemos</h2>
+      <div class="grid grid-servicos sv-grid st-inc">
+        {servicos.map(([i, t, d]) => (
+          <div class="card"><span class="icone"><Icon name={i} /></span><h3>{t}</h3><p>{d}</p></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap pl-lei">
+      <div class="pl-lei-txt">
+        <span class="eyebrow">Dentro da lei</span>
+        <h2>Campanha forte e segura</h2>
+        <p class="pl-lead">Seguimos as resoluções do TSE em vigor em cada eleição. Você cuida da campanha, e o digital não vira problema na Justiça Eleitoral.</p>
+      </div>
+      <ul class="pl-lista">{lei.map((l) => <li><span class="pl-ok"><Icon name="check" /></span>{l}</li>)}</ul>
+    </div>
+  </section>
+
+  <section id="campanhas">
+    <div class="wrap">
+      <span class="eyebrow">Portfólio</span>
+      <h2>Campanhas que criamos</h2>
+      <div class="pl-pf">{campanhas.map((p) => <CardPortfolio {...p} />)}</div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <span class="eyebrow">Passo a passo</span>
+      <h2>Como funciona</h2>
+      <ol class="etapas">{etapas.map((e) => <li>{e}</li>)}</ol>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap prose">
+      <h2>Perguntas frequentes</h2>
+      {faq.map(([q, a]) => <details><summary>{q}</summary><p>{a}</p></details>)}
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* fases (mesmo visual das páginas Sites, Lojas, Vídeos e Redes) */
+  .st-grid{display:grid;gap:16px;grid-template-columns:1fr}
+  @media(min-width:768px){.st-grid{grid-template-columns:repeat(3,1fr)}}
+  .st-card{position:relative;display:flex;flex-direction:column;padding:26px 24px 24px;border-radius:var(--radius-lg);text-align:left;
+    background:linear-gradient(160deg,rgba(28,29,33,.85),rgba(12,13,15,.9));border:1px solid rgba(255,255,255,.08);box-shadow:0 20px 40px -24px rgba(0,0,0,.9);overflow:hidden;transition:transform .3s,border-color .3s}
+  .st-card::before{content:'';position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,#ff6900,#ffb35c)}
+  .st-card:hover{transform:translateY(-4px);border-color:rgba(255,105,0,.45)}
+  .st-card.on{border-color:rgba(255,105,0,.6);box-shadow:0 0 40px -12px rgba(255,105,0,.6)}
+  .st-selo{align-self:flex-start;margin-bottom:10px;padding:4px 10px;border-radius:99px;background:linear-gradient(90deg,#ff6900,#ffb35c);color:#141006;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+  .st-card h3{font-size:24px}
+  .st-preco{margin-top:10px;font-family:var(--ff-tit);font-weight:800;font-size:36px;line-height:1;background:linear-gradient(90deg,#ff8a24,#ffc993);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .st-preco small{display:block;font-family:var(--ff-txt);font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#aeb4bd;-webkit-text-fill-color:#aeb4bd;margin-bottom:4px}
+  .st-desc{margin-top:12px;color:#aeb4bd;font-size:15px;line-height:23px}
+  .st-card ul{list-style:none;margin:16px 0 22px;padding:0;display:grid;gap:8px}
+  .st-card li{position:relative;padding-left:16px;font-size:14px;color:#e4e6ea}
+  .st-card li::before{content:'';position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:50%;background:#ff6900}
+  .st-bt{margin-top:auto;width:100%}
+  .grid.st-inc{grid-template-columns:repeat(3,1fr);grid-template-areas:none}
+  .grid.st-inc>*{grid-area:auto !important;display:block !important}
+  .grid.st-inc .icone{margin:0 0 16px !important}
+
+  /* dentro da lei */
+  .pl-lei{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+  .pl-lei-txt{text-align:left}
+  .pl-lead{margin-top:12px;color:#aeb4bd;font-size:16px;line-height:1.6}
+  .pl-lista{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+  .pl-lista li{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:14px;background:rgba(17,19,23,.7);border:1px solid rgba(255,255,255,.08);color:#e4e6ea;font-size:15px}
+  .pl-ok{flex:none;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:rgba(255,105,0,.15);color:#ff8a24}
+  .pl-ok :global(svg){width:18px;height:18px}
+
+  /* campanhas do portfólio */
+  .pl-pf{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+
+  @media(max-width:1023px){
+    .pl-lei{grid-template-columns:1fr;gap:24px}
+    .pl-lei-txt{text-align:center}
+    .pl-pf{grid-template-columns:repeat(2,minmax(0,1fr))}
+  }
+  @media(max-width:767px){
+    .grid.st-inc{grid-template-columns:1fr 1fr}
+    .st-card{text-align:center}.st-card li{text-align:left}.st-selo{align-self:center}
+    .pl-pf{grid-template-columns:minmax(0,280px);justify-content:center}
+    .pl-lista li{text-align:left}
+  }
+</style>
