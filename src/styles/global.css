@@ -252,7 +252,9 @@ body{background:var(--carbon)}
   .wa{display:none !important}
   .burger{display:none !important}
   .topo{transition:transform .3s ease}
-  .topo.esconde{transform:translateY(-100%)}
+  .topo.esconde{transform:none}
+  .topo .barra{justify-content:center}
+  .topo .barra>a:first-child{margin:0 auto}
   a,button{-webkit-tap-highlight-color:transparent}
   .btn{transition:transform .15s}
   .btn:active{transform:scale(.97)}
