@@ -32,6 +32,12 @@ const depois: [string, string][] = [
   ['', 'Promoção -20%'], ['cafe', 'Nosso espaço'], ['', 'Clientes felizes'],
   ['live-evento', 'Evento'], ['', 'Peça pelo WhatsApp'], ['jaqueta', 'Lançamento'],
 ];
+// carrossel do hero, estilo post do Instagram (imagens escolhidas pelo cliente; perfis de terceiros:
+// confirmar direito de uso antes do lançamento)
+const slides: [string, number, number][] = [
+  ['/mock/redes-perfil.webp', 736, 981], ['/mock/redes-perfil-2.webp', 800, 1000], ['/mock/redes-perfil-3.webp', 736, 920],
+  ['/mock/redes-perfil-4.webp', 800, 1422], ['/mock/redes-perfil-5.webp', 784, 1347],
+];
 const incluso: [string, string, string][] = [
   ['calendar', 'Calendário de conteúdo', 'Você aprova o mês antes de publicar.'],
   ['star', 'Identidade visual', 'Feed bonito e com a mesma cara em todos os posts.'],
@@ -59,8 +65,16 @@ const schema = [
     numeros={[[400, '', 'R$ por mês'], [30, '', 'R$ por post']]}
     rolarPara="#tipos"
   >
-    <div slot="visual" class="rd-foto">
-      <img src="/mock/redes-perfil.webp" alt="Pessoa segurando um perfil do Instagram em vidro flutuando sobre a mão" width="736" height="981" fetchpriority="high" decoding="async" />
+    <div slot="visual" class="rd-ig" id="rd-ig">
+      <div class="rd-ig-cab"><i></i><b>suamarca</b><small>Patrocinado</small><span class="rd-ig-n"><span>1</span>/{slides.length}</span></div>
+      <div class="rd-ig-trilho">
+        {slides.map(([src, w, h], i) => (
+          <img src={src} alt={`Exemplo de perfil nas redes sociais ${i + 1}`} width={w} height={h} decoding="async" fetchpriority={i === 0 ? 'high' : undefined} loading={i === 0 ? undefined : 'lazy'} />
+        ))}
+      </div>
+      <button type="button" class="rd-ig-seta" data-dir="-1" aria-label="Imagem anterior">‹</button>
+      <button type="button" class="rd-ig-seta" data-dir="1" aria-label="Próxima imagem">›</button>
+      <div class="rd-ig-rod"><span class="rd-ig-acoes"><i></i><i></i><i></i></span><span class="rd-ig-pontos">{slides.map((_, i) => <i class={i === 0 ? 'on' : ''}></i>)}</span></div>
     </div>
   </HeroCrescimento>
 
@@ -164,11 +178,29 @@ const schema = [
 </Base>
 
 <style>
-  /* foto do hero: cartão do perfil flutuando, com brilho laranja atrás */
-  .rd-foto{position:relative;width:100%;max-width:440px;margin:0 auto}
-  .rd-foto::before{content:'';position:absolute;inset:6% -4%;border-radius:50%;background:radial-gradient(closest-side,rgba(255,105,0,.35),transparent);filter:blur(24px)}
-  .rd-foto img{position:relative;display:block;width:100%;height:auto;border-radius:24px;box-shadow:0 0 0 1px rgba(255,255,255,.1),0 40px 80px -30px #000;
-    -webkit-mask-image:linear-gradient(180deg,#000 82%,transparent);mask-image:linear-gradient(180deg,#000 82%,transparent)}
+  /* carrossel do hero no formato de um post do Instagram */
+  .rd-ig{position:relative;width:100%;max-width:420px;margin:0 auto;border-radius:22px;overflow:hidden;background:#000;
+    box-shadow:0 0 0 1px rgba(255,255,255,.12),0 0 60px -10px rgba(255,105,0,.45),0 40px 80px -30px #000}
+  .rd-ig-cab{display:flex;align-items:center;gap:10px;padding:12px 14px;color:#fff}
+  .rd-ig-cab i{width:32px;height:32px;border-radius:50%;background:radial-gradient(circle,#000 0 54%,transparent 56%),conic-gradient(#ff6900,#ffb35c,#e5202e,#ff6900)}
+  .rd-ig-cab b{font:700 14px var(--ff-txt)}
+  .rd-ig-cab small{color:#8a9099;font:500 12px var(--ff-txt)}
+  .rd-ig-n{margin-left:auto;padding:3px 9px;border-radius:99px;background:rgba(255,255,255,.12);font:600 12px var(--ff-txt)}
+  .rd-ig-trilho{display:flex;overflow-x:auto;aspect-ratio:4/5;background:#0d0e11;scrollbar-width:none;scroll-behavior:smooth}
+  .rd-ig-trilho::-webkit-scrollbar{display:none}
+  .rd-ig-trilho.encaixe{scroll-snap-type:x mandatory}
+  .rd-ig-trilho img{flex:0 0 100%;width:100%;height:100%;object-fit:contain;scroll-snap-align:center}
+  .rd-ig-seta{position:absolute;top:50%;z-index:2;display:grid;place-items:center;width:34px;height:34px;margin-top:-17px;border:0;border-radius:50%;background:rgba(255,255,255,.85);color:#141006;font:700 22px/1 var(--ff-txt);cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.4);transition:opacity .2s}
+  .rd-ig-seta[data-dir="-1"]{left:10px}
+  .rd-ig-seta[data-dir="1"]{right:10px}
+  .rd-ig-seta:disabled{opacity:0;pointer-events:none}
+  .rd-ig-rod{position:relative;display:flex;align-items:center;padding:12px 14px}
+  .rd-ig-acoes{display:flex;gap:14px}
+  .rd-ig-acoes i{width:22px;height:22px;border:2px solid #fff;border-radius:50%}
+  .rd-ig-acoes i:first-child{border-color:#e5202e;background:#e5202e}
+  .rd-ig-pontos{position:absolute;left:50%;display:flex;gap:5px;transform:translateX(-50%)}
+  .rd-ig-pontos i{width:6px;height:6px;border-radius:50%;background:#555;transition:background .2s,transform .2s}
+  .rd-ig-pontos i.on{background:#ff6900;transform:scale(1.25)}
   /* planos (mesmo visual das páginas Sites, Lojas e Vídeos) */
   .st-grid{display:grid;gap:16px;grid-template-columns:1fr}
   @media(min-width:768px){.st-grid{grid-template-columns:repeat(2,1fr)}}
@@ -319,6 +351,32 @@ const schema = [
 </style>
 
 <script>
+  // carrossel do hero: setas, arraste, pontos e troca sozinha a cada 4 s (para quando a pessoa interage)
+  const ig = document.getElementById('rd-ig');
+  if (ig) {
+    const trilho = ig.querySelector<HTMLElement>('.rd-ig-trilho')!;
+    const setas = ig.querySelectorAll<HTMLButtonElement>('.rd-ig-seta');
+    const pontos = ig.querySelectorAll('.rd-ig-pontos i');
+    const n = ig.querySelector('.rd-ig-n span')!;
+    const total = pontos.length;
+    const atual = () => Math.round(trilho.scrollLeft / trilho.clientWidth);
+    const ir = (i: number) => trilho.scrollTo({ left: ((i + total) % total) * trilho.clientWidth });
+    const atualizar = () => {
+      const i = atual();
+      pontos.forEach((p, j) => p.classList.toggle('on', j === i));
+      n.textContent = String(i + 1);
+      setas[0].disabled = i === 0;
+      setas[1].disabled = i === total - 1;
+    };
+    let timer = 0;
+    const parar = () => { clearInterval(timer); trilho.classList.add('encaixe'); };
+    setas.forEach((b) => b.addEventListener('click', () => { parar(); ir(atual() + Number(b.dataset.dir)); }));
+    ['pointerdown', 'touchstart', 'wheel'].forEach((ev) => trilho.addEventListener(ev, parar, { once: true, passive: true }));
+    trilho.addEventListener('scroll', atualizar, { passive: true });
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) timer = window.setInterval(() => ir(atual() + 1), 4000);
+    atualizar();
+  }
+
   const ad = document.getElementById('antes-depois');
   const faixa = ad?.querySelector('input');
   if (ad && faixa) faixa.addEventListener('input', () => ad.style.setProperty('--x', `${faixa.value}%`));
