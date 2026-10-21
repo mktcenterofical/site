@@ -485,3 +485,5 @@ html[data-theme="light"] .cx-vidro :is(b,span,small,p,i){color:#fff}
 html[data-theme="light"] .sv-modes{background:rgba(12,13,16,.82) !important;border-color:rgba(255,255,255,.1) !important;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 12px 26px -14px rgba(0,0,0,.5)}
 html[data-theme="light"] .sv-modes button:not(.on){color:rgba(255,255,255,.85) !important}
 html[data-theme="light"] .sv-note{color:#5b616b !important}
+/* Portfólio: fundo da prévia (notebook + celular) sempre preto, também no tema claro */
+html[data-theme="light"] .pf-cena{background:radial-gradient(60% 50% at 45% 55%,rgba(255,105,0,.24),transparent 70%),linear-gradient(180deg,#0d0e12,#131519) !important}
