@@ -65,7 +65,7 @@ if (crumbs.length) {
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=DM+Sans:wght@400;600;700&display=swap" />
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
   <noscript><link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=DM+Sans:wght@400;600;700&display=swap" rel="stylesheet" /></noscript>
-  {ld.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s)} />)}
+  {ld.map((s) => <script type="application/ld+json" set:html={JSON.stringify(s).replace(/</g, '\u003c')} />)}
   <!-- Google Analytics 4 (G-WHXPL9H3WL): carrega depois da página para não pesar no carregamento -->
   <script is:inline>
     window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}

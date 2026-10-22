@@ -97,11 +97,13 @@ const schema = [
 
   <section id="lojas">
     <div class="wrap">
+      <div class="st-carrossel">
       <div class="st-cab">
         <div><span class="eyebrow">Portfólio</span><h2>Lojas que criamos</h2></div>
         <div class="st-setas"><button type="button" class="st-seta" data-dir="-1" aria-label="Lojas anteriores"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button><button type="button" class="st-seta" data-dir="1" aria-label="Próximas lojas"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button></div>
       </div>
-      <div class="st-pf" id="st-pf" tabindex="0" aria-label="Lojas (role para o lado)">{exemplos.map((p) => <CardPortfolio {...p} />)}</div>
+      <div class="st-pf" tabindex="0" aria-label="Lojas (role para o lado)">{exemplos.map((p) => <CardPortfolio {...p} />)}</div>
+      </div>
       <p class="st-mais"><a class="btn btn-ghost" href="/portfolio/">Ver todos os projetos</a></p>
     </div>
   </section>
@@ -143,19 +145,6 @@ const schema = [
 </style>
 
 <script>
-  const trilho = document.getElementById('st-pf');
-  if (trilho) {
-    const setas = document.querySelectorAll<HTMLButtonElement>('.st-seta');
-    const passo = () => ((trilho.firstElementChild as HTMLElement)?.offsetWidth || 260) + 16;
-    const atualizar = () => {
-      setas[0].disabled = trilho.scrollLeft < 4;
-      setas[1].disabled = trilho.scrollLeft + trilho.clientWidth >= trilho.scrollWidth - 4;
-    };
-    const encaixe = () => trilho.classList.add('encaixe'); // scroll-snap só depois da 1ª interação (LCP)
-    setas.forEach((b) => b.addEventListener('click', () => { encaixe(); trilho.scrollBy({ left: Number(b.dataset.dir) * passo(), behavior: 'smooth' }); }));
-    ['pointerdown', 'touchstart', 'wheel', 'keydown'].forEach((ev) => trilho.addEventListener(ev, encaixe, { once: true, passive: true }));
-    trilho.addEventListener('scroll', atualizar, { passive: true });
-    addEventListener('resize', atualizar);
-    atualizar();
-  }
+  import { iniciarCarrosseis } from '../scripts/carrossel';
+  iniciarCarrosseis();
 </script>

@@ -125,20 +125,6 @@ const schema = [
 </style>
 
 <script>
-  // cada carrossel (apps e sites) com suas setas
-  document.querySelectorAll<HTMLElement>('.st-carrossel').forEach((bloco) => {
-    const trilho = bloco.querySelector<HTMLElement>('.st-pf')!;
-    const setas = bloco.querySelectorAll<HTMLButtonElement>('.st-seta');
-    const passo = () => ((trilho.firstElementChild as HTMLElement)?.offsetWidth || 260) + 16;
-    const atualizar = () => {
-      setas[0].disabled = trilho.scrollLeft < 4;
-      setas[1].disabled = trilho.scrollLeft + trilho.clientWidth >= trilho.scrollWidth - 4;
-    };
-    const encaixe = () => trilho.classList.add('encaixe'); // scroll-snap só depois da 1ª interação (LCP)
-    setas.forEach((b) => b.addEventListener('click', () => { encaixe(); trilho.scrollBy({ left: Number(b.dataset.dir) * passo(), behavior: 'smooth' }); }));
-    ['pointerdown', 'touchstart', 'wheel', 'keydown'].forEach((ev) => trilho.addEventListener(ev, encaixe, { once: true, passive: true }));
-    trilho.addEventListener('scroll', atualizar, { passive: true });
-    addEventListener('resize', atualizar);
-    atualizar();
-  });
+  import { iniciarCarrosseis } from '../scripts/carrossel';
+  iniciarCarrosseis();
 </script>

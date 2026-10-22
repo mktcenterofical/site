@@ -55,6 +55,9 @@ Objetivo do site: gerar contatos pelo WhatsApp e pelo formulário.
 - Cada página: title único no padrão "[Palavra-Chave] - [Complemento] | MKT Center", meta description única (até ~155), um único H1, canonical, Open Graph e Schema JSON-LD. Domínio oficial https://mktcenter.com.br (site em astro.config.mjs: canonical, sitemap, og:url); a cópia mktcenter-site.vercel.app recebe X-Robots-Tag noindex (vercel.json). 404 e /termos/ (rascunho) com noindex (prop noindex do Base) e fora do sitemap. Conferir com: npm run build && node scripts/auditoria-seo.mjs
 - Versões fixas para a Hostinger (Node 22.23.3): astro 7.3.8 e @astrojs/react 7.1.0 (7.4+ e react 7.1.1 exigem Node >= 22.23.4); npm audit sem vulnerabilidades. Chrome do puppeteer só baixa no GitHub Actions (.puppeteerrc.cjs)
 - Lighthouse mobile: meta 90+ em todas as categorias (home em 20/10/2026: 90/100/100/100). Fontes Google carregam sem bloquear (media=print onload) e CSS embutido (inlineStylesheets: always)
+- Carrossel de cards (Sites, Lojas, Apps): src/scripts/carrossel.ts (iniciarCarrosseis), cada bloco .st-carrossel com .st-pf e .st-seta
+- Teste visual antes/depois de refatorar: node scripts/comparar-visual.mjs base (referência) e depois node scripts/comparar-visual.mjs (Portfólio, Vídeos e Política variam ~1-3% sozinhos por causa dos prints que rolam)
+- Cabeçalhos de segurança na Vercel (vercel.json): nosniff, Referrer-Policy, X-Frame-Options, Permissions-Policy, HSTS e cache longo em /_astro/
 - Carrosséis: scroll-snap só liga após a primeira interação (classe .encaixe); ligado no carregamento ele rola sozinho e o Chrome deixa de medir o LCP
 - Hero: animação de entrada do texto só desliza, sem opacity 0 (texto sempre visível)
 - Toda página (menos a home) mostra a navegação "Início › Página atual" no topo: prop crumbs do Base.astro, em todos os dispositivos
