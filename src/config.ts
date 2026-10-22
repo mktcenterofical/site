@@ -8,7 +8,14 @@ export const config = {
   cnpj: '17.474.200/0001-89',
   horario: 'Seg a sex, 9h às 18h',
   cidade: 'São Paulo - SP',
-  instagram: '@mktcenter',
+  instagram: '@mktcenteroficial',
+  redes: [
+    'https://www.instagram.com/mktcenteroficial/',
+    'https://www.facebook.com/mktcenteroficial',
+    'https://www.linkedin.com/in/mktcenteroficial',
+    'https://www.youtube.com/@mktcenteroficial',
+    'https://www.tiktok.com/@mktcenteroficial',
+  ],
 };
 export const waLink = (msg = config.whatsappMsg) =>
   `https://wa.me/${config.whatsapp}?text=${encodeURIComponent(msg)}`;

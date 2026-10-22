@@ -15,7 +15,7 @@ const site = Astro.site!.href;
 const schema = [
   {
     '@context': 'https://schema.org', '@type': 'ProfessionalService', '@id': site + '#empresa',
-    name: config.nome, url: site, logo: site + 'icon-512.png', taxID: config.cnpj, image: site + 'og.png',
+    name: config.nome, url: site, logo: site + 'icon-512.png', taxID: config.cnpj, sameAs: config.redes, image: site + 'og.png',
     description: 'Agência de marketing digital em São Paulo: criação de sites, lojas virtuais, aplicativos, tráfego pago, SEO, redes sociais e marketing político.',
     telephone: '+' + config.whatsapp, email: config.email, priceRange: 'R$',
     address: { '@type': 'PostalAddress', addressLocality: 'São Paulo', addressRegion: 'SP', addressCountry: 'BR' },
