@@ -530,3 +530,17 @@ html[data-theme="light"] .pf-cena{background:radial-gradient(65% 55% at 45% 58%,
   .hc .sv-note{display:none}
   .hc .ap-hero{height:min(500px,calc(100svh - 250px)) !important}
 }
+
+/* ===================== NOTEBOOK PEQUENO / TELA BAIXA (1024–1439 px de largura e até 660 px de altura) =====================
+   Netbooks e notebooks com barra de favoritos (~600 px úteis). Sem a seta ROLE (não há espaço) e visuais do topo
+   mais horizontais. Não altera telas de 720 px de altura ou mais, já ajustadas no bloco NOTEBOOK. */
+@media (min-width:1024px) and (max-width:1439px) and (max-height:660px){
+  .rolar{display:none !important}
+  .hc{padding-bottom:16px !important}
+  .hc .rd-ig{width:100%;max-width:min(400px,calc(100svh - 190px)) !important}
+  .hc .rd-ig-trilho{aspect-ratio:16/10 !important}
+  .hc .rd-ig-leg small,.hc .rd-ig-leg p:last-of-type{display:none}
+  .hc .ev{max-width:calc((100svh - 150px) * .72) !important}
+  .hc .sf-trilho{height:calc(100svh - 190px) !important}
+  .hc .sf-nota{display:none}
+}
