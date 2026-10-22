@@ -544,3 +544,19 @@ html[data-theme="light"] .pf-cena{background:radial-gradient(65% 55% at 45% 58%,
   .hc .sf-trilho{height:calc(100svh - 190px) !important}
   .hc .sf-nota{display:none}
 }
+
+/* NOTEBOOK (a partir de 661 px de altura): Redes, Vídeos e Apps usam o topo grande, como no computador
+   (título grande e visual em tamanho cheio; a seta ROLE fica logo abaixo da dobra). Pedido do cliente. */
+@media (min-width:1024px) and (max-width:1439px) and (min-height:661px){
+  main:has(.rd-ig,.ev,.ap-hero) .hc{min-height:calc(100svh - 64px - 38px) !important;padding-top:24px !important;padding-bottom:20px !important}
+  main:has(.rd-ig,.ev,.ap-hero) .hc-h1{font-size:clamp(46px,5.6vw,76px) !important;line-height:.9 !important}
+  main:has(.rd-ig,.ev,.ap-hero) .hc-lead{font-size:18px !important;line-height:28px !important;margin-top:24px !important}
+  main:has(.rd-ig,.ev,.ap-hero) .hc .acoes{margin-top:32px !important}
+  main:has(.rd-ig,.ev,.ap-hero) .hc ul{margin-top:40px !important}
+  main:has(.rd-ig,.ev,.ap-hero) .hc ul b{font-size:42px !important}
+  main:has(.rd-ig,.ev,.ap-hero) .rolar{margin-top:28px !important}
+  .hc .rd-ig{max-width:500px !important}
+  .hc .rd-ig-trilho{aspect-ratio:15/13 !important}
+  .hc .ev{max-width:580px !important}
+  .hc .ap-hero{height:auto !important;min-height:520px !important}
+}
